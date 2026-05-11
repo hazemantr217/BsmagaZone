@@ -241,6 +241,108 @@
             color: #1abc9c;
         }
 
+        /* Gold Theme - Premium Active Subject */
+        .subject-card.theme-gold {
+            border: 3px solid #f1c40f;
+            background: linear-gradient(145deg, rgba(20, 20, 30, 0.95), rgba(30, 25, 15, 0.9));
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                0 0 0 1px rgba(241, 196, 15, 0.15),
+                0 0 30px rgba(241, 196, 15, 0.08),
+                inset 0 1px 0 rgba(241, 196, 15, 0.1);
+            animation: scaleIn 0.4s ease-out backwards, gold-border-glow 3s ease-in-out infinite;
+        }
+
+        .subject-card.theme-gold::before {
+            background: linear-gradient(90deg, #f1c40f, #f39c12, #e67e22, #f39c12, #f1c40f);
+            background-size: 200% 100%;
+            height: 4px;
+            animation: gold-shimmer-bar 2.5s linear infinite;
+        }
+
+        /* Shimmer sweep */
+        .subject-card.theme-gold::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 40%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(241, 196, 15, 0.07), rgba(241, 196, 15, 0.12), rgba(241, 196, 15, 0.07), transparent);
+            transform: rotate(25deg);
+            animation: gold-shimmer 5s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .subject-card.theme-gold:hover {
+            border-color: #f1c40f;
+            box-shadow:
+                0 0 0 1px rgba(241, 196, 15, 0.3),
+                0 0 40px rgba(241, 196, 15, 0.2),
+                0 0 80px rgba(241, 196, 15, 0.08),
+                0 20px 60px rgba(0, 0, 0, 0.4);
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .subject-card.theme-gold:hover::before {
+            height: 5px;
+        }
+
+        .subject-card.theme-gold .subject-icon {
+            color: #f1c40f;
+            background: rgba(241, 196, 15, 0.12);
+            border: 1px solid rgba(241, 196, 15, 0.2);
+        }
+
+        .subject-card.theme-gold .subject-name {
+            color: #f1c40f;
+            font-weight: 800;
+        }
+
+        .subject-card.theme-gold .subject-description {
+            color: rgba(241, 196, 15, 0.6);
+        }
+
+        .subject-card.theme-gold .subject-stats .stat-icon {
+            color: #f1c40f;
+        }
+
+        .subject-card.theme-gold .subject-stat span {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .subject-card.theme-gold .card-arrow {
+            color: #f1c40f;
+        }
+
+        @keyframes gold-shimmer {
+            0% { left: -60%; }
+            40% { left: 120%; }
+            100% { left: 120%; }
+        }
+
+        @keyframes gold-shimmer-bar {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        @keyframes gold-border-glow {
+            0%, 100% {
+                box-shadow:
+                    0 0 0 1px rgba(241, 196, 15, 0.15),
+                    0 0 20px rgba(241, 196, 15, 0.06),
+                    inset 0 1px 0 rgba(241, 196, 15, 0.1);
+            }
+            50% {
+                box-shadow:
+                    0 0 0 1px rgba(241, 196, 15, 0.25),
+                    0 0 35px rgba(241, 196, 15, 0.12),
+                    inset 0 1px 0 rgba(241, 196, 15, 0.15);
+            }
+        }
+
         /* Subject Icon */
         .subject-icon {
             width: 64px;
@@ -414,7 +516,7 @@
                 </a>
 
                 <!-- Subject 2: البحث في الخدمة الاجتماعية -->
-                <a href="subject2.html" class="subject-card theme-orange" id="subject-2">
+                <a href="subject2.html" class="subject-card theme-gold" id="subject-2">
                     <div class="subject-icon">
                         <i class="fas fa-search"></i>
                     </div>
@@ -432,6 +534,22 @@
                     </div>
                     <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
                 </a>
+
+                <!-- Subject 3: نماذج ونظريات للعمل مع المجتمعات -->
+                <div class="subject-card theme-orange disabled" id="subject-3">
+                    <span class="coming-soon">قريباً</span>
+                    <div class="subject-icon">
+                        <i class="fas fa-city"></i>
+                    </div>
+                    <div class="subject-name">نماذج ونظريات للعمل مع المجتمعات</div>
+                    <div class="subject-description">امتحانات مادة نماذج ونظريات للعمل مع المجتمعات</div>
+                    <div class="subject-stats">
+                        <div class="subject-stat">
+                            <i class="fas fa-clock stat-icon"></i>
+                            <span>قيد الإعداد</span>
+                        </div>
+                    </div>
+                </div>
 
                 <!--
                     يمكنك إضافة المزيد من المواد بنسخ الكارد أعلاه وتعديل:
