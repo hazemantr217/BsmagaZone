@@ -14,6 +14,8 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-N4C1HT27G2"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-6GLGEW0N22"></script>
+    </div>
+
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
@@ -318,23 +320,39 @@
         }
 
         @keyframes gold-shimmer {
-            0% { left: -60%; }
-            40% { left: 120%; }
-            100% { left: 120%; }
+            0% {
+                left: -60%;
+            }
+
+            40% {
+                left: 120%;
+            }
+
+            100% {
+                left: 120%;
+            }
         }
 
         @keyframes gold-shimmer-bar {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
         }
 
         @keyframes gold-border-glow {
-            0%, 100% {
+
+            0%,
+            100% {
                 box-shadow:
                     0 0 0 1px rgba(241, 196, 15, 0.15),
                     0 0 20px rgba(241, 196, 15, 0.06),
                     inset 0 1px 0 rgba(241, 196, 15, 0.1);
             }
+
             50% {
                 box-shadow:
                     0 0 0 1px rgba(241, 196, 15, 0.25),
@@ -516,7 +534,7 @@
                 </a>
 
                 <!-- Subject 2: البحث في الخدمة الاجتماعية -->
-                <a href="subject2.html" class="subject-card theme-gold" id="subject-2">
+                <a href="subject2.html" class="subject-card theme-orange" id="subject-2">
                     <div class="subject-icon">
                         <i class="fas fa-search"></i>
                     </div>
@@ -536,8 +554,7 @@
                 </a>
 
                 <!-- Subject 3: نماذج ونظريات للعمل مع المجتمعات -->
-                <div class="subject-card theme-orange disabled" id="subject-3">
-                    <span class="coming-soon">قريباً</span>
+                <a href="subject3.html" class="subject-card theme-gold" id="subject-3">
                     <div class="subject-icon">
                         <i class="fas fa-city"></i>
                     </div>
@@ -545,11 +562,12 @@
                     <div class="subject-description">امتحانات مادة نماذج ونظريات للعمل مع المجتمعات</div>
                     <div class="subject-stats">
                         <div class="subject-stat">
-                            <i class="fas fa-clock stat-icon"></i>
-                            <span>قيد الإعداد</span>
+                            <i class="fas fa-file-alt stat-icon"></i>
+                            <span>3 امتحانات</span>
                         </div>
                     </div>
-                </div>
+                    <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
+                </a>
 
                 <!--
                     يمكنك إضافة المزيد من المواد بنسخ الكارد أعلاه وتعديل:
@@ -581,6 +599,27 @@
             </div>
         </div>
     </div>
+    </div>
+
+
+    <!-- One-time Notice Modal -->
+    <div id="notice-modal" class="modal">
+        <div class="modal-content" style="max-width: 500px; position: relative;">
+            <button onclick="closeNoticeModal()"
+                style="position: absolute; top: 15px; left: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); transition: color 0.3s;"
+                onmouseover="this.style.color='var(--primary-color)'"
+                onmouseout="this.style.color='var(--text-muted)'"><i class="fas fa-times"></i></button>
+            <h2 style="color: #f39c12; margin-bottom: 15px; text-align: center; font-size: 1.15rem;"><i
+                    class="fas fa-exclamation-triangle"></i> عزيزي البصمجي.. دة تنويه مهم ❤️</h2>
+            <p style="text-align: center; line-height: 1.8; margin-bottom: 10px; font-size: 1rem;">الموقع والمراجعات
+                الحالية مخصصة لطلاب <b>الخدمة الاجتماعية – جامعة الإسكندرية</b>.</p>
+            <p style="text-align: center; line-height: 1.8; margin-bottom: 10px; font-size: 1rem;">ولو اللينك وصل لطلاب
+                جامعات أو معاهد تانية زي دمنهور فأهلًا بيكم طبعًا 🌷</p>
+            <p style="text-align: center; line-height: 1.8; margin-bottom: 10px; font-size: 1rem;">لكن لازم ناخد بالنا
+                إن ممكن يكون فيه فروقات بسيطة في المنهج اللي عندك، فمن فضلك اتأكد إن المحتوى مطابق لمنهجك علشان متتوهش
+                ليلة الامتحان 😅.</p>
+        </div>
+    </div>
 
     <script>
         // Theme Management
@@ -595,8 +634,22 @@
             if (saved) setTheme(saved);
         }
 
+
+        // Notice Modal Logic
+        function closeNoticeModal() {
+            document.getElementById('notice-modal').style.display = 'none';
+            localStorage.setItem('university_notice_seen_v1', 'true');
+        }
+
+        function checkNoticeModal() {
+            if (!localStorage.getItem('university_notice_seen_v1')) {
+                document.getElementById('notice-modal').style.display = 'flex';
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             loadTheme();
+            checkNoticeModal();
             setTimeout(() => document.getElementById('loading-screen').classList.add('hidden'), 600);
         });
 

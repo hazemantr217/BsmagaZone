@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>نماذج ونظريات للعمل مع المجتمعات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="shared/styles.css">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N4C1HT27G2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-N4C1HT27G2');
+    </script>
+</head>
+
+<body>
+
+    <div id="loading-screen">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <h2>جاري تحميل الامتحان...</h2>
+            <p>إعداد 51 سؤالاً</p>
+        </div>
+    </div>
+
+    <div class="bg-animation">
+        <div class="shape circle shape-1"></div>
+        <div class="shape square shape-2"></div>
+        <div class="shape circle shape-3"></div>
+        <div class="shape square shape-4"></div>
+    </div>
+
+    <div id="landing-page">
+        <div class="landing-container">
+            <div class="landing-header">
+                <a href="index.html" class="back-to-home">
+                    <i class="fas fa-arrow-right"></i> العودة للرئيسية
+                </a>
+                <h1><i class="fas fa-city"></i> نماذج ونظريات للعمل مع المجتمعات</h1>
+                <p>اختر الوضع المناسب للدراسة</p>
+            </div>
+
+            <div class="mode-cards">
+                <div class="mode-card exam-card">
+                    <div class="card-icon"><i class="fas fa-file-alt"></i></div>
+                    <h2>الامتحان الأول</h2>
+                    <div class="card-buttons">
+                        <button class="card-btn exam-btn" onclick="window.location.href='امتحان-مجتمعات1.html'">
+                            <i class="fas fa-book-reader"></i> الامتحان الأول
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mode-card exam-card">
+                    <div class="card-icon"><i class="fas fa-file-alt"></i></div>
+                    <h2>الامتحان الثاني</h2>
+                    <div class="card-buttons">
+                        <button class="card-btn exam-btn" onclick="window.location.href='امتحان-مجتمعات2.html'">
+                            <i class="fas fa-book-reader"></i> الامتحان الثاني
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mode-card exam-card">
+                    <div class="card-icon"><i class="fas fa-file-alt"></i></div>
+                    <h2>الامتحان الثالث</h2>
+                    <div class="card-buttons">
+                        <button class="card-btn exam-btn" onclick="window.location.href='امتحان-مجتمعات3.html'">
+                            <i class="fas fa-book-reader"></i> الامتحان الثالث
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mode-card mindmap-card">
+                    <div class="card-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h2>الخريطة الذهنية</h2>
+                    <div class="card-buttons">
+                        <button class="card-btn mindmap-btn" onclick="window.location.href='الخريطة_الذهنية_مجتمعات.html'">
+                            <i class="fas fa-project-diagram"></i> تصفح الخريطة
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="landing-theme-switcher">
+                <span>المظهر:</span>
+                <button onclick="setTheme('')" title="داكن"><i class="fas fa-moon"></i></button>
+                <button onclick="setTheme('light-mode')" title="فاتح"><i class="fas fa-sun"></i></button>
+                <button onclick="setTheme('pro-mode')" title="Pro"><i class="fas fa-gem"></i></button>
+                <button onclick="setTheme('contrast-mode')" title="تباين"><i class="fas fa-adjust"></i></button>
+            </div>
+            
+            <div class="hub-footer" style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                <div class="support-contact">
+                    في حالة وجود مشكلة أو اقتراح بخصوص الموقع، 
+                    <a href="https://wa.me/201091913836?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%B9%D9%86%D8%AF%D9%8A%20%D9%85%D8%B4%D9%83%D9%84%D8%A9%20%D8%A3%D9%88%20%D8%A7%D9%82%D8%AA%D8%B1%D8%A7%D8%AD%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%85%D9%88%D9%82%D8%B9%20Bsmaga-Zone" target="_blank">
+                        تواصل معي <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+                <div style="margin-top: 10px; opacity: 0.7; font-size: 0.9rem; direction: ltr; font-family: sans-serif;">
+                    Created by Hazem Anter
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Management
+        const THEME_KEY = 'exam_theme';
+        function setTheme(name) {
+            document.body.classList.remove('light-mode', 'pro-mode', 'contrast-mode');
+            if (name) document.body.classList.add(name);
+            localStorage.setItem(THEME_KEY, name);
+        }
+        function loadTheme() {
+            const saved = localStorage.getItem(THEME_KEY);
+            if (saved) setTheme(saved);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
+            setTimeout(() => document.getElementById('loading-screen').classList.add('hidden'), 600);
+        });
+
+        window.setTheme = setTheme;
+    </script>
+
+</body>
+
+</html>
