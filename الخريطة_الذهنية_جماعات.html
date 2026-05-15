@@ -1,0 +1,2877 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>نماذج ونظريات للعمل مع الجماعات - الخريطة الذهنية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="shared/styles.css">
+    <style>
+        #mindmap-page {
+            min-height: 100vh;
+            padding: 0;
+            /* Sticky header takes its own space */
+        }
+
+        /* Sticky Header Container */
+        .sticky-header-container {
+            position: sticky;
+            top: 0;
+            z-index: 300;
+            background: var(--bg-color);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .sticky-header-container .mindmap-page-header {
+            position: relative;
+        }
+
+        .sticky-header-container .quick-nav {
+            position: relative;
+            top: auto;
+            z-index: auto;
+        }
+
+        .sticky-header-container .search-container {
+            padding: 0.5rem 1rem;
+        }
+
+        /* Controls */
+        .controls-bar {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .theme-dropdown .theme-menu {
+            left: 0;
+            right: auto;
+        }
+
+        .expand-controls {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .expand-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.4rem 0.7rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .expand-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Network Cards Grid */
+        .network-view {
+            padding: 1rem;
+        }
+
+        .network-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Central Card */
+        .network-center {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .network-center h2 {
+            font-size: 1.5rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .network-center p {
+            margin: 0.5rem 0 0;
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        /* Branch Card */
+        .network-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .network-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .network-card-header {
+            padding: 1rem 1.2rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .network-card-header h3 {
+            margin: 0;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .network-card-header i.toggle-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .network-card.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        /* Card Colors */
+        .network-card[data-branch="1"] .network-card-header {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+        .network-card[data-branch="2"] .network-card-header {
+            background: linear-gradient(135deg, #ee0979, #ff6a00);
+        }
+
+        .network-card[data-branch="3"] .network-card-header {
+            background: linear-gradient(135deg, #00b4db, #0083b0);
+        }
+
+        .network-card[data-branch="4"] .network-card-header {
+            background: linear-gradient(135deg, #f12711, #f5af19);
+        }
+
+        .network-card[data-branch="5"] .network-card-header {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+        }
+
+        .network-card[data-branch="6"] .network-card-header {
+            background: linear-gradient(135deg, #fc4a1a, #f7b733);
+        }
+
+        .network-card[data-branch="7"] .network-card-header {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+        }
+
+        .network-card[data-branch="8"] .network-card-header {
+            background: linear-gradient(135deg, #f857a6, #ff5858);
+        }
+
+        /* Card Border Glow Effects */
+        .network-card[data-branch="1"] {
+            box-shadow: 0 0 0 2px rgba(17, 153, 142, 0.3);
+        }
+
+        .network-card[data-branch="2"] {
+            box-shadow: 0 0 0 2px rgba(238, 9, 121, 0.3);
+        }
+
+        .network-card[data-branch="3"] {
+            box-shadow: 0 0 0 2px rgba(0, 180, 219, 0.3);
+        }
+
+        .network-card[data-branch="4"] {
+            box-shadow: 0 0 0 2px rgba(241, 39, 17, 0.3);
+        }
+
+        .network-card[data-branch="5"] {
+            box-shadow: 0 0 0 2px rgba(142, 45, 226, 0.3);
+        }
+
+        .network-card[data-branch="6"] {
+            box-shadow: 0 0 0 2px rgba(252, 74, 26, 0.3);
+        }
+
+        .network-card[data-branch="7"] {
+            box-shadow: 0 0 0 2px rgba(0, 198, 255, 0.3);
+        }
+
+        .network-card[data-branch="8"] {
+            box-shadow: 0 0 0 2px rgba(248, 87, 166, 0.3);
+        }
+
+        /* Quick Navigation Bar */
+        .quick-nav {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.6rem 1rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        /* Desktop specific layout for Quick Nav in Header */
+        @media (min-width: 1025px) {
+            .mindmap-page-header {
+                flex-wrap: nowrap !important;
+                gap: 20px;
+                padding: 0.8rem 1.2rem !important;
+            }
+
+            .mindmap-page-header h1 {
+                flex-shrink: 0;
+            }
+
+            .mindmap-page-header .quick-nav {
+                position: static !important;
+                background: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+                backdrop-filter: none !important;
+                margin: 0 !important;
+                flex: 1;
+                justify-content: center;
+                overflow-x: auto;
+                scrollbar-width: none;
+            }
+
+            .mindmap-page-header .quick-nav::-webkit-scrollbar {
+                display: none;
+            }
+
+            .mindmap-page-header .quick-nav .nav-chip {
+                white-space: nowrap;
+                padding: 0.35rem 0.7rem;
+                font-size: 0.7rem;
+                flex-shrink: 0;
+            }
+        }
+
+        /* Mobile specific layout for nested Quick Nav */
+        @media (max-width: 1024px) {
+            .mindmap-page-header {
+                justify-content: space-between;
+            }
+
+            .mindmap-page-header .quick-nav {
+                width: 100%;
+                order: 10;
+                margin-top: 5px;
+            }
+        }
+
+        .nav-chip {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .nav-chip[data-target="1"] {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+        }
+
+        .nav-chip[data-target="2"] {
+            background: linear-gradient(135deg, #ee0979, #ff6a00);
+            color: white;
+        }
+
+        .nav-chip[data-target="3"] {
+            background: linear-gradient(135deg, #00b4db, #0083b0);
+            color: white;
+        }
+
+        .nav-chip[data-target="4"] {
+            background: linear-gradient(135deg, #f12711, #f5af19);
+            color: white;
+        }
+
+        .nav-chip[data-target="5"] {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+            color: white;
+        }
+
+        .nav-chip[data-target="6"] {
+            background: linear-gradient(135deg, #fc4a1a, #f7b733);
+            color: white;
+        }
+
+        .nav-chip[data-target="7"] {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+        }
+
+        .nav-chip[data-target="8"] {
+            background: linear-gradient(135deg, #f857a6, #ff5858);
+            color: white;
+        }
+
+        .nav-chip:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Search Box */
+        .search-container {
+            padding: 0.8rem 1rem;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.7rem 1rem 0.7rem 2.5rem;
+            border-radius: 25px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        /* Clear Button */
+        .clear-search-btn {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 100, 100, 0.2);
+            border: none;
+            color: #ff6b6b;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .clear-search-btn:hover {
+            background: rgba(255, 100, 100, 0.4);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Search Dropdown Panel */
+        .search-dropdown-panel {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 2rem);
+            max-width: 600px;
+            background: linear-gradient(135deg, rgba(30, 30, 50, 0.98), rgba(20, 20, 35, 0.99));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+            margin-top: 0.5rem;
+        }
+
+        .search-dropdown-panel.visible {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* Results Panel */
+        .search-results-panel {
+            padding: 1.2rem 1.5rem;
+            max-height: 350px;
+            overflow-y: auto;
+            background: linear-gradient(180deg, transparent, rgba(102, 126, 234, 0.05));
+        }
+
+        .search-results-panel::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .search-results-panel::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+
+        .search-results-panel::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #667eea, #764ba2);
+            border-radius: 3px;
+        }
+
+        .results-stats {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .results-count {
+            font-weight: 700;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        /* Results Grid */
+        .results-grid {
+            display: grid;
+            gap: 0.6rem;
+        }
+
+        .result-card-item {
+            background: rgba(20, 20, 35, 0.6);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 14px;
+            padding: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            gap: 0.8rem;
+            align-items: flex-start;
+        }
+
+        .result-card-item:hover {
+            border-color: rgba(102, 126, 234, 0.6);
+            background: rgba(102, 126, 234, 0.15);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .result-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .result-title {
+            font-weight: 700;
+            font-size: 0.88rem;
+            color: #a5b4fc;
+            margin-bottom: 0.3rem;
+        }
+
+        .result-text-preview {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .result-text-preview mark {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.5), rgba(255, 165, 0, 0.4));
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+            color: inherit;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.1));
+            border-right: 4px solid #667eea;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+        }
+
+        .info-box.warning {
+            background: linear-gradient(135deg, rgba(241, 39, 17, 0.15), rgba(245, 175, 25, 0.1));
+            border-right-color: #f12711;
+        }
+
+        .info-box.success {
+            background: linear-gradient(135deg, rgba(17, 153, 142, 0.15), rgba(56, 239, 125, 0.1));
+            border-right-color: #38ef7d;
+        }
+
+        /* Number Badges */
+        .num-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f12711, #f5af19);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            min-width: 2rem;
+            box-shadow: 0 2px 8px rgba(241, 39, 17, 0.3);
+        }
+
+        .num-badge.blue {
+            background: linear-gradient(135deg, #00b4db, #0083b0);
+            box-shadow: 0 2px 8px rgba(0, 180, 219, 0.3);
+        }
+
+        .num-badge.purple {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+            box-shadow: 0 2px 8px rgba(142, 45, 226, 0.3);
+        }
+
+        .num-badge.green {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            box-shadow: 0 2px 8px rgba(17, 153, 142, 0.3);
+        }
+
+        /* Exam Tips Card - Special Styling */
+        .network-card.tips-card {
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .network-card.tips-card .network-card-header {
+            background: linear-gradient(135deg, #ffd700, #ff8c00) !important;
+            color: #333 !important;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 0, 0.05));
+            border-radius: 10px;
+            border-right: 3px solid #ffd700;
+        }
+
+        .tip-item i {
+            color: #ffd700;
+            font-size: 1.1rem;
+            margin-top: 0.1rem;
+        }
+
+        /* Quick Compare Box */
+        .compare-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .compare-item {
+            padding: 0.6rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .compare-item.green {
+            background: linear-gradient(135deg, rgba(17, 153, 142, 0.2), rgba(56, 239, 125, 0.1));
+            border: 1px solid rgba(56, 239, 125, 0.3);
+        }
+
+        .compare-item.orange {
+            background: linear-gradient(135deg, rgba(255, 106, 0, 0.2), rgba(238, 9, 121, 0.1));
+            border: 1px solid rgba(255, 106, 0, 0.3);
+        }
+
+        .compare-item .compare-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .compare-item.green .compare-title {
+            color: #38ef7d;
+        }
+
+        .compare-item.orange .compare-title {
+            color: #ff6a00;
+        }
+
+        .network-card-body {
+            padding: 1rem 1.2rem;
+            max-height: none;
+            overflow: visible;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .network-card.collapsed .network-card-body {
+            display: none;
+        }
+
+        /* Sub-section in card */
+        .network-subsection {
+            margin-bottom: 1rem;
+        }
+
+        .network-subsection-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px dashed var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+        }
+
+        .network-subsection-title i {
+            font-size: 0.6rem;
+            transition: transform 0.3s;
+        }
+
+        .network-subsection.collapsed .network-subsection-title i {
+            transform: rotate(-90deg);
+        }
+
+        .network-subsection-items {
+            padding-right: 0.5rem;
+        }
+
+        .network-subsection.collapsed .network-subsection-items {
+            display: none;
+        }
+
+        .network-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            padding: 0.5rem 0.6rem;
+            margin: 0.3rem 0;
+            background: var(--bg-color);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .network-item:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateX(-3px);
+        }
+
+        .network-item i {
+            color: var(--primary-color);
+            font-size: 0.4rem;
+            margin-top: 0.4rem;
+        }
+
+        .network-item:hover i {
+            color: white;
+        }
+
+        .network-item b {
+            color: var(--secondary-color);
+        }
+
+        .network-item:hover b {
+            color: #ffd700;
+        }
+
+        /* Tables */
+        /* Responsive Table Wrapper */
+        .table-responsive-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 0.5rem 0 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            background: var(--card-bg);
+        }
+        
+        .table-responsive-wrapper::-webkit-scrollbar {
+            height: 6px;
+        }
+        .table-responsive-wrapper::-webkit-scrollbar-track {
+            background: var(--bg-color);
+            border-radius: 12px;
+        }
+        .table-responsive-wrapper::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 12px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            min-width: 600px; /* Ensures table is wide enough to scroll */
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.8rem 0.6rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .comparison-table td {
+            padding: 0.7rem 0.6rem;
+            font-size: 0.82rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table tr:nth-child(even) td {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .comparison-table tr:nth-child(odd) td {
+            background: var(--card-bg);
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        /* Colored Table Cells */
+        .comparison-table .cell-green {
+            background: linear-gradient(135deg, rgba(17, 153, 142, 0.2), rgba(56, 239, 125, 0.15)) !important;
+            color: #38ef7d;
+            font-weight: 600;
+        }
+
+        .comparison-table .cell-blue {
+            background: linear-gradient(135deg, rgba(0, 180, 219, 0.15), rgba(0, 131, 176, 0.15)) !important;
+            color: #00b4db;
+            font-weight: 600;
+        }
+
+        .comparison-table .cell-orange {
+            background: linear-gradient(135deg, rgba(238, 9, 121, 0.15), rgba(255, 106, 0, 0.15)) !important;
+            color: #ff6a00;
+            font-weight: 600;
+        }
+
+        .comparison-table .cell-purple {
+            background: linear-gradient(135deg, rgba(142, 45, 226, 0.15), rgba(74, 0, 224, 0.15)) !important;
+            color: #8e2de2;
+            font-weight: 600;
+        }
+
+        /* Mobile Full-Screen Dropdown */
+        @media (max-width: 768px) {
+            .search-dropdown-panel {
+                width: calc(100% - 1rem);
+                left: 0.5rem;
+                right: 0.5rem;
+                transform: none;
+                max-height: 70vh;
+                overflow-y: auto;
+            }
+
+            .mindmap-page-header {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                padding: 0.8rem;
+            }
+
+            .mindmap-page-header h1 {
+                font-size: 0.85rem;
+                order: 3;
+                width: 100%;
+                text-align: center;
+                margin-top: 0.5rem;
+            }
+
+            .controls-bar {
+                order: 2;
+            }
+
+            .expand-btn {
+                padding: 0.35rem 0.5rem;
+                font-size: 0.7rem;
+            }
+
+            .network-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 0 0.5rem;
+            }
+
+            .network-center {
+                padding: 1rem;
+            }
+
+            .nav-chip {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.65rem;
+            }
+
+            .search-box input {
+                font-size: 0.8rem;
+                padding: 0.6rem 0.8rem 0.6rem 2rem;
+            }
+
+            .results-grid {
+                gap: 0.5rem;
+            }
+
+            .result-card-item {
+                padding: 0.7rem;
+            }
+
+            .result-title {
+                font-size: 0.82rem;
+            }
+
+            .result-text-preview {
+                font-size: 0.72rem;
+            }
+        }
+
+        /* Smart Sticky Header Styles */
+        :root {
+            --header-transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Spacer to prevent content jump */
+        .smart-header-spacer {
+            height: auto;
+            min-height: 120px;
+            /* Approximate height of full header */
+            pointer-events: none;
+            visibility: hidden;
+            display: none;
+            /* Hide by default, let header overlay or handle spacing manually if needed. actually sticky needs space? No, fixed needs space. sticky doesn't. */
+        }
+
+        /* Let's make spacer block to push content down if header is fixed. */
+        /* Dynamic Spacing System */
+        #content-area {
+            --header-height-expanded: 140px;
+            /* Fallback */
+            --header-height-slim: 60px;
+            /* Fallback */
+
+            padding-top: var(--header-height-expanded);
+            transition: padding-top var(--header-transition);
+            will-change: padding-top;
+            position: relative;
+            z-index: 1;
+        }
+
+        #content-area.slim-mode-padding {
+            padding-top: var(--header-height-slim) !important;
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 600px) {
+            #content-area {
+                --header-height-expanded: 200px;
+                /* Taller on mobile often */
+            }
+        }
+
+        #smart-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(30, 33, 38, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all var(--header-transition);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            padding: 0.8rem 1rem;
+        }
+
+        body.light-mode #smart-header {
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Top Bar: Always Visible */
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-title-text {
+            font-size: 1.1rem;
+            margin: 0;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header-toggle-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .header-toggle-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Collapsible Area */
+        .header-collapsible {
+            overflow: hidden;
+            max-height: 600px;
+            /* Enough for content */
+            opacity: 1;
+            transition: all var(--header-transition);
+        }
+
+        .nav-grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            justify-content: center;
+        }
+
+        .nav-pill {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            border: none;
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+        }
+
+        .nav-pill:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Specialized Control Pills */
+        .nav-pill.control {
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-pill.control:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .header-controls-row {
+            margin-top: 1rem;
+            padding-top: 0.8rem;
+            border-top: 1px dashed var(--border-color);
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* Slim Mode */
+        #smart-header.slim-mode {
+            padding: 0.5rem 1rem;
+            background: rgba(30, 33, 38, 0.98);
+            /* Higher opacity */
+        }
+
+        body.light-mode #smart-header.slim-mode {
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        #smart-header.slim-mode .header-collapsible {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+            pointer-events: none;
+        }
+
+        /* Nav Pill Colors */
+        .nav-pill[data-color="1"] {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+        .nav-pill[data-color="2"] {
+            background: linear-gradient(135deg, #ee0979, #ff6a00);
+        }
+
+        .nav-pill[data-color="3"] {
+            background: linear-gradient(135deg, #00b4db, #0083b0);
+        }
+
+        .nav-pill[data-color="4"] {
+            background: linear-gradient(135deg, #f12711, #f5af19);
+        }
+
+        .nav-pill[data-color="5"] {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+        }
+
+        .nav-pill[data-color="6"] {
+            background: linear-gradient(135deg, #fc4a1a, #f7b733);
+        }
+
+        .nav-pill[data-color="7"] {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+        }
+
+        .nav-pill[data-color="8"] {
+            background: linear-gradient(135deg, #f857a6, #ff5858);
+        }
+
+        .nav-pill[data-color="9"] {
+            background: linear-gradient(135deg, #43cea2, #185a9d);
+        }
+
+        @media (max-width: 600px) {
+            .desktop-text {
+                display: none;
+            }
+
+            .mobile-text {
+                display: inline !important;
+            }
+        }
+    
+        /* Custom Gradient Headers for Cards */
+        .network-card-header.bg-grad-blue { background: linear-gradient(135deg, #00b4db, #0083b0) !important; color: white !important; }
+        .network-card-header.bg-grad-purple { background: linear-gradient(135deg, #8e2de2, #4a00e0) !important; color: white !important; }
+        .network-card-header.bg-grad-pink { background: linear-gradient(135deg, #fc466b, #3f5efb) !important; color: white !important; }
+        .network-card-header.bg-grad-orange { background: linear-gradient(135deg, #f12711, #f5af19) !important; color: white !important; }
+        .network-card-header.bg-grad-green { background: linear-gradient(135deg, #11998e, #38ef7d) !important; color: white !important; }
+        .network-card-header.bg-grad-teal { background: linear-gradient(135deg, #159957, #155799) !important; color: white !important; }
+
+        /* Ensure all card headers have the same height */
+        .network-card-header {
+            min-height: 85px;
+            display: flex;
+            align-items: center;
+        }
+        .network-card-header h3 {
+            margin: 0;
+            line-height: 1.4;
+        }
+
+
+        /* --- Mobile Nav Pills & Gradient Fixes --- */
+        .nav-pill {
+            -webkit-appearance: none;
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+        }
+
+        .network-card-header {
+            background-size: cover !important;
+            background-repeat: no-repeat !important;
+            -webkit-appearance: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 768px) {
+            .nav-grid-container {
+                gap: 0.4rem;
+            }
+            .nav-pill {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.75rem;
+                width: 100%;
+                justify-content: flex-start;
+                border-radius: 10px;
+                min-height: auto;
+                white-space: normal;
+                text-align: right;
+            }
+            .header-collapsible {
+                max-height: 45vh;
+                overflow-y: auto;
+                padding-right: 0.5rem;
+            }
+            
+            /* Custom Scrollbar for mobile nav */
+            .header-collapsible::-webkit-scrollbar {
+                width: 4px;
+            }
+            .header-collapsible::-webkit-scrollbar-track {
+                background: rgba(0,0,0,0.1);
+                border-radius: 10px;
+            }
+            .header-collapsible::-webkit-scrollbar-thumb {
+                background: var(--primary-color);
+                border-radius: 10px;
+            }
+        }
+
+</style>
+</head>
+
+<body>
+
+    <div id="loading-screen">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <h2>جاري تحميل المراجعة...</h2>
+        </div>
+    </div>
+
+    <div class="bg-animation">
+        <div class="shape circle shape-1"></div>
+        <div class="shape square shape-2"></div>
+        <div class="shape circle shape-3"></div>
+        <div class="shape square shape-4"></div>
+    </div>
+
+    <div id="mindmap-page" style="display: block;">
+        <!-- Smart Sticky Header -->
+
+        <header id="smart-header">
+            <div class="header-inner">
+                <!-- Top Bar: Title & Toggle -->
+                <div class="header-top">
+                    <div class="header-left">
+                        <button class="back-btn" onclick="window.location.href='index.html'" title="العودة">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <h1 class="header-title-text">
+                            <i class="fas fa-project-diagram"></i>
+                            <span class="desktop-text">الخريطة الذهنية - نماذج ونظريات للعمل مع الجماعات</span>
+                            <span class="mobile-text" style="display:none">الخريطة الذهنية</span>
+                        </h1>
+                    </div>
+
+                    <button id="header-toggle-btn" class="header-toggle-btn" title="توسيع/طي القائمة">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                </div>
+
+                <!-- Collabsible Grid Content -->
+                <div class="header-collapsible">
+                    <!-- Navigation Grid -->
+                    <div class="nav-grid-container">
+                        <button class="nav-pill" data-color="1" onclick="scrollToCard(1); collapseHeaderMobile()">
+                            <i class="fas fa-book"></i> المفاهيم الأساسية
+                        </button>
+                        <button class="nav-pill" data-color="2" onclick="scrollToCard(2); collapseHeaderMobile()">
+                            <i class="fas fa-users"></i> تصنيفات الممارسين في خدمة الجماعة
+                        </button>
+                        <button class="nav-pill" data-color="3" onclick="scrollToCard(3); collapseHeaderMobile()">
+                            <i class="fas fa-layer-group"></i> مستويات المعرفة (من العام إلى الخاص)
+                        </button>
+                        <button class="nav-pill" data-color="4" onclick="scrollToCard(4); collapseHeaderMobile()">
+                            <i class="fas fa-link"></i> حقائق حول العلاقة بين النظرية والممارسة والبحث
+                        </button>
+                        <button class="nav-pill" data-color="5" onclick="scrollToCard(5); collapseHeaderMobile()">
+                            <i class="fas fa-chart-network"></i> ديناميات الجماعة والاتجاهات المفسرة لها
+                        </button>
+                        <button class="nav-pill" data-color="6" onclick="scrollToCard(6); collapseHeaderMobile()">
+                            <i class="fas fa-door-open"></i> المداخل الأساسية في العمل مع الجماعات
+                        </button>
+                        <button class="nav-pill" data-color="7" onclick="scrollToCard(7); collapseHeaderMobile()">
+                            <i class="fas fa-pills"></i> النماذج العلاجية (مقارنة شاملة)
+                        </button>
+                        <button class="nav-pill" data-color="8" onclick="scrollToCard(8); collapseHeaderMobile()">
+                            <i class="fas fa-globe"></i> بيئات الجماعة الثلاث
+                        </button>
+                        <button class="nav-pill" data-color="9" onclick="scrollToCard(9); collapseHeaderMobile()">
+                            <i class="fas fa-handshake"></i> تصنيف العلاقات الاجتماعية بين أعضاء الجماعة
+                        </button>
+                        <button class="nav-pill" data-color="1" onclick="scrollToCard(10); collapseHeaderMobile()">
+                            <i class="fas fa-chart-line"></i> مراحل تطور الجماعة
+                        </button>
+                        <button class="nav-pill" data-color="2" onclick="scrollToCard(11); collapseHeaderMobile()">
+                            <i class="fas fa-brain"></i> مفردات وتكنيكات نموذج "التعديل السلوكي"
+                        </button>
+                        <button class="nav-pill" data-color="3" onclick="scrollToCard(12); collapseHeaderMobile()">
+                            <i class="fas fa-lightbulb"></i> استراتيجيات التفكير وحل المشكلات المتقدمة
+                        </button>
+                        <button class="nav-pill" data-color="4" onclick="scrollToCard(13); collapseHeaderMobile()">
+                            <i class="fas fa-sync"></i> التفاعل الاجتماعي والنظريات المرتبطة به
+                        </button>
+                        <button class="nav-pill" data-color="5" onclick="scrollToCard(14); collapseHeaderMobile()">
+                            <i class="fas fa-theater-masks"></i> نظرية الدور (Role Theory) ومصطلحاتها الدقيقة
+                        </button>
+                        <button class="nav-pill" data-color="6" onclick="scrollToCard(15); collapseHeaderMobile()">
+                            <i class="fas fa-network-wired"></i> المجتمعات الافتراضية والتحول الرقمي (الاتجاهات التكنولوجية الحديثة)
+                        </button>
+                        <button class="nav-pill" data-color="7" onclick="scrollToCard(16); collapseHeaderMobile()">
+                            <i class="fas fa-balance-scale"></i> تجميعة سريعة لبعض المبادئ والقواعد المهنية
+                        </button>
+                        <button class="nav-pill" data-color="8" onclick="scrollToCard(17); collapseHeaderMobile()">
+                            <i class="fas fa-crown"></i> أنماط القيادة وتأثيرها على الجماعة
+                        </button>
+                        <button class="nav-pill" data-color="9" onclick="scrollToCard(18); collapseHeaderMobile()">
+                            <i class="fas fa-pen-alt"></i> أساليب التسجيل الميداني (كيف يوثق الأخصائي عمله)
+                        </button>
+                        <button class="nav-pill" data-color="1" onclick="scrollToCard(19); collapseHeaderMobile()">
+                            <i class="fas fa-tools"></i> المهارات الأساسية للأخصائي الاجتماعي مع الجماعات
+                        </button>
+                        <button class="nav-pill" data-color="2" onclick="scrollToCard(20); collapseHeaderMobile()">
+                            <i class="fas fa-clipboard-list"></i> الفروق الجوهرية
+                        </button>
+                    </div>
+
+                    <!-- Controls Row -->
+                    <div class="header-controls-row">
+                        <button class="nav-pill control" onclick="expandAll(); collapseHeaderMobile()">
+                            <i class="fas fa-expand"></i> توسيع الكل
+                        </button>
+                        <button class="nav-pill control" onclick="collapseAll(); collapseHeaderMobile()">
+                            <i class="fas fa-compress"></i> طي الكل
+                        </button>
+                        <button class="nav-pill control" onclick="cycleTheme()">
+                            <i class="fas fa-palette"></i> تغيير المظهر
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+        <!-- Network/Card View -->
+        <!-- Main Content Area with Dynamic Padding -->
+        <main id="content-area" class="dynamic-content">
+            <div class="network-view">
+                <div class="network-grid">
+                    <!-- Central Card -->
+                    <div class="network-center">
+                        <h2>👥 نماذج ونظريات للعمل مع الجماعات</h2>
+                        <p>المراجعة النهائية الشاملة (المفاهيم - التصنيفات - المعرفة - الديناميات)</p>
+                    </div>
+
+                    <!-- Card 1: المفاهيم الأساسية -->
+                    <div class="network-card" data-branch="1">
+                        <div class="network-card-header bg-grad-blue" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>1 - المفاهيم الأساسية</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>المفهوم</th>
+                                            <th>العالم / المصدر</th>
+                                            <th>التاريخ</th>
+                                            <th>المضمون والتفاصيل الدقيقة</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>الممارسة المهنية (لغة)</b></td>
+                                            <td>قاموس اللغة</td>
+                                            <td>-</td>
+                                            <td>المزاولة، التدريب، أو التطبيق العملي للشيء.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>الممارسة المهنية</b></td>
+                                            <td>باركر (Barker)</td>
+                                            <td>1991</td>
+                                            <td>التدخل المباشر الموجه من خلال المعرفة العلمية والقيم، بالاعتماد على مهارات لتحقيق أهداف محددة.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>النموذج المهني</b></td>
+                                            <td>قاموس ويستر</td>
+                                            <td>1970</td>
+                                            <td>"الذي يشبه تماماً شيئاً ما أو صورته منه"، وهو المثال الذي يُعطى للشيء هويته.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-orange"><b>النموذج (اصطلاحاً)</b></td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>إطار تصوري يجمع المفاهيم المرتبطة لتفسير جزء من الواقع وتوجيه الممارسة.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: تصنيفات الممارسين -->
+                    <div class="network-card" data-branch="2">
+                        <div class="network-card-header bg-grad-purple" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>2 - تصنيفات الممارسين في خدمة الجماعة</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="info-box success">
+                                <b>⚠️ مهم جداً للتفرقة بينهم في أسئلة الصح والخطأ</b>
+                            </div>
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>نوع الممارس</th>
+                                            <th>الخصائص والوصف الدقيق</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>الممارس المهني</b></td>
+                                            <td>يمارس خدمة الجماعة عملياً في المؤسسات، لكنه لا يهتم بالبحث العلمي أو تطوير النظريات.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>الباحث المهني</b></td>
+                                            <td>يركز على القيام بالدراسات والبحوث العلمية فقط، ولا يمارس العمل الميداني بشكل مباشر.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>الأكاديمي المهني</b></td>
+                                            <td>يدرك الأكاديمية المهنية والعلمية، لكنه يمارسها بطريقة نظرية (غالباً أساتذة الجامعات).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-orange"><b>الباحث الممارس</b></td>
+                                            <td><b>(النموذج الأمثل)</b> هو الذي يجمع بين الممارسة الميدانية والبحث العلمي لتطوير المهنة.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: مستويات المعرفة -->
+                    <div class="network-card" data-branch="3">
+                        <div class="network-card-header bg-grad-pink" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>3 - مستويات المعرفة (من العام إلى الخاص)</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="info-box">
+                                <b>📌 الترتيب والفرق بين المصطلحات</b>
+                            </div>
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>المصطلحات</th>
+                                            <th>التعريف الدقيق</th>
+                                            <th>ملاحظات إضافية</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>البارادايم (Paradigm)</b></td>
+                                            <td>"نظارة العقل" أو المنظومة الحاكمة للتفكير، وهو العدسة التي يرى بها الإنسان الحياة.</td>
+                                            <td>قد يجعلنا نرى الأمور بغير حقيقتها (خداع بصري فكري).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>النظرية (Theory)</b></td>
+                                            <td>فروض تم التأكد من صحتها، تشرح المشاهدات وتساعد في التنبؤ بظواهر المستقبل.</td>
+                                            <td>تتسم بالتجريد والتعميم.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>الاستراتيجية</b></td>
+                                            <td>الأفعال والأساليب الشاملة المخطط لها لتحقيق أهداف بعيدة المدى.</td>
+                                            <td>مصطلح مستمد من التخطيط العسكري.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-orange"><b>التكنيك (Technique)</b></td>
+                                            <td>إجراءات دقيقة وخطوات فنية قصيرة المدى تُستخدم في مواقف محددة.</td>
+                                            <td>جزء من الاستراتيجية (التفاصيل الإجرائية).</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: حقائق حول العلاقة -->
+                    <div class="network-card" data-branch="4">
+                        <div class="network-card-header bg-grad-orange" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>4 - حقائق حول العلاقة بين النظرية والممارسة والبحث</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="network-subsection">
+                                <div class="network-subsection-items">
+                                    <div class="network-item">
+                                        <i class="fas fa-circle"></i>
+                                        <span><b>الانفصال:</b> يُعتبر الانفصال بين البحث والممارسة انفصالاً <b>مصطنعاً وغير منطقي</b>؛ فالممارسة بدون بحث هي عمل عشوائي، والبحث بدون ممارسة هو ترف فكري.</span>
+                                    </div>
+                                    <div class="network-item">
+                                        <i class="fas fa-circle"></i>
+                                        <span><b>وظيفة النظرية:</b> تنظيم البيانات، صياغة الفروض، التنبؤ بالظواهر، والحكم فيها.</span>
+                                    </div>
+                                    <div class="network-item">
+                                        <i class="fas fa-circle"></i>
+                                        <span><b>بداية العلاقة المهنية:</b> تبدأ دائماً بعملية <b>(القبول والارتباط)</b> كخطوة أولى وأساسية لتكوين العلاقة مع أعضاء الجماعة.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: ديناميات الجماعة -->
+                    <div class="network-card" data-branch="5">
+                        <div class="network-card-header bg-grad-green" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>5 - ديناميات الجماعة والاتجاهات المفسرة لها</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="info-box warning">
+                                <b>📌 مقارنة شاملة - مهم جداً للامتحان</b>
+                            </div>
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>الاتجاه المفسر</th>
+                                            <th>العالم / المؤسس</th>
+                                            <th>الخصائص والكلمات المفتاحية في الامتحان</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>الاتجاه السوسيومتري</b></td>
+                                            <td>موريللو (Moreno)</td>
+                                            <td>يعتمد على قياس العلاقات من حيث (التجاذب والتنافر) باستخدام القياس السوسيومتري. يُعاب عليه أنه اتجاه أحادي القطب، لأنه يكتفي برصد بنية العلاقات ويهمل البواعث والدوافع الكامنة.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>الاتجاه الديناميكي</b></td>
+                                            <td>كورت لفين (Kurt Lewin)</td>
+                                            <td>هو الاتجاه الأقرب لحوث علم النفس الاجتماعي. يعتمد على نظرية المجال، ويركز على القوى وتفاعلات المجال الحيوي للأفراد.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>الاتجاه السوسيولوجي</b></td>
+                                            <td>إلتون مايو (Elton Mayo)</td>
+                                            <td>أرسى قواعده من خلال (تجارب هوثورن) الشهيرة. ركز على تأثير ظروف العمل والبيئة المادية (مثل الإضاءة) على زيادة الإنتاجية والتفاعل.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6: المداخل الأساسية -->
+                    <div class="network-card" data-branch="6">
+                        <div class="network-card-header bg-grad-teal" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>6 - المداخل الأساسية في العمل مع الجماعات</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>المدخل</th>
+                                            <th>الفلسفة والهدف الأساسي (الكلمات المفتاحية للامتحان)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>المنظور الإيكولوجي (البيئي)</b></td>
+                                            <td>يرى أن الإنسان يُمكن فهمه كنسق في بيئته، ويركز على التفاعلات والتبادلات في الحدود التي يتلاقى فيها الإنسان والبيئة. يهدف إلى تحقيق "التوافق البيئي" وتكيف الفرد مع محيطه.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>المدخل التنموي</b></td>
+                                            <td>يهدف إلى مساعدة الأعضاء على ترك السلبية والانعزالية، وتنمية قدراتهم واستقلالهم الذاتي. يعتمد بشدة على مفاهيم مثل: (المساعدة الذاتية، لعب الدور، التوجيه الذاتي، وتدعيم الانتماء).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>المدخل التنظيمي البيئي</b></td>
+                                            <td>يركز على التدخل في البيئة أو المؤسسة نفسها لتعديلها بما يتناسب مع إشباع حاجات الأعضاء. الأخصائي هنا يتفاعل بطريقة مباشرة لتعديل الظروف وليس مجرد تعديل سلوك الفرد فقط.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 7: النماذج العلاجية -->
+                    <div class="network-card" data-branch="7">
+                        <div class="network-card-header bg-grad-blue" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>7 - النماذج العلاجية (مقارنة شاملة)</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>النموذج</th>
+                                            <th>العالم / المؤسس</th>
+                                            <th>أهم المفاهيم وطريقة التدخل</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>نموذج التركيز على عضو الجماعة (العلاج المتمركز حول العميل)</b></td>
+                                            <td>كارل روجرز (Carl Rogers)</td>
+                                            <td>يؤمن بأن كل إنسان لديه قدرة كامنة للتعامل مع مشكلاته. يعتمد على (التقبل الإيجابي غير المشروط، والانفتاح، والاستماع العميق). يركز على العضو وتنمية قدراته بدلاً من التركيز على المشكلة نفسها.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>نموذج التركيز على المهام</b></td>
+                                            <td>ريد وإبستين</td>
+                                            <td>نموذج موجه نحو الهدف، يركز على الحاضر والمشكلات الحالية المحددة. يتم مساعدة العضو من خلال تحديد خطوات وإجراءات عملية (مهام) يقوم بإنجازها لحل المشكلة.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>نموذج التعديل السلوكي</b></td>
+                                            <td>علماء المدرسة السلوكية (بافلوف، سكينر، واطسون)</td>
+                                            <td>يرى أن السلوك "مكتسب ومتعلم"، ولا يهتم بصدمات الماضي أو اللاشعور بل يهتم بالسلوك الظاهر في الحاضر. يستخدم أساليب التدعيم والعقاب والتشكيل لتغيير السلوك.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 8: بيئات الجماعة -->
+                    <div class="network-card" data-branch="8">
+                        <div class="network-card-header bg-grad-purple" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>8 - بيئات الجماعة الثلاث</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="info-box">
+                                <b>📌 التمييز بينها دقيق جداً</b>
+                            </div>
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>نوع البيئة</th>
+                                            <th>التفسير والمكونات (ماذا تشمل؟)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>البيئة الفيزيقية</b></td>
+                                            <td>تشير إلى الأشياء المادية الملموسة التي توجد الجماعة في وسطها (المباني، الإضاءة، التهوية، الأثاث، وسائل الاتصال).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>البيئة الشخصية</b></td>
+                                            <td>تشير إلى الخصائص النفسية والسمات الداخلية للأفراد المكونين للجماعة، وتعمل كمثيرات لكل منهم تجاه الآخر.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>البيئة الاجتماعية</b></td>
+                                            <td>هي ما ينشأ كنتيجة لتكوين الجماعة من نسق العلاقات الاجتماعية، القيم، والمعايير والأعراف التي تحكم تفاعلهم.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 9: تصنيف العلاقات -->
+                    <div class="network-card" data-branch="9">
+                        <div class="network-card-header bg-grad-pink" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>9 - تصنيف العلاقات الاجتماعية بين أعضاء الجماعة</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>نوع العلاقة</th>
+                                            <th>متى تحدث؟ وما هي خصائصها؟</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>علاقات سطحية (عارضة)</b></td>
+                                            <td>علاقات مؤقتة تنشأ طبقاً لمواقف معينة وتزول بزوال الموقف (لا تتصف بالدوام). مثال: العلاقات في غرف الانتظار أو الرحلات القصيرة.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>علاقات تقوم على التبعية</b></td>
+                                            <td>تنشأ بين الأفراد حين يكون هناك أفراد تابعون لأفراد آخرين (كعلاقة المرؤوس بالقائد).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>علاقات اجتماعية عميقة ومستقرة</b></td>
+                                            <td>علاقات تتصف بالاستمرار والدوام والترابط القوي. مثال: العلاقات التي تنشأ بين الأصدقاء المقربين جداً والأقارب.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="info-box warning" style="margin-top: 1rem;">
+                                <b>⚠️ ملاحظة هامة للمذاكرة:</b> ركز جداً في الصح والخطأ على "عكس المفاهيم" (مثلاً قد يأتيك سؤال يقول: الاتجاه السوسيومتري يهتم بالدوافع الكامنة؟ الإجابة: خطأ).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 10: مراحل تطور الجماعة -->
+                    <div class="network-card" data-branch="10">
+                        <div class="network-card-header bg-grad-orange" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>مراحل تطور الجماعة</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>المرحلة (بالترتيب)</th>
+                                            <th>المسمى</th>
+                                            <th>تفاصيل ما يحدث داخل الجماعة في هذه المرحلة</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>المرحلة الأولى</b></td>
+                                            <td>التأليف (Forming)</td>
+                                            <td>مرحلة البدايات والتعارف المبدئي. يبدأ فيها الأعضاء باكتشاف بعضهم البعض وتحديد أهداف الجماعة بشكل أولي.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>المرحلة الثانية</b></td>
+                                            <td>العواصف (Storming)</td>
+                                            <td>هي مرحلة (التصادم). يتواجه فيها الأفراد، وتظهر الصراعات والخلافات حول القيادة والأدوار بعد أن يعبر كل فرد عن قدراته وشخصيته الحقيقية.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>المرحلة الثالثة</b></td>
+                                            <td>التوافق (Norming)</td>
+                                            <td>مرحلة الاستقرار بعد العاصفة. يتم فيها بناء الثقة، وضع القواعد والمعايير، وبداية تماسك الجماعة.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-orange"><b>المرحلة الرابعة</b></td>
+                                            <td>الأداء (Performing)</td>
+                                            <td>مرحلة النضج والعمل الفعلي. تتآزر فيها جهود الأعضاء للقيام بمهامهم، وتُوجّه كل الطاقات لتحقيق الهدف المنشود بكفاءة.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-green"><b>المرحلة الخامسة</b></td>
+                                            <td>الانقضاض (Adjourning)</td>
+                                            <td>(أضافها تاكمان عام 1977). هي مرحلة إنهاء عمل الجماعة بعد تحقيق أهدافها، وتتسم أحياناً بمشاعر الحزن لانفصال الأعضاء.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 11: تكنيكات التعديل السلوكي -->
+                    <div class="network-card" data-branch="11">
+                        <div class="network-card-header bg-grad-green" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>11 - مفردات وتكنيكات نموذج "التعديل السلوكي"</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="info-box warning">
+                                <b>📌 تأتي بكثرة في الصح والخطأ</b>
+                            </div>
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>التكنيك السلوكي</th>
+                                            <th>التعريف كما يأتي في الامتحان</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>التعزيز / التدعيم (بشكل عام)</b></td>
+                                            <td>أي حادثة أو نشاط من شأنه أن يزيد من احتمال تكرار حدوث السلوك المستهدف (تقوية السلوك).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>التعزيز الإيجابي</b></td>
+                                            <td>إضافة أو تقديم شيء محبب للعميل (مثل مكافأة أو هدية) لزيادة السلوك الجيد.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>التعزيز السلبي</b></td>
+                                            <td>إزالة أو إبعاد مثير مزعج أو غير مريح بمجرد قيام العميل بالسلوك الصحيح (لتقوية السلوك). <b>(احذر: التعزيز السلبي ليس عقاباً)</b>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-orange"><b>التشكيل (Shaping)</b></td>
+                                            <td>تعليم أنماط سلوكية جديدة عبر تقديم مكافآت (تعزيز) لخطوات متتالية تقترب تدريجياً من السلوك النهائي المطلوب.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-green"><b>الانطفاء (Extinction)</b></td>
+                                            <td>تجاهل السلوك غير المرغوب فيه وعدم تقديم أي تدعيم له، مما يؤدي إلى ضعفه وتلاشيه تدريجياً.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 12: استراتيجيات التفكير -->
+                    <div class="network-card" data-branch="12">
+                        <div class="network-card-header bg-grad-teal" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>12 - استراتيجيات التفكير وحل المشكلات المتقدمة</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>الاستراتيجية</th>
+                                            <th>المؤسس</th>
+                                            <th>الشرح والاستخدام المهني</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>نموذج عظمة السمكة</b></td>
+                                            <td>كاورو إيشيكاوا (عالم ياباني)</td>
+                                            <td>يُسمى أسلوب "تحليل علاقة السبب بالنتيجة". المشكلة توضع في (رأس السمكة)، والأسباب توزع على (العظام/العمود الفقري) لتسهيل التعرف على المشكلات المعقدة.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>أسلوب العصف الذهني (Brainstorming)</b></td>
+                                            <td>أوزبورن (Osborn)</td>
+                                            <td>يهدف إلى إطلاق حرية التفكير وتوليد أكبر كم من الأفكار الإبداعية. قاعدته الذهبية: <b>(تأجيل التقييم والنقد تماماً)</b> أثناء الجلسة وتشجيع الكم والأفكار غير المألوفة.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>القبعات الست للتفكير</b></td>
+                                            <td>إدوارد دي بونو</td>
+                                            <td>
+                                                تقسيم التفكير إلى 6 أنماط بألوان مختلفة لتسهيل الإدارة:<br>
+                                                <ul style="text-align: right; margin-right: 20px; margin-top: 10px;">
+                                                    <li><b>البيضاء:</b> الحقائق والأرقام والمعلومات.</li>
+                                                    <li><b>الحمراء:</b> المشاعر والعواطف (بدون تبرير).</li>
+                                                    <li><b>السوداء:</b> المخاطر، السلبيات، التفكير الحذر.</li>
+                                                    <li><b>الصفراء:</b> التفاؤل، الفوائد، الجوانب الإيجابية.</li>
+                                                    <li><b>الخضراء:</b> الإبداع، البدائل، النمو.</li>
+                                                    <li><b>الزرقاء:</b> التحكم، القيادة، تنظيم الجلسة (قبعة المدير).</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 13: التفاعل الاجتماعي -->
+                    <div class="network-card" data-branch="13">
+                        <div class="network-card-header bg-grad-blue" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>13 - التفاعل الاجتماعي والنظريات المرتبطة به</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>المفهوم / النظرية</th>
+                                            <th>التعريف والكلمات المفتاحية في الامتحان</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>التفاعل الاجتماعي</b></td>
+                                            <td>هو التأثير المتبادل وتوقع الاستجابات بين الأعضاء. يُعتبر "الجوهر" والأساس الذي تقوم عليه العلاقات وتكوين الجماعة.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>النظرية التفاعلية الرمزية</b></td>
+                                            <td>نظرية تفترض أن سلوك الأفراد يرتكز على الفهم المشترك لـ <b>(المعاني، الرموز، اللغة، والإيماءات)</b> في تفاعلهم الاجتماعي.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>نظرية النظم (Systems Theory)</b></td>
+                                            <td>تنظر للجماعة على أنها <b>(نسق / نظام مفتوح)</b> يتكون من أجزاء (أعضاء) متفاعلة ومترابطة، وكل جزء يؤثر في الآخر ويؤثر في البيئة الخارجية لضمان حالة التوازن.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-orange"><b>المدخل المعرفي (Cognitive)</b></td>
+                                            <td>يفترض أن الانفعال والسلوك الخاطئ هما نتيجة حتمية لـ <b>(تفكير غير منطقي أو معتقدات خاطئة)</b>. لذلك، تعديل السلوك يبدأ بتعديل هذه الأفكار.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 14: نظرية الدور -->
+                    <div class="network-card" data-branch="14">
+                        <div class="network-card-header bg-grad-purple" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>14 - نظرية الدور (Role Theory) ومصطلحاتها الدقيقة</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="info-box warning">
+                                <b>📌 (من أكثر الأجزاء التي تتكرر في أسئلة الاختياري والصواب والخطأ)</b>
+                            </div>
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>المصطلح</th>
+                                            <th>التفسير الدقيق (كيف يأتي في الامتحان)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>الدور الاجتماعي (Role)</b></td>
+                                            <td>هو <b>السلوك المتوقع</b> من الفرد لنتيجة تواجده في مكانة أو وضع اجتماعي معين داخل الجماعة (مثال: دور القائد، دور المسجل، دور المبادر).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>المكانة الاجتماعية (Status)</b></td>
+                                            <td>هي المركز أو الوضع الذي يشغله الفرد داخل البناء الاجتماعي للجماعة. (الدور هو الجانب الحركي والتطبيقي لهذه المكانة).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>صراع الدور (Role Conflict)</b></td>
+                                            <td>يحدث التوتر والضغط عندما يواجه الفرد مطالب أو توقعات متعارضة ومتناقضة ملقاة على عاتقه في نفس الوقت، ولا يمكنه التوفيق بينها.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-orange"><b>غموض الدور (Role Ambiguity)</b></td>
+                                            <td>يحدث عندما تكون مهام الفرد ومسؤولياته غير واضحة أو غير محددة بدقة، مما يجعله مشتتًا ولا يعرف ما يُتوقع منه بالضبط.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 15: المجتمعات الافتراضية -->
+                    <div class="network-card" data-branch="15">
+                        <div class="network-card-header bg-grad-pink" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>15 - المجتمعات الافتراضية والتحول الرقمي (الاتجاهات التكنولوجية الحديثة)</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>المفهوم</th>
+                                            <th>الخصائص والتعريف المعتمد في المنهج</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>المجتمع الافتراضي (Virtual Community)</b></td>
+                                            <td>تجمع ينتج عن علاقات بين أفراد متباعدين <b>جغرافياً</b> يتواصلون عبر وسائط وشبكات الإنترنت لاهتمامات مشتركة. <b>(لا يشترط فيه التواجد المادي/الفيزيقي في نفس المكان)</b>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>التحول الرقمي (Digital Transformation)</b></td>
+                                            <td>هو عملية شاملة لتحويل نموذج أعمال المؤسسات بالكامل بالاعتماد على التقنيات الرقمية لتقديم الخدمات. (احذر: هو ليس مجرد استخدام حاسوب أو إدخال بيانات، بل هو تغيير جذري في كيفية الإدارة وتقديم الخدمة).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>الفرق الجوهري بين المجتمع الواقعي والافتراضي</b></td>
+                                            <td>المجتمع الواقعي تحكمه "البيئة الفيزيقية" والحدود الجغرافية والتقارب المكاني. بينما المجتمع الافتراضي يتجاوز حاجز (الزمان والمكان).</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 16: المبادئ والقواعد المهنية -->
+                    <div class="network-card" data-branch="16">
+                        <div class="network-card-header bg-grad-orange" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>16 - تجميعة سريعة لبعض المبادئ والقواعد المهنية</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="info-box">
+                                <b>📌 (تُستخدم في تحليل المواقف)</b>
+                            </div>
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>المبدأ / القاعدة</th>
+                                            <th>التطبيق الميداني للأخصائي</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>مبدأ التقبل (Acceptance)</b></td>
+                                            <td>احترام العميل كما هو، وليس كما يجب أن يكون، دون إصدار أحكام سلبية أو تهديده.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>مبدأ الديمقراطية وحق تقرير المصير</b></td>
+                                            <td>إشراك الأعضاء في اتخاذ القرارات ووضع البرامج، وعدم فرض الأخصائي لرأيه بأسلوب تسلطي (ديكتاتوري).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>القيادة الديمقراطية مقابل التسلطية</b></td>
+                                            <td>القائد الديمقراطي يعمل كموجه وميسر، بينما القائد التسلطي يستخدم التهديد، مما يولد عناداً وتمرداً وعدوانية داخل الجماعة.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-orange"><b>التقييم المستمر</b></td>
+                                            <td>ليس لتصيد الأخطاء، بل للوقوف على مدى تحقيق التدخل لأهدافه، وتعديل مسار البرنامج إذا لزم الأمر.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 17: أنماط القيادة -->
+                    <div class="network-card" data-branch="17">
+                        <div class="network-card-header bg-grad-green" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>17 - أنماط القيادة وتأثيرها على الجماعة</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="info-box warning">
+                                <b>📌 (مقارنة محورية - موضع أسئلة الامتحان)</b>
+                            </div>
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>نمط القيادة</th>
+                                            <th>خصائص النمط وسلوك القائد</th>
+                                            <th>تأثيره على الأعضاء والإنتاجية</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>القيادة الديكتاتورية (التسلطية)</b></td>
+                                            <td>القائد يتخذ كافة القرارات بنفسه، يوزع المهام بالأمر المباشر، ولا يقبل النقاش أو مشاركة الأعضاء.</td>
+                                            <td>
+                                                <ul style="text-align: right; margin-right: 15px; padding: 0;">
+                                                    <li>إنتاجية عالية <b>فقط</b> في وجود القائد، وتنعدم في غيابه.</li>
+                                                    <li>تولد مشاعر عدوانية، تمرد، أو خضوع تام واعتمادية سلبية.</li>
+                                                    <li>تفكك العلاقات بين الأعضاء.</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>القيادة الديمقراطية</b></td>
+                                            <td>القائد يعمل كـ "موجه وميسر"، يشجع الأعضاء على اتخاذ القرار، ويوزع المسؤوليات بناءً على رغبات وقدرات الأعضاء.</td>
+                                            <td>
+                                                <ul style="text-align: right; margin-right: 15px; padding: 0;">
+                                                    <li>إنتاجية مستقرة وعالية سواء كان القائد حاضراً أو غائباً.</li>
+                                                    <li>روح معنوية مرتفعة، تماسك قوي، وتطور في مهارات المساعدة الذاتية للأعضاء.</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>القيادة الفوضوية (السائبة / Laissez-faire)</b></td>
+                                            <td>القائد ينسحب تماماً من التوجيه، يترك للأعضاء حرية مطلقة بدون أي حدود أو قواعد تحكم تفاعلهم.</td>
+                                            <td>
+                                                <ul style="text-align: right; margin-right: 15px; padding: 0;">
+                                                    <li>فوضى وتخبط وانعدام للإنتاجية.</li>
+                                                    <li>شعور بالضياع والإحباط لدى الأعضاء لعدم وجود هدف أو ضابط، مما يؤدي لانهيار الجماعة.</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 18: أساليب التسجيل الميداني -->
+                    <div class="network-card" data-branch="18">
+                        <div class="network-card-header bg-grad-teal" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>18 - أساليب التسجيل الميداني (كيف يوثق الأخصائي عمله)</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>أسلوب التسجيل</th>
+                                            <th>متى يُستخدم؟ وما هي خصائصه؟</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>التسجيل القصصي (الزمني)</b></td>
+                                            <td>تسجيل يسرد كل ما حدث في الاجتماع بالتفصيل وبالتسلسل الزمني (من البداية للنهاية). يُستخدم بكثرة مع <b>(الطلاب المتدربين)</b> لتعليمهم، وللاحتفاظ بتسلسل التفاعلات بدقة.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>التسجيل التلخيصي</b></td>
+                                            <td>لا يهتم بالتفاصيل الدقيقة، بل يركز على تجميع النقاط البارزة والنتائج. يُستخدم في <b>(التقارير الدورية، المراسلات الإدارية، تحويل الحالة لجهة أخرى، أو عند إنهاء عمل الجماعة)</b>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>التسجيل التحليلي</b></td>
+                                            <td>يركز على "تفسير" السلوكيات وتوضيح الديناميات (لماذا حدث هذا؟). غالباً ما يُدمج مع القصصي ليعطي صورة متكاملة عن الموقف مع التفسير المهني له.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 19: المهارات الأساسية -->
+                    <div class="network-card" data-branch="19">
+                        <div class="network-card-header bg-grad-blue" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>19 - المهارات الأساسية للأخصائي الاجتماعي مع الجماعات</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>المهارة</th>
+                                            <th>الوصف والتطبيق الميداني (الكلمات الدالة)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>الملاحظة الواعية (Observation)</b></td>
+                                            <td>ليست مجرد رؤية عابرة، بل انتباه مقصود لـ <b>(السلوك اللفظي وغير اللفظي، الإيماءات، وتعبيرات الوجه)</b> لفهم ما يدور خلف الكواليس وتحديد النجوم والمنبوذين في الجماعة.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-blue"><b>توجيه التفاعل (Directing Interaction)</b></td>
+                                            <td>تدخل الأخصائي لضبط مسار النقاش؛ مثل منع عضو مسيطر من احتكار الحديث، وتشجيع الأعضاء المنعزلين (المنطوين) على المشاركة لإحداث التوازن.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>الإصغاء الجيد (الاستماع النشط)</b></td>
+                                            <td>استماع الأخصائي بانتباه كامل لمشاعر وأفكار العميل، مع استخدام إيماءات التتبع والاهتمام، مما يسهل عملية <b>(التنفيس الوجداني)</b> للعميل ويبني الثقة.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-orange"><b>استثمار الموارد (Mobilizing Resources)</b></td>
+                                            <td>قدرة الأخصائي على استخدام وتوظيف إمكانيات المؤسسة (ملاعب، أدوات، ميزانية) أو موارد المجتمع المحلي لخدمة أهداف وبرامج الجماعة.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-green"><b>المواءمة (Alignment)</b></td>
+                                            <td>(استراتيجية ومهارة) تعني أن يضع الأخصائي نفسه عن قصد <b>كعضو مشارك</b> داخل النسق (مثل العلاج الأسري) ليكتسب ثقتهم ويُحدث التعديل المطلوب من الداخل.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 20: الفروق الجوهرية -->
+                    <div class="network-card" data-branch="20">
+                        <div class="network-card-header bg-grad-purple" onclick="toggleNetworkCard(this.parentElement)">
+                            <h3>20 - الفروق الجوهرية</h3>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="network-card-body">
+                            <div class="info-box warning">
+                                <b>📌 (مقارنات سريعة وخطيرة لأسئلة الصح والخطأ)</b>
+                            </div>
+                            <div class="table-responsive-wrapper">
+                                <table class="comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>المفهوم الأول</th>
+                                            <th>المفهوم الثاني</th>
+                                            <th>الفرق الجوهري (الخلاصة)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-green"><b>التثبيت (Fixation)</b></td>
+                                            <td class="cell-blue"><b>النكوص (Regression)</b></td>
+                                            <td>
+                                                <ul style="text-align: right; margin-right: 15px; padding: 0;">
+                                                    <li><b>التثبيت:</b> توقف النمو عند مرحلة معينة لعدم إشباعها.</li>
+                                                    <li><b>النكوص:</b> التراجع والارتداد لتصرفات طفولية بعد أن كان الفرد قد تجاوزها بالفعل (نتيجة أزمة).</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-purple"><b>المريض الظاهر (العميل)</b></td>
+                                            <td class="cell-orange"><b>النسق الأسري/الجماعي</b></td>
+                                            <td>في العلاج الأسري، العميل المنحرف أو المريض هو مجرد <b>"عَرَض" (نتيجة)</b>، بينما الخلل الحقيقي يكمن في <b>(النسق الأسري بأكمله)</b>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="cell-green"><b>البيئة الفيزيقية</b></td>
+                                            <td class="cell-blue"><b>البيئة الشخصية</b></td>
+                                            <td>
+                                                <ul style="text-align: right; margin-right: 15px; padding: 0;">
+                                                    <li><b>الفيزيقية:</b> كل ما هو مادي (مباني، إضاءة).</li>
+                                                    <li><b>الشخصية:</b> كل ما هو نفسي وداخلي (سمات الأعضاء ودوافعهم).</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Theme Management
+        const THEME_KEY = 'exam_theme';
+        const PROGRESS_KEY = 'mindmap_progress';
+
+        function setTheme(name) {
+            document.body.classList.remove('light-mode', 'pro-mode', 'contrast-mode');
+            if (name) document.body.classList.add(name);
+            localStorage.setItem(THEME_KEY, name);
+        }
+        function loadTheme() {
+            const saved = localStorage.getItem(THEME_KEY);
+            if (saved) setTheme(saved);
+        }
+
+        // Expand/Collapse All
+        function expandAll() {
+            document.querySelectorAll('.network-card.collapsed').forEach(card => {
+                card.classList.remove('collapsed');
+            });
+            document.querySelectorAll('.network-subsection.collapsed').forEach(sub => {
+                sub.classList.remove('collapsed');
+            });
+        }
+
+        function collapseAll() {
+            document.querySelectorAll('.network-card').forEach(card => {
+                card.classList.add('collapsed');
+            });
+        }
+
+        // Network Card Toggle with progress tracking
+        function toggleNetworkCard(card) {
+            card.classList.toggle('collapsed');
+            if (!card.classList.contains('collapsed')) {
+                markAsViewed(card);
+            }
+        }
+
+        // Subsection Toggle
+        function toggleSubsection(subsection) {
+            subsection.classList.toggle('collapsed');
+        }
+
+        // Scroll to Card (Navigation)
+        function scrollToCard(branchNumber) {
+            const card = document.querySelector(`.network-card[data-branch="${branchNumber}"]`);
+            if (card) {
+                card.classList.remove('collapsed');
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                markAsViewed(card);
+                // Highlight effect
+                card.style.boxShadow = '0 0 20px 5px rgba(102, 126, 234, 0.6)';
+                setTimeout(() => {
+                    card.style.boxShadow = '';
+                }, 1500);
+            }
+        }
+
+        // Arabic Text Normalization for flexible search
+        function normalizeArabic(text) {
+            return text
+                .replace(/[أإآا]/g, 'ا')
+                .replace(/[ىي]/g, 'ي')
+                .replace(/ة/g, 'ه')
+                .replace(/[ًٌٍَُِّْ]/g, '') // Remove diacritics
+                .toLowerCase();
+        }
+
+        // Search Configuration
+        let currentFilter = 'all';
+        let searchTimeout = null;
+        let selectedResultIndex = -1;
+        const RECENT_SEARCHES_KEY = 'mindmap_recent_searches';
+
+        // Debounced Search (300ms delay)
+        function debouncedSearch(query) {
+            const clearBtn = document.getElementById('clear-search');
+            clearBtn.style.display = query.length > 0 ? 'flex' : 'none';
+
+            if (searchTimeout) clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                searchContent(query);
+                if (query.length >= 2) {
+                    saveRecentSearch(query);
+                }
+            }, 300);
+        }
+
+        // Clear Search
+        function clearSearch() {
+            const input = document.getElementById('search-input');
+            input.value = '';
+            input.focus();
+            document.getElementById('clear-search').style.display = 'none';
+
+            // Show suggestions, hide results
+            document.getElementById('search-suggestions').classList.add('visible');
+            document.getElementById('search-results-panel').style.display = 'none';
+
+            // Clear highlights
+            document.querySelectorAll('.search-highlight').forEach(el => {
+                el.outerHTML = el.textContent;
+            });
+        }
+
+        // Dynamic Keywords Configuration
+        const keywordCategories = {
+            concepts: {
+                label: '📚 المفاهيم',
+                class: 'chip-concept',
+                keywords: ['المجتمع المدني', 'الجمعية', 'المؤسسة', 'التطوع', 'الشراكة', 'الديمقراطية', 'المواطنة', 'التضامن', 'المشاركة', 'الشفافية']
+            },
+            laws: {
+                label: '⚖️ القوانين',
+                class: 'chip-law',
+                keywords: ['قانون 149', 'الإخطار', 'الغرامات', 'الحل', 'مجلس الإدارة', 'الجمعية العمومية', 'الاتحاد', 'التسجيل']
+            },
+            programs: {
+                label: '💰 البرامج',
+                class: 'chip-program',
+                keywords: ['تكافل', 'كرامة', 'تحيا مصر', 'بداية', 'الأسمرات', 'بشاير الخير', 'المثلث الذهبي', 'محور القناة']
+            },
+            theories: {
+                label: '🧠 النظريات',
+                class: 'chip-theory',
+                keywords: ['غرامشي', 'التعددية', 'البيروقراطية', 'الجوهرية', 'الهيمنة', 'المجتمع المدني الثالث', 'هيجل', 'لوك']
+            },
+            numbers: {
+                label: '🔢 الأرقام',
+                class: 'chip-number',
+                keywords: ['10 أعضاء', '60 يوم', '4 سنوات', '20000 جنيه', '5-15 عضو', '90 يوم', '6 أشهر', '149']
+            }
+        };
+
+        // Generate random keywords for each category
+        function getRandomKeywords(arr, count = 3) {
+            const shuffled = [...arr].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, Math.min(count, arr.length));
+        }
+
+        // Render dynamic keywords
+        function renderDynamicKeywords() {
+            const container = document.getElementById('dynamic-keywords');
+            if (!container) return;
+
+            let html = '';
+            Object.values(keywordCategories).forEach(cat => {
+                const randomKeywords = getRandomKeywords(cat.keywords, 3);
+                html += `
+                        <div class="suggestion-category">
+                            <div class="category-label">${cat.label}</div>
+                            <div class="suggestion-chips">
+                                ${randomKeywords.map(kw =>
+                    `<span class="suggestion-chip ${cat.class}" onclick="quickSearch('${kw}')">${kw}</span>`
+                ).join('')}
+                            </div>
+                        </div>
+                    `;
+            });
+            container.innerHTML = html;
+        }
+
+        // Show Search Panel (on focus) with dynamic keywords
+        function showSearchPanel() {
+            const input = document.getElementById('search-input');
+            const dropdownPanel = document.getElementById('search-dropdown-panel');
+            const suggestions = document.getElementById('search-suggestions');
+
+            if (input.value.length < 2) {
+                renderDynamicKeywords(); // Regenerate keywords each time
+                suggestions.classList.add('visible');
+                document.getElementById('search-results-panel').style.display = 'none';
+            }
+            dropdownPanel.classList.add('visible');
+        }
+
+        // Hide Search Panel (on blur)
+        function hideSearchPanel() {
+            setTimeout(() => {
+                const dropdownPanel = document.getElementById('search-dropdown-panel');
+                dropdownPanel.classList.remove('visible');
+            }, 200);
+        }
+
+        // Quick Search (from suggestion chips)
+        function quickSearch(query) {
+            const input = document.getElementById('search-input');
+            input.value = query;
+            document.getElementById('clear-search').style.display = 'flex';
+            searchContent(query);
+        }
+
+        // Set Search Filter
+        function setSearchFilter(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-chip').forEach(chip => {
+                chip.classList.toggle('active', chip.dataset.filter === filter);
+            });
+            // Re-run search with current query
+            const query = document.getElementById('search-input').value;
+            if (query.length >= 2) {
+                searchContent(query);
+            }
+        }
+
+        // Keyboard Navigation
+        function handleSearchKeydown(event) {
+            const dropdown = document.getElementById('search-dropdown');
+            if (!dropdown || dropdown.style.display === 'none') {
+                if (event.key === 'Escape') {
+                    clearSearch();
+                }
+                return;
+            }
+
+            const items = dropdown.querySelectorAll('.dropdown-item');
+            if (items.length === 0) return;
+
+            switch (event.key) {
+                case 'ArrowDown':
+                    event.preventDefault();
+                    selectedResultIndex = Math.min(selectedResultIndex + 1, items.length - 1);
+                    updateSelectedResult(items);
+                    break;
+                case 'ArrowUp':
+                    event.preventDefault();
+                    selectedResultIndex = Math.max(selectedResultIndex - 1, 0);
+                    updateSelectedResult(items);
+                    break;
+                case 'Enter':
+                    event.preventDefault();
+                    if (selectedResultIndex >= 0) {
+                        jumpToResult(selectedResultIndex);
+                    }
+                    break;
+                case 'Escape':
+                    closeSearchDropdown();
+                    break;
+            }
+        }
+
+        function updateSelectedResult(items) {
+            items.forEach((item, idx) => {
+                item.classList.toggle('selected', idx === selectedResultIndex);
+                if (idx === selectedResultIndex) {
+                    item.scrollIntoView({ block: 'nearest' });
+                }
+            });
+        }
+
+        // Recent Searches
+        function getRecentSearches() {
+            const saved = localStorage.getItem(RECENT_SEARCHES_KEY);
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        function saveRecentSearch(query) {
+            let recent = getRecentSearches();
+            recent = recent.filter(q => q !== query); // Remove duplicates
+            recent.unshift(query); // Add to beginning
+            recent = recent.slice(0, 5); // Keep only 5
+            localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(recent));
+        }
+
+        function showRecentSearches() {
+            // Recent searches UI removed - function kept for compatibility
+        }
+
+        function useRecentSearch(query) {
+            const input = document.getElementById('search-input');
+            input.value = query;
+            searchContent(query);
+            document.getElementById('clear-search').style.display = 'flex';
+        }
+
+        // Note: Recent searches DOMContentLoaded listener removed since UI element was removed
+
+        // Search Functionality with Arabic normalization
+        function searchContent(query) {
+            let dropdownResults = document.getElementById('search-dropdown');
+
+            // Create dropdown if it doesn't exist
+            if (!dropdownResults) {
+                dropdownResults = document.createElement('div');
+                dropdownResults.id = 'search-dropdown';
+                dropdownResults.className = 'search-dropdown';
+                document.body.appendChild(dropdownResults);
+            }
+
+            // Remove previous highlights
+            document.querySelectorAll('.search-highlight').forEach(el => {
+                el.outerHTML = el.textContent;
+            });
+
+            if (!query || query.length < 2) {
+                dropdownResults.style.display = 'none';
+                dropdownResults.innerHTML = '';
+                document.getElementById('search-suggestions').classList.add('visible');
+                document.getElementById('search-results-panel').style.display = 'none';
+                return;
+            }
+
+            const normalizedQuery = normalizeArabic(query);
+            let totalMatchCount = 0;
+            const results = []; // Store results for dropdown
+            const cardStats = {}; // Statistics per card
+            const cards = document.querySelectorAll('.network-card');
+
+            // Card names mapping
+            const cardNames = {
+                '1': '📘 المفاهيم الأساسية',
+                '2': '👥 تصنيفات الممارسين',
+                '3': '📚 مستويات المعرفة',
+                '4': '🔗 النظرية والممارسة',
+                '5': '⚡ ديناميات الجماعة'
+            };
+
+            cards.forEach(card => {
+                const body = card.querySelector('.network-card-body');
+                if (!body) return;
+
+                const branchNum = card.getAttribute('data-branch');
+
+                // Apply filter - skip if filter is set and doesn't match
+                if (currentFilter !== 'all' && branchNum !== currentFilter) return;
+
+                if (!cardStats[branchNum]) cardStats[branchNum] = 0;
+
+                // Search in all text elements INCLUDING tables
+                const searchableElements = body.querySelectorAll(
+                    '.network-item, .tip-item, .compare-item, .info-box, ' +
+                    '.network-subsection-title, table td, table th, .tip-content, .tip-title'
+                );
+
+                searchableElements.forEach(item => {
+                    const normalizedText = normalizeArabic(item.textContent);
+                    if (normalizedText.includes(normalizedQuery)) {
+                        totalMatchCount++;
+                        cardStats[branchNum]++;
+
+                        // Get context text (truncate if too long)
+                        let contextText = item.textContent.trim();
+                        if (contextText.length > 60) {
+                            const idx = normalizedText.indexOf(normalizedQuery);
+                            const start = Math.max(0, idx - 20);
+                            const end = Math.min(contextText.length, idx + query.length + 40);
+                            contextText = (start > 0 ? '...' : '') + contextText.substring(start, end) + (end < contextText.length ? '...' : '');
+                        }
+
+                        // Store result with reference to element
+                        results.push({
+                            element: item,
+                            card: card,
+                            cardName: cardNames[branchNum] || `كارت ${branchNum}`,
+                            branchNum: branchNum,
+                            text: contextText,
+                            query: query
+                        });
+
+                        // Highlight the matching text
+                        const regex = new RegExp(`(${query})`, 'gi');
+                        item.innerHTML = item.innerHTML.replace(regex, '<span class="search-highlight">$1</span>');
+                    }
+                });
+            });
+
+            if (totalMatchCount > 0) {
+                // Hide suggestions, show results panel
+                document.getElementById('search-suggestions').classList.remove('visible');
+                document.getElementById('search-results-panel').style.display = 'block';
+
+                // Build statistics by card - CLICKABLE badges
+                let statsHtml = Object.entries(cardStats)
+                    .filter(([_, count]) => count > 0)
+                    .map(([num, count]) => `<span class="stat-badge clickable" onclick="jumpToCard(${num})">${cardNames[num]} (${count})</span>`)
+                    .join('');
+
+                // Update stats area
+                document.getElementById('results-stats').innerHTML = `
+                        <span class="results-count">✅ ${totalMatchCount} نتيجة</span>
+                        <div class="results-badges">${statsHtml}</div>
+                    `;
+
+                // Build inline results grid (limit to 10 for performance)
+                const displayResults = results.slice(0, 10);
+                const cardIcons = {
+                    '1': '📘', '2': '👥', '3': '📚', '4': '🔗', '5': '⚡'
+                };
+
+                document.getElementById('results-grid').innerHTML = displayResults.map((r, idx) => `
+                        <div class="result-card-item" onclick="jumpToResult(${idx})">
+                            <span class="result-icon">${cardIcons[r.branchNum] || '📄'}</span>
+                            <div class="result-content">
+                                <div class="result-title">${r.cardName}</div>
+                                <div class="result-text-preview">${highlightInText(r.text, r.query)}</div>
+                            </div>
+                        </div>
+                    `).join('') + (results.length > 10 ? `
+                        <div class="no-results" style="padding: 0.5rem; text-align: center;">
+                            ... و ${results.length - 10} نتيجة أخرى
+                        </div>
+                    ` : '');
+
+                // Store results globally for jump function
+                window.searchResults = results;
+            } else {
+                // No results
+                document.getElementById('search-suggestions').style.display = 'none';
+                document.getElementById('search-results-panel').style.display = 'block';
+                document.getElementById('results-stats').innerHTML = '';
+                document.getElementById('results-grid').innerHTML = `
+                        <div class="no-results">
+                            <div class="no-results-icon">🔍</div>
+                            <div>لا توجد نتائج لـ "${query}"</div>
+                            <small style="color: var(--text-muted)">جرب كلمات مختلفة</small>
+                        </div>
+                    `;
+            }
+        }
+
+        // Highlight text in dropdown items
+        function highlightInText(text, query) {
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<mark>$1</mark>');
+        }
+
+        // Jump to specific result
+        function jumpToResult(index) {
+            if (!window.searchResults || !window.searchResults[index]) return;
+
+            const result = window.searchResults[index];
+            const card = result.card;
+            const element = result.element;
+
+            // Expand the card
+            card.classList.remove('collapsed');
+
+            // Expand parent subsection if exists
+            const subsection = element.closest('.network-subsection');
+            if (subsection) subsection.classList.remove('collapsed');
+
+            // Scroll to element
+            setTimeout(() => {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                // Flash effect
+                element.style.transition = 'background 0.3s';
+                element.style.background = 'rgba(255, 215, 0, 0.4)';
+                setTimeout(() => {
+                    element.style.background = '';
+                }, 2000);
+            }, 100);
+
+            // Close dropdown
+            closeSearchDropdown();
+        }
+
+        // Close search dropdown
+        function closeSearchDropdown() {
+            const dropdown = document.getElementById('search-dropdown');
+            if (dropdown) dropdown.style.display = 'none';
+        }
+
+        // Jump to card (from stat badges)
+        function jumpToCard(branchNum) {
+            const card = document.querySelector(`.network-card[data-branch="${branchNum}"]`);
+            if (card) {
+                card.classList.remove('collapsed');
+                card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                // Mark as viewed
+                markAsViewed(card);
+
+                // Flash effect
+                card.style.boxShadow = '0 0 30px 10px rgba(102, 126, 234, 0.6)';
+                setTimeout(() => {
+                    card.style.boxShadow = '';
+                }, 2000);
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            const searchContainer = document.querySelector('.search-container');
+            const dropdown = document.getElementById('search-dropdown');
+            if (dropdown && searchContainer && !searchContainer.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // Progress Tracking
+        function getViewedCards() {
+            const saved = localStorage.getItem(PROGRESS_KEY);
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        function saveViewedCards(cards) {
+            localStorage.setItem(PROGRESS_KEY, JSON.stringify(cards));
+        }
+
+        function markAsViewed(card) {
+            const branch = card.getAttribute('data-branch');
+            if (!branch) return;
+
+            let viewed = getViewedCards();
+            if (!viewed.includes(branch)) {
+                viewed.push(branch);
+                saveViewedCards(viewed);
+                card.classList.add('viewed');
+                updateProgressBar();
+            }
+        }
+
+        function updateProgressBar() {
+            // Progress bar removed - function kept for compatibility
+        }
+
+        function loadProgress() {
+            const viewed = getViewedCards();
+            viewed.forEach(branch => {
+                const card = document.querySelector(`.network-card[data-branch="${branch}"]`);
+                if (card) {
+                    card.classList.add('viewed');
+                }
+            });
+        }
+
+        // Reset Progress
+        function resetProgress() {
+            localStorage.removeItem(PROGRESS_KEY);
+            document.querySelectorAll('.network-card.viewed').forEach(card => {
+                card.classList.remove('viewed');
+            });
+            updateProgressBar();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
+            loadProgress();
+            setTimeout(() => document.getElementById('loading-screen').classList.add('hidden'), 600);
+        });
+
+        window.setTheme = setTheme;
+        window.expandAll = expandAll;
+        window.collapseAll = collapseAll;
+        window.toggleNetworkCard = toggleNetworkCard;
+        window.toggleSubsection = toggleSubsection;
+        window.scrollToCard = scrollToCard;
+        window.searchContent = searchContent;
+        window.resetProgress = resetProgress;
+
+        // --- Smart Header Logic ---
+        const smartHeader = document.getElementById('smart-header');
+        const toggleButton = document.getElementById('header-toggle-btn');
+        const headerIcon = toggleButton.querySelector('i');
+        let isManualToggle = false;
+
+        function updateHeaderScroll() {
+            const scrollY = window.scrollY;
+            const threshold = 100;
+
+            if (!isManualToggle) {
+                if (scrollY > threshold) {
+                    smartHeader.classList.add('slim-mode');
+                    headerIcon.className = 'fas fa-chevron-down';
+                } else {
+                    smartHeader.classList.remove('slim-mode');
+                    headerIcon.className = 'fas fa-chevron-up';
+                }
+            }
+        }
+
+        // Scroll Listener
+        window.addEventListener('scroll', updateHeaderScroll);
+
+        // Toggle Button
+        toggleButton.addEventListener('click', () => {
+            isManualToggle = true;
+            smartHeader.classList.toggle('slim-mode');
+
+            // Update Icon
+            if (smartHeader.classList.contains('slim-mode')) {
+                headerIcon.className = 'fas fa-chevron-down';
+            } else {
+                headerIcon.className = 'fas fa-chevron-up';
+            }
+
+            // Reset manual toggle flag if we are back at top
+            if (window.scrollY < 100 && !smartHeader.classList.contains('slim-mode')) {
+                isManualToggle = false;
+            }
+        });
+
+        function collapseHeaderMobile() {
+            // Automatically collapse just for better UX after clicking a link
+            if (window.scrollY > 100) {
+                smartHeader.classList.add('slim-mode');
+                headerIcon.className = 'fas fa-chevron-down';
+                contentArea.classList.add('slim-mode-padding');
+            }
+        }
+
+        // --- Dynamic Spacing System Implementation ---
+        const contentArea = document.getElementById('content-area');
+
+        function initDynamicSpacing() {
+            // Measure actual heights
+            const expandedHeight = smartHeader.offsetHeight;
+            // Temporarily switch to slim to measure (or just est. if transition interferes, but better to calculate dynamic if content varies)
+            // Ideally, we know slim height is fixed padding + title line.
+            // Let's rely on computed styles or constants if possible, or measure.
+
+            // Set CSS variables for precise sync
+            contentArea.style.setProperty('--header-height-expanded', expandedHeight + 'px');
+
+            // Slim height is usually around 60-70px
+            // specific value from CSS padding + line-height?
+            // Let's hardcode a safe slim height or measure first element (top bar) height.
+            const topBarHeight = document.querySelector('.header-top').offsetHeight + 20; // + padding
+            contentArea.style.setProperty('--header-height-slim', topBarHeight + 'px');
+
+            // Initial State Check
+            if (window.scrollY > 100) {
+                contentArea.classList.add('slim-mode-padding');
+            } else {
+                contentArea.classList.remove('slim-mode-padding');
+            }
+        }
+
+        // Update scroll function to toggle padding class
+        const originalUpdateHeaderScroll = updateHeaderScroll;
+        updateHeaderScroll = function () {
+            const scrollY = window.scrollY;
+            const threshold = 100;
+
+            if (!isManualToggle) {
+                if (scrollY > threshold) {
+                    smartHeader.classList.add('slim-mode');
+                    headerIcon.className = 'fas fa-chevron-down';
+                    if (contentArea) contentArea.classList.add('slim-mode-padding');
+                } else {
+                    smartHeader.classList.remove('slim-mode');
+                    headerIcon.className = 'fas fa-chevron-up';
+                    if (contentArea) contentArea.classList.remove('slim-mode-padding');
+                }
+            }
+        };
+
+        // Update toggle listener to toggle padding
+        toggleButton.addEventListener('click', () => {
+            // The original listener already toggles 'slim-mode' on header.
+            // We just need to sync contentArea.
+            // Note: Original listener acts first. Check header state.
+            setTimeout(() => {
+                if (smartHeader.classList.contains('slim-mode')) {
+                    contentArea.classList.add('slim-mode-padding');
+                } else {
+                    contentArea.classList.remove('slim-mode-padding');
+                }
+            }, 0);
+        });
+
+        // Initialize on load and resize
+        window.addEventListener('load', initDynamicSpacing);
+        window.addEventListener('resize', () => {
+            // Recalculate expanded height if window resizes (e.g. text wrap)
+            if (!smartHeader.classList.contains('slim-mode')) {
+                contentArea.style.setProperty('--header-height-expanded', smartHeader.offsetHeight + 'px');
+            }
+        });
+
+        // Simple Theme Cycle for the new button
+        const themes = ['', 'light-mode', 'pro-mode', 'contrast-mode'];
+        let currentThemeIndex = 0;
+        function cycleTheme() {
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+            setTheme(themes[currentThemeIndex]);
+        }
+    </script>
+
+    <script>
+        // Auto-refresh when returning after long idle time (2 hours) to ensure latest updates
+        (function() {
+            const IDLE_THRESHOLD = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+            let lastActivity = Date.now();
+            
+            function handleActivity() {
+                if (Date.now() - lastActivity > IDLE_THRESHOLD) {
+                    window.location.reload(true);
+                } else {
+                    lastActivity = Date.now();
+                }
+            }
+
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') handleActivity();
+            });
+            window.addEventListener('focus', handleActivity);
+            document.addEventListener('mousemove', handleActivity, { passive: true });
+            document.addEventListener('touchstart', handleActivity, { passive: true });
+            document.addEventListener('keydown', handleActivity, { passive: true });
+        })();
+    </script>
+</body>
+
+</html>
