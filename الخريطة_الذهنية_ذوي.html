@@ -189,6 +189,26 @@
             background: linear-gradient(135deg, #f857a6, #ff5858);
         }
 
+        .network-card[data-branch="9"] .network-card-header {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+        .network-card[data-branch="10"] .network-card-header {
+            background: linear-gradient(135deg, #ee0979, #ff6a00);
+        }
+
+        .network-card[data-branch="11"] .network-card-header {
+            background: linear-gradient(135deg, #00b4db, #0083b0);
+        }
+
+        .network-card[data-branch="12"] .network-card-header {
+            background: linear-gradient(135deg, #f12711, #f5af19);
+        }
+
+        .network-card[data-branch="13"] .network-card-header {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+        }
+
         /* Card Border Glow Effects */
         .network-card[data-branch="1"] {
             box-shadow: 0 0 0 2px rgba(17, 153, 142, 0.3);
@@ -220,6 +240,26 @@
 
         .network-card[data-branch="8"] {
             box-shadow: 0 0 0 2px rgba(248, 87, 166, 0.3);
+        }
+
+        .network-card[data-branch="9"] {
+            box-shadow: 0 0 0 2px rgba(17, 153, 142, 0.3);
+        }
+
+        .network-card[data-branch="10"] {
+            box-shadow: 0 0 0 2px rgba(238, 9, 121, 0.3);
+        }
+
+        .network-card[data-branch="11"] {
+            box-shadow: 0 0 0 2px rgba(0, 180, 219, 0.3);
+        }
+
+        .network-card[data-branch="12"] {
+            box-shadow: 0 0 0 2px rgba(241, 39, 17, 0.3);
+        }
+
+        .network-card[data-branch="13"] {
+            box-shadow: 0 0 0 2px rgba(142, 45, 226, 0.3);
         }
 
         /* Quick Navigation Bar */
@@ -1205,10 +1245,10 @@
                         <button class="nav-pill" data-color="9" onclick="scrollToCard(9); collapseHeaderMobile()">
                             <i class="fas fa-lightbulb"></i> مفاهيم إضافية
                         </button>
-                        <button class="nav-pill" data-color="10" onclick="scrollToCard(10); collapseHeaderMobile()">
+                        <button class="nav-pill" data-color="5" onclick="scrollToCard(10); collapseHeaderMobile()">
                             <i class="fas fa-clipboard-check"></i> التقييم والمواقف المهنية
                         </button>
-                        <button class="nav-pill" data-color="11" onclick="scrollToCard(11); collapseHeaderMobile()">
+                        <button class="nav-pill" data-color="6" onclick="scrollToCard(11); collapseHeaderMobile()">
                             <i class="fas fa-sync"></i> مراحل التأهيل
                         </button>
                         <button class="nav-pill" data-color="1" onclick="scrollToCard(12); collapseHeaderMobile()">
@@ -1250,7 +1290,7 @@
                     <!-- Card 1 -->
                     <div class="network-card" data-branch="1">
                         <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                            <h3>📘 1️⃣ مفاهيم ومصطلحات أساسية</h3>
+                            <h3>مفاهيم ومصطلحات أساسية</h3>
                             <i class="fas fa-chevron-down toggle-icon"></i>
                         </div>
                         <div class="network-card-body">
@@ -1286,7 +1326,7 @@
                     <!-- Card 2 -->
                     <div class="network-card" data-branch="2">
                         <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                            <h3>⏳ 2️⃣ التطور التاريخي ونظرة المجتمعات</h3>
+                            <h3>التطور التاريخي ونظرة المجتمعات</h3>
                             <i class="fas fa-chevron-down toggle-icon"></i>
                         </div>
                         <div class="network-card-body">
@@ -1330,7 +1370,7 @@
                     <!-- Card 3 -->
                     <div class="network-card" data-branch="3">
                         <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                            <h3>🧬 3️⃣ مسببات وأنواع الإعاقة</h3>
+                            <h3>مسببات وأنواع الإعاقة</h3>
                             <i class="fas fa-chevron-down toggle-icon"></i>
                         </div>
                         <div class="network-card-body">
@@ -1406,7 +1446,7 @@
                     <!-- Card 4 -->
                     <div class="network-card" data-branch="4">
                         <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                            <h3>🛠️ 4️⃣ استراتيجيات التأهيل والتدخل المهني</h3>
+                            <h3>استراتيجيات التأهيل والتدخل المهني</h3>
                             <i class="fas fa-chevron-down toggle-icon"></i>
                         </div>
                         <div class="network-card-body">
@@ -1466,7 +1506,7 @@
                     <!-- Card 5 -->
                     <div class="network-card" data-branch="5">
                         <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                            <h3>🧠 5️⃣ أبرز العلماء والنظريات</h3>
+                            <h3>أبرز العلماء والنظريات</h3>
                             <i class="fas fa-chevron-down toggle-icon"></i>
                         </div>
                         <div class="network-card-body">
@@ -1513,7 +1553,7 @@
                     <!-- Card 6 -->
                     <div class="network-card" data-branch="6">
                         <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                            <h3>💬 6️⃣ أساليب واستراتيجيات التدخل المعرفي والسلوكي</h3>
+                            <h3>أساليب واستراتيجيات التدخل المعرفي والسلوكي</h3>
                             <i class="fas fa-chevron-down toggle-icon"></i>
                         </div>
                         <div class="network-card-body">
@@ -1557,7 +1597,7 @@
                     <!-- Card 7 -->
                     <div class="network-card" data-branch="7">
                         <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                            <h3>👨‍👩‍👧‍👦 7️⃣ العلاج الأسري ومهارات العمل مع الحالات</h3>
+                            <h3>العلاج الأسري ومهارات العمل مع الحالات</h3>
                             <i class="fas fa-chevron-down toggle-icon"></i>
                         </div>
                         <div class="network-card-body">
@@ -1619,7 +1659,7 @@
                     <!-- Card 8 -->
                     <div class="network-card" data-branch="8">
                         <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                            <h3>🔬 8️⃣ النظريات العلمية ونماذج الممارسة</h3>
+                            <h3>النظريات العلمية ونماذج الممارسة</h3>
                             <i class="fas fa-chevron-down toggle-icon"></i>
                         </div>
                         <div class="network-card-body">
@@ -1671,7 +1711,7 @@
                     <!-- Card 9 -->
                     <div class="network-card" data-branch="9">
                         <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                            <h3>💡 9️⃣ مفاهيم تحليلية ومعرفية إضافية</h3>
+                            <h3>مفاهيم تحليلية ومعرفية إضافية</h3>
                             <i class="fas fa-chevron-down toggle-icon"></i>
                         </div>
                         <div class="network-card-body">
@@ -1707,7 +1747,7 @@
                     <!-- Card 10 -->
                     <div class="network-card" data-branch="10">
                         <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                            <h3>📋 🔟 التقييم والمواقف المهنية للأخصائي</h3>
+                            <h3>التقييم والمواقف المهنية للأخصائي</h3>
                             <i class="fas fa-chevron-down toggle-icon"></i>
                         </div>
                         <div class="network-card-body">
@@ -1748,7 +1788,7 @@
                     <!-- Card 11 -->
                     <div class="network-card" data-branch="11">
                         <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                            <h3>🔄 1️⃣1️⃣ مراحل وخطوات التأهيل الشامل</h3>
+                            <h3>مراحل وخطوات التأهيل الشامل</h3>
                             <i class="fas fa-chevron-down toggle-icon"></i>
                         </div>
                         <div class="network-card-body">
@@ -1780,7 +1820,7 @@
                     <!-- Card 12 -->
                     <div class="network-card" data-branch="12">
                         <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                            <h3>⚖️ 1️⃣2️⃣ التفرقة بين المفاهيم المتشابهة</h3>
+                            <h3>التفرقة بين المفاهيم المتشابهة</h3>
                             <i class="fas fa-chevron-down toggle-icon"></i>
                         </div>
                         <div class="network-card-body">
@@ -1812,7 +1852,7 @@
                     <!-- Card 13 -->
                     <div class="network-card" data-branch="13">
                         <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                            <h3>🛠️ 1️⃣3️⃣ تطبيقات عملية في العلاقة المهنية وإدارة الحالة</h3>
+                            <h3>تطبيقات عملية في العلاقة المهنية وإدارة الحالة</h3>
                             <i class="fas fa-chevron-down toggle-icon"></i>
                         </div>
                         <div class="network-card-body">
