@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e67e22"/>
+      <stop offset="100%" style="stop-color:#f39c12"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0.3)"/>
+      <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="30" fill="url(#bg)"/>
+  <circle cx="32" cy="32" r="30" fill="url(#shine)" opacity="0.4"/>
+  <!-- Graduation cap icon -->
+  <g transform="translate(32,30)" fill="white">
+    <!-- Cap top -->
+    <polygon points="0,-14 18,-4 0,2 -18,-4" opacity="0.95"/>
+    <!-- Cap brim shadow -->
+    <polygon points="0,2 18,-4 18,-2 0,4 -18,-2 -18,-4" opacity="0.7"/>
+    <!-- Tassel string -->
+    <line x1="18" y1="-4" x2="22" y2="6" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Tassel ball -->
+    <circle cx="22" cy="8" r="2.5" opacity="0.9"/>
+    <!-- Bottom part -->
+    <path d="M-12,0 L-12,10 Q0,18 12,10 L12,0" fill="none" stroke="white" stroke-width="1.8" opacity="0.8"/>
+  </g>
+  <!-- Small star accent -->
+  <circle cx="50" cy="12" r="2" fill="white" opacity="0.6"/>
+  <circle cx="14" cy="14" r="1.5" fill="white" opacity="0.4"/>
+</svg>
