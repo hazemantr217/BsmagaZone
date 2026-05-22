@@ -43,7 +43,8 @@
                     <h2>ابدأ الامتحان</h2>
                     <p>70 سؤال - صح/خطأ + اختيار من متعدد</p>
                     <div class="card-buttons">
-                        <button class="card-btn btn-exam" style="background-color: #2ecc71; border-color: #2ecc71; color: #fff;">
+                        <button class="card-btn btn-exam"
+                            style="background-color: #2ecc71; border-color: #2ecc71; color: #fff;">
                             <i class="fas fa-play"></i> ابدأ الآن
                         </button>
                     </div>
@@ -72,9 +73,11 @@
 
         <header>
             <div class="header-content">
-                <button class="back-btn" onclick="backToMenu()" title="العودة"><i class="fas fa-arrow-right"></i></button>
+                <button class="back-btn" onclick="backToMenu()" title="العودة"><i
+                        class="fas fa-arrow-right"></i></button>
                 <div class="theme-dropdown">
-                    <button type="button" id="theme-toggle-btn" title="المظهر" onclick="toggleThemeDropdown(event)"><i class="fas fa-palette"></i></button>
+                    <button type="button" id="theme-toggle-btn" title="المظهر" onclick="toggleThemeDropdown(event)"><i
+                            class="fas fa-palette"></i></button>
                     <div class="theme-menu">
                         <button onclick="setTheme('')"><i class="fas fa-moon"></i> داكن</button>
                         <button onclick="setTheme('light-mode')"><i class="fas fa-sun"></i> فاتح</button>
@@ -103,14 +106,6 @@
         </div>
 
         <main class="container">
-            <div class="exam-instructions" id="exam-instructions">
-                <h2><i class="fas fa-info-circle"></i> <span id="mode-title">ملاحظات</span></h2>
-                <ul id="mode-instructions">
-                    <li>الإجابة والتعليل يظهران <strong style="color:var(--success-color)">فوراً</strong> بعد الحل.</li>
-                    <li>الأسئلة مقسمة: 50 سؤال صح/خطأ ثم 20 سؤال اختيار من متعدد.</li>
-                    <li>تم الحفاظ على الترتيب الأصلي للامتحان تماماً (بدون ترتيب عشوائي).</li>
-                </ul>
-            </div>
 
             <form id="exam-form">
                 <div id="questions-container"></div>
@@ -143,7 +138,8 @@
             </div>
             <p>إجاباتك الصحيحة: <strong><span id="answered-count">0</span></strong> من 70</p>
             <div class="modal-buttons">
-                <button class="btn-cancel" onclick="closeConfirmModal()"><i class="fas fa-arrow-right"></i> العودة</button>
+                <button class="btn-cancel" onclick="closeConfirmModal()"><i class="fas fa-arrow-right"></i>
+                    العودة</button>
                 <button class="btn-confirm" onclick="finishExam()"><i class="fas fa-check"></i> إنهاء</button>
             </div>
         </div>
@@ -182,8 +178,8 @@
                 id: 4,
                 type: "tf",
                 text: "اللجان الشعبية لتنمية المجتمع من منظمات تنمية المجتمع البدوي.",
-                correctAnswer: "false",
-                explanation: "اللجان الشعبية تنتشر أكثر في المجتمعات الريفية والحضرية، بينما يعتمد المجتمع البدوي في تنظيمه على النظام القبلي (العشيرة والقبيلة) والمجالس العرفية."
+                correctAnswer: "true",
+                explanation: " تعتبر اللجان الشعبية لتنمية المجتمع من المنظمات والجهود المحلية الهامة التي تساهم في تقديم الخدمات والمشاريع التنموية لخدمة أبناء المجتمع البدوي وتلبية احتياجاتهم."
             },
             {
                 id: 5,
