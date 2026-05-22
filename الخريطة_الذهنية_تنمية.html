@@ -103,45 +103,175 @@
         }
 
         /* Card Colors */
-        .network-card[data-branch="1"] .network-card-header { background: linear-gradient(135deg, #FFD700, #B8860B); }
-        .network-card[data-branch="2"] .network-card-header { background: linear-gradient(135deg, #ff9900, #ff5500); }
-        .network-card[data-branch="3"] .network-card-header { background: linear-gradient(135deg, #11998e, #38ef7d); }
-        .network-card[data-branch="4"] .network-card-header { background: linear-gradient(135deg, #00b4db, #0083b0); }
-        .network-card[data-branch="5"] .network-card-header { background: linear-gradient(135deg, #ee0979, #ff6a00); }
-        .network-card[data-branch="6"] .network-card-header { background: linear-gradient(135deg, #8e2de2, #4a00e0); }
-        .network-card[data-branch="7"] .network-card-header { background: linear-gradient(135deg, #f12711, #f5af19); }
-        .network-card[data-branch="8"] .network-card-header { background: linear-gradient(135deg, #00c6ff, #0072ff); }
-        .network-card[data-branch="9"] .network-card-header { background: linear-gradient(135deg, #f80759, #bc4e9c); }
-        .network-card[data-branch="10"] .network-card-header { background: linear-gradient(135deg, #e65c00, #F9D423); }
-        .network-card[data-branch="11"] .network-card-header { background: linear-gradient(135deg, #02aab0, #00cdac); }
-        .network-card[data-branch="12"] .network-card-header { background: linear-gradient(135deg, #3a1c71, #d76d77); }
-        .network-card[data-branch="13"] .network-card-header { background: linear-gradient(135deg, #4568dc, #b06ab3); }
-        .network-card[data-branch="14"] .network-card-header { background: linear-gradient(135deg, #ff00cc, #333399); }
-        .network-card[data-branch="15"] .network-card-header { background: linear-gradient(135deg, #11998e, #d4af37); }
-        .network-card[data-branch="16"] .network-card-header { background: linear-gradient(135deg, #bdc3c7, #2c3e50); }
-        .network-card[data-branch="17"] .network-card-header { background: linear-gradient(135deg, #f12711, #f5af19); }
+        .network-card[data-branch="1"] .network-card-header {
+            background: linear-gradient(135deg, #FFD700, #B8860B);
+        }
 
-        .network-card[data-branch="1"] { box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3); }
-        .network-card[data-branch="2"] { box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.3); }
-        .network-card[data-branch="3"] { box-shadow: 0 0 0 2px rgba(17, 153, 142, 0.3); }
-        .network-card[data-branch="4"] { box-shadow: 0 0 0 2px rgba(0, 180, 219, 0.3); }
-        .network-card[data-branch="5"] { box-shadow: 0 0 0 2px rgba(238, 9, 121, 0.3); }
-        .network-card[data-branch="6"] { box-shadow: 0 0 0 2px rgba(142, 45, 226, 0.3); }
-        .network-card[data-branch="7"] { box-shadow: 0 0 0 2px rgba(241, 39, 17, 0.3); }
-        .network-card[data-branch="8"] { box-shadow: 0 0 0 2px rgba(0, 198, 255, 0.3); }
-        .network-card[data-branch="9"] { box-shadow: 0 0 0 2px rgba(248, 7, 89, 0.3); }
-        .network-card[data-branch="10"] { box-shadow: 0 0 0 2px rgba(230, 92, 0, 0.3); }
-        .network-card[data-branch="11"] { box-shadow: 0 0 0 2px rgba(2, 170, 176, 0.3); }
-        .network-card[data-branch="12"] { box-shadow: 0 0 0 2px rgba(58, 28, 113, 0.3); }
-        .network-card[data-branch="13"] { box-shadow: 0 0 0 2px rgba(69, 104, 220, 0.3); }
-        .network-card[data-branch="14"] { box-shadow: 0 0 0 2px rgba(255, 0, 204, 0.3); }
-        .network-card[data-branch="15"] { box-shadow: 0 0 0 2px rgba(17, 153, 142, 0.3); }
-        .network-card[data-branch="16"] { box-shadow: 0 0 0 2px rgba(189, 195, 199, 0.3); }
-        .network-card[data-branch="17"] { box-shadow: 0 0 15px rgba(241, 39, 17, 0.5); animation: goldGlow 2s infinite alternate; }
+        .network-card[data-branch="2"] .network-card-header {
+            background: linear-gradient(135deg, #ff9900, #ff5500);
+        }
+
+        .network-card[data-branch="3"] .network-card-header {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+        .network-card[data-branch="4"] .network-card-header {
+            background: linear-gradient(135deg, #00b4db, #0083b0);
+        }
+
+        .network-card[data-branch="5"] .network-card-header {
+            background: linear-gradient(135deg, #ee0979, #ff6a00);
+        }
+
+        .network-card[data-branch="6"] .network-card-header {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+        }
+
+        .network-card[data-branch="7"] .network-card-header {
+            background: linear-gradient(135deg, #f12711, #f5af19);
+        }
+
+        .network-card[data-branch="8"] .network-card-header {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+        }
+
+        .network-card[data-branch="9"] .network-card-header {
+            background: linear-gradient(135deg, #f80759, #bc4e9c);
+        }
+
+        .network-card[data-branch="10"] .network-card-header {
+            background: linear-gradient(135deg, #e65c00, #F9D423);
+        }
+
+        .network-card[data-branch="11"] .network-card-header {
+            background: linear-gradient(135deg, #02aab0, #00cdac);
+        }
+
+        .network-card[data-branch="12"] .network-card-header {
+            background: linear-gradient(135deg, #3a1c71, #d76d77);
+        }
+
+        .network-card[data-branch="13"] .network-card-header {
+            background: linear-gradient(135deg, #4568dc, #b06ab3);
+        }
+
+        .network-card[data-branch="14"] .network-card-header {
+            background: linear-gradient(135deg, #ff00cc, #333399);
+        }
+
+        .network-card[data-branch="15"] .network-card-header {
+            background: linear-gradient(135deg, #11998e, #d4af37);
+        }
+
+        .network-card[data-branch="16"] .network-card-header {
+            background: linear-gradient(135deg, #bdc3c7, #2c3e50);
+        }
+
+        .network-card[data-branch="17"] .network-card-header {
+            background: linear-gradient(135deg, #f12711, #f5af19);
+        }
+
+        .network-card[data-branch="18"] .network-card-header {
+            background: linear-gradient(135deg, #d31027, #ea8514);
+        }
+
+        .network-card[data-branch="19"] .network-card-header {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+        }
+
+        .network-card[data-branch="20"] .network-card-header {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+        }
+
+        .network-card[data-branch="1"] {
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3);
+        }
+
+        .network-card[data-branch="2"] {
+            box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.3);
+        }
+
+        .network-card[data-branch="3"] {
+            box-shadow: 0 0 0 2px rgba(17, 153, 142, 0.3);
+        }
+
+        .network-card[data-branch="4"] {
+            box-shadow: 0 0 0 2px rgba(0, 180, 219, 0.3);
+        }
+
+        .network-card[data-branch="5"] {
+            box-shadow: 0 0 0 2px rgba(238, 9, 121, 0.3);
+        }
+
+        .network-card[data-branch="6"] {
+            box-shadow: 0 0 0 2px rgba(142, 45, 226, 0.3);
+        }
+
+        .network-card[data-branch="7"] {
+            box-shadow: 0 0 0 2px rgba(241, 39, 17, 0.3);
+        }
+
+        .network-card[data-branch="8"] {
+            box-shadow: 0 0 0 2px rgba(0, 198, 255, 0.3);
+        }
+
+        .network-card[data-branch="9"] {
+            box-shadow: 0 0 0 2px rgba(248, 7, 89, 0.3);
+        }
+
+        .network-card[data-branch="10"] {
+            box-shadow: 0 0 0 2px rgba(230, 92, 0, 0.3);
+        }
+
+        .network-card[data-branch="11"] {
+            box-shadow: 0 0 0 2px rgba(2, 170, 176, 0.3);
+        }
+
+        .network-card[data-branch="12"] {
+            box-shadow: 0 0 0 2px rgba(58, 28, 113, 0.3);
+        }
+
+        .network-card[data-branch="13"] {
+            box-shadow: 0 0 0 2px rgba(69, 104, 220, 0.3);
+        }
+
+        .network-card[data-branch="14"] {
+            box-shadow: 0 0 0 2px rgba(255, 0, 204, 0.3);
+        }
+
+        .network-card[data-branch="15"] {
+            box-shadow: 0 0 0 2px rgba(17, 153, 142, 0.3);
+        }
+
+        .network-card[data-branch="16"] {
+            box-shadow: 0 0 0 2px rgba(189, 195, 199, 0.3);
+        }
+
+        .network-card[data-branch="17"] {
+            box-shadow: 0 0 15px rgba(241, 39, 17, 0.5);
+            animation: goldGlow 2s infinite alternate;
+        }
+
+        .network-card[data-branch="18"] {
+            box-shadow: 0 0 0 2px rgba(211, 16, 39, 0.3);
+        }
+
+        .network-card[data-branch="19"] {
+            box-shadow: 0 0 0 2px rgba(0, 198, 255, 0.3);
+        }
+
+        .network-card[data-branch="20"] {
+            box-shadow: 0 0 0 2px rgba(142, 45, 226, 0.3);
+        }
 
         @keyframes goldGlow {
-            0% { box-shadow: 0 0 5px rgba(241, 39, 17, 0.4); }
-            100% { box-shadow: 0 0 20px rgba(245, 175, 25, 0.8); }
+            0% {
+                box-shadow: 0 0 5px rgba(241, 39, 17, 0.4);
+            }
+
+            100% {
+                box-shadow: 0 0 20px rgba(245, 175, 25, 0.8);
+            }
         }
 
         .network-card-body {
@@ -178,16 +308,47 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        .comparison-table tr:nth-child(even) td { background: rgba(212, 175, 55, 0.05); }
-        .comparison-table tr:nth-child(odd) td { background: var(--card-bg); }
-        .comparison-table tr:hover td { background: rgba(212, 175, 55, 0.15); }
+        .comparison-table tr:nth-child(even) td {
+            background: rgba(212, 175, 55, 0.05);
+        }
 
-        .cell-green { color: #38ef7d; font-weight: 600; }
-        .cell-blue { color: #00b4db; font-weight: 600; }
-        .cell-orange { color: #ff6a00; font-weight: 600; }
-        .cell-gold { color: #d4af37; font-weight: 700; }
-        .cell-purple { color: #8e2de2; font-weight: 600; }
-        .cell-red { color: #ee0979; font-weight: 700; }
+        .comparison-table tr:nth-child(odd) td {
+            background: var(--card-bg);
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(212, 175, 55, 0.15);
+        }
+
+        .cell-green {
+            color: #38ef7d;
+            font-weight: 600;
+        }
+
+        .cell-blue {
+            color: #00b4db;
+            font-weight: 600;
+        }
+
+        .cell-orange {
+            color: #ff6a00;
+            font-weight: 600;
+        }
+
+        .cell-gold {
+            color: #d4af37;
+            font-weight: 700;
+        }
+
+        .cell-purple {
+            color: #8e2de2;
+            font-weight: 600;
+        }
+
+        .cell-red {
+            color: #ee0979;
+            font-weight: 700;
+        }
 
         .table-responsive-wrapper {
             width: 100%;
@@ -279,29 +440,94 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .nav-pill[data-color="1"] { background: linear-gradient(135deg, #FFD700, #B8860B); }
-        .nav-pill[data-color="2"] { background: linear-gradient(135deg, #ff9900, #ff5500); }
-        .nav-pill[data-color="3"] { background: linear-gradient(135deg, #11998e, #38ef7d); }
-        .nav-pill[data-color="4"] { background: linear-gradient(135deg, #00b4db, #0083b0); }
-        .nav-pill[data-color="5"] { background: linear-gradient(135deg, #ee0979, #ff6a00); }
-        .nav-pill[data-color="6"] { background: linear-gradient(135deg, #8e2de2, #4a00e0); }
-        .nav-pill[data-color="7"] { background: linear-gradient(135deg, #f12711, #f5af19); }
-        .nav-pill[data-color="8"] { background: linear-gradient(135deg, #00c6ff, #0072ff); }
-        .nav-pill[data-color="9"] { background: linear-gradient(135deg, #f80759, #bc4e9c); }
-        .nav-pill[data-color="10"] { background: linear-gradient(135deg, #e65c00, #F9D423); }
-        .nav-pill[data-color="11"] { background: linear-gradient(135deg, #02aab0, #00cdac); }
-        .nav-pill[data-color="12"] { background: linear-gradient(135deg, #3a1c71, #d76d77); }
-        .nav-pill[data-color="13"] { background: linear-gradient(135deg, #4568dc, #b06ab3); }
-        .nav-pill[data-color="14"] { background: linear-gradient(135deg, #ff00cc, #333399); }
-        .nav-pill[data-color="15"] { background: linear-gradient(135deg, #11998e, #d4af37); }
-        .nav-pill[data-color="16"] { background: linear-gradient(135deg, #bdc3c7, #2c3e50); }
-        .nav-pill[data-color="17"] { background: linear-gradient(135deg, #f12711, #f5af19); font-weight: 800; border: 1px solid gold; }
+        .nav-pill[data-color="1"] {
+            background: linear-gradient(135deg, #FFD700, #B8860B);
+        }
+
+        .nav-pill[data-color="2"] {
+            background: linear-gradient(135deg, #ff9900, #ff5500);
+        }
+
+        .nav-pill[data-color="3"] {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+        .nav-pill[data-color="4"] {
+            background: linear-gradient(135deg, #00b4db, #0083b0);
+        }
+
+        .nav-pill[data-color="5"] {
+            background: linear-gradient(135deg, #ee0979, #ff6a00);
+        }
+
+        .nav-pill[data-color="6"] {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+        }
+
+        .nav-pill[data-color="7"] {
+            background: linear-gradient(135deg, #f12711, #f5af19);
+        }
+
+        .nav-pill[data-color="8"] {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+        }
+
+        .nav-pill[data-color="9"] {
+            background: linear-gradient(135deg, #f80759, #bc4e9c);
+        }
+
+        .nav-pill[data-color="10"] {
+            background: linear-gradient(135deg, #e65c00, #F9D423);
+        }
+
+        .nav-pill[data-color="11"] {
+            background: linear-gradient(135deg, #02aab0, #00cdac);
+        }
+
+        .nav-pill[data-color="12"] {
+            background: linear-gradient(135deg, #3a1c71, #d76d77);
+        }
+
+        .nav-pill[data-color="13"] {
+            background: linear-gradient(135deg, #4568dc, #b06ab3);
+        }
+
+        .nav-pill[data-color="14"] {
+            background: linear-gradient(135deg, #ff00cc, #333399);
+        }
+
+        .nav-pill[data-color="15"] {
+            background: linear-gradient(135deg, #11998e, #d4af37);
+        }
+
+        .nav-pill[data-color="16"] {
+            background: linear-gradient(135deg, #bdc3c7, #2c3e50);
+        }
+
+        .nav-pill[data-color="17"] {
+            background: linear-gradient(135deg, #f12711, #f5af19);
+            font-weight: 800;
+            border: 1px solid gold;
+        }
+
+        .nav-pill[data-color="18"] {
+            background: linear-gradient(135deg, #d31027, #ea8514);
+        }
+
+        .nav-pill[data-color="19"] {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+        }
+
+        .nav-pill[data-color="20"] {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+        }
 
         .nav-pill.control {
             background: var(--card-bg);
             color: var(--text-color);
             border: 1px solid var(--border-color);
         }
+
         .nav-pill.control:hover {
             background: var(--primary-color);
             color: white;
@@ -401,18 +627,22 @@
             .network-grid {
                 grid-template-columns: 1fr;
             }
+
             .header-title-text {
                 font-size: 0.9rem;
             }
+
             #content-area {
                 padding-top: 450px;
             }
+
             .cheat-item {
                 flex-direction: column;
                 gap: 0.5rem;
                 text-align: center;
                 align-items: center;
             }
+
             .cheat-arrow {
                 transform: rotate(90deg);
                 margin: 0.2rem 0;
@@ -450,7 +680,8 @@
                     </h1>
                 </div>
 
-                <button id="header-toggle-btn" class="header-toggle-btn" title="توسيع/طي القائمة" onclick="toggleHeader()">
+                <button id="header-toggle-btn" class="header-toggle-btn" title="توسيع/طي القائمة"
+                    onclick="toggleHeader()">
                     <i class="fas fa-chevron-up"></i>
                 </button>
             </div>
@@ -473,7 +704,11 @@
                     <button class="nav-pill" data-color="14" onclick="scrollToCard(14)">14. تقييم التدخل</button>
                     <button class="nav-pill" data-color="15" onclick="scrollToCard(15)">15. المبادئ المهنية</button>
                     <button class="nav-pill" data-color="16" onclick="scrollToCard(16)">16. مفاهيم التخطيط</button>
-                    <button class="nav-pill" data-color="17" onclick="scrollToCard(17)"><i class="fas fa-key"></i> 17. شفرات الامتحان</button>
+                    <button class="nav-pill" data-color="18" onclick="scrollToCard(18)">17. تصنيف المعوقات</button>
+                    <button class="nav-pill" data-color="19" onclick="scrollToCard(19)">18. الأجهزة التنموية</button>
+                    <button class="nav-pill" data-color="20" onclick="scrollToCard(20)">19. نماذج روثمان</button>
+                    <button class="nav-pill" data-color="17" onclick="scrollToCard(17)"><i class="fas fa-key"></i> 20.
+                        شفرات الامتحان</button>
                 </div>
 
                 <div class="header-controls-row">
@@ -497,18 +732,20 @@
 
                 <div class="network-center">
                     <h2><i class="fas fa-leaf"></i> تنمية المجتمعات المحلية</h2>
-                    <p>كبسولة المراجعة الشاملة المحدثة والموسعة بالكامل (17 قسماً شاملاً ومفاتيح وشفرات الامتحان الذهبية)</p>
+                    <p>كبسولة المراجعة الشاملة المحدثة والموسعة بالكامل (20 قسماً شاملاً ومفاتيح وشفرات الامتحان
+                        الذهبية)</p>
                 </div>
 
                 <!-- Card 1: الفروق الجوهرية بين المفاهيم -->
                 <div class="network-card" data-branch="1" id="card-1">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>أولاً: الفروق الجوهرية بين المفاهيم (النمو، التغير، التنمية)</h3>
+                        <h3>الفروق الجوهرية بين المفاهيم (النمو، التغير، التنمية)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (هذا الجزء دائماً ما يكون موضع أسئلة صح وخطأ أو اختيار من متعدد للتمييز بين المصطلحات الثلاثة)
+                            (هذا الجزء دائماً ما يكون موضع أسئلة صح وخطأ أو اختيار من متعدد للتمييز بين المصطلحات
+                            الثلاثة)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
@@ -516,13 +753,15 @@
                                     <tr>
                                         <th>المفهوم / المصطلح</th>
                                         <th>التعريف والشرح المنهجي</th>
-                                        <th>الخصائص وملاحظات هامة (موضع امتحان) <i class="fas fa-exclamation-circle" style="color: gold;"></i></th>
+                                        <th>الخصائص وملاحظات هامة (موضع امتحان) <i class="fas fa-exclamation-circle"
+                                                style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="cell-gold"><b>النمو (Growth)</b></td>
-                                        <td style="text-align: right;">هو زيادة كمية تطرأ على جانب معين من جوانب المجتمع (مثل: زيادة الدخل، زيادة عدد السكان).</td>
+                                        <td style="text-align: right;">هو زيادة كمية تطرأ على جانب معين من جوانب المجتمع
+                                            (مثل: زيادة الدخل، زيادة عدد السكان).</td>
                                         <td style="text-align: right;">
                                             - يحدث بصورة تلقائية وعشوائية.<br>
                                             - قد يكون في جانب واحد فقط.<br>
@@ -531,7 +770,8 @@
                                     </tr>
                                     <tr>
                                         <td class="cell-orange"><b>التغير (Change)</b></td>
-                                        <td style="text-align: right;">هو تحول أو تبدل من حالة إلى حالة أخرى تطرأ على البناء الاجتماعي أو الوظائف.</td>
+                                        <td style="text-align: right;">هو تحول أو تبدل من حالة إلى حالة أخرى تطرأ على
+                                            البناء الاجتماعي أو الوظائف.</td>
                                         <td style="text-align: right;">
                                             - قد يكون إيجابياً أو سلبياً.<br>
                                             - قد يكون تلقائياً أو موجهاً (مقصوداً).
@@ -539,7 +779,8 @@
                                     </tr>
                                     <tr>
                                         <td class="cell-green"><b>التنمية (Development)</b></td>
-                                        <td style="text-align: right;">هي عملية تغيير مقصودة ومخططة، تتضمن تغييرات كمية وكيفية معاً للارتقاء بالمجتمع.</td>
+                                        <td style="text-align: right;">هي عملية تغيير مقصودة ومخططة، تتضمن تغييرات كمية
+                                            وكيفية معاً للارتقاء بالمجتمع.</td>
                                         <td style="text-align: right;">
                                             - التنمية دائماً إيجابية (نحو الأفضل).<br>
                                             - عملية شاملة (لا تقتصر على جانب واحد).<br>
@@ -555,7 +796,7 @@
                 <!-- Card 2: مفاهيم المجتمع والتنمية والتمكين -->
                 <div class="network-card" data-branch="2" id="card-2">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>ثانياً: مفاهيم المجتمع والتنمية والتمكين</h3>
+                        <h3>مفاهيم المجتمع والتنمية والتمكين</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
@@ -565,13 +806,15 @@
                                     <tr>
                                         <th>المفهوم / المصطلح</th>
                                         <th>التعريف والشرح المنهجي</th>
-                                        <th>الكلمات المفتاحية / ملاحظات <i class="fas fa-key" style="color: gold;"></i></th>
+                                        <th>الكلمات المفتاحية / ملاحظات <i class="fas fa-key" style="color: gold;"></i>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="cell-gold"><b>المجتمع المحلي (Local Community)</b></td>
-                                        <td style="text-align: right;">مجموعة من الأفراد يعيشون في نطاق جغرافي محدد، يتفاعلون معاً، ويشتركون في القيم والاهتمامات، ويجمعهم شعور بالانتماء.</td>
+                                        <td style="text-align: right;">مجموعة من الأفراد يعيشون في نطاق جغرافي محدد،
+                                            يتفاعلون معاً، ويشتركون في القيم والاهتمامات، ويجمعهم شعور بالانتماء.</td>
                                         <td style="text-align: right;">
                                             عناصر المجتمع الأساسية:<br>
                                             1. رقعة جغرافية (مكان).<br>
@@ -582,7 +825,9 @@
                                     </tr>
                                     <tr>
                                         <td class="cell-orange"><b>تنمية المجتمع المحلي</b></td>
-                                        <td style="text-align: right;">عملية تستهدف الارتقاء بمستوى معيشة الأفراد اقتصادياً واجتماعياً، من خلال التكامل بين الجهود الأهلية (الشعبية) والجهود الحكومية.</td>
+                                        <td style="text-align: right;">عملية تستهدف الارتقاء بمستوى معيشة الأفراد
+                                            اقتصادياً واجتماعياً، من خلال التكامل بين الجهود الأهلية (الشعبية) والجهود
+                                            الحكومية.</td>
                                         <td style="text-align: right;">
                                             - تعتمد كلياً على المشاركة.<br>
                                             - تبدأ بـ الاحتياجات الملموسة.<br>
@@ -591,21 +836,25 @@
                                     </tr>
                                     <tr>
                                         <td class="cell-green"><b>التمكين (Empowerment)</b></td>
-                                        <td style="text-align: right;">مساعدة الأفراد والفئات (خاصة المهمشة) على اكتساب القوة والمهارات والفرص للتحكم في مقدراتهم وحل مشكلاتهم بأنفسهم.</td>
+                                        <td style="text-align: right;">مساعدة الأفراد والفئات (خاصة المهمشة) على اكتساب
+                                            القوة والمهارات والفرص للتحكم في مقدراتهم وحل مشكلاتهم بأنفسهم.</td>
                                         <td style="text-align: right;">
-                                            - ينقل المواطن من حالة (الاعتمادية السلبية والاتكالية) إلى حالة (الفاعلية والمشاركة الحقيقية).
+                                            - ينقل المواطن من حالة (الاعتمادية السلبية والاتكالية) إلى حالة (الفاعلية
+                                            والمشاركة الحقيقية).
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-blue"><b>الاستدامة (Sustainability)</b></td>
-                                        <td style="text-align: right;">تلبية احتياجات الجيل الحاضر، دون المساومة أو الإضرار بقدرة الأجيال القادمة على تلبية احتياجاتها.</td>
+                                        <td style="text-align: right;">تلبية احتياجات الجيل الحاضر، دون المساومة أو
+                                            الإضرار بقدرة الأجيال القادمة على تلبية احتياجاتها.</td>
                                         <td style="text-align: right;">
                                             - تركز على الموازنة، ترشيد الاستهلاك، والحفاظ على التوازن البيئي والموارد.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-gold"><b>التشبيك (Networking)</b></td>
-                                        <td style="text-align: right;">عملية بناء علاقات وتنسيق الجهود بين مؤسسات المجتمع المدني المختلفة لتبادل الخبرات والموارد المتاحة.</td>
+                                        <td style="text-align: right;">عملية بناء علاقات وتنسيق الجهود بين مؤسسات
+                                            المجتمع المدني المختلفة لتبادل الخبرات والموارد المتاحة.</td>
                                         <td style="text-align: right;">
                                             - الهدف منه: تكامل الخدمات، ومنع التكرار أو الازدواجية في تقديم الخدمة.
                                         </td>
@@ -619,7 +868,7 @@
                 <!-- Card 3: اتجاهات تعريف "التنمية" -->
                 <div class="network-card" data-branch="3" id="card-3">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>ثالثاً: اتجاهات تعريف "التنمية" (وجهات نظر العلماء)</h3>
+                        <h3>اتجاهات تعريف "التنمية" (وجهات نظر العلماء)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
@@ -632,24 +881,31 @@
                                     <tr>
                                         <th>الاتجاه</th>
                                         <th>نظرة الاتجاه للتنمية</th>
-                                        <th>ملاحظات وتوضيحات هامة <i class="fas fa-comment-dots" style="color: gold;"></i></th>
+                                        <th>ملاحظات وتوضيحات هامة <i class="fas fa-comment-dots"
+                                                style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="cell-orange"><b>الاتجاه الاقتصادي البحت</b></td>
-                                        <td style="text-align: right;">يرى التنمية على أنها مجرد زيادة في الإنتاج، ورفع متوسط الدخل الفردي، ونمو الناتج القومي الإجمالي.</td>
-                                        <td style="text-align: right; font-weight: bold; color: red;">يعاب عليه أنه أهمل الجانب البشري والاجتماعي وركز على الجانب المادي فقط.</td>
+                                        <td style="text-align: right;">يرى التنمية على أنها مجرد زيادة في الإنتاج، ورفع
+                                            متوسط الدخل الفردي، ونمو الناتج القومي الإجمالي.</td>
+                                        <td style="text-align: right; font-weight: bold; color: red;">يعاب عليه أنه أهمل
+                                            الجانب البشري والاجتماعي وركز على الجانب المادي فقط.</td>
                                     </tr>
                                     <tr>
                                         <td class="cell-green"><b>الاتجاه الاجتماعي</b></td>
-                                        <td style="text-align: right;">يرى التنمية على أنها تحسين في نوعية الحياة (مثل: التعليم، الصحة، الخدمات، والعدالة الاجتماعية).</td>
-                                        <td style="text-align: right;">جاء كرد فعل مباشر لتجاهل الاتجاه الاقتصادي للإنسان والجانب البشري.</td>
+                                        <td style="text-align: right;">يرى التنمية على أنها تحسين في نوعية الحياة (مثل:
+                                            التعليم، الصحة، الخدمات، والعدالة الاجتماعية).</td>
+                                        <td style="text-align: right;">جاء كرد فعل مباشر لتجاهل الاتجاه الاقتصادي
+                                            للإنسان والجانب البشري.</td>
                                     </tr>
                                     <tr>
                                         <td class="cell-gold"><b>الاتجاه الشامل (التكاملي)</b></td>
-                                        <td style="text-align: right;">يرى أن التنمية هي عملية متكاملة (اقتصادية + اجتماعية)، فلا تقدم اقتصادي بدون رفاهية اجتماعية، والعكس صحيح.</td>
-                                        <td style="text-align: right; font-weight: bold; color: var(--success-color);">هو الاتجاه الأصوب والمعتمد حالياً في خطط التدخل المهني والتنموي.</td>
+                                        <td style="text-align: right;">يرى أن التنمية هي عملية متكاملة (اقتصادية +
+                                            اجتماعية)، فلا تقدم اقتصادي بدون رفاهية اجتماعية، والعكس صحيح.</td>
+                                        <td style="text-align: right; font-weight: bold; color: var(--success-color);">
+                                            هو الاتجاه الأصوب والمعتمد حالياً في خطط التدخل المهني والتنموي.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -660,7 +916,7 @@
                 <!-- Card 4: مبادئ تنمية المجتمع -->
                 <div class="network-card" data-branch="4" id="card-4">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>رابعاً: مبادئ تنمية المجتمع (قواعد العمل التنموي المهني)</h3>
+                        <h3>مبادئ تنمية المجتمع (قواعد العمل التنموي المهني)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
@@ -673,50 +929,60 @@
                                     <tr>
                                         <th>المبدأ</th>
                                         <th>الشرح المختصر</th>
-                                        <th>أهميته وقواعده في الامتحان <i class="fas fa-graduation-cap" style="color: gold;"></i></th>
+                                        <th>أهميته وقواعده في الامتحان <i class="fas fa-graduation-cap"
+                                                style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="cell-gold"><b>1. البدء بالاحتياجات الملموسة</b></td>
-                                        <td style="text-align: right;">يجب أن يبدأ البرنامج التنموي بتلبية المشكلات التي يشعر بها الأهالي ويدركونها فعلياً في حياتهم اليومية.</td>
+                                        <td style="text-align: right;">يجب أن يبدأ البرنامج التنموي بتلبية المشكلات التي
+                                            يشعر بها الأهالي ويدركونها فعلياً في حياتهم اليومية.</td>
                                         <td style="text-align: right; font-weight: bold; color: var(--success-color);">
                                             يضمن حماس الأهالي ومشاركتهم الفعالة، (احذر: عكس البدء باحتياجات غير ملموسة).
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-orange"><b>2. المشاركة المجتمعية</b></td>
-                                        <td style="text-align: right;">إسهام الأهالي والمستهدفين بالجهد أو المال أو الرأي طواعية في كل مراحل المشروع.</td>
+                                        <td style="text-align: right;">إسهام الأهالي والمستهدفين بالجهد أو المال أو
+                                            الرأي طواعية في كل مراحل المشروع.</td>
                                         <td style="text-align: right;">
                                             يجب أن تكون المشاركة اختيارية، واعية، وليست إجبارية على الإطلاق.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-green"><b>3. التكامل</b></td>
-                                        <td style="text-align: right;">إحداث تنمية متوازنة وشاملة تشمل كافة القطاعات والاهتمامات داخل المجتمع.</td>
+                                        <td style="text-align: right;">إحداث تنمية متوازنة وشاملة تشمل كافة القطاعات
+                                            والاهتمامات داخل المجتمع.</td>
                                         <td style="text-align: right;">
-                                            يمنع نمو قطاع على حساب قطاع آخر (الاهتمام بالتعليم والصحة والاقتصاد معاً كنسيج واحد).
+                                            يمنع نمو قطاع على حساب قطاع آخر (الاهتمام بالتعليم والصحة والاقتصاد معاً
+                                            كنسيج واحد).
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-blue"><b>4. المساعدة الذاتية</b></td>
-                                        <td style="text-align: right;">مساعدة الأهالي على اكتشاف واستخدام مواردهم وقدراتهم الذاتية لحل مشكلاتهم بأنفسهم.</td>
+                                        <td style="text-align: right;">مساعدة الأهالي على اكتشاف واستخدام مواردهم
+                                            وقدراتهم الذاتية لحل مشكلاتهم بأنفسهم.</td>
                                         <td style="text-align: right;">
-                                            مساعدة المجتمع لكي يساعد نفسه، وهي لا تلغي الدعم الحكومي بل تتكامل وتتشابك معه.
+                                            مساعدة المجتمع لكي يساعد نفسه، وهي لا تلغي الدعم الحكومي بل تتكامل وتتشابك
+                                            معه.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-gold"><b>5. احترام القيم والثقافة</b></td>
-                                        <td style="text-align: right;">مراعاة العادات والتقاليد والأعراف السائدة لدى القادة والأهالي عند وضع الخطط التنموية.</td>
+                                        <td style="text-align: right;">مراعاة العادات والتقاليد والأعراف السائدة لدى
+                                            القادة والأهالي عند وضع الخطط التنموية.</td>
                                         <td style="text-align: right; font-weight: bold; color: #ff6a00;">
                                             يمنع حدوث ظاهرة "المقاومة الاجتماعية" والرفض لبرامج ومشروعات التنمية.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-orange"><b>6. المرونة</b></td>
-                                        <td style="text-align: right;">القدرة على تعديل وإعادة تشكيل الخطط لمواجهة الظروف الطارئة والمستجدات الميدانية.</td>
+                                        <td style="text-align: right;">القدرة على تعديل وإعادة تشكيل الخطط لمواجهة
+                                            الظروف الطارئة والمستجدات الميدانية.</td>
                                         <td style="text-align: right;">
-                                            التخطيط ليس قرآناً أو قالباً جامداً، بل يخضع تماماً للتعديل والمواءمة حسب الواقع.
+                                            التخطيط ليس قرآناً أو قالباً جامداً، بل يخضع تماماً للتعديل والمواءمة حسب
+                                            الواقع.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -728,7 +994,7 @@
                 <!-- Card 5: خامساً: المقارنة الشاملة بين المجتمعات -->
                 <div class="network-card" data-branch="5" id="card-5">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>خامساً: المقارنة الشاملة بين المجتمعات الأربعة (الخصائص والسمات)</h3>
+                        <h3>المقارنة الشاملة بين المجتمعات الأربعة (الخصائص والسمات)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
@@ -798,7 +1064,7 @@
                 <!-- Card 6: سادساً: أبرز المشكلات التي يعاني منها كل مجتمع -->
                 <div class="network-card" data-branch="6" id="card-6">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>سادساً: أبرز المشكلات التي يعاني منها كل مجتمع (التشخيص الطبي للمجتمعات)</h3>
+                        <h3>أبرز المشكلات التي يعاني منها كل مجتمع (التشخيص الطبي للمجتمعات)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
@@ -810,7 +1076,8 @@
                                 <thead>
                                     <tr>
                                         <th>المجتمع</th>
-                                        <th>المشكلات الأساسية (الكلمات الدلالية في الامتحان <i class="fas fa-key" style="color: gold;"></i>)</th>
+                                        <th>المشكلات الأساسية (الكلمات الدلالية في الامتحان <i class="fas fa-key"
+                                                style="color: gold;"></i>)</th>
                                         <th>الشرح والتحليل المنهجي</th>
                                     </tr>
                                 </thead>
@@ -823,8 +1090,10 @@
                                             - هجرة الشباب المتسارعة للحضر.
                                         </td>
                                         <td style="text-align: right;">
-                                            * <b>البطالة المقنعة:</b> تعني وجود عمالة زراعية زائدة فعلياً عن حاجة الأرض.<br>
-                                            * <b>تفتت الحيازة:</b> بسبب الميراث، مما يعيق استخدام الميكنة والآلات الحديثة.
+                                            * <b>البطالة المقنعة:</b> تعني وجود عمالة زراعية زائدة فعلياً عن حاجة
+                                            الأرض.<br>
+                                            * <b>تفتت الحيازة:</b> بسبب الميراث، مما يعيق استخدام الميكنة والآلات
+                                            الحديثة.
                                         </td>
                                     </tr>
                                     <tr>
@@ -835,7 +1104,8 @@
                                             - تفكك الروابط الأسرية والعزلة الاجتماعية.
                                         </td>
                                         <td style="text-align: right;">
-                                            * النمو السريع جداً وغير المخطط للمدينة يخلق ضغوطاً نفسية وبيئية حادة، ويزيد من معدلات الانحراف والجريمة.
+                                            * النمو السريع جداً وغير المخطط للمدينة يخلق ضغوطاً نفسية وبيئية حادة، ويزيد
+                                            من معدلات الانحراف والجريمة.
                                         </td>
                                     </tr>
                                     <tr>
@@ -846,7 +1116,8 @@
                                             - صعوبة بالغة في توفير الخدمات الحكومية الثابتة.
                                         </td>
                                         <td style="text-align: right;">
-                                            * التنقل الدائم طلباً للمرء يجعل من الصعب على الدولة إنشاء مدارس أو مستشفيات ثابتة، مما يكرس عزلتهم الجغرافية.
+                                            * التنقل الدائم طلباً للمرء يجعل من الصعب على الدولة إنشاء مدارس أو مستشفيات
+                                            ثابتة، مما يكرس عزلتهم الجغرافية.
                                         </td>
                                     </tr>
                                     <tr>
@@ -857,7 +1128,8 @@
                                             - التهميش المجتمعي وانتشار الأوبئة.
                                         </td>
                                         <td style="text-align: right;">
-                                            * تنشأ العشوائيات بجهود ذاتية خارجة عن القانون، كأثر مباشر للهجرة الكثيفة غير المنظمة من الريف وعجز المدن عن الاستيعاب.
+                                            * تنشأ العشوائيات بجهود ذاتية خارجة عن القانون، كأثر مباشر للهجرة الكثيفة
+                                            غير المنظمة من الريف وعجز المدن عن الاستيعاب.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -869,12 +1141,13 @@
                 <!-- Card 7: سابعاً: مداخل التنمية واستراتيجيات التدخل -->
                 <div class="network-card" data-branch="7" id="card-7">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>سابعاً: مداخل التنمية واستراتيجيات التدخل (الروشتة العلاجية لكل مجتمع)</h3>
+                        <h3>مداخل التنمية واستراتيجيات التدخل (الروشتة العلاجية لكل مجتمع)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <div class="info-box success" style="margin-bottom: 1rem; text-align: center;">
-                            <strong><i class="fas fa-lightbulb"></i> تريكة هامة جداً للامتحان:</strong> عند السؤال عن "استراتيجية التدخل" أو "دور الأخصائي"، ابحث عن هذه المداخل العلاجية الفعالة في الخيارات.
+                            <strong><i class="fas fa-lightbulb"></i> تريكة هامة جداً للامتحان:</strong> عند السؤال عن
+                            "استراتيجية التدخل" أو "دور الأخصائي"، ابحث عن هذه المداخل العلاجية الفعالة في الخيارات.
                         </div>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
@@ -888,33 +1161,46 @@
                                     <tr>
                                         <td class="cell-gold"><b>تنمية المجتمع الريفي 🌾</b></td>
                                         <td style="text-align: right;">
-                                            1. إدخال الميكنة والآلات الزراعية الحديثة وتفعيل <b>التسويق التعاوني</b>.<br>
-                                            2. تشجيع وتمويل <b>الصناعات البيئية والريفية</b> اليدوية لتوفير فرص عمل بديلة للشباب.<br>
-                                            3. نشر الوعي الصحي والتثقيف بـ <b>تنظيم الأسرة</b> لمنع الانفجار السكاني.<br>
-                                            4. الاعتماد القوي على <b>القيادات الطبيعية</b> والشعبية (العمدة / شيخ البلد) لكسب ثقة الأهالي.
+                                            1. إدخال الميكنة والآلات الزراعية الحديثة وتفعيل <b>التسويق
+                                                التعاوني</b>.<br>
+                                            2. تشجيع وتمويل <b>الصناعات البيئية والريفية</b> اليدوية لتوفير فرص عمل
+                                            بديلة للشباب.<br>
+                                            3. نشر الوعي الصحي والتثقيف بـ <b>تنظيم الأسرة</b> لمنع الانفجار
+                                            السكاني.<br>
+                                            4. الاعتماد القوي على <b>القيادات الطبيعية</b> والشعبية (العمدة / شيخ البلد)
+                                            لكسب ثقة الأهالي.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-orange"><b>تنمية المجتمع الحضري 🏙️</b></td>
                                         <td style="text-align: right;">
-                                            1. تطبيق **التخطيط الإقليمي** الشامل لتقليل الفجوة والتباين التنموي بين الريف والحضر لمنع تيار الهجرة.<br>
-                                            2. تفعيل **اللامركزية في الخدمات** وإنشاء وتعمير مدن ومجتمعات جديدة خارج نطاق التكدس.<br>
-                                            3. التطبيق الحاسم للقوانين البيئية والتشريعات لحماية هواء ومياه المدينة من التلوث.
+                                            1. تطبيق **التخطيط الإقليمي** الشامل لتقليل الفجوة والتباين التنموي بين
+                                            الريف والحضر لمنع تيار الهجرة.<br>
+                                            2. تفعيل **اللامركزية في الخدمات** وإنشاء وتعمير مدن ومجتمعات جديدة خارج
+                                            نطاق التكدس.<br>
+                                            3. التطبيق الحاسم للقوانين البيئية والتشريعات لحماية هواء ومياه المدينة من
+                                            التلوث.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-blue"><b>تنمية المجتمع البدوي 🐫</b></td>
                                         <td style="text-align: right;">
-                                            1. تطبيق سياسة <b>\"التوطين الموجه\"</b> (إنشاء وتجهيز قرى بدوية حديثة متكاملة ومستقرة من قبل الدولة).<br>
-                                            2. ابتكار وتوفير **الخدمات المتنقلة** (قوافل طبية وتعليمية مرنة) وحفر الآبار الجوفية لتأمين المياه.<br>
-                                            3. الاحترام المطلق والكامل للأعراف والتقاليد القبلية، والتعاون مع **شيخ القبيلة**.
+                                            1. تطبيق سياسة <b>\"التوطين الموجه\"</b> (إنشاء وتجهيز قرى بدوية حديثة
+                                            متكاملة ومستقرة من قبل الدولة).<br>
+                                            2. ابتكار وتوفير **الخدمات المتنقلة** (قوافل طبية وتعليمية مرنة) وحفر الآبار
+                                            الجوفية لتأمين المياه.<br>
+                                            3. الاحترام المطلق والكامل للأعراف والتقاليد القبلية، والتعاون مع **شيخ
+                                            القبيلة**.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-purple"><b>تنمية العشوائيات 🏚️</b></td>
                                         <td style="text-align: right;">
-                                            * **تطوير شامل:** (بنية تحتية كاملة + تنمية بشرية واجتماعية واقتصادية) للمناطق التي تصلح وقابلة للتطوير.<br>
-                                            * **الإزالة وإعادة التسكين:** للمناطق العشوائية غير الآمنة والخطرة جداً (مثل المهددة للحياة كالمبنية تحت الصخور والجبال أو في مخرات السيول) بنقل أهاليها لمدن سكنية حضارية مجهزة بالكامل.
+                                            * **تطوير شامل:** (بنية تحتية كاملة + تنمية بشرية واجتماعية واقتصادية)
+                                            للمناطق التي تصلح وقابلة للتطوير.<br>
+                                            * **الإزالة وإعادة التسكين:** للمناطق العشوائية غير الآمنة والخطرة جداً (مثل
+                                            المهددة للحياة كالمبنية تحت الصخور والجبال أو في مخرات السيول) بنقل أهاليها
+                                            لمدن سكنية حضارية مجهزة بالكامل.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -926,7 +1212,7 @@
                 <!-- Card 8: ثامناً: مصطلحات هامة جداً في تنمية البدو -->
                 <div class="network-card" data-branch="8" id="card-8">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>ثامناً: مصطلحات هامة في تنمية البدو (الفروق بين أنواع التوطين)</h3>
+                        <h3>مصطلحات هامة في تنمية البدو (الفروق بين أنواع التوطين)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
@@ -939,22 +1225,28 @@
                                     <tr>
                                         <th>النوع</th>
                                         <th>مفهومه وتفاصيله المنهجية</th>
-                                        <th>طبيعة الأثر والتقييم العلمي <i class="fas fa-check-circle" style="color: gold;"></i></th>
+                                        <th>طبيعة الأثر والتقييم العلمي <i class="fas fa-check-circle"
+                                                style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="cell-orange"><b>1. التوطين التلقائي (العشوائي)</b></td>
-                                        <td style="text-align: right;">استقرار البدو من تلقاء أنفسهم وبجهودهم الفردية عشوائياً، بالنزوح وضواحي المدن والقرى هرباً من الجفاف والقحط الشديد.</td>
+                                        <td style="text-align: right;">استقرار البدو من تلقاء أنفسهم وبجهودهم الفردية
+                                            عشوائياً، بالنزوح وضواحي المدن والقرى هرباً من الجفاف والقحط الشديد.</td>
                                         <td style="text-align: right; font-weight: bold; color: red;">
-                                            أثر سلبي؛ يفتقر كلياً للتخطيط، ويسبب أزمات اقتصادية واجتماعية خانقة للبدو وللمدن الحاضنة لهم.
+                                            أثر سلبي؛ يفتقر كلياً للتخطيط، ويسبب أزمات اقتصادية واجتماعية خانقة للبدو
+                                            وللمدن الحاضنة لهم.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-green"><b>2. التوطين الموجه (المخطط)</b></td>
-                                        <td style="text-align: right;">تدخل صريح ومخطط هندسياً واقتصادياً من الدولة، باختيار مناطق مناسبة، بناء مساكن متكاملة، توفير مصادر دخل بديلة (زراعة، تعدين, رعي منظم) وخدمات كاملة.</td>
+                                        <td style="text-align: right;">تدخل صريح ومخطط هندسياً واقتصادياً من الدولة،
+                                            باختيار مناطق مناسبة، بناء مساكن متكاملة، توفير مصادر دخل بديلة (زراعة،
+                                            تعدين, رعي منظم) وخدمات كاملة.</td>
                                         <td style="text-align: right; font-weight: bold; color: var(--success-color);">
-                                            أثر إيجابي؛ وهو الأسلوب الأمثل والمنظم علمياً لتنمية ودمج البدو في عجلة الدولة الوطنية.
+                                            أثر إيجابي؛ وهو الأسلوب الأمثل والمنظم علمياً لتنمية ودمج البدو في عجلة
+                                            الدولة الوطنية.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -966,7 +1258,7 @@
                 <!-- Card 9: تاسعاً: مفاهيم أساسية حول "المبادرات المجتمعية" -->
                 <div class="network-card" data-branch="9" id="card-9">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>تاسعاً: مفاهيم أساسية حول "المبادرات المجتمعية" وأهميتها</h3>
+                        <h3>مفاهيم أساسية حول "المبادرات المجتمعية" وأهميتها</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
@@ -975,29 +1267,35 @@
                                 <thead>
                                     <tr>
                                         <th>العنصر / المفهوم</th>
-                                        <th>الشرح والكلمات المفتاحية في الامتحان <i class="fas fa-key" style="color: gold;"></i></th>
+                                        <th>الشرح والكلمات المفتاحية في الامتحان <i class="fas fa-key"
+                                                style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="cell-gold"><b>تعريف المبادرة المجتمعية</b></td>
                                         <td style="text-align: right;">
-                                            هي <b>جهد تطوعي ومنظم</b>، ينبع من إحساس الفرد أو الجماعة بالمسؤولية الاجتماعية، ويهدف لتلبية احتياج مجتمعي ملح أو حل مشكلة حقيقية باستخدام الموارد المتاحة.
+                                            هي <b>جهد تطوعي ومنظم</b>، ينبع من إحساس الفرد أو الجماعة بالمسؤولية
+                                            الاجتماعية، ويهدف لتلبية احتياج مجتمعي ملح أو حل مشكلة حقيقية باستخدام
+                                            الموارد المتاحة.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-orange"><b>الدافع الأساسي للمبادرة</b></td>
                                         <td style="text-align: right; font-weight: bold; color: #ff5500;">
-                                            ينبع أساساً من **المشاركة التطوعية الحرة** و **الوعي المجتمعي**، فهي لا تعتمد إطلاقاً على الإجبار، الإكراه، أو التكليف الحكومي الإلزامي.
+                                            ينبع أساساً من **المشاركة التطوعية الحرة** و **الوعي المجتمعي**، فهي لا
+                                            تعتمد إطلاقاً على الإجبار، الإكراه، أو التكليف الحكومي الإلزامي.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-green"><b>أهمية المبادرات وأهدافها التنموية</b></td>
                                         <td style="text-align: right;">
                                             1. **تمكين الفئات المهمشة** والضعيفة في المجتمع وتحويلها لطاقة فاعلة.<br>
-                                            2. **سد الفجوة العميقة** بين (الموارد الحكومية المحدودة والضيقة) و(الاحتياجات المتزايدة والمتسارعة للأهالي).<br>
+                                            2. **سد الفجوة العميقة** بين (الموارد الحكومية المحدودة والضيقة)
+                                            و(الاحتياجات المتزايدة والمتسارعة للأهالي).<br>
                                             3. **اكتشاف وتدريب القيادات المحلية الطبيعية** وصقل مهاراتهم في الميدان.<br>
-                                            4. استثمار الموارد الذاتية غير المستغلة وتنمية روح المواطنة والانتماء الحقيقي للمجتمع.
+                                            4. استثمار الموارد الذاتية غير المستغلة وتنمية روح المواطنة والانتماء
+                                            الحقيقي للمجتمع.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1009,12 +1307,13 @@
                 <!-- Card 10: عاشراً: أنواع المبادرات المجتمعية -->
                 <div class="network-card" data-branch="10" id="card-10">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>عاشراً: أنواع المبادرات المجتمعية (سؤال تطبيقي هام بالامتحان)</h3>
+                        <h3>أنواع المبادرات المجتمعية (سؤال تطبيقي هام بالامتحان)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <div class="info-box success" style="margin-bottom: 1rem; text-align: center;">
-                            <strong><i class="fas fa-lightbulb"></i> تريكة هامة جداً:</strong> غالباً سيأتيك السؤال بسيناريو أو مثال عملي ويطلب منك تحديد وتصنيف نوع المبادرة.
+                            <strong><i class="fas fa-lightbulb"></i> تريكة هامة جداً:</strong> غالباً سيأتيك السؤال
+                            بسيناريو أو مثال عملي ويطلب منك تحديد وتصنيف نوع المبادرة.
                         </div>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
@@ -1028,31 +1327,38 @@
                                     <tr>
                                         <td class="cell-green"><b>مبادرات بيئية 🌳</b></td>
                                         <td style="text-align: right;">
-                                            حملات النظافة العامة، تشجير الشوارع والميادين، تدوير المخلفات الصلبة، وحملات ترشيد استهلاك المياه والكهرباء.
+                                            حملات النظافة العامة، تشجير الشوارع والميادين، تدوير المخلفات الصلبة، وحملات
+                                            ترشيد استهلاك المياه والكهرباء.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-gold"><b>مبادرات اقتصادية (تمكين) 💰</b></td>
                                         <td style="text-align: right;">
-                                            توفير القروض الحسنة بدون فوائد، تدريب النساء والأهالي على الحرف والصناعات اليدوية، ودعم وتمويل المشروعات المتناهية الصغر (مثل تربية الدواجن، ورش الخياطة) للمرأة المعيلة.
+                                            توفير القروض الحسنة بدون فوائد، تدريب النساء والأهالي على الحرف والصناعات
+                                            اليدوية، ودعم وتمويل المشروعات المتناهية الصغر (مثل تربية الدواجن، ورش
+                                            الخياطة) للمرأة المعيلة.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-red"><b>مبادرات صحية 🩺</b></td>
                                         <td style="text-align: right;">
-                                            تيسير القوافل الطبية المجانية للقرى، حملات التبرع بالدم، مبادرات الكشف المبكر عن الأمراض المزمنة، والتوعية الوقائية والصحية.
+                                            تيسير القوافل الطبية المجانية للقرى، حملات التبرع بالدم، مبادرات الكشف
+                                            المبكر عن الأمراض المزمنة، والتوعية الوقائية والصحية.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-blue"><b>مبادرات تعليمية / تثقيفية 📚</b></td>
                                         <td style="text-align: right;">
-                                            فصول محو الأمية للكبار، دورات تعليم الحاسب والكمبيوتر لكبار السن، وتوفير مجموعات التقوية والدروس المجانية لطلاب الأسر الأكثر احتياجاً.
+                                            فصول محو الأمية للكبار، دورات تعليم الحاسب والكمبيوتر لكبار السن، وتوفير
+                                            مجموعات التقوية والدروس المجانية لطلاب الأسر الأكثر احتياجاً.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-orange"><b>مبادرات إغاثية (أزمات) 🚨</b></td>
                                         <td style="text-align: right; font-weight: bold; color: #ff5500;">
-                                            تظهر بشكل طارئ وسريع وقت الكوارث والجوائح الطبيعية والبيئية (مثل توزيع إعانات ومساعدات عاجلة وقت السيول، أو الدعم الطبي والغذائي أثناء جائحة كورونا).
+                                            تظهر بشكل طارئ وسريع وقت الكوارث والجوائح الطبيعية والبيئية (مثل توزيع
+                                            إعانات ومساعدات عاجلة وقت السيول، أو الدعم الطبي والغذائي أثناء جائحة
+                                            كورونا).
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1064,12 +1370,13 @@
                 <!-- Card 11: حادي عشر: خطوات تصميم وتنفيذ المبادرة -->
                 <div class="network-card" data-branch="11" id="card-11">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>حادي عشر: خطوات تصميم وتنفيذ المبادرة (احفظها بالترتيب الزمني الدقيق!)</h3>
+                        <h3>خطوات تصميم وتنفيذ المبادرة (احفظها بالترتيب الزمني الدقيق!)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (هذا الجزء لا يخلو منه أي امتحان؛ ويأتي دائماً ليسألك عن الترتيب أو أي خطوة تسبق وتلي الأخرى)
+                            (هذا الجزء لا يخلو منه أي امتحان؛ ويأتي دائماً ليسألك عن الترتيب أو أي خطوة تسبق وتلي
+                            الأخرى)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
@@ -1077,7 +1384,8 @@
                                     <tr>
                                         <th>الخطوة</th>
                                         <th>اسم المرحلة التنموية</th>
-                                        <th>ماذا يحدث فيها؟ (الكلمات المفتاحية والسرية بالامتحان <i class="fas fa-user-secret" style="color: gold;"></i>)</th>
+                                        <th>ماذا يحدث فيها؟ (الكلمات المفتاحية والسرية بالامتحان <i
+                                                class="fas fa-user-secret" style="color: gold;"></i>)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1085,56 +1393,64 @@
                                         <td class="cell-gold"><b>1</b></td>
                                         <td><b>الشعور بالمشكلة وتحديد الفكرة</b></td>
                                         <td style="text-align: right;">
-                                            هي **الانطلاقة والشرارة الأولى** للمشروع، حيث يدرك الأهالي أو المبادرون وجود فجوة أو صعوبة تتطلب التدخل الفوري.
+                                            هي **الانطلاقة والشرارة الأولى** للمشروع، حيث يدرك الأهالي أو المبادرون وجود
+                                            فجوة أو صعوبة تتطلب التدخل الفوري.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-orange"><b>2</b></td>
                                         <td><b>تقدير الاحتياجات (المسح الميداني)</b></td>
                                         <td style="text-align: right;">
-                                            النزول للواقع لجمع البيانات بدقة ووضوح وتحديد: **حجم المشكلة الفعلي**، **الفئات المتضررة**، و **الموارد المحلية المتاحة**.
+                                            النزول للواقع لجمع البيانات بدقة ووضوح وتحديد: **حجم المشكلة الفعلي**،
+                                            **الفئات المتضررة**، و **الموارد المحلية المتاحة**.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-green"><b>3</b></td>
                                         <td><b>تحديد الأهداف</b></td>
                                         <td style="text-align: right;">
-                                            صياغة غايات محددة مراد الوصول إليها؛ تنقسم إلى: **أهداف عامة شاملة**، و **أهداف إجرائية محددة قابلة للقياس والتقييم**.
+                                            صياغة غايات محددة مراد الوصول إليها؛ تنقسم إلى: **أهداف عامة شاملة**، و
+                                            **أهداف إجرائية محددة قابلة للقياس والتقييم**.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-blue"><b>4</b></td>
                                         <td><b>التخطيط (وضع خطة العمل الميدانية)</b></td>
                                         <td style="text-align: right;">
-                                            رسم الطريق وتحديد: **الأنشطة التفصيلية**، **الميزانية المالية التقديرية**، و **الجدول الزمني المحدد** (متى نبدأ ومتى ننتهي).
+                                            رسم الطريق وتحديد: **الأنشطة التفصيلية**، **الميزانية المالية التقديرية**، و
+                                            **الجدول الزمني المحدد** (متى نبدأ ومتى ننتهي).
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-purple"><b>5</b></td>
                                         <td><b>حشد وتعبئة الموارد</b></td>
                                         <td style="text-align: right;">
-                                            جمع التبرعات وتدبير المساعدات (**الموارد المادية**)، واستقطاب وتدريب وتوزيع الأدوار على المتطوعين (**الموارد البشرية**).
+                                            جمع التبرعات وتدبير المساعدات (**الموارد المادية**)، واستقطاب وتدريب وتوزيع
+                                            الأدوار على المتطوعين (**الموارد البشرية**).
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-red"><b>6</b></td>
                                         <td><b>التنفيذ الفعلي للمشروع</b></td>
                                         <td style="text-align: right; font-weight: bold; color: var(--success-color);">
-                                            النزول الفعلي للميدان وتطبيق خطة العمل المرسومة بالكامل وتوجيه الأنشطة للفئات المستهدفة.
+                                            النزول الفعلي للميدان وتطبيق خطة العمل المرسومة بالكامل وتوجيه الأنشطة
+                                            للفئات المستهدفة.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-gold"><b>7</b></td>
                                         <td><b>المتابعة والتقييم</b></td>
                                         <td style="text-align: right;">
-                                            مراجعة العمل المستمرة لاكتشاف وتصحيح الانحرافات وقوانين قياس النجاح (**متابعة مستمرة أثناء العمل**، و **تقييم ختامي بعد انتهائه**).
+                                            مراجعة العمل المستمرة لاكتشاف وتصحيح الانحرافات وقوانين قياس النجاح
+                                            (**متابعة مستمرة أثناء العمل**، و **تقييم ختامي بعد انتهائه**).
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-orange"><b>8</b></td>
                                         <td><b>التوثيق وكتابة التقارير</b></td>
                                         <td style="text-align: right;">
-                                            حفظ وتسجيل كافة الخطوات والنتائج بالورق والصور الميدانية لضمان **نقل الخبرات** و **استدامة الأثر**.
+                                            حفظ وتسجيل كافة الخطوات والنتائج بالورق والصور الميدانية لضمان **نقل
+                                            الخبرات** و **استدامة الأثر**.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1146,7 +1462,7 @@
                 <!-- Card 12: ثاني عشر: أدوار الأخصائي الاجتماعي في المبادرات -->
                 <div class="network-card" data-branch="12" id="card-12">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>ثاني عشر: أدوار الأخصائي الاجتماعي في المبادرات (سؤال مؤكد بالامتحان)</h3>
+                        <h3>أدوار الأخصائي الاجتماعي في المبادرات (سؤال مؤكد بالامتحان)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
@@ -1158,39 +1474,50 @@
                                 <thead>
                                     <tr>
                                         <th>الدور المهني للأخصائي</th>
-                                        <th>متى تختاره في الامتحان? (الكلمات الدلالية الحاسمة <i class="fas fa-search" style="color: gold;"></i>)</th>
+                                        <th>متى تختاره في الامتحان? (الكلمات الدلالية الحاسمة <i class="fas fa-search"
+                                                style="color: gold;"></i>)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="cell-gold"><b>الميسر / المُمكِّن (Facilitator)</b></td>
                                         <td style="text-align: right;">
-                                            إذا كان سيناريو السؤال يتحدث عن: **تسهيل التواصل والاتصال**، **تذليل الصعاب والعقبات**، **تشجيع وتحفيز الأهالي**، أو **زيادة حجم المشاركة**.<br>
-                                            <span style="color:#ff5500; font-weight: bold;">تذكر دائماً: الأخصائي لا ينوب عن المجتمع ولا يعمل بدلاً منهم، بل يساعدهم ليعملوا هم بأنفسهم!</span>
+                                            إذا كان سيناريو السؤال يتحدث عن: **تسهيل التواصل والاتصال**، **تذليل الصعاب
+                                            والعقبات**، **تشجيع وتحفيز الأهالي**، أو **زيادة حجم المشاركة**.<br>
+                                            <span style="color:#ff5500; font-weight: bold;">تذكر دائماً: الأخصائي لا
+                                                ينوب عن المجتمع ولا يعمل بدلاً منهم، بل يساعدهم ليعملوا هم
+                                                بأنفسهم!</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-orange"><b>الخبير (Expert)</b></td>
                                         <td style="text-align: right;">
-                                            إذا كان سيناريو السؤال يتحدث عن: تقديم **البيانات الإحصائية الدقيقة**، **المعلومات العلمية المنهجية**، تقديم **النصح الفني والمهني**، أو **تصحيح المفاهيم التنموية الخاطئة** لدى القادة المحليين.
+                                            إذا كان سيناريو السؤال يتحدث عن: تقديم **البيانات الإحصائية الدقيقة**،
+                                            **المعلومات العلمية المنهجية**، تقديم **النصح الفني والمهني**، أو **تصحيح
+                                            المفاهيم التنموية الخاطئة** لدى القادة المحليين.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-red"><b>المدافع (Advocate)</b></td>
                                         <td style="text-align: right;">
-                                            إذا كان سيناريو السؤال يتحدث عن: **تبني قضايا واحتياجات الفئات المهمشة والفقيرة**، **المطالبة بحقوقهم المشروعة** أمام المسؤولين، أو **الوقوف بجانب الضعفاء**.
+                                            إذا كان سيناريو السؤال يتحدث عن: **تبني قضايا واحتياجات الفئات المهمشة
+                                            والفقيرة**، **المطالبة بحقوقهم المشروعة** أمام المسؤولين، أو **الوقوف بجانب
+                                            الضعفاء**.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-blue"><b>الوسيط (Broker)</b></td>
                                         <td style="text-align: right;">
-                                            إذا كان سيناريو السؤال يتحدث عن: **ربط المجتمع المحلي بمصادر التمويل والمنح الخارجية**، أو **إيصال الأهالي بمؤسسات الدعم والخدمات الخارجية**.
+                                            إذا كان سيناريو السؤال يتحدث عن: **ربط المجتمع المحلي بمصادر التمويل والمنح
+                                            الخارجية**، أو **إيصال الأهالي بمؤسسات الدعم والخدمات الخارجية**.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-green"><b>المنظم المجتمعي</b></td>
                                         <td style="text-align: right;">
-                                            إذا كان سيناريو السؤال يتحدث عن: **تكوين تحالفات وشراكات مؤسسية**، **بناء وتأسيس قنوات اتصال مستدامة**، **تعبئة وحشد الموارد الخارجية والداخلية**، وتدريب القيادات المحلية.
+                                            إذا كان سيناريو السؤال يتحدث عن: **تكوين تحالفات وشراكات مؤسسية**، **بناء
+                                            وتأسيس قنوات اتصال مستدامة**، **تعبئة وحشد الموارد الخارجية والداخلية**،
+                                            وتدريب القيادات المحلية.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1202,44 +1529,53 @@
                 <!-- Card 13: ثالث عشر: مصطلحات التقييم ونجاح المبادرات -->
                 <div class="network-card" data-branch="13" id="card-13">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>ثالث عشر: مصطلحات التقييم ونجاح المبادرات (الفروق المهنية الدقيقة)</h3>
+                        <h3>مصطلحات التقييم ونجاح المبادرات (الفروق المهنية الدقيقة)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (هذه المفاهيم الأربعة تبدو شديدة التشابه والتقارب ولكنها تختلف كلياً في صياغة أسئلة الاختيار)
+                            (هذه المفاهيم الأربعة تبدو شديدة التشابه والتقارب ولكنها تختلف كلياً في صياغة أسئلة
+                            الاختيار)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
                                         <th>المصطلح العلمي</th>
-                                        <th>تعريفه وما يميزه ويحسمه بالامتحان <i class="fas fa-check-double" style="color: gold;"></i></th>
+                                        <th>تعريفه وما يميزه ويحسمه بالامتحان <i class="fas fa-check-double"
+                                                style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="cell-orange"><b>الكفاءة (Efficiency)</b></td>
                                         <td style="text-align: right;">
-                                            ترتبط دائماً بـ **(الموارد والتكلفة)**. تعني الاستخدام والتوظيف الأمثل للموارد لتحقيق أفضل نتائج ممكنة بـ **أقل تكلفة وأقل إهدار للمال والجهد والوقت**.
+                                            ترتبط دائماً بـ **(الموارد والتكلفة)**. تعني الاستخدام والتوظيف الأمثل
+                                            للموارد لتحقيق أفضل نتائج ممكنة بـ **أقل تكلفة وأقل إهدار للمال والجهد
+                                            والوقت**.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-green"><b>الفعالية (Effectiveness)</b></td>
                                         <td style="text-align: right;">
-                                            ترتبط دائماً بـ **(النتائج والوصول للأهداف)**. تعني مدى نجاح وقدرة المبادرة في تحقيق أهدافها وحل المشكلة التنموية **بصرف النظر تماماً عن التكلفة المالية المدفوعة**.
+                                            ترتبط دائماً بـ **(النتائج والوصول للأهداف)**. تعني مدى نجاح وقدرة المبادرة
+                                            في تحقيق أهدافها وحل المشكلة التنموية **بصرف النظر تماماً عن التكلفة المالية
+                                            المدفوعة**.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-blue"><b>الاستدامة (Sustainability)</b></td>
                                         <td style="text-align: right;">
-                                            ترتبط دائماً بـ **(الاستمرارية والمستقبل)**. تعني قدرة المبادرة التنموية على الاستمرار في تقديم خدماتها وأنشطتها للأهالي **حتى بعد انقطاع وانتهاء التمويل الخارجي**، من خلال تدريب كوادر وقادة محليين.
+                                            ترتبط دائماً بـ **(الاستمرارية والمستقبل)**. تعني قدرة المبادرة التنموية على
+                                            الاستمرار في تقديم خدماتها وأنشطتها للأهالي **حتى بعد انقطاع وانتهاء التمويل
+                                            الخارجي**، من خلال تدريب كوادر وقادة محليين.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-gold"><b>التشبيك (Networking)</b></td>
                                         <td style="text-align: right;">
-                                            ترتبط دائماً بـ **(التعاون والتنسيق بين المؤسسات)**. التكامل والتنسيق البيني لمنع **"الازدواجية والتكرار"** في تقديم نفس الخدمة لنفس المستفيدين.
+                                            ترتبط دائماً بـ **(التعاون والتنسيق بين المؤسسات)**. التكامل والتنسيق البيني
+                                            لمنع **"الازدواجية والتكرار"** في تقديم نفس الخدمة لنفس المستفيدين.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1251,38 +1587,50 @@
                 <!-- Card 14: رابع عشر: تقييم التدخل المهني للأخصائي -->
                 <div class="network-card" data-branch="14" id="card-14">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>رابع عشر: تقييم التدخل المهني للأخصائي (الجانب الذاتي والموضوعي)</h3>
+                        <h3>تقييم التدخل المهني للأخصائي (الجانب الذاتي والموضوعي)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            عند تقييم أي تصرف أو موقف يقوم به الأخصائي الاجتماعي أثناء عمله في المجتمع، فإننا نقيمه من زاويتين (موضع سؤال مقالي أو صح وخطأ):
+                            عند تقييم أي تصرف أو موقف يقوم به الأخصائي الاجتماعي أثناء عمله في المجتمع، فإننا نقيمه من
+                            زاويتين (موضع سؤال مقالي أو صح وخطأ):
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
                                         <th>زاوية التقييم</th>
-                                        <th>ماذا تعني؟ (الكلمات الدلالية الحاسمة <i class="fas fa-tags" style="color: gold;"></i>)</th>
+                                        <th>ماذا تعني؟ (الكلمات الدلالية الحاسمة <i class="fas fa-tags"
+                                                style="color: gold;"></i>)</th>
                                         <th>أمثلة تطبيقية موضع سؤال في الامتحان</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="cell-purple"><b>الجانب الذاتي (الشخصي)</b></td>
-                                        <td style="text-align: right;">يرتبط بـ **شخصية الأخصائي وسماته الفطرية أو المكتسبة** التي تؤثر على جودة أدائه وتفاعله.</td>
-                                        <td style="text-align: right;">الاتزان الانفعالي، المظهر الهندامي اللائق، نبرة الصوت المريحة والهادئة، الصبر الطويل، سرعة البديهة، والقدرة على التعاطف الإنساني.</td>
+                                        <td style="text-align: right;">يرتبط بـ **شخصية الأخصائي وسماته الفطرية أو
+                                            المكتسبة** التي تؤثر على جودة أدائه وتفاعله.</td>
+                                        <td style="text-align: right;">الاتزان الانفعالي، المظهر الهندامي اللائق، نبرة
+                                            الصوت المريحة والهادئة، الصبر الطويل، سرعة البديهة، والقدرة على التعاطف
+                                            الإنساني.</td>
                                     </tr>
                                     <tr>
                                         <td class="cell-blue"><b>الجانب الموضوعي (المهني)</b></td>
-                                        <td style="text-align: right;">يرتبط بـ **تطبيق العلم، المنهجية، والمبادئ المهنية الدستورية**. وهو الأساس المباشر الذي يحاسب عليه الأخصائي مهنياً وقانونياً.</td>
-                                        <td style="text-align: right;">الالتزام الدقيق بخطوات التدخل، تطبيق مبادئ الخدمة الاجتماعية (كالتقبل والسرية)، احترام تقاليد المجتمع، الاستعانة بالنظريات المفسرة، والتسجيل والتدوين الدقيق للبيانات.</td>
+                                        <td style="text-align: right;">يرتبط بـ **تطبيق العلم، المنهجية، والمبادئ
+                                            المهنية الدستورية**. وهو الأساس المباشر الذي يحاسب عليه الأخصائي مهنياً
+                                            وقانونياً.</td>
+                                        <td style="text-align: right;">الالتزام الدقيق بخطوات التدخل، تطبيق مبادئ الخدمة
+                                            الاجتماعية (كالتقبل والسرية)، احترام تقاليد المجتمع، الاستعانة بالنظريات
+                                            المفسرة، والتسجيل والتدوين الدقيق للبيانات.</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="info-box danger" style="margin-top: 0.5rem; text-align: right;">
-                            <strong><i class="fas fa-exclamation-triangle"></i> ملحوظة حاسمة للامتحان:</strong> إذا جاءك موقف سلبي (مثل: انشغال الأخصائي بهاتفه المحمول أو الساعة أثناء حديث قادة المجتمع أو العميل)، فهذا يعتبر خللاً جسيماً في <b>(الجانب الموضوعي والمهني)</b> لأنه أخل مباشرة بمبدأ "التقبل والاهتمام المهني والإنصات".
+                            <strong><i class="fas fa-exclamation-triangle"></i> ملحوظة حاسمة للامتحان:</strong> إذا جاءك
+                            موقف سلبي (مثل: انشغال الأخصائي بهاتفه المحمول أو الساعة أثناء حديث قادة المجتمع أو العميل)،
+                            فهذا يعتبر خللاً جسيماً في <b>(الجانب الموضوعي والمهني)</b> لأنه أخل مباشرة بمبدأ "التقبل
+                            والاهتمام المهني والإنصات".
                         </div>
                     </div>
                 </div>
@@ -1290,7 +1638,7 @@
                 <!-- Card 15: خامس عشر: المبادئ المهنية الحاكمة لعمل الأخصائي -->
                 <div class="network-card" data-branch="15" id="card-15">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>خامس عشر: المبادئ المهنية الحاكمة لعمل الأخصائي في التنمية (الدستور المهني)</h3>
+                        <h3>المبادئ المهنية الحاكمة لعمل الأخصائي في التنمية (الدستور المهني)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
@@ -1302,25 +1650,35 @@
                                 <thead>
                                     <tr>
                                         <th>المبدأ المهني</th>
-                                        <th>الشرح المنهجي وكيفية مجيئه في أسئلة الامتحان <i class="fas fa-question-circle" style="color: gold;"></i></th>
+                                        <th>الشرح المنهجي وكيفية مجيئه في أسئلة الامتحان <i
+                                                class="fas fa-question-circle" style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="cell-green"><b>التقبل (Acceptance)</b></td>
-                                        <td style="text-align: right;">قبول المجتمع أو العميل **(كما هو، لا كما يجب أن يكون)** بكل عيوبه، مميزاته، وعاداته دون إصدار أي أحكام أخلاقية أو دينية أو تقييمية عليه. (مثل: الترحيب الحار والإنصات العميق للعملاء يعبر عن التقبل).</td>
+                                        <td style="text-align: right;">قبول المجتمع أو العميل **(كما هو، لا كما يجب أن
+                                            يكون)** بكل عيوبه، مميزاته، وعاداته دون إصدار أي أحكام أخلاقية أو دينية أو
+                                            تقييمية عليه. (مثل: الترحيب الحار والإنصات العميق للعملاء يعبر عن التقبل).
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-orange"><b>حق تقرير المصير</b></td>
-                                        <td style="text-align: right;">إعطاء الأهالي وقادة المجتمع **الحق المطلق والحرية الكاملة** في اختيار المشروعات التي تناسبهم، وعدم فرض أي خطط أو برامج فوقية عليهم من الخارج.</td>
+                                        <td style="text-align: right;">إعطاء الأهالي وقادة المجتمع **الحق المطلق والحرية
+                                            الكاملة** في اختيار المشروعات التي تناسبهم، وعدم فرض أي خطط أو برامج فوقية
+                                            عليهم من الخارج.</td>
                                     </tr>
                                     <tr>
                                         <td class="cell-blue"><b>الموضوعية (Objectivity)</b></td>
-                                        <td style="text-align: right;">تنحية المشاعر الشخصية، الانحيازات، والأحكام المسبقة جانباً، والتعامل مع المشكلات والحقائق الميدانية بحياد تام (دون أي تمييز أو محاباة بين الأهالي).</td>
+                                        <td style="text-align: right;">تنحية المشاعر الشخصية، الانحيازات، والأحكام
+                                            المسبقة جانباً، والتعامل مع المشكلات والحقائق الميدانية بحياد تام (دون أي
+                                            تمييز أو محاباة بين الأهالي).</td>
                                     </tr>
                                     <tr>
                                         <td class="cell-purple"><b>السرية (Confidentiality)</b></td>
-                                        <td style="text-align: right;">الحفاظ التام والمطبق على أسرار وبيانات المجتمع والعملاء، وعدم كشفها أو إفشائها إلا في أضيق الحدود المهنية وبموافقتهم الصريحة لصالح نجاح العمل.</td>
+                                        <td style="text-align: right;">الحفاظ التام والمطبق على أسرار وبيانات المجتمع
+                                            والعملاء، وعدم كشفها أو إفشائها إلا في أضيق الحدود المهنية وبموافقتهم
+                                            الصريحة لصالح نجاح العمل.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1331,37 +1689,49 @@
                 <!-- Card 16: سادس عشر: مفاهيم التخطيط والسياسة الاجتماعية -->
                 <div class="network-card" data-branch="16" id="card-16">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>سادس عشر: مفاهيم التخطيط والسياسة الاجتماعية (مقارنات هامة)</h3>
+                        <h3>مفاهيم التخطيط والسياسة الاجتماعية (مقارنات هامة)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (التنمية عملية واعية لا تحدث بالصدفة العشوائية، بل من خلال التخطيط. إليك أهم مصطلحاته للتمييز بينها)
+                            (التنمية عملية واعية لا تحدث بالصدفة العشوائية، بل من خلال التخطيط. إليك أهم مصطلحاته
+                            للتمييز بينها)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
                                         <th>المصطلح العلمي</th>
-                                        <th>تعريفه وما يميزه ويحسمه في أسئلة الامتحان <i class="fas fa-tasks" style="color: gold;"></i></th>
+                                        <th>تعريفه وما يميزه ويحسمه في أسئلة الامتحان <i class="fas fa-tasks"
+                                                style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="cell-green"><b>التخطيط الاجتماعي</b></td>
-                                        <td style="text-align: right;">هو أسلوب ومنهج علمي واعٍ يهدف إلى إحداث تغيير موجه مقصود في المجتمع، من خلال حصر الموارد المتاحة وتحديد الأهداف بجدول زمني محدد وفترة معينة.</td>
+                                        <td style="text-align: right;">هو أسلوب ومنهج علمي واعٍ يهدف إلى إحداث تغيير
+                                            موجه مقصود في المجتمع، من خلال حصر الموارد المتاحة وتحديد الأهداف بجدول زمني
+                                            محدد وفترة معينة.</td>
                                     </tr>
                                     <tr>
                                         <td class="cell-blue"><b>التخطيط الإقليمي</b></td>
-                                        <td style="text-align: right; font-weight: bold;">يركز على مساحة جغرافية معينة محددة (إقليم)، وهدفه الأساسي الدائم بالامتحان: **(تقليل الفجوة والتباين التنموي بين الريف والحضر)** وتحقيق العدالة للحد من تيارات الهجرة الداخلية.</td>
+                                        <td style="text-align: right; font-weight: bold;">يركز على مساحة جغرافية معينة
+                                            محددة (إقليم)، وهدفه الأساسي الدائم بالامتحان: **(تقليل الفجوة والتباين
+                                            التنموي بين الريف والحضر)** وتحقيق العدالة للحد من تيارات الهجرة الداخلية.
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-orange"><b>اللامركزية (Decentralization)</b></td>
-                                        <td style="text-align: right;">توزيع ونقل السلطات، الخدمات، والقرارات والمشروعات على المحافظات والأقاليم والأطراف، وعدم تكديسها وتكثيفها في العاصمة. <span style="color:#38ef7d; font-weight:bold;">(تعتبر الحل النموذجي لعلاج مشكلات العشوائيات والهجرة الريفية)</span>.</td>
+                                        <td style="text-align: right;">توزيع ونقل السلطات، الخدمات، والقرارات والمشروعات
+                                            على المحافظات والأقاليم والأطراف، وعدم تكديسها وتكثيفها في العاصمة. <span
+                                                style="color:#38ef7d; font-weight:bold;">(تعتبر الحل النموذجي لعلاج
+                                                مشكلات العشوائيات والهجرة الريفية)</span>.</td>
                                     </tr>
                                     <tr>
                                         <td class="cell-red"><b>المركزية (Centralization)</b></td>
-                                        <td style="text-align: right;">تركز السلطة، القرارات، والإشراف والخدمات بالكامل في يد جهة واحدة عليا مركزية (غالباً العاصمة)، مما يعيق التنمية الميدانية السريعة في الأطراف والقرى والمحافظات البعيدة.</td>
+                                        <td style="text-align: right;">تركز السلطة، القرارات، والإشراف والخدمات بالكامل
+                                            في يد جهة واحدة عليا مركزية (غالباً العاصمة)، مما يعيق التنمية الميدانية
+                                            السريعة في الأطراف والقرى والمحافظات البعيدة.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1369,15 +1739,180 @@
                     </div>
                 </div>
 
-                <!-- Card 17: سابع عشر: شفرات (مفاتيح) حل الامتحان في ثوانٍ -->
+                <!-- Card 18: معوقات تنمية المجتمعات المحلية -->
+                <div class="network-card" data-branch="18" id="card-18">
+                    <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
+                        <h3>معوقات تنمية المجتمعات المحلية (سؤال تصنيف المعوقات)</h3>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="network-card-body">
+                        <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
+                            (في الامتحان سيأتيك بمثال لمشكلة ويطلب منك تصنيفها، هل هي عائق اقتصادي أم اجتماعي أم إداري؟)
+                        </p>
+                        <div class="table-responsive-wrapper">
+                            <table class="comparison-table">
+                                <thead>
+                                    <tr>
+                                        <th>نوع العائق</th>
+                                        <th>أمثلة تطبيقية (الكلمات الدلالية في الامتحان) <i class="fas fa-key"
+                                                style="color: gold;"></i></th>
+                                        <th>الشرح / الملاحظات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="cell-red"><b>المعوقات الاجتماعية والثقافية</b></td>
+                                        <td style="text-align: right;">
+                                            - الزيادة السكانية (تلتهم عوائد التنمية).<br>
+                                            - انتشار الأمية والجهل.<br>
+                                            - العادات والتقاليد البالية (مثل النظرة الدونية لعمل المرأة أو مقاومة
+                                            التغيير).<br>
+                                            - التواكل واللامبالاة.
+                                        </td>
+                                        <td style="text-align: right;">
+                                            ترتبط بالبشر وثقافتهم وطريقة تفكيرهم. وهي أصعب المعوقات لأن تغيير ثقافة
+                                            الناس يحتاج لوقت طويل.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cell-orange"><b>المعوقات الاقتصادية</b></td>
+                                        <td style="text-align: right;">
+                                            - نقص التمويل والميزانيات.<br>
+                                            - تدهور البنية التحتية (طرق، مستشفيات).<br>
+                                            - الاعتماد على مورد واحد (كحفر الآبار فقط في البادية).
+                                        </td>
+                                        <td style="text-align: right;">
+                                            ترتبط بالمال، الموارد المادية، والمرافق الأساسية.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cell-blue"><b>المعوقات الإدارية والتنظيمية</b></td>
+                                        <td style="text-align: right;">
+                                            - الروتين والبيروقراطية والمركزية الشديدة.<br>
+                                            - غياب التنسيق بين المؤسسات (مما يسبب ازدواجية).<br>
+                                            - نقص الكوادر البشرية المدربة إدارياً.
+                                        </td>
+                                        <td style="text-align: right;">
+                                            ترتبط بـ "طريقة الإدارة" وقوانين العمل الحكومي التي تعطل سرعة التنفيذ.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 19: الأجهزة التنموية (الحكومية مقابل الأهلية/التطوعية) -->
+                <div class="network-card" data-branch="19" id="card-19">
+                    <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
+                        <h3>الأجهزة التنموية (الحكومية مقابل الأهلية/التطوعية)</h3>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="network-card-body">
+                        <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
+                            (التنمية المحلية تعتمد على جناحين (حكومي وأهلي)، وهذا الجدول يوضح الفرق بينهما)
+                        </p>
+                        <div class="table-responsive-wrapper">
+                            <table class="comparison-table">
+                                <thead>
+                                    <tr>
+                                        <th>وجه المقارنة</th>
+                                        <th>المنظمات الحكومية (الرسمية) <i class="fas fa-building"
+                                                style="color: gold;"></i></th>
+                                        <th>المنظمات الأهلية / المجتمع المدني <i class="fas fa-hands-helping"
+                                                style="color: gold;"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="cell-gold"><b>التأسيس والتمويل</b></td>
+                                        <td style="text-align: right;">تنشأ بقرار من الدولة، وتمول من الميزانية العامة /
+                                            الضرائب.</td>
+                                        <td style="text-align: right;">تنشأ بجهود تطوعية من الأهالي، وتمول من التبرعات
+                                            والاشتراكات.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cell-orange"><b>المرونة والروتين</b></td>
+                                        <td style="text-align: right;">تتسم بالبيروقراطية والبطء في اتخاذ القرار
+                                            لالتزامها بقوانين صارمة.</td>
+                                        <td style="text-align: right;">تتسم بالمرونة العالية والسرعة في اتخاذ القرار وحل
+                                            الأزمات.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cell-green"><b>نطاق العمل</b></td>
+                                        <td style="text-align: right;">تعمل على نطاق واسع وقومي (مشاريع كبرى).</td>
+                                        <td style="text-align: right;">قريبة جداً من الجماهير وتعمل على نطاق محلي (فهم
+                                            أعمق لاحتياجات الناس).</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cell-blue"><b>علاقتها بالمواطن</b></td>
+                                        <td style="text-align: right;">قد ينظر لها المواطن كجهة ملزمة أو مفروضة عليه.
+                                        </td>
+                                        <td style="text-align: right;">تحظى بثقة المواطنين لأنها نابعة منهم وتعتمد على
+                                            القيادات الطبيعية.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 20: نماذج الممارسة المهنية لـ "جاك روثمان" -->
+                <div class="network-card" data-branch="20" id="card-20">
+                    <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
+                        <h3>نماذج الممارسة المهنية لـ "جاك روثمان" (مفاتيح سريعة)</h3>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="network-card-body">
+                        <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
+                        </p>
+                        <div class="table-responsive-wrapper">
+                            <table class="comparison-table">
+                                <thead>
+                                    <tr>
+                                        <th>النموذج</th>
+                                        <th>الهدف الأساسي <i class="fas fa-bullseye" style="color: gold;"></i></th>
+                                        <th>دور الأخصائي الاجتماعي فيه <i class="fas fa-user-tie"
+                                                style="color: gold;"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="cell-gold"><b>نموذج التنمية المحلية</b></td>
+                                        <td style="text-align: right;">يستهدف تغيير "العمليات المجتمعية" (بناء قدرات
+                                            الأهالي، الاعتماد على الذات، المشاركة).</td>
+                                        <td style="text-align: right;">مُمكِّن (مُيسر)، ومُشجع للأهالي ليعملوا معاً.
+                                            (يعتمد على التوافق).</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cell-blue"><b>نموذج التخطيط الاجتماعي</b></td>
+                                        <td style="text-align: right;">يستهدف "إنجاز المهام" (حل مشكلات معقدة مثل
+                                            الإسكان، الصحة، البطالة).</td>
+                                        <td style="text-align: right;">خبير فني (يجمع البيانات ويضع الخطط المعقدة).</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cell-purple"><b>نموذج العمل الاجتماعي</b></td>
+                                        <td style="text-align: right;">يستهدف إحداث "تغيير في موازين القوى" (نصرة الفئات
+                                            المهمشة والمظلومة).</td>
+                                        <td style="text-align: right;">مدافع (Advocate)، ينحاز للضعفاء ويطالب بحقوقهم.
+                                            (يعتمد على الضغط والصراع).</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 17: شفرات (مفاتيح) حل الامتحان في ثوانٍ -->
                 <div class="network-card" data-branch="17" id="card-17">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>سابع عشر: شفرات (مفاتيح) حل الامتحان في ثوانٍ معدودة 🔑</h3>
+                        <h3>شفرات (مفاتيح) حل الامتحان في ثوانٍ معدودة 🔑</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body" style="padding: 0;">
                         <div class="info-box success" style="margin: 1rem; text-align: center;">
-                            <strong>🔑 كود الامتحان السري:</strong> احفظ هذه الشفرات الدلالية لتلتقط وتحدد الإجابة الصحيحة فوراً بمجرد قراءة كلمات السؤال بالامتحان!
+                            <strong>🔑 كود الامتحان السري:</strong> احفظ هذه الشفرات الدلالية لتلتقط وتحدد الإجابة
+                            الصحيحة فوراً بمجرد قراءة كلمات السؤال بالامتحان!
                         </div>
                         <ul class="cheat-list">
                             <li class="cheat-item">
@@ -1399,7 +1934,8 @@
                             <li class="cheat-item">
                                 <div class="cheat-left">
                                     <span class="cheat-badge">3</span>
-                                    <span>إذا رأيت في السؤال كلمة: (تجانس ثقافي ومهني - بطالة مقنعة - تفتت الحيازة)</span>
+                                    <span>إذا رأيت في السؤال كلمة: (تجانس ثقافي ومهني - بطالة مقنعة - تفتت
+                                        الحيازة)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
                                 <span class="cheat-output" style="color: #FFD700;">المجتمع الريفي 🌾</span>
@@ -1407,7 +1943,8 @@
                             <li class="cheat-item">
                                 <div class="cheat-left">
                                     <span class="cheat-badge">4</span>
-                                    <span>إذا رأيت في السؤال كلمة: (علاقات ثانوية/رسمية - رقابة رسمية بالقانون - تلوث)</span>
+                                    <span>إذا رأيت في السؤال كلمة: (علاقات ثانوية/رسمية - رقابة رسمية بالقانون -
+                                        تلوث)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
                                 <span class="cheat-output" style="color: #00b4db;">المجتمع الحضري 🏙️</span>
@@ -1415,7 +1952,8 @@
                             <li class="cheat-item">
                                 <div class="cheat-left">
                                     <span class="cheat-badge">5</span>
-                                    <span>إذا رأيت في السؤال كلمة: (عصبية قبلية - ترحال مستمر - توطين موجه - عزلة)</span>
+                                    <span>إذا رأيت في السؤال كلمة: (عصبية قبلية - ترحال مستمر - توطين موجه -
+                                        عزلة)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
                                 <span class="cheat-output" style="color: #bc4e9c;">المجتمع البدوي 🐫</span>
@@ -1431,7 +1969,8 @@
                             <li class="cheat-item">
                                 <div class="cheat-left">
                                     <span class="cheat-badge">7</span>
-                                    <span>إذا رأيت في السؤال كلمة: (جهد تطوعي ومنظم - سد فجوة موارد - قيادات طبيعية)</span>
+                                    <span>إذا رأيت في السؤال كلمة: (جهد تطوعي ومنظم - سد فجوة موارد - قيادات
+                                        طبيعية)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
                                 <span class="cheat-output" style="color: #00cdac;">المبادرات المجتمعية</span>
@@ -1439,7 +1978,8 @@
                             <li class="cheat-item">
                                 <div class="cheat-left">
                                     <span class="cheat-badge">8</span>
-                                    <span>إذا رأيت في السؤال كلمة: (امتلاك القوة والمهارة - القدرة على اتخاذ القرار والتحكم)</span>
+                                    <span>إذا رأيت في السؤال كلمة: (امتلاك القوة والمهارة - القدرة على اتخاذ القرار
+                                        والتحكم)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
                                 <span class="cheat-output" style="color: #ff5500;">التمكين (Empowerment)</span>
@@ -1447,7 +1987,8 @@
                             <li class="cheat-item">
                                 <div class="cheat-left">
                                     <span class="cheat-badge">9</span>
-                                    <span>إذا رأيت في السؤال كلمة: (تنسيق جهود بين مؤسسات - منع الازدواجية وتكرار الخدمة)</span>
+                                    <span>إذا رأيت في السؤال كلمة: (تنسيق جهود بين مؤسسات - منع الازدواجية وتكرار
+                                        الخدمة)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
                                 <span class="cheat-output" style="color: #d76d77;">التشبيك (Networking)</span>
@@ -1455,10 +1996,13 @@
                             <li class="cheat-item" style="background: rgba(212, 175, 55, 0.08);">
                                 <div class="cheat-left">
                                     <span class="cheat-badge" style="background: gold; color: black;">10</span>
-                                    <span style="font-weight: 700;">أي سؤال يخيّرك بين (استراتيجية الإقناع) و(استراتيجية الإجبار/الضغط)</span>
+                                    <span style="font-weight: 700;">أي سؤال يخيّرك بين (استراتيجية الإقناع) و(استراتيجية
+                                        الإجبار/الضغط)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
-                                <span class="cheat-output" style="background: gold; color: black; border-color: gold;">اختر دائماً: الإقناع والتوعية</span>
+                                <span class="cheat-output"
+                                    style="background: gold; color: black; border-color: gold;">اختر دائماً: الإقناع
+                                    والتوعية</span>
                             </li>
                         </ul>
                     </div>
@@ -1479,7 +2023,7 @@
         // Theme Management
         const THEME_KEY = 'exam_theme';
         const themes = ['', 'light-mode', 'pro-mode', 'contrast-mode'];
-        
+
         function setTheme(name) {
             document.body.classList.remove(...themes.filter(t => t));
             if (name) document.body.classList.add(name);
@@ -1502,15 +2046,15 @@
 
         // Header and Navigation Logic
         let headerExpanded = true;
-        
+
         function toggleHeader() {
             const header = document.getElementById('smart-header');
             const icon = document.querySelector('#header-toggle-btn i');
             const contentArea = document.getElementById('content-area');
             const collapsible = document.getElementById('header-collapsible');
-            
+
             headerExpanded = !headerExpanded;
-            
+
             if (headerExpanded) {
                 header.classList.remove('slim-mode');
                 contentArea.classList.remove('slim-mode-padding');
@@ -1537,7 +2081,7 @@
 
         // Auto-hide header on scroll down, show on scroll up
         let lastScrollTop = 0;
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             let st = window.pageYOffset || document.documentElement.scrollTop;
             if (st > lastScrollTop && st > 100) {
                 // Scroll down
@@ -1565,7 +2109,7 @@
                 card.classList.remove('collapsed');
                 const headerHeight = document.getElementById('smart-header').offsetHeight;
                 const offset = card.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
-                
+
                 window.scrollTo({
                     top: offset,
                     behavior: 'smooth'
@@ -1573,23 +2117,27 @@
 
                 // Highlight effect
                 card.style.transform = 'scale(1.02)';
-                card.style.boxShadow = `0 0 30px ${branchId === 1 ? 'rgba(212,175,55,0.6)' : 
-                                               branchId === 2 ? 'rgba(255,153,0,0.6)' : 
-                                               branchId === 3 ? 'rgba(17,153,142,0.6)' : 
-                                               branchId === 4 ? 'rgba(0,180,219,0.6)' : 
-                                               branchId === 5 ? 'rgba(238,9,121,0.6)' : 
-                                               branchId === 6 ? 'rgba(142,45,226,0.6)' : 
-                                               branchId === 7 ? 'rgba(241,39,17,0.6)' : 
-                                               branchId === 8 ? 'rgba(0,198,255,0.6)' :
-                                               branchId === 9 ? 'rgba(248,7,89,0.6)' :
-                                               branchId === 10 ? 'rgba(230,92,0,0.6)' :
-                                               branchId === 11 ? 'rgba(2,170,176,0.6)' :
-                                               branchId === 12 ? 'rgba(58,28,113,0.6)' :
-                                               branchId === 13 ? 'rgba(69,104,220,0.6)' :
-                                               branchId === 14 ? 'rgba(255,0,204,0.6)' :
-                                               branchId === 15 ? 'rgba(17,153,142,0.6)' :
-                                               branchId === 16 ? 'rgba(189,195,199,0.6)' :
-                                               'rgba(241,39,17,0.8)'}`;
+                card.style.boxShadow = `0 0 30px ${branchId === 1 ? 'rgba(212,175,55,0.6)' :
+                    branchId === 2 ? 'rgba(255,153,0,0.6)' :
+                        branchId === 3 ? 'rgba(17,153,142,0.6)' :
+                            branchId === 4 ? 'rgba(0,180,219,0.6)' :
+                                branchId === 5 ? 'rgba(238,9,121,0.6)' :
+                                    branchId === 6 ? 'rgba(142,45,226,0.6)' :
+                                        branchId === 7 ? 'rgba(241,39,17,0.6)' :
+                                            branchId === 8 ? 'rgba(0,198,255,0.6)' :
+                                                branchId === 9 ? 'rgba(248,7,89,0.6)' :
+                                                    branchId === 10 ? 'rgba(230,92,0,0.6)' :
+                                                        branchId === 11 ? 'rgba(2,170,176,0.6)' :
+                                                            branchId === 12 ? 'rgba(58,28,113,0.6)' :
+                                                                branchId === 13 ? 'rgba(69,104,220,0.6)' :
+                                                                    branchId === 14 ? 'rgba(255,0,204,0.6)' :
+                                                                        branchId === 15 ? 'rgba(17,153,142,0.6)' :
+                                                                            branchId === 16 ? 'rgba(189,195,199,0.6)' :
+                                                                                branchId === 17 ? 'rgba(241,39,17,0.6)' :
+                                                                                    branchId === 18 ? 'rgba(211,16,39,0.6)' :
+                                                                                        branchId === 19 ? 'rgba(0,198,255,0.6)' :
+                                                                                            branchId === 20 ? 'rgba(142,45,226,0.6)' :
+                                                                                                'rgba(241,39,17,0.8)'}`;
                 setTimeout(() => {
                     card.style.transform = '';
                     card.style.boxShadow = '';
