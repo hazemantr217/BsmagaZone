@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الإدارة الآمنة | مطعم واحة الشيخ</title>
+    
+    <!-- Favicon / Shortcut Icon -->
+    <link rel="shortcut icon" type="image/png" href="images/wahat_al_sheikh_logo.png">
+    
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Unified Core Stylesheet (Reusing variables & styles) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Ambient Glow Effects -->
+    <div class="glow-bg-red"></div>
+    <div class="glow-bg-gold"></div>
+
+    <!-- Navigation Header -->
+    <header class="header-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo-area" style="text-decoration: none; color: inherit;">
+                <img src="images/wahat_al_sheikh_logo.svg" alt="شعار واحة الشيخ" class="gold-logo-img">
+                <div class="logo-text">
+                    <span class="logo-title">لوحة تحكم الإدارة</span>
+                    <span class="logo-subtitle">مطعم واحة الشيخ</span>
+                </div>
+            </a>
+            <div class="contact-header-badges">
+                <a href="index.html" class="btn-contact-nav">
+                    <i class="fa-solid fa-arrow-left"></i> <span>العودة للمنيو الرئيسي</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 1. SUPABASE AUTH EMAIL/PASSWORD LOGIN SCREEN (Visible when not authenticated) -->
+    <section class="admin-login-layout" id="login-screen-view">
+        <div class="admin-login-card">
+            <div class="admin-login-icon"><i class="fa-solid fa-user-shield"></i></div>
+            <h2>بوابة الإدارة الآمنة</h2>
+            <p>سجل دخولك باستخدام بريدك الإلكتروني الإداري وكلمة المرور المشفرة للتحكم بقاعدة بيانات المنيو</p>
+            
+            <div class="input-group" style="margin-bottom: 16px; text-align: right;">
+                <label for="admin-email">البريد الإلكتروني للمدير:</label>
+                <input type="email" id="admin-email" placeholder="example@domain.com" required>
+            </div>
+            
+            <div class="input-group" style="margin-bottom: 24px; text-align: right;">
+                <label for="admin-password">كلمة المرور الآمنة:</label>
+                <input type="password" id="admin-password" placeholder="••••••••" required>
+            </div>
+            
+            <button class="btn-primary-red-block" id="btn-login-submit">
+                <i class="fa-solid fa-right-to-bracket animate-pulse"></i> تسجيل دخول آمن
+            </button>
+            
+            <!-- Safe instructions badge -->
+            <div style="background: rgba(255,255,255,0.02); border: 1.5px dashed rgba(212,175,55,0.2); padding: 12px; border-radius: var(--border-radius-sm); margin-top: 20px; font-size: 11px; text-align: right; line-height: 1.5; color: var(--color-text-gray);">
+                <i class="fa-solid fa-circle-info text-gold" style="margin-left: 6px;"></i> 
+                <span>هذه البوابة متصلة بـ **Supabase Auth**. يرجى إضافة حساب المدير في لوحة تحكم Supabase الخاصة بك للتمكن من الدخول بأمان كامل.</span>
+            </div>
+
+            <!-- Database connection settings toggle and card on the login screen to prevent locking out on bad config -->
+            <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px;">
+                <button type="button" id="btn-toggle-login-config" class="btn-secondary" style="width: 100%; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <i class="fa-solid fa-gears text-gold"></i>
+                    <span>إعدادات الربط مع قاعدة البيانات (Supabase)</span>
+                </button>
+            </div>
+
+            <div id="login-config-panel" style="display: none; margin-top: 15px; background: rgba(0,0,0,0.3); border: 1px dashed rgba(212,175,55,0.25); padding: 15px; border-radius: var(--border-radius-sm); text-align: right;">
+                <h4 style="font-size: 13px; color: var(--color-text-white); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                    <i class="fa-solid fa-database text-gold"></i> تهيئة ربط سوبابيز (Supabase)
+                </h4>
+                <div class="input-group" style="margin-bottom: 12px;">
+                    <label for="login-cfg-url" style="font-size: 11px; color: var(--color-text-gray); display: block; margin-bottom: 4px;">رابط السيرفر (Supabase URL):</label>
+                    <input type="text" id="login-cfg-url" placeholder="https://your-project.supabase.co" style="padding: 8px 12px; font-size: 12px; width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--border-radius-sm); color: var(--color-text-white);">
+                </div>
+                <div class="input-group" style="margin-bottom: 12px;">
+                    <label for="login-cfg-key" style="font-size: 11px; color: var(--color-text-gray); display: block; margin-bottom: 4px;">مفتاح الوصول العام (Anon/Public Key):</label>
+                    <input type="password" id="login-cfg-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." style="padding: 8px 12px; font-size: 12px; width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--border-radius-sm); color: var(--color-text-white);">
+                </div>
+                <div style="display: flex; gap: 8px; justify-content: flex-end; margin-top: 10px;">
+                    <button type="button" class="btn-secondary" id="btn-login-cfg-reset" style="padding: 6px 12px; font-size: 11px;">مسح الحقول (الوضع المحلي)</button>
+                    <button type="button" class="btn-primary-gold" id="btn-login-cfg-save" style="padding: 6px 14px; font-size: 11px; border-radius: var(--border-radius-sm);">حفظ والربط المباشر</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. MAIN DASHBOARD CONTENT (Visible when authenticated) -->
+    <section class="admin-dashboard-container" id="dashboard-main-view" style="display: none;">
+        
+        <!-- Dashboard Sub-Header Info -->
+        <div class="admin-dashboard-header">
+            <div class="admin-header-title">
+                <h2><i class="fa-solid fa-crown text-gold animate-bounce"></i> لوحة تحكم المنيو السحابية</h2>
+                <p style="font-size: 12px; color: var(--color-text-gray); margin-top: 4px;">المدير النشط حالياً: <span class="gold-text font-bold" id="logged-admin-email">admin@wahat-al-sheikh.com</span> | تحت إدارة: <span class="gold-text font-bold">رحومة اسرافيل &bull; اسلام اسرافيل &bull; عبدالله اسرافيل</span></p>
+            </div>
+            <div class="admin-header-actions">
+                <div class="config-status-badge" id="supabase-status-badge">
+                    <i class="fa-solid fa-circle-nodes"></i> <span>جاري التحقق من الربط...</span>
+                </div>
+                <button class="btn-logout" id="btn-admin-logout">
+                    <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج الآمن
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. Supabase Dynamic Configuration Wizard (Collapsible) -->
+        <div class="db-config-panel">
+            <h3><i class="fa-solid fa-gears text-gold"></i> إعدادات الربط المباشر مع Supabase</h3>
+            <p style="font-size: 12px; color: var(--color-text-gray);">
+                الصق روابط الربط الخاصة بمشروع Supabase الخاص بك هنا ليعمل الموقع بالكامل بنظام سحابي ديناميكي.
+                في حال ترك الحقول فارغة، سيعمل الموقع تلقائياً **بالمنيو الافتراضي الآمن (Offline Mode)** لتجنب أي انقطاع للزبائن.
+            </p>
+            <div class="db-config-grid">
+                <div class="input-group">
+                    <label for="cfg-supabase-url">رابط السيرفر (Supabase URL):</label>
+                    <input type="text" id="cfg-supabase-url" placeholder="https://your-project.supabase.co">
+                </div>
+                <div class="input-group">
+                    <label for="cfg-supabase-key">مفتاح الوصول العام (Anon/Public Key):</label>
+                    <input type="password" id="cfg-supabase-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 5px;">
+                <button class="btn-secondary" id="btn-reset-db-config" style="padding: 6px 14px; font-size: 11px;">مسح الحقول</button>
+                <button class="btn-primary-gold" id="btn-save-db-config" style="padding: 8px 18px; font-size: 13px; border-radius: var(--border-radius-sm);">
+                    <i class="fa-solid fa-plug"></i> حفظ والربط المباشر
+                </button>
+            </div>
+        </div>
+
+        <!-- 3.5 Secure Admin Password Change Panel -->
+        <div class="db-config-panel" style="border-color: rgba(196, 30, 58, 0.25); background: rgba(25, 10, 10, 0.45);">
+            <h3><i class="fa-solid fa-key text-red"></i> تغيير كلمة مرور الإدارة الآمنة (Supabase Auth)</h3>
+            <p style="font-size: 12px; color: var(--color-text-gray);">
+                تتيح لك هذه الميزة تحديث كلمة المرور الخاصة بحساب الإدارة الخاص بك في Supabase مباشرة وبشكل آمن تماماً بدون الحاجة لفتح لوحة تحكم سوبابيز.
+            </p>
+            <div class="db-config-grid">
+                <div class="input-group">
+                    <label for="cfg-new-password">كلمة المرور الجديدة:</label>
+                    <input type="password" id="cfg-new-password" placeholder="اكتب كلمة المرور الجديدة (6 خانات على الأقل)">
+                </div>
+                <div class="input-group">
+                    <label for="cfg-confirm-password">تأكيد كلمة المرور الجديدة:</label>
+                    <input type="password" id="cfg-confirm-password" placeholder="أعد كتابة كلمة المرور الجديدة للتأكيد">
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 5px;">
+                <button class="btn-submit-success" id="btn-change-password" style="background: var(--gradient-red); border-color: var(--color-red-light); padding: 8px 18px; font-size: 13px; border-radius: var(--border-radius-sm);">
+                    <i class="fa-solid fa-lock-open"></i> تحديث كلمة المرور
+                </button>
+            </div>
+        </div>
+
+        <!-- 4. Interactive CRUD Workspace -->
+        <div class="dashboard-grid">
+            
+            <!-- A. Left Panel: Items Scrollable Listing -->
+            <div class="dashboard-panel-box">
+                <div class="panel-header-title">
+                    <span><i class="fa-solid fa-list-check text-gold"></i> قائمة الوجبات الحالية (<span id="total-items-badge">0</span>)</span>
+                    <button class="btn-primary-gold" id="btn-create-new-item" style="padding: 6px 14px; font-size: 12px; border-radius: var(--border-radius-sm);">
+                        <i class="fa-solid fa-plus"></i> صنف جديد
+                    </button>
+                </div>
+                
+                <!-- Search within management panel -->
+                <div class="search-box-wrapper" style="margin-bottom: 5px;">
+                    <i class="fa-solid fa-magnifying-glass search-icon" style="right: 12px; font-size: 14px;"></i>
+                    <input type="text" id="admin-search-input" placeholder="بحث سريع في الوجبات لإدارتها..." style="padding: 8px 36px 8px 12px; font-size: 13px;">
+                </div>
+
+                <div class="admin-items-scrollable" id="admin-items-list-container">
+                    <!-- Dynamic rendering of items -->
+                </div>
+            </div>
+            
+            <!-- B. Right Panel: Dish Editor Form -->
+            <div class="dashboard-panel-box" id="editor-panel-box">
+                <div class="panel-header-title">
+                    <span id="editor-title"><i class="fa-solid fa-circle-plus text-red"></i> إضافة وجبة جديدة للمنيو</span>
+                    <span class="badge-status-mode gold-text" id="editor-mode-badge" style="font-size: 11px; font-weight: 700;">وضع الإضافة</span>
+                </div>
+
+                <form id="dish-editor-form" onsubmit="return false;" class="admin-form-group">
+                    <input type="hidden" id="editor-item-id">
+                    
+                    <!-- Dish Name -->
+                    <div class="input-group">
+                        <label for="form-dish-name">اسم الوجبة الكريم (أو الصنف):</label>
+                        <input type="text" id="form-dish-name" placeholder="مثال: كيلو كفتة مشوية..." required>
+                    </div>
+
+                    <!-- Category Association -->
+                    <div class="input-group">
+                        <label for="form-dish-category">قسم المنيو التابع له:</label>
+                        <select id="form-dish-category" required>
+                            <!-- Dynamically loaded categories -->
+                        </select>
+                    </div>
+
+                    <!-- Description / Ingredients -->
+                    <div class="input-group">
+                        <label for="form-dish-ingredients">مكونات الوجبة وتفاصيلها:</label>
+                        <textarea id="form-dish-ingredients" rows="3" placeholder="مثال: لحم ضاني بلدي + أرز بسمتي فاخر + خضار + سلطات + عيش بدوي..." required></textarea>
+                    </div>
+
+                    <!-- Pricing structure fields -->
+                    <div class="form-double-column">
+                        <div class="input-group">
+                            <label for="form-dish-price-type">نوع تسعير الصنف:</label>
+                            <select id="form-dish-price-type" required>
+                                <option value="fixed">سعر ثابت محدد (ج.م)</option>
+                                <option value="undetermined">حسب الطلب / استفسار تلفوني</option>
+                                <option value="weight">حسب الوزن الإجمالي (⚖️)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group" id="price-numeric-input-group">
+                            <label for="form-dish-price">سعر الصنف بالجنيه المصري (ج.م):</label>
+                            <input type="number" id="form-dish-price" value="0" min="0" placeholder="مثال: 350">
+                        </div>
+                    </div>
+
+                    <!-- Custom Badge -->
+                    <div class="input-group">
+                        <label for="form-dish-badge">شارة ترويجية خاصة (اختياري):</label>
+                        <input type="text" id="form-dish-badge" placeholder="مثال: الأكثر مبيعاً، سعر مميز، جديد...">
+                    </div>
+
+                    <!-- CRUD Action Buttons -->
+                    <div class="form-actions-row">
+                        <button type="button" class="btn-secondary" id="btn-form-cancel">إلغاء التحديد</button>
+                        <button type="submit" class="btn-submit-success" id="btn-form-submit">
+                            <i class="fa-solid fa-floppy-disk"></i> حفظ الصنف ونشره للمنيو
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Official Supabase JS SDK via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Administrative JavaScript Logic -->
+    <script src="admin.js"></script>
+</body>
+</html>
