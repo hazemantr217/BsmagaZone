@@ -185,7 +185,7 @@ function updateNavigator() {
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.classList.add('nav-btn');
-        btn.textContent = q.id;
+        btn.textContent = idx + 1;
 
         if (userAnswers[q.id]) {
             answeredCount++;
@@ -324,7 +324,7 @@ function renderQuestions() {
 
         card.innerHTML = `
             <div class="question-header">
-                <span>📝 سؤال ${q.id}</span>
+                <span>📝 سؤال ${idx + 1}</span>
                 <span class="question-status"></span>
             </div>
             <div class="question-text">${q.text}</div>
