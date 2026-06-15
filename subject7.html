@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>تنمية المجتمعات المحلية</title>
+    <title>ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª Ø§Ù„Ù…Ø­Ù„ÙŠØ©</title>
     <link rel="icon" type="image/svg+xml" href="shared/favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -19,6 +19,9 @@
 
         gtag('config', 'G-N4C1HT27G2');
     </script>
+    <!-- Supabase Integration -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="shared/supabase-config.js"></script>
 </head>
 
 <body>
@@ -26,8 +29,8 @@
     <div id="loading-screen">
         <div class="loader-content">
             <div class="loader-spinner"></div>
-            <h2>جاري التحميل...</h2>
-            <p>تجهيز المادة</p>
+            <h2>Ø¬Ø§Ø±ÙŠ Ø§Ù„ØªØ­Ù…ÙŠÙ„...</h2>
+            <p>ØªØ¬Ù‡ÙŠØ² Ø§Ù„Ù…Ø§Ø¯Ø©</p>
         </div>
     </div>
 
@@ -42,67 +45,77 @@
         <div class="landing-container">
             <div class="landing-header">
                 <a href="index.html" class="back-to-home">
-                    <i class="fas fa-arrow-right"></i> العودة للرئيسية
+                    <i class="fas fa-arrow-right"></i> Ø§Ù„Ø¹ÙˆØ¯Ø© Ù„Ù„Ø±Ø¦ÙŠØ³ÙŠØ©
                 </a>
-                <h1><i class="fas fa-leaf"></i> تنمية المجتمعات المحلية</h1>
-                <p>اختر الوضع المناسب للدراسة</p>
+                <h1><i class="fas fa-leaf"></i> ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª Ø§Ù„Ù…Ø­Ù„ÙŠØ©</h1>
+                <p>Ø§Ø®ØªØ± Ø§Ù„ÙˆØ¶Ø¹ Ø§Ù„Ù…Ù†Ø§Ø³Ø¨ Ù„Ù„Ø¯Ø±Ø§Ø³Ø©</p>
             </div>
 
             <div class="mode-cards">
                 <div class="mode-card mindmap-card">
                     <div class="card-icon"><i class="fas fa-project-diagram"></i></div>
-                    <h2>كبسولة المراجعة</h2>
+                    <h2>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©</h2>
                     <div class="card-buttons">
-                        <button class="card-btn review-btn" onclick="window.location.href='الخريطة_الذهنية_تنمية.html'">
-                            <i class="fas fa-play"></i> ابدأ المراجعة
+                        <button class="card-btn mindmap-btn" onclick="window.location.href='Ø§Ù„Ø®Ø±ÙŠØ·Ø©_Ø§Ù„Ø°Ù‡Ù†ÙŠØ©_ØªÙ†Ù…ÙŠØ©.html'">
+                            <i class="fas fa-play"></i> Ø§Ø¨Ø¯Ø£ Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©
                         </button>
                     </div>
                 </div>
 
                 <div class="mode-card exam-card">
                     <div class="card-icon"><i class="fas fa-file-alt"></i></div>
-                    <h2>الامتحان الأول</h2>
+                    <h2>Ø§Ù„Ø§Ù…ØªØ­Ø§Ù† Ø§Ù„Ø£ÙˆÙ„</h2>
                     <div class="card-buttons">
-                        <button class="card-btn exam-btn" onclick="window.location.href='امتحان-تنمية1.html'">
-                            <i class="fas fa-book-reader"></i> ابدأ الامتحان
+                        <button class="card-btn exam-btn" onclick="window.location.href='Ø§Ù…ØªØ­Ø§Ù†-ØªÙ†Ù…ÙŠØ©1.html'">
+                            <i class="fas fa-book-reader"></i> Ø§Ø¨Ø¯Ø£ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†
                         </button>
                     </div>
                 </div>
 
                 <div class="mode-card exam-card">
                     <div class="card-icon"><i class="fas fa-file-alt"></i></div>
-                    <h2>الامتحان الثاني</h2>
+                    <h2>Ø§Ù„Ø§Ù…ØªØ­Ø§Ù† Ø§Ù„Ø«Ø§Ù†ÙŠ</h2>
                     <div class="card-buttons">
-                        <button class="card-btn exam-btn" onclick="window.location.href='امتحان-تنمية2.html'">
-                            <i class="fas fa-book-reader"></i> ابدأ الامتحان
+                        <button class="card-btn exam-btn" onclick="window.location.href='Ø§Ù…ØªØ­Ø§Ù†-ØªÙ†Ù…ÙŠØ©2.html'">
+                            <i class="fas fa-book-reader"></i> Ø§Ø¨Ø¯Ø£ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†
                         </button>
                     </div>
                 </div>
 
                 <div class="mode-card exam-card">
                     <div class="card-icon"><i class="fas fa-file-alt"></i></div>
-                    <h2>الامتحان الثالث</h2>
+                    <h2>Ø§Ù„Ø§Ù…ØªØ­Ø§Ù† Ø§Ù„Ø«Ø§Ù„Ø«</h2>
                     <div class="card-buttons">
-                        <button class="card-btn exam-btn" onclick="window.location.href='امتحان-تنمية3.html'">
-                            <i class="fas fa-book-reader"></i> ابدأ الامتحان
+                        <button class="card-btn exam-btn" onclick="window.location.href='Ø§Ù…ØªØ­Ø§Ù†-ØªÙ†Ù…ÙŠØ©3.html'">
+                            <i class="fas fa-book-reader"></i> Ø§Ø¨Ø¯Ø£ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mode-card exam-card" style="border-color: #ffd700 !important; position: relative; box-shadow: 0 0 20px rgba(255, 215, 0, 0.25); background: rgba(255, 215, 0, 0.03); overflow: hidden; transition: all 0.3s ease;">
+                    <div class="card-icon" style="color: #ffd700 !important; background: rgba(255, 215, 0, 0.15) !important; box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);"><i class="fas fa-crown"></i></div>
+                    <h2 style="color: #ffd700; font-weight: 800; margin-bottom: 12px;">Ø§Ù…ØªØ­Ø§Ù† Ø§Ù„Ø³Ù†Ø© Ø§Ù„Ø³Ø§Ø¨Ù‚Ø©</h2>
+                    <div class="card-buttons">
+                        <button class="card-btn exam-btn" style="background: linear-gradient(135deg, #ffd700, #f39c12) !important; border: none !important; color: #000 !important; font-weight: 900; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4) !important;" onclick="window.location.href='Ø§Ù…ØªØ­Ø§Ù†-ØªÙ†Ù…ÙŠØ©-Ø³Ø§Ø¨Ù‚.html'">
+                            <i class="fas fa-medal"></i> Ø§Ø¨Ø¯Ø£ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†
                         </button>
                     </div>
                 </div>
             </div>
 
             <div class="landing-theme-switcher">
-                <span>المظهر:</span>
-                <button onclick="setTheme('')" title="داكن"><i class="fas fa-moon"></i></button>
-                <button onclick="setTheme('light-mode')" title="فاتح"><i class="fas fa-sun"></i></button>
+                <span>Ø§Ù„Ù…Ø¸Ù‡Ø±:</span>
+                <button onclick="setTheme('')" title="Ø¯Ø§ÙƒÙ†"><i class="fas fa-moon"></i></button>
+                <button onclick="setTheme('light-mode')" title="ÙØ§ØªØ­"><i class="fas fa-sun"></i></button>
                 <button onclick="setTheme('pro-mode')" title="Pro"><i class="fas fa-gem"></i></button>
-                <button onclick="setTheme('contrast-mode')" title="تباين"><i class="fas fa-adjust"></i></button>
+                <button onclick="setTheme('contrast-mode')" title="ØªØ¨Ø§ÙŠÙ†"><i class="fas fa-adjust"></i></button>
             </div>
             
             <div class="hub-footer" style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 15px;">
                 <div class="support-contact">
-                    في حالة وجود مشكلة أو اقتراح بخصوص الموقع، 
+                    ÙÙŠ Ø­Ø§Ù„Ø© ÙˆØ¬ÙˆØ¯ Ù…Ø´ÙƒÙ„Ø© Ø£Ùˆ Ø§Ù‚ØªØ±Ø§Ø­ Ø¨Ø®ØµÙˆØµ Ø§Ù„Ù…ÙˆÙ‚Ø¹ØŒ 
                     <a href="https://wa.me/201091913836?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%B9%D9%86%D8%AF%D9%89%20%D9%85%D8%B4%D9%83%D9%84%D8%A9%20%D8%A3%D9%88%20%D8%A7%D9%82%D8%AA%D8%B1%D8%A7%D8%AD%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%85%D9%88%D9%82%D8%B9%20Bsmaga-Zone" target="_blank">
-                        تواصل معي <i class="fab fa-whatsapp"></i>
+                        ØªÙˆØ§ØµÙ„ Ù…Ø¹ÙŠ <i class="fab fa-whatsapp"></i>
                     </a>
                 </div>
                 <div style="margin-top: 10px; opacity: 0.7; font-size: 0.9rem; direction: ltr; font-family: sans-serif;">
@@ -136,3 +149,4 @@
 </body>
 
 </html>
+

@@ -95,6 +95,7 @@ let timerInterval = null;
 let userAnswers = {};
 let score = 0;
 let currentMode = 'practice';
+let examStartTime = null;
 
 // ============================================
 // LOCAL STORAGE
@@ -441,6 +442,15 @@ function finishExam() {
 
     document.getElementById('submit-btn').style.display = 'none';
 
+    // Track exam result in Supabase
+    if (typeof trackExamResult === 'function') {
+        const filename = window.location.pathname.split('/').pop().replace('.html', '');
+        const decodedExamSlug = decodeURIComponent(filename);
+        const subjectSlug = getSubjectSlugFromExamFilename(filename);
+        const timeSpentSeconds = examStartTime ? Math.round((Date.now() - examStartTime) / 1000) : 0;
+        trackExamResult(decodedExamSlug, subjectSlug, score, total, timeSpentSeconds, userAnswers);
+    }
+
     if (pct >= 85) createConfetti();
     clearState();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -455,7 +465,61 @@ function finishExam() {
 // ============================================
 // INIT EXAM
 // ============================================
-function initExam() {
+async function initExam() {
+    examStartTime = Date.now();
+
+    // Attempt to load questions from Supabase
+    const client = typeof getSupabaseClient === 'function' ? getSupabaseClient() : null;
+    if (client) {
+        try {
+            const filename = window.location.pathname.split('/').pop().replace('.html', '');
+            const decodedExamSlug = decodeURIComponent(filename);
+            
+            // Find exam ID
+            const { data: examData } = await client
+                .from('exams')
+                .select('id')
+                .eq('slug', decodedExamSlug)
+                .single();
+                
+            if (examData) {
+                const { data: dbQuestions } = await client
+                    .from('questions')
+                    .select('*')
+                    .eq('exam_id', examData.id)
+                    .order('sort_order', { ascending: true })
+                    .order('id', { ascending: true });
+                    
+                if (dbQuestions && dbQuestions.length > 0) {
+                    // Map db fields to client fields
+                    questions = dbQuestions.map(q => ({
+                        id: q.id,
+                        type: q.type,
+                        text: q.text,
+                        options: q.options,
+                        correctAnswer: q.type === 'tf' ? q.correct_answer : parseInt(q.correct_answer),
+                        explanation: q.explanation
+                    }));
+                    
+                    // Update header/footer question counters with actual count
+                    const total = questions.length;
+                    const progressText = document.getElementById('progress-text');
+                    if (progressText) progressText.textContent = `0 / ${total}`;
+                    const headerTotal = document.getElementById('header-total');
+                    if (headerTotal) headerTotal.textContent = total;
+                    const liveTotal = document.getElementById('live-total');
+                    if (liveTotal) liveTotal.textContent = total;
+                    
+                    // Update loading screen text (if visible)
+                    const loadingText = document.querySelector('#loading-screen p');
+                    if (loadingText) loadingText.textContent = `إعداد ${total} سؤالاً`;
+                }
+            }
+        } catch (e) {
+            console.error("Error loading questions from Supabase, using local fallback questions:", e);
+        }
+    }
+
     const tfQuestions = questions.filter(q => q.type === 'tf');
     const mcqQuestions = questions.filter(q => q.type === 'mcq');
     const essayQuestions = questions.filter(q => q.type === 'essay');
@@ -471,6 +535,12 @@ function initExam() {
     updateProgress();
     updateLiveScore();
     startTimer(loadTime() || 7200);
+
+    // Hide loading screen
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        loadingScreen.classList.add('hidden');
+    }
 }
 
 // ============================================

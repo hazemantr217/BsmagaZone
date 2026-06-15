@@ -1,0 +1,1200 @@
+// Admin Dashboard Core Logic for BsmagaZone
+let authMode = 'login';
+let currentTab = 'overview';
+let activeSubjects = [];
+let activeExams = [];
+let allQuestions = [];
+
+// Chart instances
+let visitsChart = null;
+let subjectsChart = null;
+let subjectScoresChart = null;
+let usageHoursChart = null;
+
+// Initialize Admin Dashboard
+document.addEventListener("DOMContentLoaded", () => {
+    // Wait for Supabase to be ready
+    const checkSupabase = setInterval(() => {
+        if (window.supabase) {
+            clearInterval(checkSupabase);
+            initAuthListener();
+        }
+    }, 100);
+});
+
+// Switch between Login and Signup tabs
+function switchAuthTab(mode) {
+    authMode = mode;
+    const tabs = document.querySelectorAll('.auth-tab');
+    const submitBtn = document.getElementById('auth-submit-btn');
+    
+    tabs.forEach(tab => tab.classList.remove('active'));
+    
+    if (mode === 'login') {
+        tabs[0].classList.add('active');
+        submitBtn.querySelector('span').textContent = 'تسجيل الدخول';
+        submitBtn.querySelector('i').className = 'fas fa-sign-in-alt';
+    } else {
+        tabs[1].classList.add('active');
+        submitBtn.querySelector('span').textContent = 'إنشاء حساب أدمن';
+        submitBtn.querySelector('i').className = 'fas fa-user-plus';
+    }
+}
+
+// Authentication Listener
+function initAuthListener() {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    // Listen for Auth changes
+    client.auth.onAuthStateChange((event, session) => {
+        if (session) {
+            // User is signed in
+            document.getElementById('auth-section').style.display = 'none';
+            document.getElementById('dashboard-section').style.display = 'flex';
+            document.getElementById('admin-email').textContent = session.user.email;
+            
+            // Initial data loads
+            loadDashboardData();
+        } else {
+            // User is signed out
+            document.getElementById('auth-section').style.display = 'flex';
+            document.getElementById('dashboard-section').style.display = 'none';
+        }
+    });
+}
+
+// Handle Login or Signup submission
+async function handleAuth(event) {
+    event.preventDefault();
+    const email = document.getElementById('auth-email').value;
+    const password = document.getElementById('auth-password').value;
+    const client = getSupabaseClient();
+    
+    if (!client) {
+        alert("فشل الاتصال بـ Supabase.");
+        return;
+    }
+
+    try {
+        if (authMode === 'login') {
+            const { data, error } = await client.auth.signInWithPassword({ email, password });
+            if (error) throw error;
+        } else {
+            const { data, error } = await client.auth.signUp({ email, password });
+            if (error) throw error;
+            alert("تم إرسال رابط تأكيد الحساب لبريدك الإلكتروني (يرجى التحقق من البريد لتتمكن من تسجيل الدخول).");
+        }
+    } catch (e) {
+        alert("خطأ في المصادقة: " + e.message);
+    }
+}
+
+// Handle Logout
+async function handleLogout() {
+    const client = getSupabaseClient();
+    if (client) {
+        await client.auth.signOut();
+    }
+}
+
+// Switch between Navigation Tabs
+function switchTab(tabName) {
+    currentTab = tabName;
+    
+    // Manage active state of menu items
+    const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
+    menuItems.forEach(item => item.classList.remove('active'));
+    
+    const activeItem = document.getElementById(`menu-${tabName}`);
+    if (activeItem) activeItem.classList.add('active');
+
+    // Manage active state of sections
+    const sections = document.querySelectorAll('.dashboard-section');
+    sections.forEach(sec => sec.classList.remove('active'));
+    
+    const activeSection = document.getElementById(`tab-${tabName}`);
+    if (activeSection) activeSection.classList.add('active');
+
+    // Update Top bar titles
+    const titleEl = document.getElementById('current-tab-title');
+    const subtitleEl = document.getElementById('current-tab-subtitle');
+    
+    switch (tabName) {
+        case 'overview':
+            titleEl.textContent = 'نظرة عامة';
+            subtitleEl.textContent = 'إحصائيات فورية لأداء منصة الامتحانات';
+            break;
+        case 'analytics':
+            titleEl.textContent = 'التحليلات والأرقام';
+            subtitleEl.textContent = 'تحليلات تفصيلية عن سلوك الطلاب وأدائهم';
+            break;
+        case 'results':
+            titleEl.textContent = 'نتائج الطلاب';
+            subtitleEl.textContent = 'سجل درجات الطلاب والامتحانات المكتملة';
+            break;
+        case 'questions':
+            titleEl.textContent = 'إدارة الأسئلة';
+            subtitleEl.textContent = 'إضافة، تعديل، وحذف أسئلة الامتحانات';
+            break;
+        case 'subjects':
+            titleEl.textContent = 'المواد والامتحانات';
+            subtitleEl.textContent = 'تفعيل/تعطيل المواد الدراسية وامتحاناتها';
+            break;
+    }
+    
+    // Trigger specific tab loads
+    loadTabData(tabName);
+}
+
+// Toggle Sidebar on mobile
+function toggleSidebar() {
+    const sidebar = document.getElementById('admin-sidebar');
+    sidebar.classList.toggle('active');
+}
+
+// ============================================
+// DATA LOADING DISPATCHER
+// ============================================
+async function loadDashboardData() {
+    // Load subjects globally first
+    await loadGlobalSubjects();
+    
+    // Load default tab data
+    switchTab('overview');
+}
+
+async function loadTabData(tabName) {
+    switch (tabName) {
+        case 'overview':
+            await loadOverviewData();
+            break;
+        case 'analytics':
+            await loadAnalyticsData();
+            break;
+        case 'results':
+            await loadResultsData();
+            break;
+        case 'questions':
+            await loadQuestionsData();
+            break;
+        case 'subjects':
+            await loadSubjectsManagerData();
+            break;
+    }
+}
+
+// Fetch subjects and exams globally to use in dropdowns
+async function loadGlobalSubjects() {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        const { data: subjects, error: sError } = await client
+            .from('subjects')
+            .select('*')
+            .order('id', { ascending: true });
+            
+        if (sError) throw sError;
+        activeSubjects = subjects || [];
+
+        const { data: exams, error: eError } = await client
+            .from('exams')
+            .select('*')
+            .order('id', { ascending: true });
+            
+        if (eError) throw eError;
+        activeExams = exams || [];
+
+        // Populate filter dropdowns
+        populateDropdowns();
+    } catch (e) {
+        console.error("Error loading global config:", e);
+    }
+}
+
+function populateDropdowns() {
+    const resultSubSelect = document.getElementById('filter-result-subject');
+    const questionSubSelect = document.getElementById('filter-question-subject');
+    
+    // Clear and add default
+    if (resultSubSelect) {
+        resultSubSelect.innerHTML = '<option value="">كل المواد</option>';
+        activeSubjects.forEach(s => {
+            resultSubSelect.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+        });
+    }
+
+    if (questionSubSelect) {
+        questionSubSelect.innerHTML = '<option value="">اختر المادة...</option>';
+        activeSubjects.forEach(s => {
+            questionSubSelect.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+        });
+    }
+}
+
+// ============================================
+// 1️⃣ OVERVIEW DATA LOADING
+// ============================================
+async function loadOverviewData() {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        // Stats 1: Active students (distinct session count)
+        const { data: activeStudentsData, error: e1 } = await client
+            .from('exam_results')
+            .select('session_id');
+        if (e1) throw e1;
+        const activeStudents = new Set((activeStudentsData || []).map(r => r.session_id)).size;
+        document.getElementById('stat-active-students').textContent = activeStudents;
+
+        // Stats 2: Completed exams count
+        const { count: completedExams, error: e2 } = await client
+            .from('exam_results')
+            .select('*', { count: 'exact', head: true });
+        if (e2) throw e2;
+        document.getElementById('stat-completed-exams').textContent = completedExams || 0;
+
+        // Stats 3: Average score
+        const { data: avgScoreData, error: e3 } = await client
+            .from('exam_results')
+            .select('percentage');
+        if (e3) throw e3;
+        
+        let avgScore = 0;
+        if (avgScoreData && avgScoreData.length > 0) {
+            const sum = avgScoreData.reduce((acc, curr) => acc + parseFloat(curr.percentage), 0);
+            avgScore = Math.round(sum / avgScoreData.length);
+        }
+        document.getElementById('stat-average-score').textContent = `${avgScore}%`;
+
+        // Stats 4: Page visits today
+        const startOfDay = new Date();
+        startOfDay.setHours(0, 0, 0, 0);
+        const { count: pageVisits, error: e4 } = await client
+            .from('page_visits')
+            .select('*', { count: 'exact', head: true })
+            .gte('visited_at', startOfDay.toISOString());
+        if (e4) throw e4;
+        document.getElementById('stat-page-visits').textContent = pageVisits || 0;
+
+        // Load charts
+        loadOverviewCharts();
+
+        // Load top performers
+        loadTopPerformers();
+
+        // Load hardest questions
+        loadHardestQuestions(avgScoreData);
+    } catch (e) {
+        console.error("Error loading overview stats:", e);
+    }
+}
+
+async function loadOverviewCharts() {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        // Chart 1: Daily Visits (last 30 days)
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        
+        const { data: visitsData, error: vErr } = await client
+            .from('page_visits')
+            .select('visited_at')
+            .gte('visited_at', thirtyDaysAgo.toISOString());
+            
+        if (vErr) throw vErr;
+
+        // Group by local date
+        const visitsByDate = {};
+        for (let i = 29; i >= 0; i--) {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            const dateStr = d.toLocaleDateString('ar-EG', { month: 'short', day: 'numeric' });
+            visitsByDate[dateStr] = 0;
+        }
+
+        (visitsData || []).forEach(v => {
+            const dateStr = new Date(v.visited_at).toLocaleDateString('ar-EG', { month: 'short', day: 'numeric' });
+            if (visitsByDate[dateStr] !== undefined) {
+                visitsByDate[dateStr]++;
+            }
+        });
+
+        const visitsLabels = Object.keys(visitsByDate);
+        const visitsValues = Object.values(visitsByDate);
+
+        if (visitsChart) visitsChart.destroy();
+        const ctx1 = document.getElementById('overviewVisitsChart').getContext('2d');
+        visitsChart = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: visitsLabels,
+                datasets: [{
+                    label: 'الزيارات اليومية',
+                    data: visitsValues,
+                    borderColor: '#e67e22',
+                    backgroundColor: 'rgba(230, 126, 34, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#a0aec0' } },
+                    x: { grid: { display: false }, ticks: { color: '#a0aec0' } }
+                }
+            }
+        });
+
+        // Chart 2: Student distribution across subjects (Pie chart of exam results count)
+        const { data: resultsData, error: rErr } = await client
+            .from('exam_results')
+            .select('subject_id');
+            
+        if (rErr) throw rErr;
+
+        const subjectCounts = {};
+        activeSubjects.forEach(s => {
+            subjectCounts[s.name] = 0;
+        });
+
+        (resultsData || []).forEach(r => {
+            const subject = activeSubjects.find(s => s.id === r.subject_id);
+            if (subject) {
+                subjectCounts[subject.name] = (subjectCounts[subject.name] || 0) + 1;
+            }
+        });
+
+        if (subjectsChart) subjectsChart.destroy();
+        const ctx2 = document.getElementById('overviewSubjectsChart').getContext('2d');
+        subjectsChart = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(subjectCounts),
+                datasets: [{
+                    data: Object.values(subjectCounts),
+                    backgroundColor: [
+                        '#e67e22', '#9b59b6', '#2ecc71', '#3498db', '#e74c3c', '#1abc9c', '#f1c40f'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: { color: '#a0aec0', font: { family: 'Cairo' } }
+                    }
+                }
+            }
+        });
+
+    } catch (e) {
+        console.error("Error loading charts:", e);
+    }
+}
+
+async function loadTopPerformers() {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        const { data: results, error } = await client
+            .from('exam_results')
+            .select(`
+                score, 
+                total_questions, 
+                percentage, 
+                session_id,
+                student_sessions (student_name)
+            `);
+            
+        if (error) throw error;
+
+        // Group by session
+        const students = {};
+        (results || []).forEach(r => {
+            const session = r.student_sessions;
+            const name = (session && session.student_name) ? session.student_name : 'طالب مجهول';
+            const sessionId = r.session_id;
+
+            if (!students[sessionId]) {
+                students[sessionId] = { name: name, count: 0, sumPercent: 0 };
+            }
+            students[sessionId].count++;
+            students[sessionId].sumPercent += parseFloat(r.percentage);
+        });
+
+        // Convert to array and sort
+        const sortedStudents = Object.values(students)
+            .map(s => ({
+                name: s.name,
+                count: s.count,
+                avgPercent: Math.round(s.sumPercent / s.count)
+            }))
+            .sort((a, b) => b.avgPercent - a.avgPercent)
+            .slice(0, 5);
+
+        const tbody = document.querySelector('#top-performers-table tbody');
+        tbody.innerHTML = '';
+
+        if (sortedStudents.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text-secondary)">لا توجد نتائج مسجلة حتى الآن</td></tr>';
+            return;
+        }
+
+        sortedStudents.forEach(s => {
+            tbody.innerHTML += `
+                <tr>
+                    <td><i class="fas fa-user" style="color:var(--primary-color); margin-left: 8px;"></i>${s.name}</td>
+                    <td>${s.count} امتحان</td>
+                    <td><span class="badge success">${s.avgPercent}%</span></td>
+                </tr>
+            `;
+        });
+    } catch (e) {
+        console.error("Error loading top performers:", e);
+    }
+}
+
+async function loadHardestQuestions() {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        const { data: results, error } = await client
+            .from('exam_results')
+            .select('answers, subject_id');
+            
+        if (error) throw error;
+
+        // Parse answers to compute error rates per question
+        const questionStats = {}; // key: qId, val: { wrong: 0, total: 0 }
+        
+        (results || []).forEach(r => {
+            const answers = r.answers;
+            if (answers && typeof answers === 'object') {
+                Object.keys(answers).forEach(qId => {
+                    const ans = answers[qId];
+                    if (!questionStats[qId]) {
+                        questionStats[qId] = { wrong: 0, total: 0 };
+                    }
+                    questionStats[qId].total++;
+                    if (ans && ans.isCorrect === false) {
+                        questionStats[qId].wrong++;
+                    }
+                });
+            }
+        });
+
+        // Filter questions with at least 3 attempts
+        const hardest = Object.keys(questionStats)
+            .map(qId => ({
+                id: parseInt(qId),
+                wrong: questionStats[qId].wrong,
+                total: questionStats[qId].total,
+                rate: questionStats[qId].wrong / questionStats[qId].total
+            }))
+            .filter(q => q.total >= 3)
+            .sort((a, b) => b.rate - a.rate)
+            .slice(0, 5);
+
+        const tbody = document.querySelector('#hardest-questions-table tbody');
+        
+        if (hardest.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text-secondary)">لا توجد بيانات كافية حالياً (تتطلب 3 محاولات على الأقل للسؤال)</td></tr>';
+            return;
+        }
+
+        // Fetch question details for these hardest IDs
+        const ids = hardest.map(h => h.id);
+        const { data: qDetails, error: qErr } = await client
+            .from('questions')
+            .select('id, text, exam_id, exams(subject_id, subjects(name))')
+            .in('id', ids);
+
+        if (qErr) throw qErr;
+
+        tbody.innerHTML = '';
+        hardest.forEach(h => {
+            const q = qDetails.find(qd => qd.id === h.id);
+            if (q) {
+                const subjectName = q.exams && q.exams.subjects ? q.exams.subjects.name : 'مادة مجهولة';
+                tbody.innerHTML += `
+                    <tr>
+                        <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${q.text}">${q.text}</td>
+                        <td>${subjectName}</td>
+                        <td><span class="badge danger">${Math.round(h.rate * 100)}% خطأ</span></td>
+                    </tr>
+                `;
+            }
+        });
+
+    } catch (e) {
+        console.error("Error loading hardest questions:", e);
+    }
+}
+
+// ============================================
+// 2️⃣ ANALYTICS DATA LOADING
+// ============================================
+async function loadAnalyticsData() {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        // Device stats from sessions
+        const { data: sessions, error: sErr } = await client
+            .from('student_sessions')
+            .select('device_type');
+            
+        if (sErr) throw sErr;
+
+        let mobile = 0;
+        let desktop = 0;
+        (sessions || []).forEach(s => {
+            if (s.device_type === 'mobile') mobile++;
+            else desktop++;
+        });
+
+        const total = mobile + desktop || 1;
+        document.getElementById('stat-mobile-pct').textContent = `${Math.round(mobile/total*100)}%`;
+        document.getElementById('stat-desktop-pct').textContent = `${Math.round(desktop/total*100)}%`;
+
+        // Average time spent
+        const { data: timeSpentData, error: tErr } = await client
+            .from('exam_results')
+            .select('time_spent_seconds');
+            
+        if (tErr) throw tErr;
+
+        let avgMinutes = 0;
+        if (timeSpentData && timeSpentData.length > 0) {
+            const totalSecs = timeSpentData.reduce((acc, curr) => acc + (curr.time_spent_seconds || 0), 0);
+            avgMinutes = Math.round((totalSecs / timeSpentData.length) / 60);
+        }
+        document.getElementById('stat-avg-exam-time').textContent = `${avgMinutes} دقيقة`;
+
+        // Load charts
+        loadAnalyticsCharts();
+    } catch (e) {
+        console.error("Error loading analytics data:", e);
+    }
+}
+
+async function loadAnalyticsCharts() {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        // Chart 1: Average scores per subject
+        const { data: scoresData, error: scErr } = await client
+            .from('exam_results')
+            .select('subject_id, percentage');
+            
+        if (scErr) throw scErr;
+
+        const subjectScores = {};
+        activeSubjects.forEach(s => {
+            subjectScores[s.name] = { sum: 0, count: 0 };
+        });
+
+        (scoresData || []).forEach(r => {
+            const subject = activeSubjects.find(s => s.id === r.subject_id);
+            if (subject) {
+                subjectScores[subject.name].sum += parseFloat(r.percentage);
+                subjectScores[subject.name].count++;
+            }
+        });
+
+        const subjectScoresLabels = [];
+        const subjectScoresValues = [];
+        Object.keys(subjectScores).forEach(name => {
+            const s = subjectScores[name];
+            subjectScoresLabels.push(name);
+            subjectScoresValues.push(s.count > 0 ? Math.round(s.sum / s.count) : 0);
+        });
+
+        if (subjectScoresChart) subjectScoresChart.destroy();
+        const ctx1 = document.getElementById('analyticsSubjectScoresChart').getContext('2d');
+        subjectScoresChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: subjectScoresLabels,
+                datasets: [{
+                    label: 'متوسط الدرجات %',
+                    data: subjectScoresValues,
+                    backgroundColor: 'rgba(230, 126, 34, 0.75)',
+                    borderRadius: 8,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { max: 100, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#a0aec0' } },
+                    x: { grid: { display: false }, ticks: { color: '#a0aec0', font: { size: 10 } } }
+                }
+            }
+        });
+
+        // Chart 2: Hourly usage peak times (visits grouped by hour)
+        const { data: visitsData, error: vErr } = await client
+            .from('page_visits')
+            .select('visited_at');
+            
+        if (vErr) throw vErr;
+
+        const hoursMap = Array(24).fill(0);
+        (visitsData || []).forEach(v => {
+            const hour = new Date(v.visited_at).getHours();
+            hoursMap[hour]++;
+        });
+
+        const hourLabels = Array(24).fill(0).map((_, i) => `${i}:00`);
+
+        if (usageHoursChart) usageHoursChart.destroy();
+        const ctx2 = document.getElementById('analyticsUsageHoursChart').getContext('2d');
+        usageHoursChart = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: hourLabels,
+                datasets: [{
+                    label: 'عدد الزيارات',
+                    data: hoursMap,
+                    borderColor: '#9b59b6',
+                    backgroundColor: 'rgba(155, 89, 182, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#a0aec0' } },
+                    x: { grid: { display: false }, ticks: { color: '#a0aec0' } }
+                }
+            }
+        });
+
+    } catch (e) {
+        console.error("Error loading analytics charts:", e);
+    }
+}
+
+// ============================================
+// 3️⃣ RESULTS TAB LOGIC
+// ============================================
+async function loadResultsData() {
+    // Dropdowns are already loaded globally, just load table
+    await loadResultsTable();
+}
+
+async function loadResultsTable() {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    const subjectFilter = document.getElementById('filter-result-subject').value;
+    const tbody = document.querySelector('#results-table tbody');
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">جاري جلب النتائج...</td></tr>';
+
+    try {
+        let query = client
+            .from('exam_results')
+            .select(`
+                id,
+                score,
+                total_questions,
+                percentage,
+                time_spent_seconds,
+                completed_at,
+                student_sessions (student_name),
+                subjects (name),
+                exams (title)
+            `)
+            .order('completed_at', { ascending: false });
+
+        if (subjectFilter) {
+            query = query.eq('subject_id', subjectFilter);
+        }
+
+        const { data: results, error } = await query;
+        if (error) throw error;
+
+        tbody.innerHTML = '';
+        
+        if (!results || results.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-secondary)">لا توجد نتائج مسجلة للمرشحات الحالية</td></tr>';
+            return;
+        }
+
+        results.forEach(r => {
+            const studentName = r.student_sessions && r.student_sessions.student_name ? r.student_sessions.student_name : 'طالب مجهول';
+            const subjectName = r.subjects ? r.subjects.name : 'مادة مجهولة';
+            const examTitle = r.exams ? r.exams.title : 'امتحان مجهول';
+            const timeMin = r.time_spent_seconds ? `${Math.floor(r.time_spent_seconds / 60)}د ${r.time_spent_seconds % 60}ث` : 'مجهول';
+            const dateStr = new Date(r.completed_at).toLocaleString('ar-EG');
+            
+            const badgeClass = r.percentage >= 85 ? 'success' : (r.percentage >= 50 ? 'warning' : 'danger');
+
+            tbody.innerHTML += `
+                <tr>
+                    <td><strong>${studentName}</strong></td>
+                    <td>${subjectName}</td>
+                    <td>${examTitle}</td>
+                    <td>${r.score} من ${r.total_questions}</td>
+                    <td><span class="badge ${badgeClass}">${r.percentage}%</span></td>
+                    <td>${timeMin}</td>
+                    <td style="font-size:0.85rem;color:var(--text-secondary)">${dateStr}</td>
+                </tr>
+            `;
+        });
+    } catch (e) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--error-color)">حدث خطأ أثناء تحميل البيانات: ${e.message}</td></tr>`;
+    }
+}
+
+// Export results to CSV
+async function exportResultsToCSV() {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        const { data: results, error } = await client
+            .from('exam_results')
+            .select(`
+                completed_at,
+                percentage,
+                score,
+                total_questions,
+                time_spent_seconds,
+                student_sessions (student_name),
+                subjects (name),
+                exams (title)
+            `)
+            .order('completed_at', { ascending: false });
+
+        if (error) throw error;
+        if (!results || results.length === 0) {
+            alert('لا توجد بيانات لتصديرها');
+            return;
+        }
+
+        // CSV Header
+        let csvContent = "\uFEFF"; // UTF-8 BOM for Excel Arabic support
+        csvContent += "اسم الطالب,المادة,الامتحان,النتيجة,النسبة المئوية,الوقت المستغرق,تاريخ الاتمام\n";
+
+        results.forEach(r => {
+            const student = r.student_sessions && r.student_sessions.student_name ? r.student_sessions.student_name : 'طالب مجهول';
+            const subject = r.subjects ? r.subjects.name : 'مادة مجهولة';
+            const exam = r.exams ? r.exams.title : 'امتحان مجهول';
+            const scoreStr = `${r.score}/${r.total_questions}`;
+            const time = r.time_spent_seconds ? `${Math.floor(r.time_spent_seconds / 60)}m ${r.time_spent_seconds % 60}s` : 'Unknown';
+            const date = new Date(r.completed_at).toLocaleString('ar-EG');
+            
+            // Escape values containing commas
+            csvContent += `"${student}","${subject}","${exam}","${scoreStr}","${r.percentage}%","${time}","${date}"\n`;
+        });
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", `نتائج_الطلاب_BsmagaZone_${new Date().toISOString().slice(0, 10)}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } catch (e) {
+        alert('خطأ في تصدير الملف: ' + e.message);
+    }
+}
+
+// ============================================
+// 4️⃣ QUESTIONS TAB LOGIC
+// ============================================
+async function loadQuestionsData() {
+    // Dropdowns populated globally, wait for selection
+}
+
+async function onQuestionSubjectFilterChange() {
+    const subjectId = document.getElementById('filter-question-subject').value;
+    const examSelect = document.getElementById('filter-question-exam');
+    const addBtn = document.getElementById('btn-add-question');
+    
+    // Clear list
+    document.getElementById('questions-list').innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-secondary)">
+            <p>يرجى اختيار الامتحان لعرض الأسئلة</p>
+        </div>
+    `;
+
+    if (!subjectId) {
+        examSelect.innerHTML = '<option value="">اختر الامتحان...</option>';
+        examSelect.disabled = true;
+        addBtn.disabled = true;
+        return;
+    }
+
+    // Filter exams by selected subject
+    const exams = activeExams.filter(e => e.subject_id == subjectId);
+    
+    examSelect.innerHTML = '<option value="">اختر الامتحان...</option>';
+    exams.forEach(e => {
+        examSelect.innerHTML += `<option value="${e.id}">${e.title}</option>`;
+    });
+    
+    examSelect.disabled = false;
+    addBtn.disabled = true;
+}
+
+async function loadQuestionsList() {
+    const examId = document.getElementById('filter-question-exam').value;
+    const addBtn = document.getElementById('btn-add-question');
+    const container = document.getElementById('questions-list');
+
+    if (!examId) {
+        container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-secondary)">
+                <p>يرجى اختيار الامتحان لعرض الأسئلة</p>
+            </div>
+        `;
+        addBtn.disabled = true;
+        return;
+    }
+
+    addBtn.disabled = false;
+    container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:20px;">جاري تحميل الأسئلة...</div>';
+
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        const { data: questions, error } = await client
+            .from('questions')
+            .select('*')
+            .eq('exam_id', examId)
+            .order('sort_order', { ascending: true })
+            .order('id', { ascending: true });
+
+        if (error) throw error;
+        allQuestions = questions || [];
+        
+        renderQuestionsManager();
+    } catch (e) {
+        container.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:var(--error-color)">خطأ أثناء تحميل الأسئلة: ${e.message}</div>`;
+    }
+}
+
+function renderQuestionsManager() {
+    const container = document.getElementById('questions-list');
+    container.innerHTML = '';
+
+    if (allQuestions.length === 0) {
+        container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-secondary)">
+                <p>لا توجد أسئلة مسجلة في هذا الامتحان. يمكنك إضافة سؤالك الأول بالضغط على زر "إضافة سؤال جديد"</p>
+            </div>
+        `;
+        return;
+    }
+
+    allQuestions.forEach((q, idx) => {
+        const typeBadge = q.type === 'tf' ? 'الصواب والخطأ' : (q.type === 'mcq' ? 'اختيار من متعدد' : 'سؤال مقالي');
+        const badgeColor = q.type === 'tf' ? 'info' : (q.type === 'mcq' ? 'success' : 'warning');
+        
+        let answersPreview = '';
+        if (q.type === 'tf') {
+            answersPreview = `الإجابة الصحيحة: <strong>${q.correct_answer === 'true' ? 'صح' : 'خطأ'}</strong>`;
+        } else if (q.type === 'mcq') {
+            const opts = q.options || [];
+            answersPreview = `الخيارات: [${opts.join(' | ')}]<br>الخيار الصحيح: <strong>${opts[parseInt(q.correct_answer)] || q.correct_answer}</strong>`;
+        } else {
+            answersPreview = `الإجابة النموذجية: <strong>${q.explanation ? q.explanation.substring(0, 50) + '...' : 'غير مدخلة'}</strong>`;
+        }
+
+        container.innerHTML += `
+            <div class="manager-card" data-text="${q.text.toLowerCase()}">
+                <div class="card-top">
+                    <span class="badge ${badgeColor}">${typeBadge}</span>
+                    <div class="card-actions">
+                        <button class="btn-circle edit" onclick="openEditQuestionModal(${q.id})" title="تعديل"><i class="fas fa-edit"></i></button>
+                        <button class="btn-circle delete" onclick="deleteQuestion(${q.id})" title="حذف"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+                <h4 style="margin-bottom: 12px; font-weight: 700; line-height: 1.6;">سؤال ${idx + 1}: ${q.text}</h4>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 10px;">
+                    ${answersPreview}
+                </p>
+                ${q.explanation && q.type !== 'essay' ? `<p style="font-size: 0.8rem; color: var(--warning-color)">التعليل: ${q.explanation}</p>` : ''}
+            </div>
+        `;
+    });
+}
+
+function filterQuestions() {
+    const q = document.getElementById('search-questions-input').value.toLowerCase();
+    const cards = document.querySelectorAll('#questions-list .manager-card');
+    
+    cards.forEach(card => {
+        const text = card.dataset.text || '';
+        if (text.includes(q)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+// Open modals
+function openAddQuestionModal() {
+    document.getElementById('question-modal-title').textContent = 'إضافة سؤال جديد';
+    document.getElementById('modal-question-id').value = '';
+    document.getElementById('question-form').reset();
+    onQuestionTypeChange();
+    
+    document.getElementById('question-modal').classList.add('active');
+}
+
+function openEditQuestionModal(qId) {
+    const q = allQuestions.find(x => x.id === qId);
+    if (!q) return;
+
+    document.getElementById('question-modal-title').textContent = 'تعديل السؤال';
+    document.getElementById('modal-question-id').value = q.id;
+    document.getElementById('modal-question-type').value = q.type;
+    document.getElementById('modal-question-text').value = q.text;
+    document.getElementById('modal-question-explanation').value = q.explanation || '';
+    
+    onQuestionTypeChange();
+
+    if (q.type === 'tf') {
+        document.getElementById('modal-correct-tf').value = q.correct_answer;
+    } else if (q.type === 'mcq') {
+        const optInputs = document.querySelectorAll('.mcq-option-input');
+        const opts = q.options || [];
+        optInputs.forEach((inp, idx) => {
+            inp.value = opts[idx] || '';
+        });
+        document.getElementById('modal-correct-mcq').value = q.correct_answer;
+    }
+
+    document.getElementById('question-modal').classList.add('active');
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
+}
+
+function onQuestionTypeChange() {
+    const type = document.getElementById('modal-question-type').value;
+    const mcqOpts = document.getElementById('mcq-options-container');
+    const tfCorrect = document.getElementById('correct-tf-container');
+    const mcqCorrect = document.getElementById('correct-mcq-container');
+    
+    const optionInputs = document.querySelectorAll('.mcq-option-input');
+
+    if (type === 'tf') {
+        mcqOpts.style.display = 'none';
+        tfCorrect.style.display = 'block';
+        mcqCorrect.style.display = 'none';
+        optionInputs.forEach(i => i.removeAttribute('required'));
+    } else if (type === 'mcq') {
+        mcqOpts.style.display = 'block';
+        tfCorrect.style.display = 'none';
+        mcqCorrect.style.display = 'block';
+        optionInputs.forEach(i => i.setAttribute('required', 'true'));
+    } else {
+        // Essay
+        mcqOpts.style.display = 'none';
+        tfCorrect.style.display = 'none';
+        mcqCorrect.style.display = 'none';
+        optionInputs.forEach(i => i.removeAttribute('required'));
+    }
+}
+
+// Save (Insert / Update) question
+async function saveQuestion(event) {
+    event.preventDefault();
+    const qId = document.getElementById('modal-question-id').value;
+    const type = document.getElementById('modal-question-type').value;
+    const text = document.getElementById('modal-question-text').value;
+    const explanation = document.getElementById('modal-question-explanation').value;
+    const examId = document.getElementById('filter-question-exam').value;
+    const client = getSupabaseClient();
+
+    if (!client || !examId) return;
+
+    let correct_answer = '';
+    let options = null;
+
+    if (type === 'tf') {
+        correct_answer = document.getElementById('modal-correct-tf').value;
+    } else if (type === 'mcq') {
+        const optInputs = document.querySelectorAll('.mcq-option-input');
+        options = Array.from(optInputs).map(inp => inp.value.trim());
+        correct_answer = document.getElementById('modal-correct-mcq').value;
+    } else {
+        // Essay
+        correct_answer = 'essay';
+    }
+
+    const payload = {
+        exam_id: parseInt(examId),
+        type,
+        text,
+        options,
+        correct_answer,
+        explanation
+    };
+
+    try {
+        if (qId) {
+            // Update
+            const { error } = await client
+                .from('questions')
+                .update(payload)
+                .eq('id', qId);
+            if (error) throw error;
+        } else {
+            // Insert
+            const { error } = await client
+                .from('questions')
+                .insert(payload);
+            if (error) throw error;
+        }
+        
+        closeModal('question-modal');
+        loadQuestionsList();
+    } catch (e) {
+        alert("خطأ أثناء حفظ السؤال: " + e.message);
+    }
+}
+
+// Delete question
+async function deleteQuestion(qId) {
+    if (!confirm("هل أنت متأكد من حذف هذا السؤال نهائياً؟")) return;
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        const { error } = await client
+            .from('questions')
+            .delete()
+            .eq('id', qId);
+        if (error) throw error;
+        loadQuestionsList();
+    } catch (e) {
+        alert("خطأ أثناء حذف السؤال: " + e.message);
+    }
+}
+
+// ============================================
+// 5️⃣ SUBJECTS & EXAMS MANAGER TAB LOGIC
+// ============================================
+async function loadSubjectsManagerData() {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    const container = document.getElementById('subjects-list');
+    container.innerHTML = '<div style="grid-column:1/-1; text-align:center;">جاري تحميل المواد والامتحانات...</div>';
+
+    try {
+        // Fetch fresh data
+        await loadGlobalSubjects();
+
+        container.innerHTML = '';
+        activeSubjects.forEach(s => {
+            const exams = activeExams.filter(e => e.subject_id === s.id);
+            
+            let examsListHtml = '';
+            exams.forEach(e => {
+                examsListHtml += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.03);">
+                        <span style="font-size:0.9rem; color:var(--text-secondary);"><i class="fas fa-file-alt" style="margin-left:8px;"></i>${e.title}</span>
+                        <label class="switch">
+                            <input type="checkbox" ${e.is_active ? 'checked' : ''} onchange="toggleExamActive(${e.id}, this.checked)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                `;
+            });
+
+            container.innerHTML += `
+                <div class="manager-card" style="display:flex; flex-direction:column; gap:15px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h3 style="font-weight:800; font-size:1.1rem; color:var(--primary-color);">
+                            <i class="fas fa-${s.icon || 'book'}" style="margin-left:10px;"></i>${s.name}
+                        </h3>
+                        <label class="switch">
+                            <input type="checkbox" ${s.is_active ? 'checked' : ''} onchange="toggleSubjectActive(${s.id}, this.checked)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <h5 style="color:var(--text-secondary); margin-bottom:10px; border-bottom:1px solid var(--glass-border); padding-bottom:5px;">قائمة الامتحانات</h5>
+                        ${examsListHtml || '<p style="font-size:0.85rem; color:var(--text-secondary); text-align:center;">لا توجد امتحانات مضافة بعد</p>'}
+                    </div>
+                </div>
+            `;
+        });
+    } catch (e) {
+        container.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:var(--error-color)">خطأ أثناء تحميل البيانات: ${e.message}</div>`;
+    }
+}
+
+// Toggle subject status
+async function toggleSubjectActive(subjectId, isActive) {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        const { error } = await client
+            .from('subjects')
+            .update({ is_active: isActive })
+            .eq('id', subjectId);
+
+        if (error) throw error;
+        
+        // Show success alert in console or user alert
+        console.log(`Subject ${subjectId} active status set to: ${isActive}`);
+    } catch (e) {
+        alert("فشل تحديث حالة المادة: " + e.message);
+        loadSubjectsManagerData(); // Reload to reset toggles
+    }
+}
+
+// Toggle exam status
+async function toggleExamActive(examId, isActive) {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        const { error } = await client
+            .from('exams')
+            .update({ is_active: isActive })
+            .eq('id', examId);
+
+        if (error) throw error;
+        
+        console.log(`Exam ${examId} active status set to: ${isActive}`);
+    } catch (e) {
+        alert("فشل تحديث حالة الامتحان: " + e.message);
+        loadSubjectsManagerData(); // Reload to reset toggles
+    }
+}

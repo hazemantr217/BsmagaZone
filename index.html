@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>منصة الامتحانات - الفرقة الثالثة | الترم الثاني</title>
+    <title>Ù…Ù†ØµØ© Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†Ø§Øª - Ø§Ù„ÙØ±Ù‚Ø© Ø§Ù„Ø«Ø§Ù„Ø«Ø© | Ø§Ù„ØªØ±Ù… Ø§Ù„Ø«Ø§Ù†ÙŠ</title>
     <link rel="icon" type="image/svg+xml" href="shared/favicon.svg">
     <meta name="description"
-        content="منصة امتحانات إلكترونية للفرقة الثالثة - الترم الثاني. تدرب على امتحانات المواد المختلفة.">
+        content="Ù…Ù†ØµØ© Ø§Ù…ØªØ­Ø§Ù†Ø§Øª Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ© Ù„Ù„ÙØ±Ù‚Ø© Ø§Ù„Ø«Ø§Ù„Ø«Ø© - Ø§Ù„ØªØ±Ù… Ø§Ù„Ø«Ø§Ù†ÙŠ. ØªØ¯Ø±Ø¨ Ø¹Ù„Ù‰ Ø§Ù…ØªØ­Ø§Ù†Ø§Øª Ø§Ù„Ù…ÙˆØ§Ø¯ Ø§Ù„Ù…Ø®ØªÙ„ÙØ©.">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="shared/styles.css">
@@ -489,174 +489,184 @@
             }
         }
 
-        /* Farewell Notice Modal Space / Zero-Gravity Effects */
+        /* Farewell Premium Modal Custom Styles */
         .farewell-modal-content {
-            background: linear-gradient(135deg, rgba(20, 24, 33, 0.95), rgba(30, 20, 36, 0.95)) !important;
-            border: 2px solid rgba(155, 89, 182, 0.3) !important;
-            box-shadow: 0 0 30px rgba(155, 89, 182, 0.25), inset 0 0 20px rgba(255, 255, 255, 0.05) !important;
+            background: linear-gradient(135deg, rgba(20, 24, 33, 0.96), rgba(35, 20, 44, 0.96)) !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            box-shadow: 0 20px 50px rgba(230, 126, 34, 0.18), 0 0 40px rgba(155, 89, 182, 0.15) !important;
+            max-width: 550px !important;
+            padding: 35px 25px 30px !important;
             border-radius: 24px !important;
             position: relative;
-            padding: 35px 25px !important;
-            color: #f8f9fa !important;
-            overflow: visible !important;
+            overflow: hidden;
+        }
+        
+        /* Light mode adjustments */
+        body.light-mode .farewell-modal-content {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(245, 240, 250, 0.98)) !important;
+            border: 1px solid rgba(230, 126, 34, 0.2) !important;
+            box-shadow: 0 20px 50px rgba(230, 126, 34, 0.1), 0 0 30px rgba(0, 0, 0, 0.05) !important;
         }
 
         .farewell-header {
-            font-size: 1.35rem;
-            font-weight: 800;
-            color: #f39c12;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             margin-bottom: 20px;
-            text-align: center;
-            line-height: 1.4;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .farewell-header .header-cap {
+            font-size: 2.8rem;
+            color: #f1c40f !important;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 2px 8px rgba(241, 196, 15, 0.3));
+            animation: pulse-cap 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-cap {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .farewell-header h2 {
+            font-size: 1.6rem !important;
+            font-weight: 800;
+            color: var(--primary-color) !important;
+            margin-bottom: 0 !important;
+            text-shadow: none !important;
+        }
+
+        body.light-mode .farewell-header h2 {
+            color: var(--primary-color) !important;
+        }
+
+        .farewell-body {
+            text-align: right;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .farewell-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 14px 18px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .farewell-card {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .farewell-card:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(230, 126, 34, 0.25);
+        }
+
+        body.light-mode .farewell-card:hover {
+            background: rgba(230, 126, 34, 0.05);
+            border-color: rgba(230, 126, 34, 0.2);
+        }
+
+        .farewell-card-icon {
+            font-size: 1.2rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            text-shadow: 0 2px 10px rgba(243, 156, 18, 0.2);
+            flex-shrink: 0;
         }
 
-        .farewell-text {
-            text-align: center;
-            line-height: 1.8;
-            margin-bottom: 16px;
-            font-size: 1.05rem;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
+        .fc-orange {
+            background: rgba(230, 126, 34, 0.15);
+            color: #e67e22;
         }
-
-        .farewell-heart {
-            color: #e74c3c;
-            animation: heartbeat 1.5s ease infinite;
-            display: inline-block;
-        }
-
-        .farewell-hands {
-            color: #ffffff;
-            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
-        }
-
-        .space-effect-container {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 25px;
-            padding: 12px 28px;
-            border-radius: 50px;
-            background: linear-gradient(135deg, rgba(155, 89, 182, 0.15), rgba(52, 152, 219, 0.15));
-            border: 1.5px dashed rgba(155, 89, 182, 0.4);
-            box-shadow: 0 0 25px rgba(155, 89, 182, 0.2), inset 0 0 15px rgba(52, 152, 219, 0.1);
-            overflow: visible;
-        }
-
-        .space-effect-text {
-            font-size: 1.35rem;
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            font-family: 'Outfit', 'Cairo', sans-serif;
-            text-transform: uppercase;
-            background: linear-gradient(135deg, #f1c40f, #e67e22, #9b59b6, #3498db, #2ecc71);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: spaceFloat 5s ease-in-out infinite, nebulaShift 10s ease infinite;
-            display: inline-block;
-        }
-
-        .space-star {
-            position: absolute;
-            font-size: 0.9rem;
-            pointer-events: none;
-            user-select: none;
-        }
-
-        .star-1 {
-            top: -12px;
-            right: 20px;
-            animation: floatStar1 3.5s ease-in-out infinite;
-            color: #f1c40f;
-            text-shadow: 0 0 10px #f1c40f;
-        }
-
-        .star-2 {
-            bottom: -15px;
-            left: 25px;
-            animation: floatStar2 4.5s ease-in-out infinite;
-            color: #3498db;
-            text-shadow: 0 0 10px #3498db;
-        }
-
-        .star-3 {
-            top: 5px;
-            left: -12px;
-            animation: floatStar3 3s ease-in-out infinite;
-            color: #9b59b6;
-            text-shadow: 0 0 10px #9b59b6;
-        }
-
-        .star-4 {
-            bottom: 8px;
-            right: -10px;
-            animation: floatStar4 4s ease-in-out infinite;
+        .fc-green {
+            background: rgba(46, 204, 113, 0.15);
             color: #2ecc71;
-            text-shadow: 0 0 10px #2ecc71;
         }
-
-        .astronaut-icon {
-            font-size: 2.2rem;
+        .fc-purple {
+            background: rgba(155, 89, 182, 0.15);
+            color: #9b59b6;
+        }
+        .fc-blue {
+            background: rgba(52, 152, 219, 0.15);
             color: #3498db;
-            animation: astronautFloat 6s ease-in-out infinite;
-            display: block;
-            margin: 0 auto 15px;
-            text-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
-            width: fit-content;
         }
 
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
+        .farewell-card-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            font-weight: 600;
+            color: var(--text-color);
         }
 
-        @keyframes astronautFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(8deg); }
+        .farewell-highlight {
+            background: linear-gradient(135deg, rgba(230, 126, 34, 0.12), rgba(155, 89, 182, 0.12)) !important;
+            border: 1px solid rgba(230, 126, 34, 0.25) !important;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.05);
         }
 
-        @keyframes spaceFloat {
-            0%, 100% {
-                transform: translateY(0px) scale(1);
-                filter: drop-shadow(0 2px 5px rgba(155, 89, 182, 0.4));
-            }
-            50% {
-                transform: translateY(-6px) scale(1.03);
-                filter: drop-shadow(0 8px 20px rgba(52, 152, 219, 0.7));
-            }
+        .farewell-signature {
+            text-align: center;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-top: 15px;
+            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, #f1c40f, #e67e22, #9b59b6, #f1c40f);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-text 3s linear infinite;
         }
 
-        @keyframes nebulaShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        @keyframes gradient-text {
+            to { background-position: 200% center; }
         }
 
-        @keyframes floatStar1 {
-            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.4; }
-            50% { transform: translate(6px, -12px) scale(1.3) rotate(45deg); opacity: 1; }
+        .farewell-btn {
+            background: var(--primary-color) !important;
+            color: white !important;
+            padding: 12px 30px !important;
+            font-size: 1rem !important;
+            font-weight: 700 !important;
+            border: none !important;
+            border-radius: 50px !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3) !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            margin-top: 15px;
+            direction: ltr !important;
         }
-        @keyframes floatStar2 {
-            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.5; }
-            50% { transform: translate(-10px, 10px) scale(1.25) rotate(-30deg); opacity: 1; }
+
+        .farewell-btn:hover {
+            transform: translateY(-3px) scale(1.03) !important;
+            box-shadow: 0 6px 20px rgba(230, 126, 34, 0.45) !important;
         }
-        @keyframes floatStar3 {
-            0%, 100% { transform: translate(0, 0) scale(0.9) rotate(0deg); opacity: 0.3; }
-            50% { transform: translate(8px, 6px) scale(1.4) rotate(90deg); opacity: 1; }
-        }
-        @keyframes floatStar4 {
-            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.4; }
-            50% { transform: translate(-6px, -10px) scale(1.15) rotate(-60deg); opacity: 1; }
+
+        .farewell-btn:active {
+            transform: translateY(-1px) scale(0.98) !important;
         }
     </style>
+    <!-- Supabase Integration -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="shared/supabase-config.js"></script>
 </head>
 
 <body>
@@ -664,8 +674,8 @@
     <div id="loading-screen">
         <div class="loader-content">
             <div class="loader-spinner"></div>
-            <h2>جاري التحميل...</h2>
-            <p>تجهيز المنصة</p>
+            <h2>Ø¬Ø§Ø±ÙŠ Ø§Ù„ØªØ­Ù…ÙŠÙ„...</h2>
+            <p>ØªØ¬Ù‡ÙŠØ² Ø§Ù„Ù…Ù†ØµØ©</p>
         </div>
     </div>
 
@@ -681,144 +691,144 @@
             <div class="landing-header">
                 <div class="hub-badge">
                     <i class="fas fa-circle"></i>
-                    الفرقة الثالثة — الترم الثاني
+                    Ø§Ù„ÙØ±Ù‚Ø© Ø§Ù„Ø«Ø§Ù„Ø«Ø© â€” Ø§Ù„ØªØ±Ù… Ø§Ù„Ø«Ø§Ù†ÙŠ
                 </div>
-                <h1><i class="fas fa-graduation-cap"></i> منصة الامتحانات</h1>
-                <p class="subtitle">اختر المادة للبدء في المذاكرة والتدريب على الامتحانات</p>
+                <h1><i class="fas fa-graduation-cap"></i> Ù…Ù†ØµØ© Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</h1>
+                <p class="subtitle">Ø§Ø®ØªØ± Ø§Ù„Ù…Ø§Ø¯Ø© Ù„Ù„Ø¨Ø¯Ø¡ ÙÙŠ Ø§Ù„Ù…Ø°Ø§ÙƒØ±Ø© ÙˆØ§Ù„ØªØ¯Ø±ÙŠØ¨ Ø¹Ù„Ù‰ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</p>
             </div>
 
             <div class="subject-cards" id="subject-cards">
 
-                <!-- Subject 1: نماذج ونظريات -->
+                <!-- Subject 1: Ù†Ù…Ø§Ø°Ø¬ ÙˆÙ†Ø¸Ø±ÙŠØ§Øª -->
                 <a href="subject1.html" class="subject-card theme-orange" id="subject-1">
                     <div class="subject-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <div class="subject-name">نماذج ونظريات للعمل مع الأفراد</div>
+                    <div class="subject-name">Ù†Ù…Ø§Ø°Ø¬ ÙˆÙ†Ø¸Ø±ÙŠØ§Øª Ù„Ù„Ø¹Ù…Ù„ Ù…Ø¹ Ø§Ù„Ø£ÙØ±Ø§Ø¯</div>
                     <div class="subject-stats">
                         <div class="subject-stat">
                             <i class="fas fa-file-alt stat-icon"></i>
-                            <span>3 امتحانات</span>
+                            <span>3 Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</span>
                         </div>
                         <div class="subject-stat">
                             <i class="fas fa-sitemap stat-icon"></i>
-                            <span>كبسولة المراجعة</span>
+                            <span>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©</span>
                         </div>
                     </div>
                     <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
                 </a>
 
 
-                <!-- Subject 2: البحث في الخدمة الاجتماعية -->
+                <!-- Subject 2: Ø§Ù„Ø¨Ø­Ø« ÙÙŠ Ø§Ù„Ø®Ø¯Ù…Ø© Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© -->
                 <a href="subject2.html" class="subject-card theme-orange" id="subject-2">
                     <div class="subject-icon">
                         <i class="fas fa-search"></i>
                     </div>
-                    <div class="subject-name">البحث في خدمة الاجتماعية 2</div>
+                    <div class="subject-name">Ø§Ù„Ø¨Ø­Ø« ÙÙŠ Ø®Ø¯Ù…Ø© Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© 2</div>
                     <div class="subject-stats">
                         <div class="subject-stat">
                             <i class="fas fa-file-alt stat-icon"></i>
-                            <span>3 امتحانات</span>
+                            <span>3 Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</span>
                         </div>
                         <div class="subject-stat">
                             <i class="fas fa-sitemap stat-icon"></i>
-                            <span>كبسولة المراجعة</span>
+                            <span>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©</span>
                         </div>
                     </div>
                     <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
                 </a>
 
 
-                <!-- Subject 3: نماذج ونظريات للعمل مع المجتمعات -->
+                <!-- Subject 3: Ù†Ù…Ø§Ø°Ø¬ ÙˆÙ†Ø¸Ø±ÙŠØ§Øª Ù„Ù„Ø¹Ù…Ù„ Ù…Ø¹ Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª -->
                 <a href="subject3.html" class="subject-card theme-orange" id="subject-3">
                     <div class="subject-icon">
                         <i class="fas fa-city"></i>
                     </div>
-                    <div class="subject-name">نماذج ونظريات للعمل مع المجتمعات</div>
+                    <div class="subject-name">Ù†Ù…Ø§Ø°Ø¬ ÙˆÙ†Ø¸Ø±ÙŠØ§Øª Ù„Ù„Ø¹Ù…Ù„ Ù…Ø¹ Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª</div>
                     <div class="subject-stats">
                         <div class="subject-stat">
                             <i class="fas fa-file-alt stat-icon"></i>
-                            <span>3 امتحانات</span>
+                            <span>3 Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</span>
                         </div>
                         <div class="subject-stat">
                             <i class="fas fa-sitemap stat-icon"></i>
-                            <span>كبسولة المراجعة</span>
+                            <span>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©</span>
                         </div>
                     </div>
                     <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
                 </a>
 
-                <!-- Subject 4: نماذج ونظريات للعمل مع الجماعات -->
+                <!-- Subject 4: Ù†Ù…Ø§Ø°Ø¬ ÙˆÙ†Ø¸Ø±ÙŠØ§Øª Ù„Ù„Ø¹Ù…Ù„ Ù…Ø¹ Ø§Ù„Ø¬Ù…Ø§Ø¹Ø§Øª -->
                 <a href="subject4.html" class="subject-card theme-orange" id="subject-4">
                     <div class="subject-icon">
                         <i class="fas fa-users-cog"></i>
                     </div>
-                    <div class="subject-name">نماذج ونظريات للعمل مع الجماعات</div>
+                    <div class="subject-name">Ù†Ù…Ø§Ø°Ø¬ ÙˆÙ†Ø¸Ø±ÙŠØ§Øª Ù„Ù„Ø¹Ù…Ù„ Ù…Ø¹ Ø§Ù„Ø¬Ù…Ø§Ø¹Ø§Øª</div>
                     <div class="subject-stats">
                         <div class="subject-stat">
                             <i class="fas fa-file-alt stat-icon"></i>
-                            <span>3 امتحانات</span>
+                            <span>3 Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</span>
                         </div>
                         <div class="subject-stat">
                             <i class="fas fa-sitemap stat-icon"></i>
-                            <span>كبسولة المراجعة</span>
+                            <span>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©</span>
                         </div>
                     </div>
                     <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
                 </a>
 
-                <!-- Subject 5: الخدمة الاجتماعية في مجال ذوي الاحتياجات الخاصة -->
+                <!-- Subject 5: Ø§Ù„Ø®Ø¯Ù…Ø© Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© ÙÙŠ Ù…Ø¬Ø§Ù„ Ø°ÙˆÙŠ Ø§Ù„Ø§Ø­ØªÙŠØ§Ø¬Ø§Øª Ø§Ù„Ø®Ø§ØµØ© -->
                 <a href="subject5.html" class="subject-card theme-orange" id="subject-5">
                     <div class="subject-icon">
                         <i class="fas fa-wheelchair"></i>
                     </div>
-                    <div class="subject-name">الخدمة الاجتماعية في مجال ذوي الاحتياجات الخاصة</div>
+                    <div class="subject-name">Ø§Ù„Ø®Ø¯Ù…Ø© Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© ÙÙŠ Ù…Ø¬Ø§Ù„ Ø°ÙˆÙŠ Ø§Ù„Ø§Ø­ØªÙŠØ§Ø¬Ø§Øª Ø§Ù„Ø®Ø§ØµØ©</div>
                     <div class="subject-stats">
                         <div class="subject-stat">
                             <i class="fas fa-file-alt stat-icon"></i>
-                            <span>3 امتحانات</span>
+                            <span>3 Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</span>
                         </div>
                         <div class="subject-stat">
                             <i class="fas fa-sitemap stat-icon"></i>
-                            <span>كبسولة المراجعة</span>
+                            <span>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©</span>
                         </div>
                     </div>
                     <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
                 </a>
 
-                <!-- Subject 6: تقويم البرامج والمشروعات الاجتماعية -->
+                <!-- Subject 6: ØªÙ‚ÙˆÙŠÙ… Ø§Ù„Ø¨Ø±Ø§Ù…Ø¬ ÙˆØ§Ù„Ù…Ø´Ø±ÙˆØ¹Ø§Øª Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© -->
                 <a href="subject6.html" class="subject-card theme-orange" id="subject-6">
                     <div class="subject-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <div class="subject-name">تقويم البرامج والمشروعات الاجتماعية</div>
+                    <div class="subject-name">ØªÙ‚ÙˆÙŠÙ… Ø§Ù„Ø¨Ø±Ø§Ù…Ø¬ ÙˆØ§Ù„Ù…Ø´Ø±ÙˆØ¹Ø§Øª Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ©</div>
                     <div class="subject-stats">
                         <div class="subject-stat">
                             <i class="fas fa-file-alt stat-icon"></i>
-                            <span>3 امتحانات</span>
+                            <span>3 Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</span>
                         </div>
                         <div class="subject-stat">
                             <i class="fas fa-sitemap stat-icon"></i>
-                            <span>كبسولة المراجعة</span>
+                            <span>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©</span>
                         </div>
                     </div>
                     <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
                 </a>
 
-                <!-- Subject 7: تنمية المجتمعات المحلية -->
+                <!-- Subject 7: ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª Ø§Ù„Ù…Ø­Ù„ÙŠØ© -->
                 <a href="subject7.html" class="subject-card theme-gold" id="subject-7">
                     <div class="subject-icon">
                         <i class="fas fa-leaf"></i>
                     </div>
-                    <div class="subject-name">تنمية المجتمعات المحلية</div>
+                    <div class="subject-name">ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª Ø§Ù„Ù…Ø­Ù„ÙŠØ©</div>
                     <div class="subject-stats">
                         <div class="subject-stat">
                             <i class="fas fa-file-alt stat-icon"></i>
-                            <span>3 امتحانات</span>
+                            <span>3 Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</span>
                         </div>
                         <div class="subject-stat">
                             <i class="fas fa-sitemap stat-icon"></i>
-                            <span>كبسولة المراجعة</span>
+                            <span>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©</span>
                         </div>
                     </div>
                     <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
@@ -830,29 +840,29 @@
 
 
                 <!--
-                    يمكنك إضافة المزيد من المواد بنسخ الكارد أعلاه وتعديل:
-                    - href: رابط صفحة المادة (subject3.html, subject4.html, ...)
-                    - theme-*: لون الكارد (theme-orange, theme-orange, theme-orange, theme-orange, theme-orange, theme-teal)
-                    - الأيقونة والاسم والوصف والإحصائيات
-                    - أزل class="disabled" و <span class="coming-soon"> عند جاهزية المادة
+                    ÙŠÙ…ÙƒÙ†Ùƒ Ø¥Ø¶Ø§ÙØ© Ø§Ù„Ù…Ø²ÙŠØ¯ Ù…Ù† Ø§Ù„Ù…ÙˆØ§Ø¯ Ø¨Ù†Ø³Ø® Ø§Ù„ÙƒØ§Ø±Ø¯ Ø£Ø¹Ù„Ø§Ù‡ ÙˆØªØ¹Ø¯ÙŠÙ„:
+                    - href: Ø±Ø§Ø¨Ø· ØµÙØ­Ø© Ø§Ù„Ù…Ø§Ø¯Ø© (subject3.html, subject4.html, ...)
+                    - theme-*: Ù„ÙˆÙ† Ø§Ù„ÙƒØ§Ø±Ø¯ (theme-orange, theme-orange, theme-orange, theme-orange, theme-orange, theme-teal)
+                    - Ø§Ù„Ø£ÙŠÙ‚ÙˆÙ†Ø© ÙˆØ§Ù„Ø§Ø³Ù… ÙˆØ§Ù„ÙˆØµÙ ÙˆØ§Ù„Ø¥Ø­ØµØ§Ø¦ÙŠØ§Øª
+                    - Ø£Ø²Ù„ class="disabled" Ùˆ <span class="coming-soon"> Ø¹Ù†Ø¯ Ø¬Ø§Ù‡Ø²ÙŠØ© Ø§Ù„Ù…Ø§Ø¯Ø©
                 -->
 
             </div>
 
             <div class="landing-theme-switcher">
-                <span>المظهر:</span>
-                <button onclick="setTheme('')" title="داكن"><i class="fas fa-moon"></i></button>
-                <button onclick="setTheme('light-mode')" title="فاتح"><i class="fas fa-sun"></i></button>
+                <span>Ø§Ù„Ù…Ø¸Ù‡Ø±:</span>
+                <button onclick="setTheme('')" title="Ø¯Ø§ÙƒÙ†"><i class="fas fa-moon"></i></button>
+                <button onclick="setTheme('light-mode')" title="ÙØ§ØªØ­"><i class="fas fa-sun"></i></button>
                 <button onclick="setTheme('pro-mode')" title="Pro"><i class="fas fa-gem"></i></button>
-                <button onclick="setTheme('contrast-mode')" title="تباين"><i class="fas fa-adjust"></i></button>
+                <button onclick="setTheme('contrast-mode')" title="ØªØ¨Ø§ÙŠÙ†"><i class="fas fa-adjust"></i></button>
             </div>
 
             <div class="hub-footer">
                 <div class="support-contact">
-                    في حالة وجود مشكلة أو اقتراح بخصوص الموقع
+                    ÙÙŠ Ø­Ø§Ù„Ø© ÙˆØ¬ÙˆØ¯ Ù…Ø´ÙƒÙ„Ø© Ø£Ùˆ Ø§Ù‚ØªØ±Ø§Ø­ Ø¨Ø®ØµÙˆØµ Ø§Ù„Ù…ÙˆÙ‚Ø¹
                     <a href="https://wa.me/201091913836?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%B9%D9%86%D8%AF%D9%8A%20%D9%85%D8%B4%D9%83%D9%84%D8%A9%20%D8%A3%D9%88%20%D8%A7%D9%82%D8%AA%D8%B1%D8%A7%D8%AD%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%85%D9%88%D9%82%D8%B9%20Bsmaga-Zone"
                         target="_blank">
-                        تواصل معي <i class="fab fa-whatsapp"></i>
+                        ØªÙˆØ§ØµÙ„ Ù…Ø¹ÙŠ <i class="fab fa-whatsapp"></i>
                     </a>
                 </div>
                 <div class="hub-footer-text">Created by Hazem Anter</div>
@@ -864,30 +874,36 @@
 
     <!-- One-time Notice Modal -->
     <div id="notice-modal" class="modal">
-        <div class="modal-content farewell-modal-content" style="max-width: 500px; position: relative;">
+        <div class="modal-content farewell-modal-content">
             <button onclick="closeNoticeModal()"
-                style="position: absolute; top: 15px; left: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: rgba(255, 255, 255, 0.5); transition: color 0.3s; z-index: 10;"
-                onmouseover="this.style.color='#f39c12'"
-                onmouseout="this.style.color='rgba(255, 255, 255, 0.5)'"><i class="fas fa-times"></i></button>
+                style="position: absolute; top: 18px; left: 18px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; color: var(--text-muted); transition: all 0.3s;"
+                onmouseover="this.style.color='var(--primary-color)'; this.style.background='rgba(255,255,255,0.1)';"
+                onmouseout="this.style.color='var(--text-muted)'; this.style.background='rgba(255,255,255,0.05)';"><i class="fas fa-times"></i></button>
             
-            <div class="astronaut-icon">
-                <i class="fas fa-user-astronaut"></i>
+            <div class="farewell-header">
+                <i class="fas fa-graduation-cap header-cap"></i>
+                <h2>Ø¹Ø²ÙŠØ²ÙŠ Ø§Ù„Ø¨ØµÙ…Ø¬ÙŠ â¤ï¸</h2>
             </div>
             
-            <h2 class="farewell-header">عزيزي البصمجي <span class="farewell-heart">❤️</span></h2>
-            
-            <p class="farewell-text">كده وصلنا لآخر مادة في سنة تالتة والحمد لله 🎓</p>
-            <p class="farewell-text">أتمنى أكون قدرت أفيدك أو أسهل عليك الفترة دي ولو بحاجة بسيطة ✨</p>
-            <p class="farewell-text">أرجو تدعيلي أنا وكل زمايلك دعوة حلوة من قلبك، يمكن تكون سبب في رزق أو فرحة كبيرة <span class="farewell-hands">🤍</span></p>
-            <p class="farewell-text">أتمنى أكون كنت صاحب كويس ليكم وسط السهر والبصمجة وضغط الامتحانات ☕️📖</p>
-            <p class="farewell-text" style="font-size: 1.15rem; font-weight: 700; color: #f39c12; margin-top: 15px; margin-bottom: 5px;">أشوفكم على خير 👋</p>
-            
-            <div class="space-effect-container">
-                <div class="space-star star-1">★</div>
-                <div class="space-star star-2">✦</div>
-                <span class="space-effect-text">See you on the other side</span>
-                <div class="space-star star-3">✦</div>
-                <div class="space-star star-4">★</div>
+            <div class="farewell-body" style="text-align: center; gap: 8px;">
+                <p style="font-size: 1.05rem; line-height: 2; font-weight: 600; color: var(--text-color); margin: 0;">
+                    ÙƒØ¯Ù‡ ÙˆØµÙ„Ù†Ø§ Ù„Ø¢Ø®Ø± Ù…Ø§Ø¯Ø© ÙÙŠ Ø³Ù†Ø© ØªØ§Ù„ØªØ© ÙˆØ§Ù„Ø­Ù…Ø¯ Ù„Ù„Ù‡
+                </p>
+                <p style="font-size: 1.05rem; line-height: 2; font-weight: 600; color: var(--text-color); margin: 0;">
+                    Ø£ØªÙ…Ù†Ù‰ Ø£ÙƒÙˆÙ† Ù‚Ø¯Ø±Øª Ø£ÙÙŠØ¯Ùƒ Ø£Ùˆ Ø£Ø³Ù‡Ù„ Ø¹Ù„ÙŠÙƒ Ø§Ù„ÙØªØ±Ø© Ø¯ÙŠ ÙˆÙ„Ùˆ Ø¨Ø­Ø§Ø¬Ø© Ø¨Ø³ÙŠØ·Ø©
+                </p>
+                <p style="font-size: 1.05rem; line-height: 2; font-weight: 600; color: var(--text-color); margin: 0;">
+                    Ø£Ø±Ø¬Ùˆ ØªØ¯Ø¹ÙŠÙ„ÙŠ Ø£Ù†Ø§ ÙˆÙƒÙ„ Ø²Ù…Ø§ÙŠÙ„Ùƒ Ø¯Ø¹ÙˆØ© Ø­Ù„ÙˆØ© Ù…Ù† Ù‚Ù„Ø¨ÙƒØŒ ÙŠÙ…ÙƒÙ† ØªÙƒÙˆÙ† Ø³Ø¨Ø¨ ÙÙŠ Ø±Ø²Ù‚ Ø£Ùˆ ÙØ±Ø­Ø© ÙƒØ¨ÙŠØ±Ø© ðŸ¤
+                </p>
+                <p style="font-size: 1.05rem; line-height: 2; font-weight: 600; color: var(--text-color); margin: 0;">
+                    Ø£ØªÙ…Ù†Ù‰ Ø£ÙƒÙˆÙ† ÙƒÙ†Øª ØµØ§Ø­Ø¨ ÙƒÙˆÙŠØ³ Ù„ÙŠÙƒÙ… ÙˆØ³Ø· Ø§Ù„Ø³Ù‡Ø± ÙˆØ§Ù„Ø¨ØµÙ…Ø¬Ø© ÙˆØ¶ØºØ· Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†Ø§Øª
+                </p>
+                
+                <div style="text-align: center; margin-top: 18px;">
+                    <button onclick="closeNoticeModal()" class="farewell-btn">
+                        See you on the other side ðŸ’«
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -906,15 +922,43 @@
         }
 
 
+        // Confetti Celebration Generator
+        function startConfetti() {
+            const container = document.getElementById('confetti-container') || (() => {
+                const div = document.createElement('div');
+                div.id = 'confetti-container';
+                document.body.appendChild(div);
+                return div;
+            })();
+            container.innerHTML = '';
+            const colors = ['#e67e22', '#2ecc71', '#3498db', '#9b59b6', '#f1c40f', '#e74c3c'];
+            for (let i = 0; i < 80; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 1.5 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 2.5) + 's';
+                confetti.style.width = Math.random() * 8 + 6 + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0px';
+                container.appendChild(confetti);
+            }
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 6000);
+        }
+
         // Notice Modal Logic
         function closeNoticeModal() {
             document.getElementById('notice-modal').style.display = 'none';
-            localStorage.setItem('university_notice_seen_v3', 'true');
+            localStorage.setItem('farewell_notice_seen_v2', 'true');
         }
 
         function checkNoticeModal() {
-            if (!localStorage.getItem('university_notice_seen_v3')) {
+            if (!localStorage.getItem('farewell_notice_seen_v2')) {
                 document.getElementById('notice-modal').style.display = 'flex';
+                setTimeout(startConfetti, 400);
             }
         }
 
