@@ -1,13 +1,13 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ù…Ù†ØµØ© Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†Ø§Øª - Ø§Ù„ÙØ±Ù‚Ø© Ø§Ù„Ø«Ø§Ù„Ø«Ø© | Ø§Ù„ØªØ±Ù… Ø§Ù„Ø«Ø§Ù†ÙŠ</title>
+    <title>منصة الامتحانات - الفرقة الثالثة | الترم الثاني</title>
     <link rel="icon" type="image/svg+xml" href="shared/favicon.svg">
     <meta name="description"
-        content="Ù…Ù†ØµØ© Ø§Ù…ØªØ­Ø§Ù†Ø§Øª Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠØ© Ù„Ù„ÙØ±Ù‚Ø© Ø§Ù„Ø«Ø§Ù„Ø«Ø© - Ø§Ù„ØªØ±Ù… Ø§Ù„Ø«Ø§Ù†ÙŠ. ØªØ¯Ø±Ø¨ Ø¹Ù„Ù‰ Ø§Ù…ØªØ­Ø§Ù†Ø§Øª Ø§Ù„Ù…ÙˆØ§Ø¯ Ø§Ù„Ù…Ø®ØªÙ„ÙØ©.">
+        content="منصة امتحانات إلكترونية للفرقة الثالثة - الترم الثاني. تدرب على امتحانات المواد المختلفة.">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="shared/styles.css">
@@ -664,9 +664,11 @@
             transform: translateY(-1px) scale(0.98) !important;
         }
     </style>
+
     <!-- Supabase Integration -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="shared/supabase-config.js"></script>
+
 </head>
 
 <body>
@@ -674,8 +676,8 @@
     <div id="loading-screen">
         <div class="loader-content">
             <div class="loader-spinner"></div>
-            <h2>Ø¬Ø§Ø±ÙŠ Ø§Ù„ØªØ­Ù…ÙŠÙ„...</h2>
-            <p>ØªØ¬Ù‡ÙŠØ² Ø§Ù„Ù…Ù†ØµØ©</p>
+            <h2>جاري التحميل...</h2>
+            <p>تجهيز المنصة</p>
         </div>
     </div>
 
@@ -691,144 +693,144 @@
             <div class="landing-header">
                 <div class="hub-badge">
                     <i class="fas fa-circle"></i>
-                    Ø§Ù„ÙØ±Ù‚Ø© Ø§Ù„Ø«Ø§Ù„Ø«Ø© â€” Ø§Ù„ØªØ±Ù… Ø§Ù„Ø«Ø§Ù†ÙŠ
+                    الفرقة الثالثة — الترم الثاني
                 </div>
-                <h1><i class="fas fa-graduation-cap"></i> Ù…Ù†ØµØ© Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</h1>
-                <p class="subtitle">Ø§Ø®ØªØ± Ø§Ù„Ù…Ø§Ø¯Ø© Ù„Ù„Ø¨Ø¯Ø¡ ÙÙŠ Ø§Ù„Ù…Ø°Ø§ÙƒØ±Ø© ÙˆØ§Ù„ØªØ¯Ø±ÙŠØ¨ Ø¹Ù„Ù‰ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</p>
+                <h1><i class="fas fa-graduation-cap"></i> منصة الامتحانات</h1>
+                <p class="subtitle">اختر المادة للبدء في المذاكرة والتدريب على الامتحانات</p>
             </div>
 
             <div class="subject-cards" id="subject-cards">
 
-                <!-- Subject 1: Ù†Ù…Ø§Ø°Ø¬ ÙˆÙ†Ø¸Ø±ÙŠØ§Øª -->
+                <!-- Subject 1: نماذج ونظريات -->
                 <a href="subject1.html" class="subject-card theme-orange" id="subject-1">
                     <div class="subject-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <div class="subject-name">Ù†Ù…Ø§Ø°Ø¬ ÙˆÙ†Ø¸Ø±ÙŠØ§Øª Ù„Ù„Ø¹Ù…Ù„ Ù…Ø¹ Ø§Ù„Ø£ÙØ±Ø§Ø¯</div>
+                    <div class="subject-name">نماذج ونظريات للعمل مع الأفراد</div>
                     <div class="subject-stats">
                         <div class="subject-stat">
                             <i class="fas fa-file-alt stat-icon"></i>
-                            <span>3 Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</span>
+                            <span>3 امتحانات</span>
                         </div>
                         <div class="subject-stat">
                             <i class="fas fa-sitemap stat-icon"></i>
-                            <span>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©</span>
+                            <span>كبسولة المراجعة</span>
                         </div>
                     </div>
                     <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
                 </a>
 
 
-                <!-- Subject 2: Ø§Ù„Ø¨Ø­Ø« ÙÙŠ Ø§Ù„Ø®Ø¯Ù…Ø© Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© -->
+                <!-- Subject 2: البحث في الخدمة الاجتماعية -->
                 <a href="subject2.html" class="subject-card theme-orange" id="subject-2">
                     <div class="subject-icon">
                         <i class="fas fa-search"></i>
                     </div>
-                    <div class="subject-name">Ø§Ù„Ø¨Ø­Ø« ÙÙŠ Ø®Ø¯Ù…Ø© Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© 2</div>
+                    <div class="subject-name">البحث في خدمة الاجتماعية 2</div>
                     <div class="subject-stats">
                         <div class="subject-stat">
                             <i class="fas fa-file-alt stat-icon"></i>
-                            <span>3 Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</span>
+                            <span>3 امتحانات</span>
                         </div>
                         <div class="subject-stat">
                             <i class="fas fa-sitemap stat-icon"></i>
-                            <span>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©</span>
+                            <span>كبسولة المراجعة</span>
                         </div>
                     </div>
                     <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
                 </a>
 
 
-                <!-- Subject 3: Ù†Ù…Ø§Ø°Ø¬ ÙˆÙ†Ø¸Ø±ÙŠØ§Øª Ù„Ù„Ø¹Ù…Ù„ Ù…Ø¹ Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª -->
+                <!-- Subject 3: نماذج ونظريات للعمل مع المجتمعات -->
                 <a href="subject3.html" class="subject-card theme-orange" id="subject-3">
                     <div class="subject-icon">
                         <i class="fas fa-city"></i>
                     </div>
-                    <div class="subject-name">Ù†Ù…Ø§Ø°Ø¬ ÙˆÙ†Ø¸Ø±ÙŠØ§Øª Ù„Ù„Ø¹Ù…Ù„ Ù…Ø¹ Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª</div>
+                    <div class="subject-name">نماذج ونظريات للعمل مع المجتمعات</div>
                     <div class="subject-stats">
                         <div class="subject-stat">
                             <i class="fas fa-file-alt stat-icon"></i>
-                            <span>3 Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</span>
+                            <span>3 امتحانات</span>
                         </div>
                         <div class="subject-stat">
                             <i class="fas fa-sitemap stat-icon"></i>
-                            <span>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©</span>
+                            <span>كبسولة المراجعة</span>
                         </div>
                     </div>
                     <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
                 </a>
 
-                <!-- Subject 4: Ù†Ù…Ø§Ø°Ø¬ ÙˆÙ†Ø¸Ø±ÙŠØ§Øª Ù„Ù„Ø¹Ù…Ù„ Ù…Ø¹ Ø§Ù„Ø¬Ù…Ø§Ø¹Ø§Øª -->
+                <!-- Subject 4: نماذج ونظريات للعمل مع الجماعات -->
                 <a href="subject4.html" class="subject-card theme-orange" id="subject-4">
                     <div class="subject-icon">
                         <i class="fas fa-users-cog"></i>
                     </div>
-                    <div class="subject-name">Ù†Ù…Ø§Ø°Ø¬ ÙˆÙ†Ø¸Ø±ÙŠØ§Øª Ù„Ù„Ø¹Ù…Ù„ Ù…Ø¹ Ø§Ù„Ø¬Ù…Ø§Ø¹Ø§Øª</div>
+                    <div class="subject-name">نماذج ونظريات للعمل مع الجماعات</div>
                     <div class="subject-stats">
                         <div class="subject-stat">
                             <i class="fas fa-file-alt stat-icon"></i>
-                            <span>3 Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</span>
+                            <span>3 امتحانات</span>
                         </div>
                         <div class="subject-stat">
                             <i class="fas fa-sitemap stat-icon"></i>
-                            <span>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©</span>
+                            <span>كبسولة المراجعة</span>
                         </div>
                     </div>
                     <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
                 </a>
 
-                <!-- Subject 5: Ø§Ù„Ø®Ø¯Ù…Ø© Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© ÙÙŠ Ù…Ø¬Ø§Ù„ Ø°ÙˆÙŠ Ø§Ù„Ø§Ø­ØªÙŠØ§Ø¬Ø§Øª Ø§Ù„Ø®Ø§ØµØ© -->
+                <!-- Subject 5: الخدمة الاجتماعية في مجال ذوي الاحتياجات الخاصة -->
                 <a href="subject5.html" class="subject-card theme-orange" id="subject-5">
                     <div class="subject-icon">
                         <i class="fas fa-wheelchair"></i>
                     </div>
-                    <div class="subject-name">Ø§Ù„Ø®Ø¯Ù…Ø© Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© ÙÙŠ Ù…Ø¬Ø§Ù„ Ø°ÙˆÙŠ Ø§Ù„Ø§Ø­ØªÙŠØ§Ø¬Ø§Øª Ø§Ù„Ø®Ø§ØµØ©</div>
+                    <div class="subject-name">الخدمة الاجتماعية في مجال ذوي الاحتياجات الخاصة</div>
                     <div class="subject-stats">
                         <div class="subject-stat">
                             <i class="fas fa-file-alt stat-icon"></i>
-                            <span>3 Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</span>
+                            <span>3 امتحانات</span>
                         </div>
                         <div class="subject-stat">
                             <i class="fas fa-sitemap stat-icon"></i>
-                            <span>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©</span>
+                            <span>كبسولة المراجعة</span>
                         </div>
                     </div>
                     <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
                 </a>
 
-                <!-- Subject 6: ØªÙ‚ÙˆÙŠÙ… Ø§Ù„Ø¨Ø±Ø§Ù…Ø¬ ÙˆØ§Ù„Ù…Ø´Ø±ÙˆØ¹Ø§Øª Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© -->
+                <!-- Subject 6: تقويم البرامج والمشروعات الاجتماعية -->
                 <a href="subject6.html" class="subject-card theme-orange" id="subject-6">
                     <div class="subject-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <div class="subject-name">ØªÙ‚ÙˆÙŠÙ… Ø§Ù„Ø¨Ø±Ø§Ù…Ø¬ ÙˆØ§Ù„Ù…Ø´Ø±ÙˆØ¹Ø§Øª Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ©</div>
+                    <div class="subject-name">تقويم البرامج والمشروعات الاجتماعية</div>
                     <div class="subject-stats">
                         <div class="subject-stat">
                             <i class="fas fa-file-alt stat-icon"></i>
-                            <span>3 Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</span>
+                            <span>3 امتحانات</span>
                         </div>
                         <div class="subject-stat">
                             <i class="fas fa-sitemap stat-icon"></i>
-                            <span>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©</span>
+                            <span>كبسولة المراجعة</span>
                         </div>
                     </div>
                     <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
                 </a>
 
-                <!-- Subject 7: ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª Ø§Ù„Ù…Ø­Ù„ÙŠØ© -->
+                <!-- Subject 7: تنمية المجتمعات المحلية -->
                 <a href="subject7.html" class="subject-card theme-gold" id="subject-7">
                     <div class="subject-icon">
                         <i class="fas fa-leaf"></i>
                     </div>
-                    <div class="subject-name">ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª Ø§Ù„Ù…Ø­Ù„ÙŠØ©</div>
+                    <div class="subject-name">تنمية المجتمعات المحلية</div>
                     <div class="subject-stats">
                         <div class="subject-stat">
                             <i class="fas fa-file-alt stat-icon"></i>
-                            <span>3 Ø§Ù…ØªØ­Ø§Ù†Ø§Øª</span>
+                            <span>3 امتحانات</span>
                         </div>
                         <div class="subject-stat">
                             <i class="fas fa-sitemap stat-icon"></i>
-                            <span>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©</span>
+                            <span>كبسولة المراجعة</span>
                         </div>
                     </div>
                     <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
@@ -840,29 +842,29 @@
 
 
                 <!--
-                    ÙŠÙ…ÙƒÙ†Ùƒ Ø¥Ø¶Ø§ÙØ© Ø§Ù„Ù…Ø²ÙŠØ¯ Ù…Ù† Ø§Ù„Ù…ÙˆØ§Ø¯ Ø¨Ù†Ø³Ø® Ø§Ù„ÙƒØ§Ø±Ø¯ Ø£Ø¹Ù„Ø§Ù‡ ÙˆØªØ¹Ø¯ÙŠÙ„:
-                    - href: Ø±Ø§Ø¨Ø· ØµÙØ­Ø© Ø§Ù„Ù…Ø§Ø¯Ø© (subject3.html, subject4.html, ...)
-                    - theme-*: Ù„ÙˆÙ† Ø§Ù„ÙƒØ§Ø±Ø¯ (theme-orange, theme-orange, theme-orange, theme-orange, theme-orange, theme-teal)
-                    - Ø§Ù„Ø£ÙŠÙ‚ÙˆÙ†Ø© ÙˆØ§Ù„Ø§Ø³Ù… ÙˆØ§Ù„ÙˆØµÙ ÙˆØ§Ù„Ø¥Ø­ØµØ§Ø¦ÙŠØ§Øª
-                    - Ø£Ø²Ù„ class="disabled" Ùˆ <span class="coming-soon"> Ø¹Ù†Ø¯ Ø¬Ø§Ù‡Ø²ÙŠØ© Ø§Ù„Ù…Ø§Ø¯Ø©
+                    يمكنك إضافة المزيد من المواد بنسخ الكارد أعلاه وتعديل:
+                    - href: رابط صفحة المادة (subject3.html, subject4.html, ...)
+                    - theme-*: لون الكارد (theme-orange, theme-orange, theme-orange, theme-orange, theme-orange, theme-teal)
+                    - الأيقونة والاسم والوصف والإحصائيات
+                    - أزل class="disabled" و <span class="coming-soon"> عند جاهزية المادة
                 -->
 
             </div>
 
             <div class="landing-theme-switcher">
-                <span>Ø§Ù„Ù…Ø¸Ù‡Ø±:</span>
-                <button onclick="setTheme('')" title="Ø¯Ø§ÙƒÙ†"><i class="fas fa-moon"></i></button>
-                <button onclick="setTheme('light-mode')" title="ÙØ§ØªØ­"><i class="fas fa-sun"></i></button>
+                <span>المظهر:</span>
+                <button onclick="setTheme('')" title="داكن"><i class="fas fa-moon"></i></button>
+                <button onclick="setTheme('light-mode')" title="فاتح"><i class="fas fa-sun"></i></button>
                 <button onclick="setTheme('pro-mode')" title="Pro"><i class="fas fa-gem"></i></button>
-                <button onclick="setTheme('contrast-mode')" title="ØªØ¨Ø§ÙŠÙ†"><i class="fas fa-adjust"></i></button>
+                <button onclick="setTheme('contrast-mode')" title="تباين"><i class="fas fa-adjust"></i></button>
             </div>
 
             <div class="hub-footer">
                 <div class="support-contact">
-                    ÙÙŠ Ø­Ø§Ù„Ø© ÙˆØ¬ÙˆØ¯ Ù…Ø´ÙƒÙ„Ø© Ø£Ùˆ Ø§Ù‚ØªØ±Ø§Ø­ Ø¨Ø®ØµÙˆØµ Ø§Ù„Ù…ÙˆÙ‚Ø¹
+                    في حالة وجود مشكلة أو اقتراح بخصوص الموقع
                     <a href="https://wa.me/201091913836?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%B9%D9%86%D8%AF%D9%8A%20%D9%85%D8%B4%D9%83%D9%84%D8%A9%20%D8%A3%D9%88%20%D8%A7%D9%82%D8%AA%D8%B1%D8%A7%D8%AD%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D9%85%D9%88%D9%82%D8%B9%20Bsmaga-Zone"
                         target="_blank">
-                        ØªÙˆØ§ØµÙ„ Ù…Ø¹ÙŠ <i class="fab fa-whatsapp"></i>
+                        تواصل معي <i class="fab fa-whatsapp"></i>
                     </a>
                 </div>
                 <div class="hub-footer-text">Created by Hazem Anter</div>
@@ -882,26 +884,26 @@
             
             <div class="farewell-header">
                 <i class="fas fa-graduation-cap header-cap"></i>
-                <h2>Ø¹Ø²ÙŠØ²ÙŠ Ø§Ù„Ø¨ØµÙ…Ø¬ÙŠ â¤ï¸</h2>
+                <h2>عزيزي البصمجي ❤️</h2>
             </div>
             
             <div class="farewell-body" style="text-align: center; gap: 8px;">
                 <p style="font-size: 1.05rem; line-height: 2; font-weight: 600; color: var(--text-color); margin: 0;">
-                    ÙƒØ¯Ù‡ ÙˆØµÙ„Ù†Ø§ Ù„Ø¢Ø®Ø± Ù…Ø§Ø¯Ø© ÙÙŠ Ø³Ù†Ø© ØªØ§Ù„ØªØ© ÙˆØ§Ù„Ø­Ù…Ø¯ Ù„Ù„Ù‡
+                    كده وصلنا لآخر مادة في سنة تالتة والحمد لله
                 </p>
                 <p style="font-size: 1.05rem; line-height: 2; font-weight: 600; color: var(--text-color); margin: 0;">
-                    Ø£ØªÙ…Ù†Ù‰ Ø£ÙƒÙˆÙ† Ù‚Ø¯Ø±Øª Ø£ÙÙŠØ¯Ùƒ Ø£Ùˆ Ø£Ø³Ù‡Ù„ Ø¹Ù„ÙŠÙƒ Ø§Ù„ÙØªØ±Ø© Ø¯ÙŠ ÙˆÙ„Ùˆ Ø¨Ø­Ø§Ø¬Ø© Ø¨Ø³ÙŠØ·Ø©
+                    أتمنى أكون قدرت أفيدك أو أسهل عليك الفترة دي ولو بحاجة بسيطة
                 </p>
                 <p style="font-size: 1.05rem; line-height: 2; font-weight: 600; color: var(--text-color); margin: 0;">
-                    Ø£Ø±Ø¬Ùˆ ØªØ¯Ø¹ÙŠÙ„ÙŠ Ø£Ù†Ø§ ÙˆÙƒÙ„ Ø²Ù…Ø§ÙŠÙ„Ùƒ Ø¯Ø¹ÙˆØ© Ø­Ù„ÙˆØ© Ù…Ù† Ù‚Ù„Ø¨ÙƒØŒ ÙŠÙ…ÙƒÙ† ØªÙƒÙˆÙ† Ø³Ø¨Ø¨ ÙÙŠ Ø±Ø²Ù‚ Ø£Ùˆ ÙØ±Ø­Ø© ÙƒØ¨ÙŠØ±Ø© ðŸ¤
+                    أرجو تدعيلي أنا وكل زمايلك دعوة حلوة من قلبك، يمكن تكون سبب في رزق أو فرحة كبيرة 🤍
                 </p>
                 <p style="font-size: 1.05rem; line-height: 2; font-weight: 600; color: var(--text-color); margin: 0;">
-                    Ø£ØªÙ…Ù†Ù‰ Ø£ÙƒÙˆÙ† ÙƒÙ†Øª ØµØ§Ø­Ø¨ ÙƒÙˆÙŠØ³ Ù„ÙŠÙƒÙ… ÙˆØ³Ø· Ø§Ù„Ø³Ù‡Ø± ÙˆØ§Ù„Ø¨ØµÙ…Ø¬Ø© ÙˆØ¶ØºØ· Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†Ø§Øª
+                    أتمنى أكون كنت صاحب كويس ليكم وسط السهر والبصمجة وضغط الامتحانات
                 </p>
                 
                 <div style="text-align: center; margin-top: 18px;">
                     <button onclick="closeNoticeModal()" class="farewell-btn">
-                        See you on the other side ðŸ’«
+                        See you on the other side 💫
                     </button>
                 </div>
             </div>

@@ -244,4 +244,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     
     await trackPageVisit(pageName, pageType);
+
+    // Easter egg: Click "Created by Hazem Anter" 10 times consecutively within 1s interval to open admin.html
+    let clickCount = 0;
+    let lastClickTime = 0;
+    document.addEventListener("click", (e) => {
+        if (e.target && (
+            e.target.classList.contains("hub-footer-text") ||
+            (e.target.textContent && e.target.textContent.trim().includes("Created by Hazem Anter"))
+        )) {
+            const currentTime = Date.now();
+            if (currentTime - lastClickTime < 1000) {
+                clickCount++;
+                if (clickCount >= 10) {
+                    window.location.href = "admin.html";
+                    clickCount = 0;
+                }
+            } else {
+                clickCount = 1;
+            }
+            lastClickTime = currentTime;
+        }
+    });
 });

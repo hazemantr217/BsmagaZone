@@ -4,6 +4,8 @@ let currentTab = 'overview';
 let activeSubjects = [];
 let activeExams = [];
 let allQuestions = [];
+let activeYears = [];
+let activeSemesters = [];
 
 // Chart instances
 let visitsChart = null;
@@ -190,19 +192,35 @@ async function loadGlobalSubjects() {
     if (!client) return;
 
     try {
+        // Load Academic Years
+        const { data: years, error: yError } = await client
+            .from('academic_years')
+            .select('*')
+            .order('sort_order', { ascending: true });
+        if (yError) throw yError;
+        activeYears = years || [];
+
+        // Load Semesters
+        const { data: semesters, error: semError } = await client
+            .from('semesters')
+            .select('*')
+            .order('sort_order', { ascending: true });
+        if (semError) throw semError;
+        activeSemesters = semesters || [];
+
+        // Load Subjects
         const { data: subjects, error: sError } = await client
             .from('subjects')
             .select('*')
             .order('id', { ascending: true });
-            
         if (sError) throw sError;
         activeSubjects = subjects || [];
 
+        // Load Exams
         const { data: exams, error: eError } = await client
             .from('exams')
             .select('*')
             .order('id', { ascending: true });
-            
         if (eError) throw eError;
         activeExams = exams || [];
 
@@ -229,6 +247,52 @@ function populateDropdowns() {
         questionSubSelect.innerHTML = '<option value="">اختر المادة...</option>';
         activeSubjects.forEach(s => {
             questionSubSelect.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+        });
+    }
+
+    // New filters in Subjects tab
+    const subYearSelect = document.getElementById('filter-subject-year');
+    if (subYearSelect) {
+        const cachedVal = subYearSelect.value;
+        subYearSelect.innerHTML = '<option value="">كل الفرق</option>';
+        activeYears.forEach(y => {
+            subYearSelect.innerHTML += `<option value="${y.id}">${y.name}</option>`;
+        });
+        subYearSelect.value = cachedVal;
+    }
+
+    const subSemSelect = document.getElementById('filter-subject-semester');
+    if (subSemSelect) {
+        const cachedVal = subSemSelect.value;
+        subSemSelect.innerHTML = '<option value="">كل الترمات</option>';
+        activeSemesters.forEach(sem => {
+            subSemSelect.innerHTML += `<option value="${sem.id}">${sem.name}</option>`;
+        });
+        subSemSelect.value = cachedVal;
+    }
+
+    // Modals dropdowns
+    const modalSubYear = document.getElementById('modal-subject-year');
+    if (modalSubYear) {
+        modalSubYear.innerHTML = '<option value="">اختر الفرقة...</option>';
+        activeYears.forEach(y => {
+            modalSubYear.innerHTML += `<option value="${y.id}">${y.name}</option>`;
+        });
+    }
+
+    const modalSubSem = document.getElementById('modal-subject-semester');
+    if (modalSubSem) {
+        modalSubSem.innerHTML = '<option value="">اختر الترم...</option>';
+        activeSemesters.forEach(sem => {
+            modalSubSem.innerHTML += `<option value="${sem.id}">${sem.name}</option>`;
+        });
+    }
+
+    const modalExamSub = document.getElementById('modal-exam-subject');
+    if (modalExamSub) {
+        modalExamSub.innerHTML = '<option value="">اختر المادة...</option>';
+        activeSubjects.forEach(s => {
+            modalExamSub.innerHTML += `<option value="${s.id}">${s.name}</option>`;
         });
     }
 }
@@ -1115,44 +1179,248 @@ async function loadSubjectsManagerData() {
     container.innerHTML = '<div style="grid-column:1/-1; text-align:center;">جاري تحميل المواد والامتحانات...</div>';
 
     try {
+        const yearFilterVal = document.getElementById('filter-subject-year').value;
+        const semFilterVal = document.getElementById('filter-subject-semester').value;
+
         // Fetch fresh data
         await loadGlobalSubjects();
 
-        container.innerHTML = '';
-        activeSubjects.forEach(s => {
-            const exams = activeExams.filter(e => e.subject_id === s.id);
-            
-            let examsListHtml = '';
-            exams.forEach(e => {
-                examsListHtml += `
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.03);">
-                        <span style="font-size:0.9rem; color:var(--text-secondary);"><i class="fas fa-file-alt" style="margin-left:8px;"></i>${e.title}</span>
-                        <label class="switch">
-                            <input type="checkbox" ${e.is_active ? 'checked' : ''} onchange="toggleExamActive(${e.id}, this.checked)">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                `;
-            });
+        const selectedYearId = yearFilterVal ? parseInt(yearFilterVal) : null;
+        const selectedSemId = semFilterVal ? parseInt(semFilterVal) : null;
 
-            container.innerHTML += `
-                <div class="manager-card" style="display:flex; flex-direction:column; gap:15px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <h3 style="font-weight:800; font-size:1.1rem; color:var(--primary-color);">
-                            <i class="fas fa-${s.icon || 'book'}" style="margin-left:10px;"></i>${s.name}
+        container.innerHTML = '';
+
+        if (activeYears.length === 0 && activeSubjects.length === 0) {
+            container.innerHTML = '<div style="grid-column:1/-1; text-align:center; color:var(--text-secondary);">لا توجد فرق أو مواد دراسية مضافة بعد</div>';
+            return;
+        }
+
+        // Group subjects by Year
+        activeYears.forEach(year => {
+            if (selectedYearId && year.id !== selectedYearId) return;
+
+            // Get subjects for this year
+            let yearSubjects = activeSubjects.filter(s => s.academic_year_id === year.id);
+            if (selectedSemId) {
+                yearSubjects = yearSubjects.filter(s => s.semester_id === selectedSemId);
+            }
+
+            // Create year section container
+            const yearSection = document.createElement('div');
+            yearSection.className = 'year-section';
+            yearSection.style.cssText = 'grid-column: 1 / -1; margin-bottom: 30px; display: flex; flex-direction: column; gap: 15px;';
+
+            // Year header layout
+            let yearHeaderHtml = `
+                <div class="year-header" style="display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.05); padding: 12px 20px; border-radius: 10px; border: 1px solid var(--glass-border); backdrop-filter: blur(5px);">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <h3 style="font-weight: 800; font-size: 1.2rem; color: #a855f7; margin: 0;">
+                            <i class="fas fa-graduation-cap" style="margin-left: 10px;"></i>${year.name}
                         </h3>
-                        <label class="switch">
-                            <input type="checkbox" ${s.is_active ? 'checked' : ''} onchange="toggleSubjectActive(${s.id}, this.checked)">
+                        <span style="font-size: 0.8rem; background: rgba(168, 85, 247, 0.2); color: #c084fc; padding: 2px 8px; border-radius: 20px;">الرمز: ${year.slug}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <label class="switch" title="تفعيل / تعطيل الفرقة">
+                            <input type="checkbox" ${year.is_active ? 'checked' : ''} onchange="toggleYearActive(${year.id}, this.checked)">
                             <span class="slider"></span>
                         </label>
-                    </div>
-                    <div style="margin-top:10px;">
-                        <h5 style="color:var(--text-secondary); margin-bottom:10px; border-bottom:1px solid var(--glass-border); padding-bottom:5px;">قائمة الامتحانات</h5>
-                        ${examsListHtml || '<p style="font-size:0.85rem; color:var(--text-secondary); text-align:center;">لا توجد امتحانات مضافة بعد</p>'}
+                        <button onclick="openEditYearModal(${year.id})" style="background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1rem;" title="تعديل الفرقة">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteAcademicYear(${year.id})" style="background: none; border: none; color: var(--error-color, #ef4444); cursor: pointer; font-size: 1rem;" title="حذف الفرقة">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
                     </div>
                 </div>
             `;
+
+            yearSection.innerHTML = yearHeaderHtml;
+
+            // Subjects grid under this year
+            const subjectsGrid = document.createElement('div');
+            subjectsGrid.className = 'grid-cards';
+            subjectsGrid.style.cssText = 'display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;';
+
+            if (yearSubjects.length === 0) {
+                subjectsGrid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding: 20px; color:var(--text-secondary); font-size:0.9rem;">لا توجد مواد في هذه الفرقة تطابق الفلتر</div>';
+            } else {
+                yearSubjects.forEach(s => {
+                    const exams = activeExams.filter(e => e.subject_id === s.id);
+                    const semesterObj = activeSemesters.find(sem => sem.id === s.semester_id);
+                    const semesterName = semesterObj ? semesterObj.name : 'بدون ترم';
+
+                    let examsListHtml = '';
+                    exams.forEach(e => {
+                        examsListHtml += `
+                            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.03);">
+                                <span style="font-size:0.9rem; color:var(--text-secondary);">
+                                    <i class="fas fa-file-alt" style="margin-left:8px; color: #10b981;"></i>${e.title}
+                                </span>
+                                <div style="display:flex; align-items:center; gap:12px;">
+                                    <label class="switch" title="تفعيل / تعطيل الامتحان">
+                                        <input type="checkbox" ${e.is_active ? 'checked' : ''} onchange="toggleExamActive(${e.id}, this.checked)">
+                                        <span class="slider"></span>
+                                    </label>
+                                    <button onclick="openEditExamModal(${e.id})" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:0.85rem;" title="تعديل الامتحان">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button onclick="deleteExam(${e.id})" style="background:none; border:none; color:var(--error-color); cursor:pointer; font-size:0.85rem;" title="حذف الامتحان">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    const cardHtml = `
+                        <div class="manager-card theme-${s.color_theme || 'orange'}" style="display:flex; flex-direction:column; gap:15px; border-top: 4px solid var(--theme-color, var(--primary-color));">
+                            <div style="display:flex; justify-content:space-between; align-items:start;">
+                                <div>
+                                    <h4 style="font-weight:800; font-size:1.1rem; color:var(--primary-color); margin:0;">
+                                        <i class="fas fa-${s.icon || 'book'}" style="margin-left:10px;"></i>${s.name}
+                                    </h4>
+                                    <div style="margin-top: 5px; display: flex; gap: 8px; flex-wrap: wrap;">
+                                        <span style="font-size:0.75rem; background:rgba(255,255,255,0.05); color:var(--text-secondary); padding:2px 8px; border-radius:10px;">
+                                            ${semesterName}
+                                        </span>
+                                        <span style="font-size:0.75rem; background:rgba(255,255,255,0.05); color:var(--text-secondary); padding:2px 8px; border-radius:10px;">
+                                            الرمز: ${s.slug}
+                                        </span>
+                                    </div>
+                                    ${s.description ? `<p style="font-size: 0.8rem; color: var(--text-secondary); margin: 8px 0 0 0; line-height: 1.4;">${s.description}</p>` : ''}
+                                </div>
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <label class="switch" title="تفعيل / تعطيل المادة">
+                                        <input type="checkbox" ${s.is_active ? 'checked' : ''} onchange="toggleSubjectActive(${s.id}, this.checked)">
+                                        <span class="slider"></span>
+                                    </label>
+                                    <button onclick="openEditSubjectModal(${s.id})" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:0.95rem;" title="تعديل المادة">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button onclick="deleteSubject(${s.id})" style="background:none; border:none; color:var(--error-color); cursor:pointer; font-size:0.95rem;" title="حذف المادة">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div style="margin-top:10px; flex: 1;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid var(--glass-border); padding-bottom:5px;">
+                                    <h5 style="color:var(--text-secondary); margin:0;">قائمة الامتحانات (${exams.length})</h5>
+                                    <button onclick="openAddExamModal(${s.id})" style="background:none; border:none; color:var(--primary-color); cursor:pointer; font-size:0.8rem; display:flex; align-items:center; gap:4px;" title="إضافة امتحان للمادة">
+                                        <i class="fas fa-plus-circle"></i>
+                                        <span>إضافة امتحان</span>
+                                    </button>
+                                </div>
+                                ${examsListHtml || '<p style="font-size:0.85rem; color:var(--text-secondary); text-align:center; margin: 20px 0;">لا توجد امتحانات مضافة بعد</p>'}
+                            </div>
+                        </div>
+                    `;
+                    subjectsGrid.innerHTML += cardHtml;
+                });
+            }
+
+            yearSection.appendChild(subjectsGrid);
+            container.appendChild(yearSection);
         });
+
+        // Also display subjects with no year associated
+        let orphanSubjects = activeSubjects.filter(s => !s.academic_year_id);
+        if (yearFilterVal) orphanSubjects = [];
+        if (selectedSemId) {
+            orphanSubjects = orphanSubjects.filter(s => s.semester_id === selectedSemId);
+        }
+
+        if (orphanSubjects.length > 0) {
+            const orphanSection = document.createElement('div');
+            orphanSection.className = 'year-section';
+            orphanSection.style.cssText = 'grid-column: 1 / -1; margin-bottom: 30px; display: flex; flex-direction: column; gap: 15px;';
+
+            orphanSection.innerHTML = `
+                <div class="year-header" style="display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.02); padding: 12px 20px; border-radius: 10px; border: 1px solid var(--glass-border); backdrop-filter: blur(5px);">
+                    <h3 style="font-weight: 800; font-size: 1.2rem; color: #94a3b8; margin: 0;">
+                        <i class="fas fa-question-circle" style="margin-left: 10px;"></i>مواد غير مصنفة تحت فرقة
+                    </h3>
+                </div>
+            `;
+
+            const subjectsGrid = document.createElement('div');
+            subjectsGrid.className = 'grid-cards';
+            subjectsGrid.style.cssText = 'display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;';
+
+            orphanSubjects.forEach(s => {
+                const exams = activeExams.filter(e => e.subject_id === s.id);
+                const semesterObj = activeSemesters.find(sem => sem.id === s.semester_id);
+                const semesterName = semesterObj ? semesterObj.name : 'بدون ترم';
+
+                let examsListHtml = '';
+                exams.forEach(e => {
+                    examsListHtml += `
+                        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.03);">
+                            <span style="font-size:0.9rem; color:var(--text-secondary);"><i class="fas fa-file-alt" style="margin-left:8px; color: #10b981;"></i>${e.title}</span>
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <label class="switch">
+                                    <input type="checkbox" ${e.is_active ? 'checked' : ''} onchange="toggleExamActive(${e.id}, this.checked)">
+                                    <span class="slider"></span>
+                                </label>
+                                <button onclick="openEditExamModal(${e.id})" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:0.85rem;" title="تعديل الامتحان">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button onclick="deleteExam(${e.id})" style="background:none; border:none; color:var(--error-color); cursor:pointer; font-size:0.85rem;" title="حذف الامتحان">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                const cardHtml = `
+                    <div class="manager-card theme-${s.color_theme || 'orange'}" style="display:flex; flex-direction:column; gap:15px; border-top: 4px solid var(--theme-color, var(--primary-color));">
+                        <div style="display:flex; justify-content:space-between; align-items:start;">
+                            <div>
+                                <h4 style="font-weight:800; font-size:1.1rem; color:var(--primary-color); margin:0;">
+                                    <i class="fas fa-${s.icon || 'book'}" style="margin-left:10px;"></i>${s.name}
+                                </h4>
+                                <div style="margin-top: 5px; display: flex; gap: 8px; flex-wrap: wrap;">
+                                    <span style="font-size:0.75rem; background:rgba(255,255,255,0.05); color:var(--text-secondary); padding:2px 8px; border-radius:10px;">
+                                        ${semesterName}
+                                    </span>
+                                    <span style="font-size:0.75rem; background:rgba(255,255,255,0.05); color:var(--text-secondary); padding:2px 8px; border-radius:10px;">
+                                        الرمز: ${s.slug}
+                                    </span>
+                                </div>
+                                ${s.description ? `<p style="font-size: 0.8rem; color: var(--text-secondary); margin: 8px 0 0 0; line-height: 1.4;">${s.description}</p>` : ''}
+                            </div>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <label class="switch">
+                                    <input type="checkbox" ${s.is_active ? 'checked' : ''} onchange="toggleSubjectActive(${s.id}, this.checked)">
+                                    <span class="slider"></span>
+                                </label>
+                                <button onclick="openEditSubjectModal(${s.id})" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:0.95rem;" title="تعديل المادة">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button onclick="deleteSubject(${s.id})" style="background:none; border:none; color:var(--error-color); cursor:pointer; font-size:0.95rem;" title="حذف المادة">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px; flex: 1;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid var(--glass-border); padding-bottom:5px;">
+                                <h5 style="color:var(--text-secondary); margin:0;">قائمة الامتحانات (${exams.length})</h5>
+                                <button onclick="openAddExamModal(${s.id})" style="background:none; border:none; color:var(--primary-color); cursor:pointer; font-size:0.8rem; display:flex; align-items:center; gap:4px;" title="إضافة امتحان للمادة">
+                                    <i class="fas fa-plus-circle"></i>
+                                    <span>إضافة امتحان</span>
+                                </button>
+                            </div>
+                            ${examsListHtml || '<p style="font-size:0.85rem; color:var(--text-secondary); text-align:center; margin: 20px 0;">لا توجد امتحانات مضافة بعد</p>'}
+                        </div>
+                    </div>
+                `;
+                subjectsGrid.innerHTML += cardHtml;
+            });
+
+            orphanSection.appendChild(subjectsGrid);
+            container.appendChild(orphanSection);
+        }
+
     } catch (e) {
         container.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:var(--error-color)">خطأ أثناء تحميل البيانات: ${e.message}</div>`;
     }
@@ -1170,12 +1438,11 @@ async function toggleSubjectActive(subjectId, isActive) {
             .eq('id', subjectId);
 
         if (error) throw error;
-        
-        // Show success alert in console or user alert
         console.log(`Subject ${subjectId} active status set to: ${isActive}`);
+        await loadGlobalSubjects();
     } catch (e) {
         alert("فشل تحديث حالة المادة: " + e.message);
-        loadSubjectsManagerData(); // Reload to reset toggles
+        loadSubjectsManagerData();
     }
 }
 
@@ -1191,10 +1458,311 @@ async function toggleExamActive(examId, isActive) {
             .eq('id', examId);
 
         if (error) throw error;
-        
         console.log(`Exam ${examId} active status set to: ${isActive}`);
+        await loadGlobalSubjects();
     } catch (e) {
         alert("فشل تحديث حالة الامتحان: " + e.message);
-        loadSubjectsManagerData(); // Reload to reset toggles
+        loadSubjectsManagerData();
+    }
+}
+
+// ============================================
+// ACADEMIC YEARS CRUD LOGIC
+// ============================================
+function openAddYearModal() {
+    document.getElementById('year-modal-title').textContent = 'إضافة فرقة جديدة';
+    document.getElementById('modal-year-id').value = '';
+    document.getElementById('year-form').reset();
+    document.getElementById('year-modal').classList.add('active');
+}
+
+async function openEditYearModal(yearId) {
+    const year = activeYears.find(y => y.id === yearId);
+    if (!year) return;
+
+    document.getElementById('year-modal-title').textContent = 'تعديل الفرقة';
+    document.getElementById('modal-year-id').value = year.id;
+    document.getElementById('modal-year-name').value = year.name;
+    document.getElementById('modal-year-slug').value = year.slug;
+    document.getElementById('modal-year-sort').value = year.sort_order;
+
+    document.getElementById('year-modal').classList.add('active');
+}
+
+async function saveAcademicYear(event) {
+    event.preventDefault();
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    const id = document.getElementById('modal-year-id').value;
+    const name = document.getElementById('modal-year-name').value.trim();
+    const slug = document.getElementById('modal-year-slug').value.trim();
+    const sort_order = parseInt(document.getElementById('modal-year-sort').value);
+
+    const payload = { name, slug, sort_order };
+
+    try {
+        if (id) {
+            const { error } = await client
+                .from('academic_years')
+                .update(payload)
+                .eq('id', id);
+            if (error) throw error;
+        } else {
+            const { error } = await client
+                .from('academic_years')
+                .insert(payload);
+            if (error) throw error;
+        }
+
+        closeModal('year-modal');
+        await loadGlobalSubjects();
+        await loadSubjectsManagerData();
+    } catch (e) {
+        alert("خطأ أثناء حفظ الفرقة: " + e.message);
+    }
+}
+
+async function deleteAcademicYear(yearId) {
+    const hasSubjects = activeSubjects.some(s => s.academic_year_id === yearId);
+    if (hasSubjects) {
+        alert("لا يمكن حذف هذه الفرقة لأنها تحتوي على مواد مرتبطة بها. يرجى حذف المواد أولاً.");
+        return;
+    }
+
+    if (!confirm("هل أنت متأكد من حذف هذه الفرقة نهائياً؟")) return;
+
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        const { error } = await client
+            .from('academic_years')
+            .delete()
+            .eq('id', yearId);
+        if (error) throw error;
+
+        await loadGlobalSubjects();
+        await loadSubjectsManagerData();
+    } catch (e) {
+        alert("خطأ أثناء حذف الفرقة: " + e.message);
+    }
+}
+
+async function toggleYearActive(yearId, isActive) {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        const { error } = await client
+            .from('academic_years')
+            .update({ is_active: isActive })
+            .eq('id', yearId);
+
+        if (error) throw error;
+        console.log(`Year ${yearId} active status set to: ${isActive}`);
+        await loadGlobalSubjects();
+    } catch (e) {
+        alert("فشل تحديث حالة الفرقة: " + e.message);
+        loadSubjectsManagerData();
+    }
+}
+
+// ============================================
+// SUBJECTS CRUD LOGIC
+// ============================================
+function openAddSubjectModal() {
+    document.getElementById('subject-modal-title').textContent = 'إضافة مادة جديدة';
+    document.getElementById('modal-subject-id').value = '';
+    document.getElementById('subject-form').reset();
+    document.getElementById('subject-modal').classList.add('active');
+}
+
+async function openEditSubjectModal(subjectId) {
+    const subject = activeSubjects.find(s => s.id === subjectId);
+    if (!subject) return;
+
+    document.getElementById('subject-modal-title').textContent = 'تعديل المادة';
+    document.getElementById('modal-subject-id').value = subject.id;
+    document.getElementById('modal-subject-name').value = subject.name;
+    document.getElementById('modal-subject-slug').value = subject.slug;
+    document.getElementById('modal-subject-year').value = subject.academic_year_id || '';
+    document.getElementById('modal-subject-semester').value = subject.semester_id || '';
+    document.getElementById('modal-subject-icon').value = subject.icon || 'book';
+    document.getElementById('modal-subject-color').value = subject.color_theme || 'orange';
+    document.getElementById('modal-subject-desc').value = subject.description || '';
+
+    document.getElementById('subject-modal').classList.add('active');
+}
+
+async function saveSubject(event) {
+    event.preventDefault();
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    const id = document.getElementById('modal-subject-id').value;
+    const name = document.getElementById('modal-subject-name').value.trim();
+    const slug = document.getElementById('modal-subject-slug').value.trim();
+    const academic_year_id = parseInt(document.getElementById('modal-subject-year').value);
+    const semester_id = parseInt(document.getElementById('modal-subject-semester').value);
+    const icon = document.getElementById('modal-subject-icon').value.trim();
+    const color_theme = document.getElementById('modal-subject-color').value;
+    const description = document.getElementById('modal-subject-desc').value.trim();
+
+    const payload = {
+        name,
+        slug,
+        academic_year_id,
+        semester_id,
+        icon,
+        color_theme,
+        description
+    };
+
+    try {
+        if (id) {
+            const { error } = await client
+                .from('subjects')
+                .update(payload)
+                .eq('id', id);
+            if (error) throw error;
+        } else {
+            const { error } = await client
+                .from('subjects')
+                .insert(payload);
+            if (error) throw error;
+        }
+
+        closeModal('subject-modal');
+        await loadGlobalSubjects();
+        await loadSubjectsManagerData();
+    } catch (e) {
+        alert("خطأ أثناء حفظ المادة: " + e.message);
+    }
+}
+
+async function deleteSubject(subjectId) {
+    const hasExams = activeExams.some(e => e.subject_id === subjectId);
+    if (hasExams) {
+        alert("لا يمكن حذف هذه المادة لأنها تحتوي على امتحانات مرتبطة بها. يرجى حذف الامتحانات أولاً.");
+        return;
+    }
+
+    if (!confirm("هل أنت متأكد من حذف هذه المادة نهائياً؟")) return;
+
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        const { error } = await client
+            .from('subjects')
+            .delete()
+            .eq('id', subjectId);
+        if (error) throw error;
+
+        await loadGlobalSubjects();
+        await loadSubjectsManagerData();
+    } catch (e) {
+        alert("خطأ أثناء حذف المادة: " + e.message);
+    }
+}
+
+// ============================================
+// EXAMS CRUD LOGIC
+// ============================================
+function openAddExamModal(subjectId = null) {
+    document.getElementById('exam-modal-title').textContent = 'إضافة امتحان جديد';
+    document.getElementById('modal-exam-id').value = '';
+    document.getElementById('exam-form').reset();
+    if (subjectId && typeof subjectId === 'number') {
+        document.getElementById('modal-exam-subject').value = subjectId;
+    }
+    document.getElementById('exam-modal').classList.add('active');
+}
+
+async function openEditExamModal(examId) {
+    const exam = activeExams.find(e => e.id === examId);
+    if (!exam) return;
+
+    document.getElementById('exam-modal-title').textContent = 'تعديل الامتحان';
+    document.getElementById('modal-exam-id').value = exam.id;
+    document.getElementById('modal-exam-title').value = exam.title;
+    document.getElementById('modal-exam-slug').value = exam.slug;
+    document.getElementById('modal-exam-subject').value = exam.subject_id || '';
+    document.getElementById('modal-exam-time').value = Math.round((exam.time_limit_seconds || 7200) / 60);
+
+    document.getElementById('exam-modal').classList.add('active');
+}
+
+async function saveExam(event) {
+    event.preventDefault();
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    const id = document.getElementById('modal-exam-id').value;
+    const title = document.getElementById('modal-exam-title').value.trim();
+    const slug = document.getElementById('modal-exam-slug').value.trim();
+    const subject_id = parseInt(document.getElementById('modal-exam-subject').value);
+    const minutes = parseInt(document.getElementById('modal-exam-time').value);
+    const time_limit_seconds = minutes * 60;
+
+    const payload = {
+        title,
+        slug,
+        subject_id,
+        time_limit_seconds
+    };
+
+    try {
+        if (id) {
+            const { error } = await client
+                .from('exams')
+                .update(payload)
+                .eq('id', id);
+            if (error) throw error;
+        } else {
+            const { error } = await client
+                .from('exams')
+                .insert(payload);
+            if (error) throw error;
+        }
+
+        closeModal('exam-modal');
+        await loadGlobalSubjects();
+        await loadSubjectsManagerData();
+    } catch (e) {
+        alert("خطأ أثناء حفظ الامتحان: " + e.message);
+    }
+}
+
+async function deleteExam(examId) {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    try {
+        const { count, error: countError } = await client
+            .from('questions')
+            .select('*', { count: 'exact', head: true })
+            .eq('exam_id', examId);
+        
+        if (countError) throw countError;
+
+        if (count && count > 0) {
+            alert(`لا يمكن حذف هذا الامتحان لأنه يحتوي على ${count} من الأسئلة المرتبطة به. يرجى حذف الأسئلة أولاً من علامة تبويب "إدارة الأسئلة".`);
+            return;
+        }
+
+        if (!confirm("هل أنت متأكد من حذف هذا الامتحان نهائياً؟")) return;
+
+        const { error } = await client
+            .from('exams')
+            .delete()
+            .eq('id', examId);
+        if (error) throw error;
+
+        await loadGlobalSubjects();
+        await loadSubjectsManagerData();
+    } catch (e) {
+        alert("خطأ أثناء حذف الامتحان: " + e.message);
     }
 }

@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª Ø§Ù„Ù…Ø­Ù„ÙŠØ© - ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø© Ø§Ù„Ø´Ø§Ù…Ù„Ø©</title>
+    <title>تنمية المجتمعات المحلية - كبسولة المراجعة الشاملة</title>
     <link rel="icon" type="image/svg+xml" href="shared/favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -649,9 +649,11 @@
             }
         }
     </style>
+
     <!-- Supabase Integration -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="shared/supabase-config.js"></script>
+
 </head>
 
 <body>
@@ -659,7 +661,7 @@
     <div id="loading-screen">
         <div class="loader-content">
             <div class="loader-spinner"></div>
-            <h2>Ø¬Ø§Ø±ÙŠ ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø©...</h2>
+            <h2>جاري تحميل المراجعة...</h2>
         </div>
     </div>
 
@@ -674,16 +676,16 @@
         <div class="header-inner">
             <div class="header-top">
                 <div class="header-left">
-                    <button class="back-btn" onclick="window.location.href='subject7.html'" title="Ø§Ù„Ø¹ÙˆØ¯Ø©">
+                    <button class="back-btn" onclick="window.location.href='subject7.html'" title="العودة">
                         <i class="fas fa-arrow-right"></i>
                     </button>
                     <h1 class="header-title-text">
                         <i class="fas fa-project-diagram"></i>
-                        <span>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø© - ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª Ø§Ù„Ù…Ø­Ù„ÙŠØ©</span>
+                        <span>كبسولة المراجعة - تنمية المجتمعات المحلية</span>
                     </h1>
                 </div>
 
-                <button id="header-toggle-btn" class="header-toggle-btn" title="ØªÙˆØ³ÙŠØ¹/Ø·ÙŠ Ø§Ù„Ù‚Ø§Ø¦Ù…Ø©"
+                <button id="header-toggle-btn" class="header-toggle-btn" title="توسيع/طي القائمة"
                     onclick="toggleHeader()">
                     <i class="fas fa-chevron-up"></i>
                 </button>
@@ -691,38 +693,38 @@
 
             <div class="header-collapsible" id="header-collapsible">
                 <div class="nav-grid-container">
-                    <button class="nav-pill" data-color="1" onclick="scrollToCard(1)">1. Ù…ÙØ§Ù‡ÙŠÙ… Ø¬ÙˆÙ‡Ø±ÙŠØ©</button>
-                    <button class="nav-pill" data-color="2" onclick="scrollToCard(2)">2. Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ ÙˆØ§Ù„ØªÙ…ÙƒÙŠÙ†</button>
-                    <button class="nav-pill" data-color="3" onclick="scrollToCard(3)">3. Ø§ØªØ¬Ø§Ù‡Ø§Øª Ø§Ù„ØªÙ†Ù…ÙŠØ©</button>
-                    <button class="nav-pill" data-color="4" onclick="scrollToCard(4)">4. Ù…Ø¨Ø§Ø¯Ø¦ Ø§Ù„ØªÙ†Ù…ÙŠØ©</button>
-                    <button class="nav-pill" data-color="5" onclick="scrollToCard(5)">5. Ø§Ù„Ù…Ù‚Ø§Ø±Ù†Ø© Ø§Ù„Ø´Ø§Ù…Ù„Ø©</button>
-                    <button class="nav-pill" data-color="6" onclick="scrollToCard(6)">6. ØªØ´Ø®ÙŠØµ Ø§Ù„Ù…Ø´ÙƒÙ„Ø§Øª</button>
-                    <button class="nav-pill" data-color="7" onclick="scrollToCard(7)">7. Ù…Ø¯Ø§Ø®Ù„ Ø§Ù„ØªØ¯Ø®Ù„</button>
-                    <button class="nav-pill" data-color="8" onclick="scrollToCard(8)">8. ØªÙˆØ·ÙŠÙ† Ø§Ù„Ø¨Ø¯Ùˆ</button>
-                    <button class="nav-pill" data-color="9" onclick="scrollToCard(9)">9. ÙÙ„Ø³ÙØ© Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø§Øª</button>
-                    <button class="nav-pill" data-color="10" onclick="scrollToCard(10)">10. Ø£Ù†ÙˆØ§Ø¹ Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø§Øª</button>
-                    <button class="nav-pill" data-color="11" onclick="scrollToCard(11)">11. Ø®Ø·ÙˆØ§Øª Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø©</button>
-                    <button class="nav-pill" data-color="12" onclick="scrollToCard(12)">12. Ø£Ø¯ÙˆØ§Ø± Ø§Ù„Ø£Ø®ØµØ§Ø¦ÙŠ</button>
-                    <button class="nav-pill" data-color="13" onclick="scrollToCard(13)">13. Ù…Ø¹Ø§ÙŠÙŠØ± Ø§Ù„ØªÙ‚ÙŠÙŠÙ…</button>
-                    <button class="nav-pill" data-color="14" onclick="scrollToCard(14)">14. ØªÙ‚ÙŠÙŠÙ… Ø§Ù„ØªØ¯Ø®Ù„</button>
-                    <button class="nav-pill" data-color="15" onclick="scrollToCard(15)">15. Ø§Ù„Ù…Ø¨Ø§Ø¯Ø¦ Ø§Ù„Ù…Ù‡Ù†ÙŠØ©</button>
-                    <button class="nav-pill" data-color="16" onclick="scrollToCard(16)">16. Ù…ÙØ§Ù‡ÙŠÙ… Ø§Ù„ØªØ®Ø·ÙŠØ·</button>
-                    <button class="nav-pill" data-color="18" onclick="scrollToCard(18)">17. ØªØµÙ†ÙŠÙ Ø§Ù„Ù…Ø¹ÙˆÙ‚Ø§Øª</button>
-                    <button class="nav-pill" data-color="19" onclick="scrollToCard(19)">18. Ø§Ù„Ø£Ø¬Ù‡Ø²Ø© Ø§Ù„ØªÙ†Ù…ÙˆÙŠØ©</button>
-                    <button class="nav-pill" data-color="20" onclick="scrollToCard(20)">19. Ù†Ù…Ø§Ø°Ø¬ Ø±ÙˆØ«Ù…Ø§Ù†</button>
+                    <button class="nav-pill" data-color="1" onclick="scrollToCard(1)">1. مفاهيم جوهرية</button>
+                    <button class="nav-pill" data-color="2" onclick="scrollToCard(2)">2. المجتمع والتمكين</button>
+                    <button class="nav-pill" data-color="3" onclick="scrollToCard(3)">3. اتجاهات التنمية</button>
+                    <button class="nav-pill" data-color="4" onclick="scrollToCard(4)">4. مبادئ التنمية</button>
+                    <button class="nav-pill" data-color="5" onclick="scrollToCard(5)">5. المقارنة الشاملة</button>
+                    <button class="nav-pill" data-color="6" onclick="scrollToCard(6)">6. تشخيص المشكلات</button>
+                    <button class="nav-pill" data-color="7" onclick="scrollToCard(7)">7. مداخل التدخل</button>
+                    <button class="nav-pill" data-color="8" onclick="scrollToCard(8)">8. توطين البدو</button>
+                    <button class="nav-pill" data-color="9" onclick="scrollToCard(9)">9. فلسفة المبادرات</button>
+                    <button class="nav-pill" data-color="10" onclick="scrollToCard(10)">10. أنواع المبادرات</button>
+                    <button class="nav-pill" data-color="11" onclick="scrollToCard(11)">11. خطوات المبادرة</button>
+                    <button class="nav-pill" data-color="12" onclick="scrollToCard(12)">12. أدوار الأخصائي</button>
+                    <button class="nav-pill" data-color="13" onclick="scrollToCard(13)">13. معايير التقييم</button>
+                    <button class="nav-pill" data-color="14" onclick="scrollToCard(14)">14. تقييم التدخل</button>
+                    <button class="nav-pill" data-color="15" onclick="scrollToCard(15)">15. المبادئ المهنية</button>
+                    <button class="nav-pill" data-color="16" onclick="scrollToCard(16)">16. مفاهيم التخطيط</button>
+                    <button class="nav-pill" data-color="18" onclick="scrollToCard(18)">17. تصنيف المعوقات</button>
+                    <button class="nav-pill" data-color="19" onclick="scrollToCard(19)">18. الأجهزة التنموية</button>
+                    <button class="nav-pill" data-color="20" onclick="scrollToCard(20)">19. نماذج روثمان</button>
                     <button class="nav-pill" data-color="17" onclick="scrollToCard(17)"><i class="fas fa-key"></i> 20.
-                        Ø´ÙØ±Ø§Øª Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†</button>
+                        شفرات الامتحان</button>
                 </div>
 
                 <div class="header-controls-row">
                     <button class="nav-pill control" onclick="expandAll()">
-                        <i class="fas fa-expand"></i> ØªÙˆØ³ÙŠØ¹ Ø§Ù„ÙƒÙ„
+                        <i class="fas fa-expand"></i> توسيع الكل
                     </button>
                     <button class="nav-pill control" onclick="collapseAll()">
-                        <i class="fas fa-compress"></i> Ø·ÙŠ Ø§Ù„ÙƒÙ„
+                        <i class="fas fa-compress"></i> طي الكل
                     </button>
                     <button class="nav-pill control" onclick="cycleTheme()">
-                        <i class="fas fa-palette"></i> ØªØºÙŠÙŠØ± Ø§Ù„Ù…Ø¸Ù‡Ø±
+                        <i class="fas fa-palette"></i> تغيير المظهر
                     </button>
                 </div>
             </div>
@@ -734,60 +736,60 @@
             <div class="network-grid">
 
                 <div class="network-center">
-                    <h2><i class="fas fa-leaf"></i> ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª Ø§Ù„Ù…Ø­Ù„ÙŠØ©</h2>
-                    <p>ÙƒØ¨Ø³ÙˆÙ„Ø© Ø§Ù„Ù…Ø±Ø§Ø¬Ø¹Ø© Ø§Ù„Ø´Ø§Ù…Ù„Ø© Ø§Ù„Ù…Ø­Ø¯Ø«Ø© ÙˆØ§Ù„Ù…ÙˆØ³Ø¹Ø© Ø¨Ø§Ù„ÙƒØ§Ù…Ù„ (20 Ù‚Ø³Ù…Ø§Ù‹ Ø´Ø§Ù…Ù„Ø§Ù‹ ÙˆÙ…ÙØ§ØªÙŠØ­ ÙˆØ´ÙØ±Ø§Øª Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†
-                        Ø§Ù„Ø°Ù‡Ø¨ÙŠØ©)</p>
+                    <h2><i class="fas fa-leaf"></i> تنمية المجتمعات المحلية</h2>
+                    <p>كبسولة المراجعة الشاملة المحدثة والموسعة بالكامل (20 قسماً شاملاً ومفاتيح وشفرات الامتحان
+                        الذهبية)</p>
                 </div>
 
-                <!-- Card 1: Ø§Ù„ÙØ±ÙˆÙ‚ Ø§Ù„Ø¬ÙˆÙ‡Ø±ÙŠØ© Ø¨ÙŠÙ† Ø§Ù„Ù…ÙØ§Ù‡ÙŠÙ… -->
+                <!-- Card 1: الفروق الجوهرية بين المفاهيم -->
                 <div class="network-card" data-branch="1" id="card-1">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ø§Ù„ÙØ±ÙˆÙ‚ Ø§Ù„Ø¬ÙˆÙ‡Ø±ÙŠØ© Ø¨ÙŠÙ† Ø§Ù„Ù…ÙØ§Ù‡ÙŠÙ… (Ø§Ù„Ù†Ù…ÙˆØŒ Ø§Ù„ØªØºÙŠØ±ØŒ Ø§Ù„ØªÙ†Ù…ÙŠØ©)</h3>
+                        <h3>الفروق الجوهرية بين المفاهيم (النمو، التغير، التنمية)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (Ù‡Ø°Ø§ Ø§Ù„Ø¬Ø²Ø¡ Ø¯Ø§Ø¦Ù…Ø§Ù‹ Ù…Ø§ ÙŠÙƒÙˆÙ† Ù…ÙˆØ¶Ø¹ Ø£Ø³Ø¦Ù„Ø© ØµØ­ ÙˆØ®Ø·Ø£ Ø£Ùˆ Ø§Ø®ØªÙŠØ§Ø± Ù…Ù† Ù…ØªØ¹Ø¯Ø¯ Ù„Ù„ØªÙ…ÙŠÙŠØ² Ø¨ÙŠÙ† Ø§Ù„Ù…ØµØ·Ù„Ø­Ø§Øª
-                            Ø§Ù„Ø«Ù„Ø§Ø«Ø©)
+                            (هذا الجزء دائماً ما يكون موضع أسئلة صح وخطأ أو اختيار من متعدد للتمييز بين المصطلحات
+                            الثلاثة)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ø§Ù„Ù…ÙÙ‡ÙˆÙ… / Ø§Ù„Ù…ØµØ·Ù„Ø­</th>
-                                        <th>Ø§Ù„ØªØ¹Ø±ÙŠÙ ÙˆØ§Ù„Ø´Ø±Ø­ Ø§Ù„Ù…Ù†Ù‡Ø¬ÙŠ</th>
-                                        <th>Ø§Ù„Ø®ØµØ§Ø¦Øµ ÙˆÙ…Ù„Ø§Ø­Ø¸Ø§Øª Ù‡Ø§Ù…Ø© (Ù…ÙˆØ¶Ø¹ Ø§Ù…ØªØ­Ø§Ù†) <i class="fas fa-exclamation-circle"
+                                        <th>المفهوم / المصطلح</th>
+                                        <th>التعريف والشرح المنهجي</th>
+                                        <th>الخصائص وملاحظات هامة (موضع امتحان) <i class="fas fa-exclamation-circle"
                                                 style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-gold"><b>Ø§Ù„Ù†Ù…Ùˆ (Growth)</b></td>
-                                        <td style="text-align: right;">Ù‡Ùˆ Ø²ÙŠØ§Ø¯Ø© ÙƒÙ…ÙŠØ© ØªØ·Ø±Ø£ Ø¹Ù„Ù‰ Ø¬Ø§Ù†Ø¨ Ù…Ø¹ÙŠÙ† Ù…Ù† Ø¬ÙˆØ§Ù†Ø¨ Ø§Ù„Ù…Ø¬ØªÙ…Ø¹
-                                            (Ù…Ø«Ù„: Ø²ÙŠØ§Ø¯Ø© Ø§Ù„Ø¯Ø®Ù„ØŒ Ø²ÙŠØ§Ø¯Ø© Ø¹Ø¯Ø¯ Ø§Ù„Ø³ÙƒØ§Ù†).</td>
+                                        <td class="cell-gold"><b>النمو (Growth)</b></td>
+                                        <td style="text-align: right;">هو زيادة كمية تطرأ على جانب معين من جوانب المجتمع
+                                            (مثل: زيادة الدخل، زيادة عدد السكان).</td>
                                         <td style="text-align: right;">
-                                            - ÙŠØ­Ø¯Ø« Ø¨ØµÙˆØ±Ø© ØªÙ„Ù‚Ø§Ø¦ÙŠØ© ÙˆØ¹Ø´ÙˆØ§Ø¦ÙŠØ©.<br>
-                                            - Ù‚Ø¯ ÙŠÙƒÙˆÙ† ÙÙŠ Ø¬Ø§Ù†Ø¨ ÙˆØ§Ø­Ø¯ ÙÙ‚Ø·.<br>
-                                            - Ù„Ø§ ÙŠØªØ·Ù„Ø¨ ØªØ¯Ø®Ù„Ø§Ù‹ Ø¥Ø±Ø§Ø¯ÙŠØ§Ù‹ Ø£Ùˆ ØªØ®Ø·ÙŠØ·Ø§Ù‹ Ù…Ø³Ø¨Ù‚Ø§Ù‹.
+                                            - يحدث بصورة تلقائية وعشوائية.<br>
+                                            - قد يكون في جانب واحد فقط.<br>
+                                            - لا يتطلب تدخلاً إرادياً أو تخطيطاً مسبقاً.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-orange"><b>Ø§Ù„ØªØºÙŠØ± (Change)</b></td>
-                                        <td style="text-align: right;">Ù‡Ùˆ ØªØ­ÙˆÙ„ Ø£Ùˆ ØªØ¨Ø¯Ù„ Ù…Ù† Ø­Ø§Ù„Ø© Ø¥Ù„Ù‰ Ø­Ø§Ù„Ø© Ø£Ø®Ø±Ù‰ ØªØ·Ø±Ø£ Ø¹Ù„Ù‰
-                                            Ø§Ù„Ø¨Ù†Ø§Ø¡ Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ Ø£Ùˆ Ø§Ù„ÙˆØ¸Ø§Ø¦Ù.</td>
+                                        <td class="cell-orange"><b>التغير (Change)</b></td>
+                                        <td style="text-align: right;">هو تحول أو تبدل من حالة إلى حالة أخرى تطرأ على
+                                            البناء الاجتماعي أو الوظائف.</td>
                                         <td style="text-align: right;">
-                                            - Ù‚Ø¯ ÙŠÙƒÙˆÙ† Ø¥ÙŠØ¬Ø§Ø¨ÙŠØ§Ù‹ Ø£Ùˆ Ø³Ù„Ø¨ÙŠØ§Ù‹.<br>
-                                            - Ù‚Ø¯ ÙŠÙƒÙˆÙ† ØªÙ„Ù‚Ø§Ø¦ÙŠØ§Ù‹ Ø£Ùˆ Ù…ÙˆØ¬Ù‡Ø§Ù‹ (Ù…Ù‚ØµÙˆØ¯Ø§Ù‹).
+                                            - قد يكون إيجابياً أو سلبياً.<br>
+                                            - قد يكون تلقائياً أو موجهاً (مقصوداً).
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-green"><b>Ø§Ù„ØªÙ†Ù…ÙŠØ© (Development)</b></td>
-                                        <td style="text-align: right;">Ù‡ÙŠ Ø¹Ù…Ù„ÙŠØ© ØªØºÙŠÙŠØ± Ù…Ù‚ØµÙˆØ¯Ø© ÙˆÙ…Ø®Ø·Ø·Ø©ØŒ ØªØªØ¶Ù…Ù† ØªØºÙŠÙŠØ±Ø§Øª ÙƒÙ…ÙŠØ©
-                                            ÙˆÙƒÙŠÙÙŠØ© Ù…Ø¹Ø§Ù‹ Ù„Ù„Ø§Ø±ØªÙ‚Ø§Ø¡ Ø¨Ø§Ù„Ù…Ø¬ØªÙ…Ø¹.</td>
+                                        <td class="cell-green"><b>التنمية (Development)</b></td>
+                                        <td style="text-align: right;">هي عملية تغيير مقصودة ومخططة، تتضمن تغييرات كمية
+                                            وكيفية معاً للارتقاء بالمجتمع.</td>
                                         <td style="text-align: right;">
-                                            - Ø§Ù„ØªÙ†Ù…ÙŠØ© Ø¯Ø§Ø¦Ù…Ø§Ù‹ Ø¥ÙŠØ¬Ø§Ø¨ÙŠØ© (Ù†Ø­Ùˆ Ø§Ù„Ø£ÙØ¶Ù„).<br>
-                                            - Ø¹Ù…Ù„ÙŠØ© Ø´Ø§Ù…Ù„Ø© (Ù„Ø§ ØªÙ‚ØªØµØ± Ø¹Ù„Ù‰ Ø¬Ø§Ù†Ø¨ ÙˆØ§Ø­Ø¯).<br>
-                                            - ØªØ¹ØªÙ…Ø¯ Ø¹Ù„Ù‰ ØªØ¯Ø®Ù„ Ø¥Ø±Ø§Ø¯ÙŠ ÙˆØªØ®Ø·ÙŠØ· Ø¹Ù„Ù…ÙŠ.
+                                            - التنمية دائماً إيجابية (نحو الأفضل).<br>
+                                            - عملية شاملة (لا تقتصر على جانب واحد).<br>
+                                            - تعتمد على تدخل إرادي وتخطيط علمي.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -796,10 +798,10 @@
                     </div>
                 </div>
 
-                <!-- Card 2: Ù…ÙØ§Ù‡ÙŠÙ… Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ ÙˆØ§Ù„ØªÙ†Ù…ÙŠØ© ÙˆØ§Ù„ØªÙ…ÙƒÙŠÙ† -->
+                <!-- Card 2: مفاهيم المجتمع والتنمية والتمكين -->
                 <div class="network-card" data-branch="2" id="card-2">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ù…ÙØ§Ù‡ÙŠÙ… Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ ÙˆØ§Ù„ØªÙ†Ù…ÙŠØ© ÙˆØ§Ù„ØªÙ…ÙƒÙŠÙ†</h3>
+                        <h3>مفاهيم المجتمع والتنمية والتمكين</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
@@ -807,59 +809,59 @@
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ø§Ù„Ù…ÙÙ‡ÙˆÙ… / Ø§Ù„Ù…ØµØ·Ù„Ø­</th>
-                                        <th>Ø§Ù„ØªØ¹Ø±ÙŠÙ ÙˆØ§Ù„Ø´Ø±Ø­ Ø§Ù„Ù…Ù†Ù‡Ø¬ÙŠ</th>
-                                        <th>Ø§Ù„ÙƒÙ„Ù…Ø§Øª Ø§Ù„Ù…ÙØªØ§Ø­ÙŠØ© / Ù…Ù„Ø§Ø­Ø¸Ø§Øª <i class="fas fa-key" style="color: gold;"></i>
+                                        <th>المفهوم / المصطلح</th>
+                                        <th>التعريف والشرح المنهجي</th>
+                                        <th>الكلمات المفتاحية / ملاحظات <i class="fas fa-key" style="color: gold;"></i>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-gold"><b>Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ù…Ø­Ù„ÙŠ (Local Community)</b></td>
-                                        <td style="text-align: right;">Ù…Ø¬Ù…ÙˆØ¹Ø© Ù…Ù† Ø§Ù„Ø£ÙØ±Ø§Ø¯ ÙŠØ¹ÙŠØ´ÙˆÙ† ÙÙŠ Ù†Ø·Ø§Ù‚ Ø¬ØºØ±Ø§ÙÙŠ Ù…Ø­Ø¯Ø¯ØŒ
-                                            ÙŠØªÙØ§Ø¹Ù„ÙˆÙ† Ù…Ø¹Ø§Ù‹ØŒ ÙˆÙŠØ´ØªØ±ÙƒÙˆÙ† ÙÙŠ Ø§Ù„Ù‚ÙŠÙ… ÙˆØ§Ù„Ø§Ù‡ØªÙ…Ø§Ù…Ø§ØªØŒ ÙˆÙŠØ¬Ù…Ø¹Ù‡Ù… Ø´Ø¹ÙˆØ± Ø¨Ø§Ù„Ø§Ù†ØªÙ…Ø§Ø¡.</td>
+                                        <td class="cell-gold"><b>المجتمع المحلي (Local Community)</b></td>
+                                        <td style="text-align: right;">مجموعة من الأفراد يعيشون في نطاق جغرافي محدد،
+                                            يتفاعلون معاً، ويشتركون في القيم والاهتمامات، ويجمعهم شعور بالانتماء.</td>
                                         <td style="text-align: right;">
-                                            Ø¹Ù†Ø§ØµØ± Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø£Ø³Ø§Ø³ÙŠØ©:<br>
-                                            1. Ø±Ù‚Ø¹Ø© Ø¬ØºØ±Ø§ÙÙŠØ© (Ù…ÙƒØ§Ù†).<br>
-                                            2. Ø³ÙƒØ§Ù† (Ø£ÙØ±Ø§Ø¯).<br>
-                                            3. ØªÙØ§Ø¹Ù„ Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ.<br>
-                                            4. Ø´Ø¹ÙˆØ± Ø¨Ø§Ù„Ø§Ù†ØªÙ…Ø§Ø¡ (Ø§Ù„ÙˆØ¹ÙŠ Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ÙŠ).
+                                            عناصر المجتمع الأساسية:<br>
+                                            1. رقعة جغرافية (مكان).<br>
+                                            2. سكان (أفراد).<br>
+                                            3. تفاعل اجتماعي.<br>
+                                            4. شعور بالانتماء (الوعي المجتمعي).
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-orange"><b>ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ù…Ø­Ù„ÙŠ</b></td>
-                                        <td style="text-align: right;">Ø¹Ù…Ù„ÙŠØ© ØªØ³ØªÙ‡Ø¯Ù Ø§Ù„Ø§Ø±ØªÙ‚Ø§Ø¡ Ø¨Ù…Ø³ØªÙˆÙ‰ Ù…Ø¹ÙŠØ´Ø© Ø§Ù„Ø£ÙØ±Ø§Ø¯
-                                            Ø§Ù‚ØªØµØ§Ø¯ÙŠØ§Ù‹ ÙˆØ§Ø¬ØªÙ…Ø§Ø¹ÙŠØ§Ù‹ØŒ Ù…Ù† Ø®Ù„Ø§Ù„ Ø§Ù„ØªÙƒØ§Ù…Ù„ Ø¨ÙŠÙ† Ø§Ù„Ø¬Ù‡ÙˆØ¯ Ø§Ù„Ø£Ù‡Ù„ÙŠØ© (Ø§Ù„Ø´Ø¹Ø¨ÙŠØ©) ÙˆØ§Ù„Ø¬Ù‡ÙˆØ¯
-                                            Ø§Ù„Ø­ÙƒÙˆÙ…ÙŠØ©.</td>
+                                        <td class="cell-orange"><b>تنمية المجتمع المحلي</b></td>
+                                        <td style="text-align: right;">عملية تستهدف الارتقاء بمستوى معيشة الأفراد
+                                            اقتصادياً واجتماعياً، من خلال التكامل بين الجهود الأهلية (الشعبية) والجهود
+                                            الحكومية.</td>
                                         <td style="text-align: right;">
-                                            - ØªØ¹ØªÙ…Ø¯ ÙƒÙ„ÙŠØ§Ù‹ Ø¹Ù„Ù‰ Ø§Ù„Ù…Ø´Ø§Ø±ÙƒØ©.<br>
-                                            - ØªØ¨Ø¯Ø£ Ø¨Ù€ Ø§Ù„Ø§Ø­ØªÙŠØ§Ø¬Ø§Øª Ø§Ù„Ù…Ù„Ù…ÙˆØ³Ø©.<br>
-                                            - Ø§Ù„Ø¥Ù†Ø³Ø§Ù† ÙÙŠÙ‡Ø§ Ù‡Ùˆ Ø§Ù„ØºØ§ÙŠØ© ÙˆØ§Ù„ÙˆØ³ÙŠÙ„Ø©.
+                                            - تعتمد كلياً على المشاركة.<br>
+                                            - تبدأ بـ الاحتياجات الملموسة.<br>
+                                            - الإنسان فيها هو الغاية والوسيلة.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-green"><b>Ø§Ù„ØªÙ…ÙƒÙŠÙ† (Empowerment)</b></td>
-                                        <td style="text-align: right;">Ù…Ø³Ø§Ø¹Ø¯Ø© Ø§Ù„Ø£ÙØ±Ø§Ø¯ ÙˆØ§Ù„ÙØ¦Ø§Øª (Ø®Ø§ØµØ© Ø§Ù„Ù…Ù‡Ù…Ø´Ø©) Ø¹Ù„Ù‰ Ø§ÙƒØªØ³Ø§Ø¨
-                                            Ø§Ù„Ù‚ÙˆØ© ÙˆØ§Ù„Ù…Ù‡Ø§Ø±Ø§Øª ÙˆØ§Ù„ÙØ±Øµ Ù„Ù„ØªØ­ÙƒÙ… ÙÙŠ Ù…Ù‚Ø¯Ø±Ø§ØªÙ‡Ù… ÙˆØ­Ù„ Ù…Ø´ÙƒÙ„Ø§ØªÙ‡Ù… Ø¨Ø£Ù†ÙØ³Ù‡Ù….</td>
+                                        <td class="cell-green"><b>التمكين (Empowerment)</b></td>
+                                        <td style="text-align: right;">مساعدة الأفراد والفئات (خاصة المهمشة) على اكتساب
+                                            القوة والمهارات والفرص للتحكم في مقدراتهم وحل مشكلاتهم بأنفسهم.</td>
                                         <td style="text-align: right;">
-                                            - ÙŠÙ†Ù‚Ù„ Ø§Ù„Ù…ÙˆØ§Ø·Ù† Ù…Ù† Ø­Ø§Ù„Ø© (Ø§Ù„Ø§Ø¹ØªÙ…Ø§Ø¯ÙŠØ© Ø§Ù„Ø³Ù„Ø¨ÙŠØ© ÙˆØ§Ù„Ø§ØªÙƒØ§Ù„ÙŠØ©) Ø¥Ù„Ù‰ Ø­Ø§Ù„Ø© (Ø§Ù„ÙØ§Ø¹Ù„ÙŠØ©
-                                            ÙˆØ§Ù„Ù…Ø´Ø§Ø±ÙƒØ© Ø§Ù„Ø­Ù‚ÙŠÙ‚ÙŠØ©).
+                                            - ينقل المواطن من حالة (الاعتمادية السلبية والاتكالية) إلى حالة (الفاعلية
+                                            والمشاركة الحقيقية).
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-blue"><b>Ø§Ù„Ø§Ø³ØªØ¯Ø§Ù…Ø© (Sustainability)</b></td>
-                                        <td style="text-align: right;">ØªÙ„Ø¨ÙŠØ© Ø§Ø­ØªÙŠØ§Ø¬Ø§Øª Ø§Ù„Ø¬ÙŠÙ„ Ø§Ù„Ø­Ø§Ø¶Ø±ØŒ Ø¯ÙˆÙ† Ø§Ù„Ù…Ø³Ø§ÙˆÙ…Ø© Ø£Ùˆ
-                                            Ø§Ù„Ø¥Ø¶Ø±Ø§Ø± Ø¨Ù‚Ø¯Ø±Ø© Ø§Ù„Ø£Ø¬ÙŠØ§Ù„ Ø§Ù„Ù‚Ø§Ø¯Ù…Ø© Ø¹Ù„Ù‰ ØªÙ„Ø¨ÙŠØ© Ø§Ø­ØªÙŠØ§Ø¬Ø§ØªÙ‡Ø§.</td>
+                                        <td class="cell-blue"><b>الاستدامة (Sustainability)</b></td>
+                                        <td style="text-align: right;">تلبية احتياجات الجيل الحاضر، دون المساومة أو
+                                            الإضرار بقدرة الأجيال القادمة على تلبية احتياجاتها.</td>
                                         <td style="text-align: right;">
-                                            - ØªØ±ÙƒØ² Ø¹Ù„Ù‰ Ø§Ù„Ù…ÙˆØ§Ø²Ù†Ø©ØŒ ØªØ±Ø´ÙŠØ¯ Ø§Ù„Ø§Ø³ØªÙ‡Ù„Ø§ÙƒØŒ ÙˆØ§Ù„Ø­ÙØ§Ø¸ Ø¹Ù„Ù‰ Ø§Ù„ØªÙˆØ§Ø²Ù† Ø§Ù„Ø¨ÙŠØ¦ÙŠ ÙˆØ§Ù„Ù…ÙˆØ§Ø±Ø¯.
+                                            - تركز على الموازنة، ترشيد الاستهلاك، والحفاظ على التوازن البيئي والموارد.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-gold"><b>Ø§Ù„ØªØ´Ø¨ÙŠÙƒ (Networking)</b></td>
-                                        <td style="text-align: right;">Ø¹Ù…Ù„ÙŠØ© Ø¨Ù†Ø§Ø¡ Ø¹Ù„Ø§Ù‚Ø§Øª ÙˆØªÙ†Ø³ÙŠÙ‚ Ø§Ù„Ø¬Ù‡ÙˆØ¯ Ø¨ÙŠÙ† Ù…Ø¤Ø³Ø³Ø§Øª
-                                            Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ù…Ø¯Ù†ÙŠ Ø§Ù„Ù…Ø®ØªÙ„ÙØ© Ù„ØªØ¨Ø§Ø¯Ù„ Ø§Ù„Ø®Ø¨Ø±Ø§Øª ÙˆØ§Ù„Ù…ÙˆØ§Ø±Ø¯ Ø§Ù„Ù…ØªØ§Ø­Ø©.</td>
+                                        <td class="cell-gold"><b>التشبيك (Networking)</b></td>
+                                        <td style="text-align: right;">عملية بناء علاقات وتنسيق الجهود بين مؤسسات
+                                            المجتمع المدني المختلفة لتبادل الخبرات والموارد المتاحة.</td>
                                         <td style="text-align: right;">
-                                            - Ø§Ù„Ù‡Ø¯Ù Ù…Ù†Ù‡: ØªÙƒØ§Ù…Ù„ Ø§Ù„Ø®Ø¯Ù…Ø§ØªØŒ ÙˆÙ…Ù†Ø¹ Ø§Ù„ØªÙƒØ±Ø§Ø± Ø£Ùˆ Ø§Ù„Ø§Ø²Ø¯ÙˆØ§Ø¬ÙŠØ© ÙÙŠ ØªÙ‚Ø¯ÙŠÙ… Ø§Ù„Ø®Ø¯Ù…Ø©.
+                                            - الهدف منه: تكامل الخدمات، ومنع التكرار أو الازدواجية في تقديم الخدمة.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -868,47 +870,47 @@
                     </div>
                 </div>
 
-                <!-- Card 3: Ø§ØªØ¬Ø§Ù‡Ø§Øª ØªØ¹Ø±ÙŠÙ "Ø§Ù„ØªÙ†Ù…ÙŠØ©" -->
+                <!-- Card 3: اتجاهات تعريف "التنمية" -->
                 <div class="network-card" data-branch="3" id="card-3">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ø§ØªØ¬Ø§Ù‡Ø§Øª ØªØ¹Ø±ÙŠÙ "Ø§Ù„ØªÙ†Ù…ÙŠØ©" (ÙˆØ¬Ù‡Ø§Øª Ù†Ø¸Ø± Ø§Ù„Ø¹Ù„Ù…Ø§Ø¡)</h3>
+                        <h3>اتجاهات تعريف "التنمية" (وجهات نظر العلماء)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (Ù‡Ù†Ø§Ùƒ ÙˆØ¬Ù‡Ø§Øª Ù†Ø¸Ø± Ù…Ø®ØªÙ„ÙØ© Ù„Ù„Ø¹Ù„Ù…Ø§Ø¡ ÙˆØ§Ù„Ù…ØªØ®ØµØµÙŠÙ† ÙÙŠ ØªØ¹Ø±ÙŠÙ Ø§Ù„ØªÙ†Ù…ÙŠØ©ØŒ Ù…Ù‚Ø³Ù…Ø© Ø¥Ù„Ù‰ Ø«Ù„Ø§Ø«Ø© Ø§ØªØ¬Ø§Ù‡Ø§Øª Ø±Ø¦ÙŠØ³ÙŠØ©)
+                            (هناك وجهات نظر مختلفة للعلماء والمتخصصين في تعريف التنمية، مقسمة إلى ثلاثة اتجاهات رئيسية)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ø§Ù„Ø§ØªØ¬Ø§Ù‡</th>
-                                        <th>Ù†Ø¸Ø±Ø© Ø§Ù„Ø§ØªØ¬Ø§Ù‡ Ù„Ù„ØªÙ†Ù…ÙŠØ©</th>
-                                        <th>Ù…Ù„Ø§Ø­Ø¸Ø§Øª ÙˆØªÙˆØ¶ÙŠØ­Ø§Øª Ù‡Ø§Ù…Ø© <i class="fas fa-comment-dots"
+                                        <th>الاتجاه</th>
+                                        <th>نظرة الاتجاه للتنمية</th>
+                                        <th>ملاحظات وتوضيحات هامة <i class="fas fa-comment-dots"
                                                 style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-orange"><b>Ø§Ù„Ø§ØªØ¬Ø§Ù‡ Ø§Ù„Ø§Ù‚ØªØµØ§Ø¯ÙŠ Ø§Ù„Ø¨Ø­Øª</b></td>
-                                        <td style="text-align: right;">ÙŠØ±Ù‰ Ø§Ù„ØªÙ†Ù…ÙŠØ© Ø¹Ù„Ù‰ Ø£Ù†Ù‡Ø§ Ù…Ø¬Ø±Ø¯ Ø²ÙŠØ§Ø¯Ø© ÙÙŠ Ø§Ù„Ø¥Ù†ØªØ§Ø¬ØŒ ÙˆØ±ÙØ¹
-                                            Ù…ØªÙˆØ³Ø· Ø§Ù„Ø¯Ø®Ù„ Ø§Ù„ÙØ±Ø¯ÙŠØŒ ÙˆÙ†Ù…Ùˆ Ø§Ù„Ù†Ø§ØªØ¬ Ø§Ù„Ù‚ÙˆÙ…ÙŠ Ø§Ù„Ø¥Ø¬Ù…Ø§Ù„ÙŠ.</td>
-                                        <td style="text-align: right; font-weight: bold; color: red;">ÙŠØ¹Ø§Ø¨ Ø¹Ù„ÙŠÙ‡ Ø£Ù†Ù‡ Ø£Ù‡Ù…Ù„
-                                            Ø§Ù„Ø¬Ø§Ù†Ø¨ Ø§Ù„Ø¨Ø´Ø±ÙŠ ÙˆØ§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ ÙˆØ±ÙƒØ² Ø¹Ù„Ù‰ Ø§Ù„Ø¬Ø§Ù†Ø¨ Ø§Ù„Ù…Ø§Ø¯ÙŠ ÙÙ‚Ø·.</td>
+                                        <td class="cell-orange"><b>الاتجاه الاقتصادي البحت</b></td>
+                                        <td style="text-align: right;">يرى التنمية على أنها مجرد زيادة في الإنتاج، ورفع
+                                            متوسط الدخل الفردي، ونمو الناتج القومي الإجمالي.</td>
+                                        <td style="text-align: right; font-weight: bold; color: red;">يعاب عليه أنه أهمل
+                                            الجانب البشري والاجتماعي وركز على الجانب المادي فقط.</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-green"><b>Ø§Ù„Ø§ØªØ¬Ø§Ù‡ Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ</b></td>
-                                        <td style="text-align: right;">ÙŠØ±Ù‰ Ø§Ù„ØªÙ†Ù…ÙŠØ© Ø¹Ù„Ù‰ Ø£Ù†Ù‡Ø§ ØªØ­Ø³ÙŠÙ† ÙÙŠ Ù†ÙˆØ¹ÙŠØ© Ø§Ù„Ø­ÙŠØ§Ø© (Ù…Ø«Ù„:
-                                            Ø§Ù„ØªØ¹Ù„ÙŠÙ…ØŒ Ø§Ù„ØµØ­Ø©ØŒ Ø§Ù„Ø®Ø¯Ù…Ø§ØªØŒ ÙˆØ§Ù„Ø¹Ø¯Ø§Ù„Ø© Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ©).</td>
-                                        <td style="text-align: right;">Ø¬Ø§Ø¡ ÙƒØ±Ø¯ ÙØ¹Ù„ Ù…Ø¨Ø§Ø´Ø± Ù„ØªØ¬Ø§Ù‡Ù„ Ø§Ù„Ø§ØªØ¬Ø§Ù‡ Ø§Ù„Ø§Ù‚ØªØµØ§Ø¯ÙŠ
-                                            Ù„Ù„Ø¥Ù†Ø³Ø§Ù† ÙˆØ§Ù„Ø¬Ø§Ù†Ø¨ Ø§Ù„Ø¨Ø´Ø±ÙŠ.</td>
+                                        <td class="cell-green"><b>الاتجاه الاجتماعي</b></td>
+                                        <td style="text-align: right;">يرى التنمية على أنها تحسين في نوعية الحياة (مثل:
+                                            التعليم، الصحة، الخدمات، والعدالة الاجتماعية).</td>
+                                        <td style="text-align: right;">جاء كرد فعل مباشر لتجاهل الاتجاه الاقتصادي
+                                            للإنسان والجانب البشري.</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-gold"><b>Ø§Ù„Ø§ØªØ¬Ø§Ù‡ Ø§Ù„Ø´Ø§Ù…Ù„ (Ø§Ù„ØªÙƒØ§Ù…Ù„ÙŠ)</b></td>
-                                        <td style="text-align: right;">ÙŠØ±Ù‰ Ø£Ù† Ø§Ù„ØªÙ†Ù…ÙŠØ© Ù‡ÙŠ Ø¹Ù…Ù„ÙŠØ© Ù…ØªÙƒØ§Ù…Ù„Ø© (Ø§Ù‚ØªØµØ§Ø¯ÙŠØ© +
-                                            Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ©)ØŒ ÙÙ„Ø§ ØªÙ‚Ø¯Ù… Ø§Ù‚ØªØµØ§Ø¯ÙŠ Ø¨Ø¯ÙˆÙ† Ø±ÙØ§Ù‡ÙŠØ© Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ©ØŒ ÙˆØ§Ù„Ø¹ÙƒØ³ ØµØ­ÙŠØ­.</td>
+                                        <td class="cell-gold"><b>الاتجاه الشامل (التكاملي)</b></td>
+                                        <td style="text-align: right;">يرى أن التنمية هي عملية متكاملة (اقتصادية +
+                                            اجتماعية)، فلا تقدم اقتصادي بدون رفاهية اجتماعية، والعكس صحيح.</td>
                                         <td style="text-align: right; font-weight: bold; color: var(--success-color);">
-                                            Ù‡Ùˆ Ø§Ù„Ø§ØªØ¬Ø§Ù‡ Ø§Ù„Ø£ØµÙˆØ¨ ÙˆØ§Ù„Ù…Ø¹ØªÙ…Ø¯ Ø­Ø§Ù„ÙŠØ§Ù‹ ÙÙŠ Ø®Ø·Ø· Ø§Ù„ØªØ¯Ø®Ù„ Ø§Ù„Ù…Ù‡Ù†ÙŠ ÙˆØ§Ù„ØªÙ†Ù…ÙˆÙŠ.</td>
+                                            هو الاتجاه الأصوب والمعتمد حالياً في خطط التدخل المهني والتنموي.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -916,76 +918,76 @@
                     </div>
                 </div>
 
-                <!-- Card 4: Ù…Ø¨Ø§Ø¯Ø¦ ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ -->
+                <!-- Card 4: مبادئ تنمية المجتمع -->
                 <div class="network-card" data-branch="4" id="card-4">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ù…Ø¨Ø§Ø¯Ø¦ ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ (Ù‚ÙˆØ§Ø¹Ø¯ Ø§Ù„Ø¹Ù…Ù„ Ø§Ù„ØªÙ†Ù…ÙˆÙŠ Ø§Ù„Ù…Ù‡Ù†ÙŠ)</h3>
+                        <h3>مبادئ تنمية المجتمع (قواعد العمل التنموي المهني)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (Ù‡ÙŠ Ø§Ù„Ø£Ø³Ø³ ÙˆØ§Ù„Ù‚ÙˆØ§Ø¹Ø¯ Ø§Ù„ØªÙŠ ÙŠÙ„ØªØ²Ù… Ø¨Ù‡Ø§ Ø§Ù„Ø£Ø®ØµØ§Ø¦ÙŠ Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ ÙˆØ§Ù„Ù…Ø®Ø·Ø·ÙˆÙ† Ù„Ø¶Ù…Ø§Ù† Ù†Ø¬Ø§Ø­ Ø§Ù„Ø¨Ø±Ø§Ù…Ø¬ Ø§Ù„ØªÙ†Ù…ÙˆÙŠØ©)
+                            (هي الأسس والقواعد التي يلتزم بها الأخصائي الاجتماعي والمخططون لضمان نجاح البرامج التنموية)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ø§Ù„Ù…Ø¨Ø¯Ø£</th>
-                                        <th>Ø§Ù„Ø´Ø±Ø­ Ø§Ù„Ù…Ø®ØªØµØ±</th>
-                                        <th>Ø£Ù‡Ù…ÙŠØªÙ‡ ÙˆÙ‚ÙˆØ§Ø¹Ø¯Ù‡ ÙÙŠ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù† <i class="fas fa-graduation-cap"
+                                        <th>المبدأ</th>
+                                        <th>الشرح المختصر</th>
+                                        <th>أهميته وقواعده في الامتحان <i class="fas fa-graduation-cap"
                                                 style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-gold"><b>1. Ø§Ù„Ø¨Ø¯Ø¡ Ø¨Ø§Ù„Ø§Ø­ØªÙŠØ§Ø¬Ø§Øª Ø§Ù„Ù…Ù„Ù…ÙˆØ³Ø©</b></td>
-                                        <td style="text-align: right;">ÙŠØ¬Ø¨ Ø£Ù† ÙŠØ¨Ø¯Ø£ Ø§Ù„Ø¨Ø±Ù†Ø§Ù…Ø¬ Ø§Ù„ØªÙ†Ù…ÙˆÙŠ Ø¨ØªÙ„Ø¨ÙŠØ© Ø§Ù„Ù…Ø´ÙƒÙ„Ø§Øª Ø§Ù„ØªÙŠ
-                                            ÙŠØ´Ø¹Ø± Ø¨Ù‡Ø§ Ø§Ù„Ø£Ù‡Ø§Ù„ÙŠ ÙˆÙŠØ¯Ø±ÙƒÙˆÙ†Ù‡Ø§ ÙØ¹Ù„ÙŠØ§Ù‹ ÙÙŠ Ø­ÙŠØ§ØªÙ‡Ù… Ø§Ù„ÙŠÙˆÙ…ÙŠØ©.</td>
+                                        <td class="cell-gold"><b>1. البدء بالاحتياجات الملموسة</b></td>
+                                        <td style="text-align: right;">يجب أن يبدأ البرنامج التنموي بتلبية المشكلات التي
+                                            يشعر بها الأهالي ويدركونها فعلياً في حياتهم اليومية.</td>
                                         <td style="text-align: right; font-weight: bold; color: var(--success-color);">
-                                            ÙŠØ¶Ù…Ù† Ø­Ù…Ø§Ø³ Ø§Ù„Ø£Ù‡Ø§Ù„ÙŠ ÙˆÙ…Ø´Ø§Ø±ÙƒØªÙ‡Ù… Ø§Ù„ÙØ¹Ø§Ù„Ø©ØŒ (Ø§Ø­Ø°Ø±: Ø¹ÙƒØ³ Ø§Ù„Ø¨Ø¯Ø¡ Ø¨Ø§Ø­ØªÙŠØ§Ø¬Ø§Øª ØºÙŠØ± Ù…Ù„Ù…ÙˆØ³Ø©).
+                                            يضمن حماس الأهالي ومشاركتهم الفعالة، (احذر: عكس البدء باحتياجات غير ملموسة).
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-orange"><b>2. Ø§Ù„Ù…Ø´Ø§Ø±ÙƒØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ÙŠØ©</b></td>
-                                        <td style="text-align: right;">Ø¥Ø³Ù‡Ø§Ù… Ø§Ù„Ø£Ù‡Ø§Ù„ÙŠ ÙˆØ§Ù„Ù…Ø³ØªÙ‡Ø¯ÙÙŠÙ† Ø¨Ø§Ù„Ø¬Ù‡Ø¯ Ø£Ùˆ Ø§Ù„Ù…Ø§Ù„ Ø£Ùˆ
-                                            Ø§Ù„Ø±Ø£ÙŠ Ø·ÙˆØ§Ø¹ÙŠØ© ÙÙŠ ÙƒÙ„ Ù…Ø±Ø§Ø­Ù„ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹.</td>
+                                        <td class="cell-orange"><b>2. المشاركة المجتمعية</b></td>
+                                        <td style="text-align: right;">إسهام الأهالي والمستهدفين بالجهد أو المال أو
+                                            الرأي طواعية في كل مراحل المشروع.</td>
                                         <td style="text-align: right;">
-                                            ÙŠØ¬Ø¨ Ø£Ù† ØªÙƒÙˆÙ† Ø§Ù„Ù…Ø´Ø§Ø±ÙƒØ© Ø§Ø®ØªÙŠØ§Ø±ÙŠØ©ØŒ ÙˆØ§Ø¹ÙŠØ©ØŒ ÙˆÙ„ÙŠØ³Øª Ø¥Ø¬Ø¨Ø§Ø±ÙŠØ© Ø¹Ù„Ù‰ Ø§Ù„Ø¥Ø·Ù„Ø§Ù‚.
+                                            يجب أن تكون المشاركة اختيارية، واعية، وليست إجبارية على الإطلاق.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-green"><b>3. Ø§Ù„ØªÙƒØ§Ù…Ù„</b></td>
-                                        <td style="text-align: right;">Ø¥Ø­Ø¯Ø§Ø« ØªÙ†Ù…ÙŠØ© Ù…ØªÙˆØ§Ø²Ù†Ø© ÙˆØ´Ø§Ù…Ù„Ø© ØªØ´Ù…Ù„ ÙƒØ§ÙØ© Ø§Ù„Ù‚Ø·Ø§Ø¹Ø§Øª
-                                            ÙˆØ§Ù„Ø§Ù‡ØªÙ…Ø§Ù…Ø§Øª Ø¯Ø§Ø®Ù„ Ø§Ù„Ù…Ø¬ØªÙ…Ø¹.</td>
+                                        <td class="cell-green"><b>3. التكامل</b></td>
+                                        <td style="text-align: right;">إحداث تنمية متوازنة وشاملة تشمل كافة القطاعات
+                                            والاهتمامات داخل المجتمع.</td>
                                         <td style="text-align: right;">
-                                            ÙŠÙ…Ù†Ø¹ Ù†Ù…Ùˆ Ù‚Ø·Ø§Ø¹ Ø¹Ù„Ù‰ Ø­Ø³Ø§Ø¨ Ù‚Ø·Ø§Ø¹ Ø¢Ø®Ø± (Ø§Ù„Ø§Ù‡ØªÙ…Ø§Ù… Ø¨Ø§Ù„ØªØ¹Ù„ÙŠÙ… ÙˆØ§Ù„ØµØ­Ø© ÙˆØ§Ù„Ø§Ù‚ØªØµØ§Ø¯ Ù…Ø¹Ø§Ù‹
-                                            ÙƒÙ†Ø³ÙŠØ¬ ÙˆØ§Ø­Ø¯).
+                                            يمنع نمو قطاع على حساب قطاع آخر (الاهتمام بالتعليم والصحة والاقتصاد معاً
+                                            كنسيج واحد).
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-blue"><b>4. Ø§Ù„Ù…Ø³Ø§Ø¹Ø¯Ø© Ø§Ù„Ø°Ø§ØªÙŠØ©</b></td>
-                                        <td style="text-align: right;">Ù…Ø³Ø§Ø¹Ø¯Ø© Ø§Ù„Ø£Ù‡Ø§Ù„ÙŠ Ø¹Ù„Ù‰ Ø§ÙƒØªØ´Ø§Ù ÙˆØ§Ø³ØªØ®Ø¯Ø§Ù… Ù…ÙˆØ§Ø±Ø¯Ù‡Ù…
-                                            ÙˆÙ‚Ø¯Ø±Ø§ØªÙ‡Ù… Ø§Ù„Ø°Ø§ØªÙŠØ© Ù„Ø­Ù„ Ù…Ø´ÙƒÙ„Ø§ØªÙ‡Ù… Ø¨Ø£Ù†ÙØ³Ù‡Ù….</td>
+                                        <td class="cell-blue"><b>4. المساعدة الذاتية</b></td>
+                                        <td style="text-align: right;">مساعدة الأهالي على اكتشاف واستخدام مواردهم
+                                            وقدراتهم الذاتية لحل مشكلاتهم بأنفسهم.</td>
                                         <td style="text-align: right;">
-                                            Ù…Ø³Ø§Ø¹Ø¯Ø© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ù„ÙƒÙŠ ÙŠØ³Ø§Ø¹Ø¯ Ù†ÙØ³Ù‡ØŒ ÙˆÙ‡ÙŠ Ù„Ø§ ØªÙ„ØºÙŠ Ø§Ù„Ø¯Ø¹Ù… Ø§Ù„Ø­ÙƒÙˆÙ…ÙŠ Ø¨Ù„ ØªØªÙƒØ§Ù…Ù„ ÙˆØªØªØ´Ø§Ø¨Ùƒ
-                                            Ù…Ø¹Ù‡.
+                                            مساعدة المجتمع لكي يساعد نفسه، وهي لا تلغي الدعم الحكومي بل تتكامل وتتشابك
+                                            معه.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-gold"><b>5. Ø§Ø­ØªØ±Ø§Ù… Ø§Ù„Ù‚ÙŠÙ… ÙˆØ§Ù„Ø«Ù‚Ø§ÙØ©</b></td>
-                                        <td style="text-align: right;">Ù…Ø±Ø§Ø¹Ø§Ø© Ø§Ù„Ø¹Ø§Ø¯Ø§Øª ÙˆØ§Ù„ØªÙ‚Ø§Ù„ÙŠØ¯ ÙˆØ§Ù„Ø£Ø¹Ø±Ø§Ù Ø§Ù„Ø³Ø§Ø¦Ø¯Ø© Ù„Ø¯Ù‰
-                                            Ø§Ù„Ù‚Ø§Ø¯Ø© ÙˆØ§Ù„Ø£Ù‡Ø§Ù„ÙŠ Ø¹Ù†Ø¯ ÙˆØ¶Ø¹ Ø§Ù„Ø®Ø·Ø· Ø§Ù„ØªÙ†Ù…ÙˆÙŠØ©.</td>
+                                        <td class="cell-gold"><b>5. احترام القيم والثقافة</b></td>
+                                        <td style="text-align: right;">مراعاة العادات والتقاليد والأعراف السائدة لدى
+                                            القادة والأهالي عند وضع الخطط التنموية.</td>
                                         <td style="text-align: right; font-weight: bold; color: #ff6a00;">
-                                            ÙŠÙ…Ù†Ø¹ Ø­Ø¯ÙˆØ« Ø¸Ø§Ù‡Ø±Ø© "Ø§Ù„Ù…Ù‚Ø§ÙˆÙ…Ø© Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ©" ÙˆØ§Ù„Ø±ÙØ¶ Ù„Ø¨Ø±Ø§Ù…Ø¬ ÙˆÙ…Ø´Ø±ÙˆØ¹Ø§Øª Ø§Ù„ØªÙ†Ù…ÙŠØ©.
+                                            يمنع حدوث ظاهرة "المقاومة الاجتماعية" والرفض لبرامج ومشروعات التنمية.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-orange"><b>6. Ø§Ù„Ù…Ø±ÙˆÙ†Ø©</b></td>
-                                        <td style="text-align: right;">Ø§Ù„Ù‚Ø¯Ø±Ø© Ø¹Ù„Ù‰ ØªØ¹Ø¯ÙŠÙ„ ÙˆØ¥Ø¹Ø§Ø¯Ø© ØªØ´ÙƒÙŠÙ„ Ø§Ù„Ø®Ø·Ø· Ù„Ù…ÙˆØ§Ø¬Ù‡Ø©
-                                            Ø§Ù„Ø¸Ø±ÙˆÙ Ø§Ù„Ø·Ø§Ø±Ø¦Ø© ÙˆØ§Ù„Ù…Ø³ØªØ¬Ø¯Ø§Øª Ø§Ù„Ù…ÙŠØ¯Ø§Ù†ÙŠØ©.</td>
+                                        <td class="cell-orange"><b>6. المرونة</b></td>
+                                        <td style="text-align: right;">القدرة على تعديل وإعادة تشكيل الخطط لمواجهة
+                                            الظروف الطارئة والمستجدات الميدانية.</td>
                                         <td style="text-align: right;">
-                                            Ø§Ù„ØªØ®Ø·ÙŠØ· Ù„ÙŠØ³ Ù‚Ø±Ø¢Ù†Ø§Ù‹ Ø£Ùˆ Ù‚Ø§Ù„Ø¨Ø§Ù‹ Ø¬Ø§Ù…Ø¯Ø§Ù‹ØŒ Ø¨Ù„ ÙŠØ®Ø¶Ø¹ ØªÙ…Ø§Ù…Ø§Ù‹ Ù„Ù„ØªØ¹Ø¯ÙŠÙ„ ÙˆØ§Ù„Ù…ÙˆØ§Ø¡Ù…Ø© Ø­Ø³Ø¨
-                                            Ø§Ù„ÙˆØ§Ù‚Ø¹.
+                                            التخطيط ليس قرآناً أو قالباً جامداً، بل يخضع تماماً للتعديل والمواءمة حسب
+                                            الواقع.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -994,69 +996,69 @@
                     </div>
                 </div>
 
-                <!-- Card 5: Ø®Ø§Ù…Ø³Ø§Ù‹: Ø§Ù„Ù…Ù‚Ø§Ø±Ù†Ø© Ø§Ù„Ø´Ø§Ù…Ù„Ø© Ø¨ÙŠÙ† Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª -->
+                <!-- Card 5: خامساً: المقارنة الشاملة بين المجتمعات -->
                 <div class="network-card" data-branch="5" id="card-5">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ø§Ù„Ù…Ù‚Ø§Ø±Ù†Ø© Ø§Ù„Ø´Ø§Ù…Ù„Ø© Ø¨ÙŠÙ† Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª Ø§Ù„Ø£Ø±Ø¨Ø¹Ø© (Ø§Ù„Ø®ØµØ§Ø¦Øµ ÙˆØ§Ù„Ø³Ù…Ø§Øª)</h3>
+                        <h3>المقارنة الشاملة بين المجتمعات الأربعة (الخصائص والسمات)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (Ù‡Ø°Ø§ Ø§Ù„Ø¬Ø¯ÙˆÙ„ Ø§Ù„ÙØ±ÙŠØ¯ ÙŠØ¬Ù…Ø¹ Ù„Ùƒ Ø§Ù„ÙØ±ÙˆÙ‚ Ø§Ù„Ø¬ÙˆÙ‡Ø±ÙŠØ© ÙˆØ§Ù„Ø¯Ù‚ÙŠÙ‚Ø© Ù„Ø¹Ø¯Ù… Ø§Ù„Ø®Ù„Ø· Ù…Ø·Ù„Ù‚Ø§Ù‹ Ø¨ÙŠÙ†Ù‡Ø§ ÙÙŠ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†)
+                            (هذا الجدول الفريد يجمع لك الفروق الجوهرية والدقيقة لعدم الخلط مطلقاً بينها في الامتحان)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>ÙˆØ¬Ù‡ Ø§Ù„Ù…Ù‚Ø§Ø±Ù†Ø©</th>
-                                        <th>Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø±ÙŠÙÙŠ ðŸŒ¾</th>
-                                        <th>Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø­Ø¶Ø±ÙŠ (Ø§Ù„Ù…Ø¯ÙŠÙ†Ø©) ðŸ™ï¸</th>
-                                        <th>Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø¨Ø¯ÙˆÙŠ ðŸ«</th>
-                                        <th>Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø¹Ø´ÙˆØ§Ø¦ÙŠ ðŸšï¸</th>
+                                        <th>وجه المقارنة</th>
+                                        <th>المجتمع الريفي 🌾</th>
+                                        <th>المجتمع الحضري (المدينة) 🏙️</th>
+                                        <th>المجتمع البدوي 🐫</th>
+                                        <th>المجتمع العشوائي 🏚️</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-gold"><b>Ø§Ù„Ù†Ø´Ø§Ø· Ø§Ù„Ø§Ù‚ØªØµØ§Ø¯ÙŠ Ø§Ù„Ø³Ø§Ø¦Ø¯</b></td>
-                                        <td>Ø§Ù„Ø²Ø±Ø§Ø¹Ø© ÙˆÙ…Ø§ ÙŠØ±ØªØ¨Ø· Ø¨Ù‡Ø§ Ù…Ù† Ø£Ù†Ø´Ø·Ø© ÙˆØ¥Ù†ØªØ§Ø¬ Ø·Ø¹Ø§Ù….</td>
-                                        <td>Ø§Ù„ØµÙ†Ø§Ø¹Ø© ÙˆØ§Ù„ØªØ¬Ø§Ø±Ø© ÙˆØ§Ù„Ø®Ø¯Ù…Ø§Øª Ø§Ù„Ù…ØªÙ†ÙˆØ¹Ø©.</td>
-                                        <td>Ø§Ù„Ø±Ø¹ÙŠ ÙˆØ§Ù„Ø§Ø¹ØªÙ…Ø§Ø¯ Ø§Ù„Ù…Ø¨Ø§Ø´Ø± Ø¹Ù„Ù‰ Ø§Ù„Ø·Ø¨ÙŠØ¹Ø© (Ø§Ù„Ù…Ø·Ø± ÙˆØ§Ù„Ø¹Ø´Ø¨).</td>
-                                        <td>Ø£Ø¹Ù…Ø§Ù„ Ù‡Ø§Ù…Ø´ÙŠØ©ØŒ Ø¨Ø·Ø§Ù„Ø© ÙƒØ«ÙŠÙØ©ØŒ ÙˆØ¹Ù…Ø§Ù„Ø© ØºÙŠØ± Ù…Ù†ØªØ¸Ù…Ø©.</td>
+                                        <td class="cell-gold"><b>النشاط الاقتصادي السائد</b></td>
+                                        <td>الزراعة وما يرتبط بها من أنشطة وإنتاج طعام.</td>
+                                        <td>الصناعة والتجارة والخدمات المتنوعة.</td>
+                                        <td>الرعي والاعتماد المباشر على الطبيعة (المطر والعشب).</td>
+                                        <td>أعمال هامشية، بطالة كثيفة، وعمالة غير منتظمة.</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-orange"><b>Ø§Ù„ØªØ¬Ø§Ù†Ø³ ÙˆØªÙ‚Ø³ÙŠÙ… Ø§Ù„Ø¹Ù…Ù„</b></td>
-                                        <td>ØªØ¬Ø§Ù†Ø³ Ø´Ø¯ÙŠØ¯ (Ø§Ù„ÙƒÙ„ ÙŠØ¹Ù…Ù„ Ø¨Ø§Ù„Ø²Ø±Ø§Ø¹Ø©)ØŒ ØªÙ‚Ø³ÙŠÙ… Ø¹Ù…Ù„ Ø¨Ø³ÙŠØ·.</td>
-                                        <td>ØªØ¨Ø§ÙŠÙ† ÙˆØ§Ø®ØªÙ„Ø§Ù Ù…Ø¹Ù‚Ø¯ØŒ ØªÙ‚Ø³ÙŠÙ… Ø¹Ù…Ù„ Ø¯Ù‚ÙŠÙ‚ Ø¬Ø¯Ø§Ù‹ ÙˆØªØ®ØµØµØ§Øª.</td>
-                                        <td>ØªØ¬Ø§Ù†Ø³ Ù…Ø·Ù„Ù‚ (Ø«Ù‚Ø§ÙÙŠ ÙˆÙ…Ù‡Ù†ÙŠ)ØŒ Ù…ØºÙ„Ù‚ Ø¹Ù„Ù‰ Ù†ÙØ³Ù‡ ØªÙ…Ø§Ù…Ø§Ù‹.</td>
-                                        <td>Ø®Ù„ÙŠØ· ØºÙŠØ± Ù…ØªØ¬Ø§Ù†Ø³ (ØºØ§Ù„Ø¨ÙŠØªÙ‡Ù… Ù…Ù‡Ø§Ø¬Ø±ÙˆÙ† Ù…Ù† Ø£Ø±ÙŠØ§Ù Ù…Ø®ØªÙ„ÙØ©).</td>
+                                        <td class="cell-orange"><b>التجانس وتقسيم العمل</b></td>
+                                        <td>تجانس شديد (الكل يعمل بالزراعة)، تقسيم عمل بسيط.</td>
+                                        <td>تباين واختلاف معقد، تقسيم عمل دقيق جداً وتخصصات.</td>
+                                        <td>تجانس مطلق (ثقافي ومهني)، مغلق على نفسه تماماً.</td>
+                                        <td>خليط غير متجانس (غالبيتهم مهاجرون من أرياف مختلفة).</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-green"><b>Ù†ÙˆØ¹ Ø§Ù„Ø¹Ù„Ø§Ù‚Ø§Øª Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ©</b></td>
-                                        <td>Ø£ÙˆÙ„ÙŠØ© Ù…Ø¨Ø§Ø´Ø±Ø© (Ø¹Ù„Ø§Ù‚Ø§Øª Ø§Ù„ÙˆØ¬Ù‡ Ù„Ù„ÙˆØ¬Ù‡ØŒ Ø§Ù„Ø¬ÙŠØ±Ø©ØŒ ÙˆØ§Ù„Ù‚Ø±Ø§Ø¨Ø©).</td>
-                                        <td>Ø«Ø§Ù†ÙˆÙŠØ© ÙˆØ±Ø³Ù…ÙŠØ© (Ø³Ø·Ø­ÙŠØ©ØŒ Ù…ØµÙ„Ø­ÙŠØ©ØŒ ÙˆØªØªØ³Ù… Ø¨Ø§Ù„Ø¹Ø²Ù„Ø© Ø§Ù„Ù†ÙØ³ÙŠØ©).</td>
-                                        <td>Ø¹ØµØ¨ÙŠØ© Ù‚Ø¨Ù„ÙŠØ© Ù‚ÙˆÙŠØ© Ø¬Ø¯Ø§Ù‹ (Ø§Ù„ÙˆÙ„Ø§Ø¡ Ø§Ù„Ù…Ø·Ù„Ù‚ Ù„Ù„Ù‚Ø¨ÙŠÙ„Ø© ÙˆØ§Ù„Ø¹Ø´ÙŠØ±Ø©).</td>
-                                        <td>Ø¹Ù„Ø§Ù‚Ø§Øª Ù…ØµÙ„Ø­Ø©ØŒ Ù…Ø¹ ÙˆØ¬ÙˆØ¯ ØªØ¬Ù…Ø¹Ø§Øª ÙØ±Ø¹ÙŠØ© Ù…Ø¨Ù†ÙŠØ© Ø¹Ù„Ù‰ Ø£ØµÙ„ Ø§Ù„Ù…Ù†Ø´Ø£.</td>
+                                        <td class="cell-green"><b>نوع العلاقات الاجتماعية</b></td>
+                                        <td>أولية مباشرة (علاقات الوجه للوجه، الجيرة، والقرابة).</td>
+                                        <td>ثانوية ورسمية (سطحية، مصلحية، وتتسم بالعزلة النفسية).</td>
+                                        <td>عصبية قبلية قوية جداً (الولاء المطلق للقبيلة والعشيرة).</td>
+                                        <td>علاقات مصلحة، مع وجود تجمعات فرعية مبنية على أصل المنشأ.</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-blue"><b>Ø§Ù„Ø¶Ø¨Ø· Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ (Ø§Ù„Ø±Ù‚Ø§Ø¨Ø©)</b></td>
-                                        <td>ØºÙŠØ± Ø±Ø³Ù…ÙŠ (ÙŠØ¹ØªÙ…Ø¯ Ø¹Ù„Ù‰ Ø§Ù„Ø¹Ø±ÙØŒ Ø§Ù„ØªÙ‚Ø§Ù„ÙŠØ¯ØŒ ÙˆÙƒÙ„Ø§Ù… Ø§Ù„Ù†Ø§Ø³).</td>
-                                        <td>Ø±Ø³Ù…ÙŠ Ù‚Ø§Ù†ÙˆÙ†ÙŠ ØµØ§Ø±Ù… (Ø§Ù„Ø´Ø±Ø·Ø©ØŒ Ø§Ù„Ù‚ÙˆØ§Ù†ÙŠÙ†ØŒ ÙˆØ§Ù„Ù…Ø­Ø§ÙƒÙ…).</td>
-                                        <td>ØºÙŠØ± Ø±Ø³Ù…ÙŠ ØµØ§Ø±Ù… ÙˆØ­Ø§Ø³Ù… (Ø§Ù„Ø¹Ø±Ù Ø§Ù„Ù‚Ø¨Ù„ÙŠ ÙˆÙ‚Ø¶Ø§Ø¡ Ø§Ù„Ø¨Ø§Ø¯ÙŠØ©).</td>
-                                        <td>ØºÙŠØ§Ø¨ Ø£Ùˆ Ø¶Ø¹Ù Ø§Ù„Ø±Ù‚Ø§Ø¨Ø© Ø¨Ù†ÙˆØ¹ÙŠÙ‡Ø§ (Ù…Ù…Ø§ ÙŠØ³Ù‡Ù„ Ø§Ù„Ø§Ù†Ø­Ø±Ø§Ù ÙˆØ§Ù„Ø¬Ø±ÙŠÙ…Ø©).</td>
+                                        <td class="cell-blue"><b>الضبط الاجتماعي (الرقابة)</b></td>
+                                        <td>غير رسمي (يعتمد على العرف، التقاليد، وكلام الناس).</td>
+                                        <td>رسمي قانوني صارم (الشرطة، القوانين، والمحاكم).</td>
+                                        <td>غير رسمي صارم وحاسم (العرف القبلي وقضاء البادية).</td>
+                                        <td>غياب أو ضعف الرقابة بنوعيها (مما يسهل الانحراف والجريمة).</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-purple"><b>Ø´ÙƒÙ„ Ø§Ù„Ø£Ø³Ø±Ø© Ø§Ù„Ø³Ø§Ø¦Ø¯</b></td>
-                                        <td>Ø§Ù„Ø£Ø³Ø±Ø© Ø§Ù„Ù…Ù…ØªØ¯Ø© (Ø£Ø¬ÙŠØ§Ù„ Ù…ØªØ¹Ø§Ù‚Ø¯Ø© Ù„Ù„ØªØ¹Ø§ÙˆÙ† ÙÙŠ Ø§Ù„Ø²Ø±Ø§Ø¹Ø©).</td>
-                                        <td>Ø§Ù„Ø£Ø³Ø±Ø© Ø§Ù„Ù†ÙˆÙˆÙŠØ© Ø§Ù„ØµØºÙŠØ±Ø© (Ø²ÙˆØ¬ ÙˆØ²ÙˆØ¬Ø© ÙˆØ£Ø¨Ù†Ø§Ø¡ ÙÙ‚Ø·).</td>
-                                        <td>Ø§Ù„Ø¹Ø´ÙŠØ±Ø© ÙˆØ§Ù„Ù‚Ø¨ÙŠÙ„Ø© ÙˆØ§Ù„Ù†Ø³Ø¨ Ø§Ù„Ù…ØªØµÙ„.</td>
-                                        <td>Ø£Ø³Ø± Ù…ÙƒØ¯Ø³Ø© Ø¨Ø£Ø¹Ø¯Ø§Ø¯ ÙƒØ¨ÙŠØ±Ø© ÙÙŠ Ù…Ø³Ø§Ø­Ø§Øª Ø¬ØºØ±Ø§ÙÙŠØ© Ø¶ÙŠÙ‚Ø© Ø¬Ø¯Ø§Ù‹.</td>
+                                        <td class="cell-purple"><b>شكل الأسرة السائد</b></td>
+                                        <td>الأسرة الممتدة (أجيال متعاقدة للتعاون في الزراعة).</td>
+                                        <td>الأسرة النووية الصغيرة (زوج وزوجة وأبناء فقط).</td>
+                                        <td>العشيرة والقبيلة والنسب المتصل.</td>
+                                        <td>أسر مكدسة بأعداد كبيرة في مساحات جغرافية ضيقة جداً.</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-gold"><b>Ø§Ù„Ø­Ø±Ø§Ùƒ Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ</b></td>
-                                        <td>Ø¨Ø·ÙŠØ¡ Ø¬Ø¯Ø§Ù‹ (ÙŠØµØ¹Ø¨ Ø§Ù„Ø§Ù†ØªÙ‚Ø§Ù„ Ù…Ù† Ø·Ø¨Ù‚Ø© Ù„Ø£Ø®Ø±Ù‰).</td>
-                                        <td>Ø³Ø±ÙŠØ¹ ÙˆÙ…ØªØ§Ø­ (Ù„ØªÙˆÙØ± ÙØ±Øµ Ø§Ù„ØªØ¹Ù„ÙŠÙ… ÙˆØ§Ù„Ø¹Ù…Ù„ Ø§Ù„Ù…ØªÙ†ÙˆØ¹Ø©).</td>
-                                        <td>Ø´Ø¨Ù‡ Ù…Ø¹Ø¯ÙˆÙ… ÙˆÙ…Ù†ØºÙ„Ù‚ Ø¹Ù„Ù‰ Ø§Ù„Ø±ØªØ¨ Ø§Ù„Ù‚Ø¨Ù„ÙŠØ©.</td>
-                                        <td>Ø­Ø±Ø§Ùƒ Ù…ØªØ¹Ø«Ø± ÙˆÙ…Ù‡Ù…Ø´ ÙˆÙ…Ù„ÙŠØ¡ Ø¨Ø§Ù„Ø¹ÙˆØ§Ø¦Ù‚ Ø§Ù„Ø§Ù‚ØªØµØ§Ø¯ÙŠØ©.</td>
+                                        <td class="cell-gold"><b>الحراك الاجتماعي</b></td>
+                                        <td>بطيء جداً (يصعب الانتقال من طبقة لأخرى).</td>
+                                        <td>سريع ومتاح (لتوفر فرص التعليم والعمل المتنوعة).</td>
+                                        <td>شبه معدوم ومنغلق على الرتب القبلية.</td>
+                                        <td>حراك متعثر ومهمش ومليء بالعوائق الاقتصادية.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1064,75 +1066,75 @@
                     </div>
                 </div>
 
-                <!-- Card 6: Ø³Ø§Ø¯Ø³Ø§Ù‹: Ø£Ø¨Ø±Ø² Ø§Ù„Ù…Ø´ÙƒÙ„Ø§Øª Ø§Ù„ØªÙŠ ÙŠØ¹Ø§Ù†ÙŠ Ù…Ù†Ù‡Ø§ ÙƒÙ„ Ù…Ø¬ØªÙ…Ø¹ -->
+                <!-- Card 6: سادساً: أبرز المشكلات التي يعاني منها كل مجتمع -->
                 <div class="network-card" data-branch="6" id="card-6">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ø£Ø¨Ø±Ø² Ø§Ù„Ù…Ø´ÙƒÙ„Ø§Øª Ø§Ù„ØªÙŠ ÙŠØ¹Ø§Ù†ÙŠ Ù…Ù†Ù‡Ø§ ÙƒÙ„ Ù…Ø¬ØªÙ…Ø¹ (Ø§Ù„ØªØ´Ø®ÙŠØµ Ø§Ù„Ø·Ø¨ÙŠ Ù„Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª)</h3>
+                        <h3>أبرز المشكلات التي يعاني منها كل مجتمع (التشخيص الطبي للمجتمعات)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (ÙƒÙ„ Ù…Ø¬ØªÙ…Ø¹ Ù„Ù‡ "Ø£Ù…Ø±Ø§Ø¶Ù‡ ÙˆØµØ¹ÙˆØ¨Ø§ØªÙ‡" Ø§Ù„Ø®Ø§ØµØ© Ø§Ù„ØªÙŠ ÙŠØ±ØªÙƒØ² Ø¹Ù„ÙŠÙ‡Ø§ ÙˆØ¶Ø¹ Ø®Ø·Ø© Ø§Ù„ØªØ¯Ø®Ù„ Ø§Ù„Ù…Ù‡Ù†ÙŠ)
+                            (كل مجتمع له "أمراضه وصعوباته" الخاصة التي يرتكز عليها وضع خطة التدخل المهني)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ø§Ù„Ù…Ø¬ØªÙ…Ø¹</th>
-                                        <th>Ø§Ù„Ù…Ø´ÙƒÙ„Ø§Øª Ø§Ù„Ø£Ø³Ø§Ø³ÙŠØ© (Ø§Ù„ÙƒÙ„Ù…Ø§Øª Ø§Ù„Ø¯Ù„Ø§Ù„ÙŠØ© ÙÙŠ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù† <i class="fas fa-key"
+                                        <th>المجتمع</th>
+                                        <th>المشكلات الأساسية (الكلمات الدلالية في الامتحان <i class="fas fa-key"
                                                 style="color: gold;"></i>)</th>
-                                        <th>Ø§Ù„Ø´Ø±Ø­ ÙˆØ§Ù„ØªØ­Ù„ÙŠÙ„ Ø§Ù„Ù…Ù†Ù‡Ø¬ÙŠ</th>
+                                        <th>الشرح والتحليل المنهجي</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-gold"><b>Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø±ÙŠÙÙŠ ðŸŒ¾</b></td>
+                                        <td class="cell-gold"><b>المجتمع الريفي 🌾</b></td>
                                         <td style="text-align: right; font-weight: 600; color: #ff9900;">
-                                            - Ø§Ù„Ø¨Ø·Ø§Ù„Ø© Ø§Ù„Ù…Ù‚Ù†Ø¹Ø©.<br>
-                                            - ØªÙØªØª Ø§Ù„Ø­ÙŠØ§Ø²Ø© Ø§Ù„Ø²Ø±Ø§Ø¹ÙŠØ©.<br>
-                                            - Ù‡Ø¬Ø±Ø© Ø§Ù„Ø´Ø¨Ø§Ø¨ Ø§Ù„Ù…ØªØ³Ø§Ø±Ø¹Ø© Ù„Ù„Ø­Ø¶Ø±.
+                                            - البطالة المقنعة.<br>
+                                            - تفتت الحيازة الزراعية.<br>
+                                            - هجرة الشباب المتسارعة للحضر.
                                         </td>
                                         <td style="text-align: right;">
-                                            * <b>Ø§Ù„Ø¨Ø·Ø§Ù„Ø© Ø§Ù„Ù…Ù‚Ù†Ø¹Ø©:</b> ØªØ¹Ù†ÙŠ ÙˆØ¬ÙˆØ¯ Ø¹Ù…Ø§Ù„Ø© Ø²Ø±Ø§Ø¹ÙŠØ© Ø²Ø§Ø¦Ø¯Ø© ÙØ¹Ù„ÙŠØ§Ù‹ Ø¹Ù† Ø­Ø§Ø¬Ø©
-                                            Ø§Ù„Ø£Ø±Ø¶.<br>
-                                            * <b>ØªÙØªØª Ø§Ù„Ø­ÙŠØ§Ø²Ø©:</b> Ø¨Ø³Ø¨Ø¨ Ø§Ù„Ù…ÙŠØ±Ø§Ø«ØŒ Ù…Ù…Ø§ ÙŠØ¹ÙŠÙ‚ Ø§Ø³ØªØ®Ø¯Ø§Ù… Ø§Ù„Ù…ÙŠÙƒÙ†Ø© ÙˆØ§Ù„Ø¢Ù„Ø§Øª
-                                            Ø§Ù„Ø­Ø¯ÙŠØ«Ø©.
+                                            * <b>البطالة المقنعة:</b> تعني وجود عمالة زراعية زائدة فعلياً عن حاجة
+                                            الأرض.<br>
+                                            * <b>تفتت الحيازة:</b> بسبب الميراث، مما يعيق استخدام الميكنة والآلات
+                                            الحديثة.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-orange"><b>Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø­Ø¶Ø±ÙŠ ðŸ™ï¸</b></td>
+                                        <td class="cell-orange"><b>المجتمع الحضري 🏙️</b></td>
                                         <td style="text-align: right; font-weight: 600; color: #FFD700;">
-                                            - Ø§Ù„ØªÙƒØ¯Ø³ Ø§Ù„Ø³ÙƒØ§Ù†ÙŠ ÙˆØ§Ù„Ø§Ø²Ø¯Ø­Ø§Ù….<br>
-                                            - Ø§Ù„ØªÙ„ÙˆØ« (Ø§Ù„Ø¨ÙŠØ¦ÙŠØŒ Ø§Ù„Ø¨ØµØ±ÙŠØŒ ÙˆØ§Ù„Ø³Ù…Ø¹ÙŠ).<br>
-                                            - ØªÙÙƒÙƒ Ø§Ù„Ø±ÙˆØ§Ø¨Ø· Ø§Ù„Ø£Ø³Ø±ÙŠØ© ÙˆØ§Ù„Ø¹Ø²Ù„Ø© Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ©.
+                                            - التكدس السكاني والازدحام.<br>
+                                            - التلوث (البيئي، البصري، والسمعي).<br>
+                                            - تفكك الروابط الأسرية والعزلة الاجتماعية.
                                         </td>
                                         <td style="text-align: right;">
-                                            * Ø§Ù„Ù†Ù…Ùˆ Ø§Ù„Ø³Ø±ÙŠØ¹ Ø¬Ø¯Ø§Ù‹ ÙˆØºÙŠØ± Ø§Ù„Ù…Ø®Ø·Ø· Ù„Ù„Ù…Ø¯ÙŠÙ†Ø© ÙŠØ®Ù„Ù‚ Ø¶ØºÙˆØ·Ø§Ù‹ Ù†ÙØ³ÙŠØ© ÙˆØ¨ÙŠØ¦ÙŠØ© Ø­Ø§Ø¯Ø©ØŒ ÙˆÙŠØ²ÙŠØ¯
-                                            Ù…Ù† Ù…Ø¹Ø¯Ù„Ø§Øª Ø§Ù„Ø§Ù†Ø­Ø±Ø§Ù ÙˆØ§Ù„Ø¬Ø±ÙŠÙ…Ø©.
+                                            * النمو السريع جداً وغير المخطط للمدينة يخلق ضغوطاً نفسية وبيئية حادة، ويزيد
+                                            من معدلات الانحراف والجريمة.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-blue"><b>Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø¨Ø¯ÙˆÙŠ ðŸ«</b></td>
+                                        <td class="cell-blue"><b>المجتمع البدوي 🐫</b></td>
                                         <td style="text-align: right; font-weight: 600; color: #00b4db;">
-                                            - Ø§Ù„ØªØ±Ø­Ø§Ù„ Ø§Ù„Ù…Ø³ØªÙ…Ø± ÙˆØ¹Ø¯Ù… Ø§Ù„Ø§Ø³ØªÙ‚Ø±Ø§Ø±.<br>
-                                            - Ø§Ù„Ø¬ÙØ§Ù Ø§Ù„Ø­Ø§Ø¯ ÙˆÙ†Ù‚Øµ Ø§Ù„Ù…ÙˆØ§Ø±Ø¯ Ø§Ù„Ù…Ø§Ø¦ÙŠØ©.<br>
-                                            - ØµØ¹ÙˆØ¨Ø© Ø¨Ø§Ù„ØºØ© ÙÙŠ ØªÙˆÙÙŠØ± Ø§Ù„Ø®Ø¯Ù…Ø§Øª Ø§Ù„Ø­ÙƒÙˆÙ…ÙŠØ© Ø§Ù„Ø«Ø§Ø¨ØªØ©.
+                                            - الترحال المستمر وعدم الاستقرار.<br>
+                                            - الجفاف الحاد ونقص الموارد المائية.<br>
+                                            - صعوبة بالغة في توفير الخدمات الحكومية الثابتة.
                                         </td>
                                         <td style="text-align: right;">
-                                            * Ø§Ù„ØªÙ†Ù‚Ù„ Ø§Ù„Ø¯Ø§Ø¦Ù… Ø·Ù„Ø¨Ø§Ù‹ Ù„Ù„Ù…Ø±Ø¡ ÙŠØ¬Ø¹Ù„ Ù…Ù† Ø§Ù„ØµØ¹Ø¨ Ø¹Ù„Ù‰ Ø§Ù„Ø¯ÙˆÙ„Ø© Ø¥Ù†Ø´Ø§Ø¡ Ù…Ø¯Ø§Ø±Ø³ Ø£Ùˆ Ù…Ø³ØªØ´ÙÙŠØ§Øª
-                                            Ø«Ø§Ø¨ØªØ©ØŒ Ù…Ù…Ø§ ÙŠÙƒØ±Ø³ Ø¹Ø²Ù„ØªÙ‡Ù… Ø§Ù„Ø¬ØºØ±Ø§ÙÙŠØ©.
+                                            * التنقل الدائم طلباً للمرء يجعل من الصعب على الدولة إنشاء مدارس أو مستشفيات
+                                            ثابتة، مما يكرس عزلتهم الجغرافية.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-purple"><b>Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø¹Ø´ÙˆØ§Ø¦ÙŠ ðŸšï¸</b></td>
+                                        <td class="cell-purple"><b>المجتمع العشوائي 🏚️</b></td>
                                         <td style="text-align: right; font-weight: 600; color: #ee0979;">
-                                            - ØºÙŠØ§Ø¨ ÙƒØ§Ù…Ù„ Ù„Ù„ØªØ®Ø·ÙŠØ· Ø§Ù„Ø¹Ù…Ø±Ø§Ù†ÙŠ.<br>
-                                            - Ø§Ù†Ø¹Ø¯Ø§Ù… Ø§Ù„Ù…Ø±Ø§ÙÙ‚ Ø§Ù„Ø£Ø³Ø§Ø³ÙŠØ© (Ù…ÙŠØ§Ù‡ Ø´Ø±Ø¨ØŒ ØµØ±Ù ØµØ­ÙŠ).<br>
-                                            - Ø§Ù„ØªÙ‡Ù…ÙŠØ´ Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ÙŠ ÙˆØ§Ù†ØªØ´Ø§Ø± Ø§Ù„Ø£ÙˆØ¨Ø¦Ø©.
+                                            - غياب كامل للتخطيط العمراني.<br>
+                                            - انعدام المرافق الأساسية (مياه شرب، صرف صحي).<br>
+                                            - التهميش المجتمعي وانتشار الأوبئة.
                                         </td>
                                         <td style="text-align: right;">
-                                            * ØªÙ†Ø´Ø£ Ø§Ù„Ø¹Ø´ÙˆØ§Ø¦ÙŠØ§Øª Ø¨Ø¬Ù‡ÙˆØ¯ Ø°Ø§ØªÙŠØ© Ø®Ø§Ø±Ø¬Ø© Ø¹Ù† Ø§Ù„Ù‚Ø§Ù†ÙˆÙ†ØŒ ÙƒØ£Ø«Ø± Ù…Ø¨Ø§Ø´Ø± Ù„Ù„Ù‡Ø¬Ø±Ø© Ø§Ù„ÙƒØ«ÙŠÙØ©
-                                            ØºÙŠØ± Ø§Ù„Ù…Ù†Ø¸Ù…Ø© Ù…Ù† Ø§Ù„Ø±ÙŠÙ ÙˆØ¹Ø¬Ø² Ø§Ù„Ù…Ø¯Ù† Ø¹Ù† Ø§Ù„Ø§Ø³ØªÙŠØ¹Ø§Ø¨.
+                                            * تنشأ العشوائيات بجهود ذاتية خارجة عن القانون، كأثر مباشر للهجرة الكثيفة
+                                            غير المنظمة من الريف وعجز المدن عن الاستيعاب.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1141,69 +1143,69 @@
                     </div>
                 </div>
 
-                <!-- Card 7: Ø³Ø§Ø¨Ø¹Ø§Ù‹: Ù…Ø¯Ø§Ø®Ù„ Ø§Ù„ØªÙ†Ù…ÙŠØ© ÙˆØ§Ø³ØªØ±Ø§ØªÙŠØ¬ÙŠØ§Øª Ø§Ù„ØªØ¯Ø®Ù„ -->
+                <!-- Card 7: سابعاً: مداخل التنمية واستراتيجيات التدخل -->
                 <div class="network-card" data-branch="7" id="card-7">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ù…Ø¯Ø§Ø®Ù„ Ø§Ù„ØªÙ†Ù…ÙŠØ© ÙˆØ§Ø³ØªØ±Ø§ØªÙŠØ¬ÙŠØ§Øª Ø§Ù„ØªØ¯Ø®Ù„ (Ø§Ù„Ø±ÙˆØ´ØªØ© Ø§Ù„Ø¹Ù„Ø§Ø¬ÙŠØ© Ù„ÙƒÙ„ Ù…Ø¬ØªÙ…Ø¹)</h3>
+                        <h3>مداخل التنمية واستراتيجيات التدخل (الروشتة العلاجية لكل مجتمع)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <div class="info-box success" style="margin-bottom: 1rem; text-align: center;">
-                            <strong><i class="fas fa-lightbulb"></i> ØªØ±ÙŠÙƒØ© Ù‡Ø§Ù…Ø© Ø¬Ø¯Ø§Ù‹ Ù„Ù„Ø§Ù…ØªØ­Ø§Ù†:</strong> Ø¹Ù†Ø¯ Ø§Ù„Ø³Ø¤Ø§Ù„ Ø¹Ù†
-                            "Ø§Ø³ØªØ±Ø§ØªÙŠØ¬ÙŠØ© Ø§Ù„ØªØ¯Ø®Ù„" Ø£Ùˆ "Ø¯ÙˆØ± Ø§Ù„Ø£Ø®ØµØ§Ø¦ÙŠ"ØŒ Ø§Ø¨Ø­Ø« Ø¹Ù† Ù‡Ø°Ù‡ Ø§Ù„Ù…Ø¯Ø§Ø®Ù„ Ø§Ù„Ø¹Ù„Ø§Ø¬ÙŠØ© Ø§Ù„ÙØ¹Ø§Ù„Ø© ÙÙŠ Ø§Ù„Ø®ÙŠØ§Ø±Ø§Øª.
+                            <strong><i class="fas fa-lightbulb"></i> تريكة هامة جداً للامتحان:</strong> عند السؤال عن
+                            "استراتيجية التدخل" أو "دور الأخصائي"، ابحث عن هذه المداخل العلاجية الفعالة في الخيارات.
                         </div>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ù†ÙˆØ¹ Ø§Ù„Ù…Ø¬ØªÙ…Ø¹</th>
-                                        <th>Ø§Ù„Ù…Ø¯Ø®Ù„ Ø§Ù„ØªÙ†Ù…ÙˆÙŠ Ø§Ù„Ù…Ù†Ø§Ø³Ø¨ ÙˆØ§Ù„Ø§Ø³ØªØ±Ø§ØªÙŠØ¬ÙŠØ© (Ø§Ù„Ø±ÙˆØ´ØªØ© Ø§Ù„Ø¹Ù„Ø§Ø¬ÙŠØ©)</th>
+                                        <th>نوع المجتمع</th>
+                                        <th>المدخل التنموي المناسب والاستراتيجية (الروشتة العلاجية)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-gold"><b>ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø±ÙŠÙÙŠ ðŸŒ¾</b></td>
+                                        <td class="cell-gold"><b>تنمية المجتمع الريفي 🌾</b></td>
                                         <td style="text-align: right;">
-                                            1. Ø¥Ø¯Ø®Ø§Ù„ Ø§Ù„Ù…ÙŠÙƒÙ†Ø© ÙˆØ§Ù„Ø¢Ù„Ø§Øª Ø§Ù„Ø²Ø±Ø§Ø¹ÙŠØ© Ø§Ù„Ø­Ø¯ÙŠØ«Ø© ÙˆØªÙØ¹ÙŠÙ„ <b>Ø§Ù„ØªØ³ÙˆÙŠÙ‚
-                                                Ø§Ù„ØªØ¹Ø§ÙˆÙ†ÙŠ</b>.<br>
-                                            2. ØªØ´Ø¬ÙŠØ¹ ÙˆØªÙ…ÙˆÙŠÙ„ <b>Ø§Ù„ØµÙ†Ø§Ø¹Ø§Øª Ø§Ù„Ø¨ÙŠØ¦ÙŠØ© ÙˆØ§Ù„Ø±ÙŠÙÙŠØ©</b> Ø§Ù„ÙŠØ¯ÙˆÙŠØ© Ù„ØªÙˆÙÙŠØ± ÙØ±Øµ Ø¹Ù…Ù„
-                                            Ø¨Ø¯ÙŠÙ„Ø© Ù„Ù„Ø´Ø¨Ø§Ø¨.<br>
-                                            3. Ù†Ø´Ø± Ø§Ù„ÙˆØ¹ÙŠ Ø§Ù„ØµØ­ÙŠ ÙˆØ§Ù„ØªØ«Ù‚ÙŠÙ Ø¨Ù€ <b>ØªÙ†Ø¸ÙŠÙ… Ø§Ù„Ø£Ø³Ø±Ø©</b> Ù„Ù…Ù†Ø¹ Ø§Ù„Ø§Ù†ÙØ¬Ø§Ø±
-                                            Ø§Ù„Ø³ÙƒØ§Ù†ÙŠ.<br>
-                                            4. Ø§Ù„Ø§Ø¹ØªÙ…Ø§Ø¯ Ø§Ù„Ù‚ÙˆÙŠ Ø¹Ù„Ù‰ <b>Ø§Ù„Ù‚ÙŠØ§Ø¯Ø§Øª Ø§Ù„Ø·Ø¨ÙŠØ¹ÙŠØ©</b> ÙˆØ§Ù„Ø´Ø¹Ø¨ÙŠØ© (Ø§Ù„Ø¹Ù…Ø¯Ø© / Ø´ÙŠØ® Ø§Ù„Ø¨Ù„Ø¯)
-                                            Ù„ÙƒØ³Ø¨ Ø«Ù‚Ø© Ø§Ù„Ø£Ù‡Ø§Ù„ÙŠ.
+                                            1. إدخال الميكنة والآلات الزراعية الحديثة وتفعيل <b>التسويق
+                                                التعاوني</b>.<br>
+                                            2. تشجيع وتمويل <b>الصناعات البيئية والريفية</b> اليدوية لتوفير فرص عمل
+                                            بديلة للشباب.<br>
+                                            3. نشر الوعي الصحي والتثقيف بـ <b>تنظيم الأسرة</b> لمنع الانفجار
+                                            السكاني.<br>
+                                            4. الاعتماد القوي على <b>القيادات الطبيعية</b> والشعبية (العمدة / شيخ البلد)
+                                            لكسب ثقة الأهالي.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-orange"><b>ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø­Ø¶Ø±ÙŠ ðŸ™ï¸</b></td>
+                                        <td class="cell-orange"><b>تنمية المجتمع الحضري 🏙️</b></td>
                                         <td style="text-align: right;">
-                                            1. ØªØ·Ø¨ÙŠÙ‚ **Ø§Ù„ØªØ®Ø·ÙŠØ· Ø§Ù„Ø¥Ù‚Ù„ÙŠÙ…ÙŠ** Ø§Ù„Ø´Ø§Ù…Ù„ Ù„ØªÙ‚Ù„ÙŠÙ„ Ø§Ù„ÙØ¬ÙˆØ© ÙˆØ§Ù„ØªØ¨Ø§ÙŠÙ† Ø§Ù„ØªÙ†Ù…ÙˆÙŠ Ø¨ÙŠÙ†
-                                            Ø§Ù„Ø±ÙŠÙ ÙˆØ§Ù„Ø­Ø¶Ø± Ù„Ù…Ù†Ø¹ ØªÙŠØ§Ø± Ø§Ù„Ù‡Ø¬Ø±Ø©.<br>
-                                            2. ØªÙØ¹ÙŠÙ„ **Ø§Ù„Ù„Ø§Ù…Ø±ÙƒØ²ÙŠØ© ÙÙŠ Ø§Ù„Ø®Ø¯Ù…Ø§Øª** ÙˆØ¥Ù†Ø´Ø§Ø¡ ÙˆØªØ¹Ù…ÙŠØ± Ù…Ø¯Ù† ÙˆÙ…Ø¬ØªÙ…Ø¹Ø§Øª Ø¬Ø¯ÙŠØ¯Ø© Ø®Ø§Ø±Ø¬
-                                            Ù†Ø·Ø§Ù‚ Ø§Ù„ØªÙƒØ¯Ø³.<br>
-                                            3. Ø§Ù„ØªØ·Ø¨ÙŠÙ‚ Ø§Ù„Ø­Ø§Ø³Ù… Ù„Ù„Ù‚ÙˆØ§Ù†ÙŠÙ† Ø§Ù„Ø¨ÙŠØ¦ÙŠØ© ÙˆØ§Ù„ØªØ´Ø±ÙŠØ¹Ø§Øª Ù„Ø­Ù…Ø§ÙŠØ© Ù‡ÙˆØ§Ø¡ ÙˆÙ…ÙŠØ§Ù‡ Ø§Ù„Ù…Ø¯ÙŠÙ†Ø© Ù…Ù†
-                                            Ø§Ù„ØªÙ„ÙˆØ«.
+                                            1. تطبيق **التخطيط الإقليمي** الشامل لتقليل الفجوة والتباين التنموي بين
+                                            الريف والحضر لمنع تيار الهجرة.<br>
+                                            2. تفعيل **اللامركزية في الخدمات** وإنشاء وتعمير مدن ومجتمعات جديدة خارج
+                                            نطاق التكدس.<br>
+                                            3. التطبيق الحاسم للقوانين البيئية والتشريعات لحماية هواء ومياه المدينة من
+                                            التلوث.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-blue"><b>ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø¨Ø¯ÙˆÙŠ ðŸ«</b></td>
+                                        <td class="cell-blue"><b>تنمية المجتمع البدوي 🐫</b></td>
                                         <td style="text-align: right;">
-                                            1. ØªØ·Ø¨ÙŠÙ‚ Ø³ÙŠØ§Ø³Ø© <b>\"Ø§Ù„ØªÙˆØ·ÙŠÙ† Ø§Ù„Ù…ÙˆØ¬Ù‡\"</b> (Ø¥Ù†Ø´Ø§Ø¡ ÙˆØªØ¬Ù‡ÙŠØ² Ù‚Ø±Ù‰ Ø¨Ø¯ÙˆÙŠØ© Ø­Ø¯ÙŠØ«Ø©
-                                            Ù…ØªÙƒØ§Ù…Ù„Ø© ÙˆÙ…Ø³ØªÙ‚Ø±Ø© Ù…Ù† Ù‚Ø¨Ù„ Ø§Ù„Ø¯ÙˆÙ„Ø©).<br>
-                                            2. Ø§Ø¨ØªÙƒØ§Ø± ÙˆØªÙˆÙÙŠØ± **Ø§Ù„Ø®Ø¯Ù…Ø§Øª Ø§Ù„Ù…ØªÙ†Ù‚Ù„Ø©** (Ù‚ÙˆØ§ÙÙ„ Ø·Ø¨ÙŠØ© ÙˆØªØ¹Ù„ÙŠÙ…ÙŠØ© Ù…Ø±Ù†Ø©) ÙˆØ­ÙØ± Ø§Ù„Ø¢Ø¨Ø§Ø±
-                                            Ø§Ù„Ø¬ÙˆÙÙŠØ© Ù„ØªØ£Ù…ÙŠÙ† Ø§Ù„Ù…ÙŠØ§Ù‡.<br>
-                                            3. Ø§Ù„Ø§Ø­ØªØ±Ø§Ù… Ø§Ù„Ù…Ø·Ù„Ù‚ ÙˆØ§Ù„ÙƒØ§Ù…Ù„ Ù„Ù„Ø£Ø¹Ø±Ø§Ù ÙˆØ§Ù„ØªÙ‚Ø§Ù„ÙŠØ¯ Ø§Ù„Ù‚Ø¨Ù„ÙŠØ©ØŒ ÙˆØ§Ù„ØªØ¹Ø§ÙˆÙ† Ù…Ø¹ **Ø´ÙŠØ®
-                                            Ø§Ù„Ù‚Ø¨ÙŠÙ„Ø©**.
+                                            1. تطبيق سياسة <b>\"التوطين الموجه\"</b> (إنشاء وتجهيز قرى بدوية حديثة
+                                            متكاملة ومستقرة من قبل الدولة).<br>
+                                            2. ابتكار وتوفير **الخدمات المتنقلة** (قوافل طبية وتعليمية مرنة) وحفر الآبار
+                                            الجوفية لتأمين المياه.<br>
+                                            3. الاحترام المطلق والكامل للأعراف والتقاليد القبلية، والتعاون مع **شيخ
+                                            القبيلة**.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-purple"><b>ØªÙ†Ù…ÙŠØ© Ø§Ù„Ø¹Ø´ÙˆØ§Ø¦ÙŠØ§Øª ðŸšï¸</b></td>
+                                        <td class="cell-purple"><b>تنمية العشوائيات 🏚️</b></td>
                                         <td style="text-align: right;">
-                                            * **ØªØ·ÙˆÙŠØ± Ø´Ø§Ù…Ù„:** (Ø¨Ù†ÙŠØ© ØªØ­ØªÙŠØ© ÙƒØ§Ù…Ù„Ø© + ØªÙ†Ù…ÙŠØ© Ø¨Ø´Ø±ÙŠØ© ÙˆØ§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© ÙˆØ§Ù‚ØªØµØ§Ø¯ÙŠØ©)
-                                            Ù„Ù„Ù…Ù†Ø§Ø·Ù‚ Ø§Ù„ØªÙŠ ØªØµÙ„Ø­ ÙˆÙ‚Ø§Ø¨Ù„Ø© Ù„Ù„ØªØ·ÙˆÙŠØ±.<br>
-                                            * **Ø§Ù„Ø¥Ø²Ø§Ù„Ø© ÙˆØ¥Ø¹Ø§Ø¯Ø© Ø§Ù„ØªØ³ÙƒÙŠÙ†:** Ù„Ù„Ù…Ù†Ø§Ø·Ù‚ Ø§Ù„Ø¹Ø´ÙˆØ§Ø¦ÙŠØ© ØºÙŠØ± Ø§Ù„Ø¢Ù…Ù†Ø© ÙˆØ§Ù„Ø®Ø·Ø±Ø© Ø¬Ø¯Ø§Ù‹ (Ù…Ø«Ù„
-                                            Ø§Ù„Ù…Ù‡Ø¯Ø¯Ø© Ù„Ù„Ø­ÙŠØ§Ø© ÙƒØ§Ù„Ù…Ø¨Ù†ÙŠØ© ØªØ­Øª Ø§Ù„ØµØ®ÙˆØ± ÙˆØ§Ù„Ø¬Ø¨Ø§Ù„ Ø£Ùˆ ÙÙŠ Ù…Ø®Ø±Ø§Øª Ø§Ù„Ø³ÙŠÙˆÙ„) Ø¨Ù†Ù‚Ù„ Ø£Ù‡Ø§Ù„ÙŠÙ‡Ø§
-                                            Ù„Ù…Ø¯Ù† Ø³ÙƒÙ†ÙŠØ© Ø­Ø¶Ø§Ø±ÙŠØ© Ù…Ø¬Ù‡Ø²Ø© Ø¨Ø§Ù„ÙƒØ§Ù…Ù„.
+                                            * **تطوير شامل:** (بنية تحتية كاملة + تنمية بشرية واجتماعية واقتصادية)
+                                            للمناطق التي تصلح وقابلة للتطوير.<br>
+                                            * **الإزالة وإعادة التسكين:** للمناطق العشوائية غير الآمنة والخطرة جداً (مثل
+                                            المهددة للحياة كالمبنية تحت الصخور والجبال أو في مخرات السيول) بنقل أهاليها
+                                            لمدن سكنية حضارية مجهزة بالكامل.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1212,44 +1214,44 @@
                     </div>
                 </div>
 
-                <!-- Card 8: Ø«Ø§Ù…Ù†Ø§Ù‹: Ù…ØµØ·Ù„Ø­Ø§Øª Ù‡Ø§Ù…Ø© Ø¬Ø¯Ø§Ù‹ ÙÙŠ ØªÙ†Ù…ÙŠØ© Ø§Ù„Ø¨Ø¯Ùˆ -->
+                <!-- Card 8: ثامناً: مصطلحات هامة جداً في تنمية البدو -->
                 <div class="network-card" data-branch="8" id="card-8">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ù…ØµØ·Ù„Ø­Ø§Øª Ù‡Ø§Ù…Ø© ÙÙŠ ØªÙ†Ù…ÙŠØ© Ø§Ù„Ø¨Ø¯Ùˆ (Ø§Ù„ÙØ±ÙˆÙ‚ Ø¨ÙŠÙ† Ø£Ù†ÙˆØ§Ø¹ Ø§Ù„ØªÙˆØ·ÙŠÙ†)</h3>
+                        <h3>مصطلحات هامة في تنمية البدو (الفروق بين أنواع التوطين)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (Ù‡Ø°Ø§ Ø§Ù„ØªÙ…ÙŠÙŠØ² ÙŠØªÙƒØ±Ø± Ø¯Ø§Ø¦Ù…Ø§Ù‹ ÙÙŠ Ø£Ø³Ø¦Ù„Ø© Ø§Ù„ØµÙˆØ§Ø¨ ÙˆØ§Ù„Ø®Ø·Ø£ Ù„ØªØ­Ø¯ÙŠØ¯ Ø·Ø¨ÙŠØ¹Ø© Ø§Ø³ØªÙ‚Ø±Ø§Ø± Ø§Ù„Ø¨Ø¯Ùˆ)
+                            (هذا التمييز يتكرر دائماً في أسئلة الصواب والخطأ لتحديد طبيعة استقرار البدو)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ø§Ù„Ù†ÙˆØ¹</th>
-                                        <th>Ù…ÙÙ‡ÙˆÙ…Ù‡ ÙˆØªÙØ§ØµÙŠÙ„Ù‡ Ø§Ù„Ù…Ù†Ù‡Ø¬ÙŠØ©</th>
-                                        <th>Ø·Ø¨ÙŠØ¹Ø© Ø§Ù„Ø£Ø«Ø± ÙˆØ§Ù„ØªÙ‚ÙŠÙŠÙ… Ø§Ù„Ø¹Ù„Ù…ÙŠ <i class="fas fa-check-circle"
+                                        <th>النوع</th>
+                                        <th>مفهومه وتفاصيله المنهجية</th>
+                                        <th>طبيعة الأثر والتقييم العلمي <i class="fas fa-check-circle"
                                                 style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-orange"><b>1. Ø§Ù„ØªÙˆØ·ÙŠÙ† Ø§Ù„ØªÙ„Ù‚Ø§Ø¦ÙŠ (Ø§Ù„Ø¹Ø´ÙˆØ§Ø¦ÙŠ)</b></td>
-                                        <td style="text-align: right;">Ø§Ø³ØªÙ‚Ø±Ø§Ø± Ø§Ù„Ø¨Ø¯Ùˆ Ù…Ù† ØªÙ„Ù‚Ø§Ø¡ Ø£Ù†ÙØ³Ù‡Ù… ÙˆØ¨Ø¬Ù‡ÙˆØ¯Ù‡Ù… Ø§Ù„ÙØ±Ø¯ÙŠØ©
-                                            Ø¹Ø´ÙˆØ§Ø¦ÙŠØ§Ù‹ØŒ Ø¨Ø§Ù„Ù†Ø²ÙˆØ­ ÙˆØ¶ÙˆØ§Ø­ÙŠ Ø§Ù„Ù…Ø¯Ù† ÙˆØ§Ù„Ù‚Ø±Ù‰ Ù‡Ø±Ø¨Ø§Ù‹ Ù…Ù† Ø§Ù„Ø¬ÙØ§Ù ÙˆØ§Ù„Ù‚Ø­Ø· Ø§Ù„Ø´Ø¯ÙŠØ¯.</td>
+                                        <td class="cell-orange"><b>1. التوطين التلقائي (العشوائي)</b></td>
+                                        <td style="text-align: right;">استقرار البدو من تلقاء أنفسهم وبجهودهم الفردية
+                                            عشوائياً، بالنزوح وضواحي المدن والقرى هرباً من الجفاف والقحط الشديد.</td>
                                         <td style="text-align: right; font-weight: bold; color: red;">
-                                            Ø£Ø«Ø± Ø³Ù„Ø¨ÙŠØ› ÙŠÙØªÙ‚Ø± ÙƒÙ„ÙŠØ§Ù‹ Ù„Ù„ØªØ®Ø·ÙŠØ·ØŒ ÙˆÙŠØ³Ø¨Ø¨ Ø£Ø²Ù…Ø§Øª Ø§Ù‚ØªØµØ§Ø¯ÙŠØ© ÙˆØ§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© Ø®Ø§Ù†Ù‚Ø© Ù„Ù„Ø¨Ø¯Ùˆ
-                                            ÙˆÙ„Ù„Ù…Ø¯Ù† Ø§Ù„Ø­Ø§Ø¶Ù†Ø© Ù„Ù‡Ù….
+                                            أثر سلبي؛ يفتقر كلياً للتخطيط، ويسبب أزمات اقتصادية واجتماعية خانقة للبدو
+                                            وللمدن الحاضنة لهم.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-green"><b>2. Ø§Ù„ØªÙˆØ·ÙŠÙ† Ø§Ù„Ù…ÙˆØ¬Ù‡ (Ø§Ù„Ù…Ø®Ø·Ø·)</b></td>
-                                        <td style="text-align: right;">ØªØ¯Ø®Ù„ ØµØ±ÙŠØ­ ÙˆÙ…Ø®Ø·Ø· Ù‡Ù†Ø¯Ø³ÙŠØ§Ù‹ ÙˆØ§Ù‚ØªØµØ§Ø¯ÙŠØ§Ù‹ Ù…Ù† Ø§Ù„Ø¯ÙˆÙ„Ø©ØŒ
-                                            Ø¨Ø§Ø®ØªÙŠØ§Ø± Ù…Ù†Ø§Ø·Ù‚ Ù…Ù†Ø§Ø³Ø¨Ø©ØŒ Ø¨Ù†Ø§Ø¡ Ù…Ø³Ø§ÙƒÙ† Ù…ØªÙƒØ§Ù…Ù„Ø©ØŒ ØªÙˆÙÙŠØ± Ù…ØµØ§Ø¯Ø± Ø¯Ø®Ù„ Ø¨Ø¯ÙŠÙ„Ø© (Ø²Ø±Ø§Ø¹Ø©ØŒ
-                                            ØªØ¹Ø¯ÙŠÙ†, Ø±Ø¹ÙŠ Ù…Ù†Ø¸Ù…) ÙˆØ®Ø¯Ù…Ø§Øª ÙƒØ§Ù…Ù„Ø©.</td>
+                                        <td class="cell-green"><b>2. التوطين الموجه (المخطط)</b></td>
+                                        <td style="text-align: right;">تدخل صريح ومخطط هندسياً واقتصادياً من الدولة،
+                                            باختيار مناطق مناسبة، بناء مساكن متكاملة، توفير مصادر دخل بديلة (زراعة،
+                                            تعدين, رعي منظم) وخدمات كاملة.</td>
                                         <td style="text-align: right; font-weight: bold; color: var(--success-color);">
-                                            Ø£Ø«Ø± Ø¥ÙŠØ¬Ø§Ø¨ÙŠØ› ÙˆÙ‡Ùˆ Ø§Ù„Ø£Ø³Ù„ÙˆØ¨ Ø§Ù„Ø£Ù…Ø«Ù„ ÙˆØ§Ù„Ù…Ù†Ø¸Ù… Ø¹Ù„Ù…ÙŠØ§Ù‹ Ù„ØªÙ†Ù…ÙŠØ© ÙˆØ¯Ù…Ø¬ Ø§Ù„Ø¨Ø¯Ùˆ ÙÙŠ Ø¹Ø¬Ù„Ø©
-                                            Ø§Ù„Ø¯ÙˆÙ„Ø© Ø§Ù„ÙˆØ·Ù†ÙŠØ©.
+                                            أثر إيجابي؛ وهو الأسلوب الأمثل والمنظم علمياً لتنمية ودمج البدو في عجلة
+                                            الدولة الوطنية.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1258,10 +1260,10 @@
                     </div>
                 </div>
 
-                <!-- Card 9: ØªØ§Ø³Ø¹Ø§Ù‹: Ù…ÙØ§Ù‡ÙŠÙ… Ø£Ø³Ø§Ø³ÙŠØ© Ø­ÙˆÙ„ "Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø§Øª Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ÙŠØ©" -->
+                <!-- Card 9: تاسعاً: مفاهيم أساسية حول "المبادرات المجتمعية" -->
                 <div class="network-card" data-branch="9" id="card-9">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ù…ÙØ§Ù‡ÙŠÙ… Ø£Ø³Ø§Ø³ÙŠØ© Ø­ÙˆÙ„ "Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø§Øª Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ÙŠØ©" ÙˆØ£Ù‡Ù…ÙŠØªÙ‡Ø§</h3>
+                        <h3>مفاهيم أساسية حول "المبادرات المجتمعية" وأهميتها</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
@@ -1269,36 +1271,36 @@
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ø§Ù„Ø¹Ù†ØµØ± / Ø§Ù„Ù…ÙÙ‡ÙˆÙ…</th>
-                                        <th>Ø§Ù„Ø´Ø±Ø­ ÙˆØ§Ù„ÙƒÙ„Ù…Ø§Øª Ø§Ù„Ù…ÙØªØ§Ø­ÙŠØ© ÙÙŠ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù† <i class="fas fa-key"
+                                        <th>العنصر / المفهوم</th>
+                                        <th>الشرح والكلمات المفتاحية في الامتحان <i class="fas fa-key"
                                                 style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-gold"><b>ØªØ¹Ø±ÙŠÙ Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ÙŠØ©</b></td>
+                                        <td class="cell-gold"><b>تعريف المبادرة المجتمعية</b></td>
                                         <td style="text-align: right;">
-                                            Ù‡ÙŠ <b>Ø¬Ù‡Ø¯ ØªØ·ÙˆØ¹ÙŠ ÙˆÙ…Ù†Ø¸Ù…</b>ØŒ ÙŠÙ†Ø¨Ø¹ Ù…Ù† Ø¥Ø­Ø³Ø§Ø³ Ø§Ù„ÙØ±Ø¯ Ø£Ùˆ Ø§Ù„Ø¬Ù…Ø§Ø¹Ø© Ø¨Ø§Ù„Ù…Ø³Ø¤ÙˆÙ„ÙŠØ©
-                                            Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ©ØŒ ÙˆÙŠÙ‡Ø¯Ù Ù„ØªÙ„Ø¨ÙŠØ© Ø§Ø­ØªÙŠØ§Ø¬ Ù…Ø¬ØªÙ…Ø¹ÙŠ Ù…Ù„Ø­ Ø£Ùˆ Ø­Ù„ Ù…Ø´ÙƒÙ„Ø© Ø­Ù‚ÙŠÙ‚ÙŠØ© Ø¨Ø§Ø³ØªØ®Ø¯Ø§Ù…
-                                            Ø§Ù„Ù…ÙˆØ§Ø±Ø¯ Ø§Ù„Ù…ØªØ§Ø­Ø©.
+                                            هي <b>جهد تطوعي ومنظم</b>، ينبع من إحساس الفرد أو الجماعة بالمسؤولية
+                                            الاجتماعية، ويهدف لتلبية احتياج مجتمعي ملح أو حل مشكلة حقيقية باستخدام
+                                            الموارد المتاحة.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-orange"><b>Ø§Ù„Ø¯Ø§ÙØ¹ Ø§Ù„Ø£Ø³Ø§Ø³ÙŠ Ù„Ù„Ù…Ø¨Ø§Ø¯Ø±Ø©</b></td>
+                                        <td class="cell-orange"><b>الدافع الأساسي للمبادرة</b></td>
                                         <td style="text-align: right; font-weight: bold; color: #ff5500;">
-                                            ÙŠÙ†Ø¨Ø¹ Ø£Ø³Ø§Ø³Ø§Ù‹ Ù…Ù† **Ø§Ù„Ù…Ø´Ø§Ø±ÙƒØ© Ø§Ù„ØªØ·ÙˆØ¹ÙŠØ© Ø§Ù„Ø­Ø±Ø©** Ùˆ **Ø§Ù„ÙˆØ¹ÙŠ Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ÙŠ**ØŒ ÙÙ‡ÙŠ Ù„Ø§
-                                            ØªØ¹ØªÙ…Ø¯ Ø¥Ø·Ù„Ø§Ù‚Ø§Ù‹ Ø¹Ù„Ù‰ Ø§Ù„Ø¥Ø¬Ø¨Ø§Ø±ØŒ Ø§Ù„Ø¥ÙƒØ±Ø§Ù‡ØŒ Ø£Ùˆ Ø§Ù„ØªÙƒÙ„ÙŠÙ Ø§Ù„Ø­ÙƒÙˆÙ…ÙŠ Ø§Ù„Ø¥Ù„Ø²Ø§Ù…ÙŠ.
+                                            ينبع أساساً من **المشاركة التطوعية الحرة** و **الوعي المجتمعي**، فهي لا
+                                            تعتمد إطلاقاً على الإجبار، الإكراه، أو التكليف الحكومي الإلزامي.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-green"><b>Ø£Ù‡Ù…ÙŠØ© Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø§Øª ÙˆØ£Ù‡Ø¯Ø§ÙÙ‡Ø§ Ø§Ù„ØªÙ†Ù…ÙˆÙŠØ©</b></td>
+                                        <td class="cell-green"><b>أهمية المبادرات وأهدافها التنموية</b></td>
                                         <td style="text-align: right;">
-                                            1. **ØªÙ…ÙƒÙŠÙ† Ø§Ù„ÙØ¦Ø§Øª Ø§Ù„Ù…Ù‡Ù…Ø´Ø©** ÙˆØ§Ù„Ø¶Ø¹ÙŠÙØ© ÙÙŠ Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ ÙˆØªØ­ÙˆÙŠÙ„Ù‡Ø§ Ù„Ø·Ø§Ù‚Ø© ÙØ§Ø¹Ù„Ø©.<br>
-                                            2. **Ø³Ø¯ Ø§Ù„ÙØ¬ÙˆØ© Ø§Ù„Ø¹Ù…ÙŠÙ‚Ø©** Ø¨ÙŠÙ† (Ø§Ù„Ù…ÙˆØ§Ø±Ø¯ Ø§Ù„Ø­ÙƒÙˆÙ…ÙŠØ© Ø§Ù„Ù…Ø­Ø¯ÙˆØ¯Ø© ÙˆØ§Ù„Ø¶ÙŠÙ‚Ø©)
-                                            Ùˆ(Ø§Ù„Ø§Ø­ØªÙŠØ§Ø¬Ø§Øª Ø§Ù„Ù…ØªØ²Ø§ÙŠØ¯Ø© ÙˆØ§Ù„Ù…ØªØ³Ø§Ø±Ø¹Ø© Ù„Ù„Ø£Ù‡Ø§Ù„ÙŠ).<br>
-                                            3. **Ø§ÙƒØªØ´Ø§Ù ÙˆØªØ¯Ø±ÙŠØ¨ Ø§Ù„Ù‚ÙŠØ§Ø¯Ø§Øª Ø§Ù„Ù…Ø­Ù„ÙŠØ© Ø§Ù„Ø·Ø¨ÙŠØ¹ÙŠØ©** ÙˆØµÙ‚Ù„ Ù…Ù‡Ø§Ø±Ø§ØªÙ‡Ù… ÙÙŠ Ø§Ù„Ù…ÙŠØ¯Ø§Ù†.<br>
-                                            4. Ø§Ø³ØªØ«Ù…Ø§Ø± Ø§Ù„Ù…ÙˆØ§Ø±Ø¯ Ø§Ù„Ø°Ø§ØªÙŠØ© ØºÙŠØ± Ø§Ù„Ù…Ø³ØªØºÙ„Ø© ÙˆØªÙ†Ù…ÙŠØ© Ø±ÙˆØ­ Ø§Ù„Ù…ÙˆØ§Ø·Ù†Ø© ÙˆØ§Ù„Ø§Ù†ØªÙ…Ø§Ø¡
-                                            Ø§Ù„Ø­Ù‚ÙŠÙ‚ÙŠ Ù„Ù„Ù…Ø¬ØªÙ…Ø¹.
+                                            1. **تمكين الفئات المهمشة** والضعيفة في المجتمع وتحويلها لطاقة فاعلة.<br>
+                                            2. **سد الفجوة العميقة** بين (الموارد الحكومية المحدودة والضيقة)
+                                            و(الاحتياجات المتزايدة والمتسارعة للأهالي).<br>
+                                            3. **اكتشاف وتدريب القيادات المحلية الطبيعية** وصقل مهاراتهم في الميدان.<br>
+                                            4. استثمار الموارد الذاتية غير المستغلة وتنمية روح المواطنة والانتماء
+                                            الحقيقي للمجتمع.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1307,61 +1309,61 @@
                     </div>
                 </div>
 
-                <!-- Card 10: Ø¹Ø§Ø´Ø±Ø§Ù‹: Ø£Ù†ÙˆØ§Ø¹ Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø§Øª Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ÙŠØ© -->
+                <!-- Card 10: عاشراً: أنواع المبادرات المجتمعية -->
                 <div class="network-card" data-branch="10" id="card-10">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ø£Ù†ÙˆØ§Ø¹ Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø§Øª Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ÙŠØ© (Ø³Ø¤Ø§Ù„ ØªØ·Ø¨ÙŠÙ‚ÙŠ Ù‡Ø§Ù… Ø¨Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†)</h3>
+                        <h3>أنواع المبادرات المجتمعية (سؤال تطبيقي هام بالامتحان)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <div class="info-box success" style="margin-bottom: 1rem; text-align: center;">
-                            <strong><i class="fas fa-lightbulb"></i> ØªØ±ÙŠÙƒØ© Ù‡Ø§Ù…Ø© Ø¬Ø¯Ø§Ù‹:</strong> ØºØ§Ù„Ø¨Ø§Ù‹ Ø³ÙŠØ£ØªÙŠÙƒ Ø§Ù„Ø³Ø¤Ø§Ù„
-                            Ø¨Ø³ÙŠÙ†Ø§Ø±ÙŠÙˆ Ø£Ùˆ Ù…Ø«Ø§Ù„ Ø¹Ù…Ù„ÙŠ ÙˆÙŠØ·Ù„Ø¨ Ù…Ù†Ùƒ ØªØ­Ø¯ÙŠØ¯ ÙˆØªØµÙ†ÙŠÙ Ù†ÙˆØ¹ Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø©.
+                            <strong><i class="fas fa-lightbulb"></i> تريكة هامة جداً:</strong> غالباً سيأتيك السؤال
+                            بسيناريو أو مثال عملي ويطلب منك تحديد وتصنيف نوع المبادرة.
                         </div>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ù†ÙˆØ¹ Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø©</th>
-                                        <th>Ù…Ø¬Ø§Ù„ Ø¹Ù…Ù„Ù‡Ø§ ÙˆØ§Ù„Ø£Ù…Ø«Ù„Ø© Ø§Ù„ØªØ·Ø¨ÙŠÙ‚ÙŠØ© Ù…ÙˆØ¶Ø¹ Ø§Ù„Ø³Ø¤Ø§Ù„</th>
+                                        <th>نوع المبادرة</th>
+                                        <th>مجال عملها والأمثلة التطبيقية موضع السؤال</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-green"><b>Ù…Ø¨Ø§Ø¯Ø±Ø§Øª Ø¨ÙŠØ¦ÙŠØ© ðŸŒ³</b></td>
+                                        <td class="cell-green"><b>مبادرات بيئية 🌳</b></td>
                                         <td style="text-align: right;">
-                                            Ø­Ù…Ù„Ø§Øª Ø§Ù„Ù†Ø¸Ø§ÙØ© Ø§Ù„Ø¹Ø§Ù…Ø©ØŒ ØªØ´Ø¬ÙŠØ± Ø§Ù„Ø´ÙˆØ§Ø±Ø¹ ÙˆØ§Ù„Ù…ÙŠØ§Ø¯ÙŠÙ†ØŒ ØªØ¯ÙˆÙŠØ± Ø§Ù„Ù…Ø®Ù„ÙØ§Øª Ø§Ù„ØµÙ„Ø¨Ø©ØŒ ÙˆØ­Ù…Ù„Ø§Øª
-                                            ØªØ±Ø´ÙŠØ¯ Ø§Ø³ØªÙ‡Ù„Ø§Ùƒ Ø§Ù„Ù…ÙŠØ§Ù‡ ÙˆØ§Ù„ÙƒÙ‡Ø±Ø¨Ø§Ø¡.
+                                            حملات النظافة العامة، تشجير الشوارع والميادين، تدوير المخلفات الصلبة، وحملات
+                                            ترشيد استهلاك المياه والكهرباء.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-gold"><b>Ù…Ø¨Ø§Ø¯Ø±Ø§Øª Ø§Ù‚ØªØµØ§Ø¯ÙŠØ© (ØªÙ…ÙƒÙŠÙ†) ðŸ’°</b></td>
+                                        <td class="cell-gold"><b>مبادرات اقتصادية (تمكين) 💰</b></td>
                                         <td style="text-align: right;">
-                                            ØªÙˆÙÙŠØ± Ø§Ù„Ù‚Ø±ÙˆØ¶ Ø§Ù„Ø­Ø³Ù†Ø© Ø¨Ø¯ÙˆÙ† ÙÙˆØ§Ø¦Ø¯ØŒ ØªØ¯Ø±ÙŠØ¨ Ø§Ù„Ù†Ø³Ø§Ø¡ ÙˆØ§Ù„Ø£Ù‡Ø§Ù„ÙŠ Ø¹Ù„Ù‰ Ø§Ù„Ø­Ø±Ù ÙˆØ§Ù„ØµÙ†Ø§Ø¹Ø§Øª
-                                            Ø§Ù„ÙŠØ¯ÙˆÙŠØ©ØŒ ÙˆØ¯Ø¹Ù… ÙˆØªÙ…ÙˆÙŠÙ„ Ø§Ù„Ù…Ø´Ø±ÙˆØ¹Ø§Øª Ø§Ù„Ù…ØªÙ†Ø§Ù‡ÙŠØ© Ø§Ù„ØµØºØ± (Ù…Ø«Ù„ ØªØ±Ø¨ÙŠØ© Ø§Ù„Ø¯ÙˆØ§Ø¬Ù†ØŒ ÙˆØ±Ø´
-                                            Ø§Ù„Ø®ÙŠØ§Ø·Ø©) Ù„Ù„Ù…Ø±Ø£Ø© Ø§Ù„Ù…Ø¹ÙŠÙ„Ø©.
+                                            توفير القروض الحسنة بدون فوائد، تدريب النساء والأهالي على الحرف والصناعات
+                                            اليدوية، ودعم وتمويل المشروعات المتناهية الصغر (مثل تربية الدواجن، ورش
+                                            الخياطة) للمرأة المعيلة.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-red"><b>Ù…Ø¨Ø§Ø¯Ø±Ø§Øª ØµØ­ÙŠØ© ðŸ©º</b></td>
+                                        <td class="cell-red"><b>مبادرات صحية 🩺</b></td>
                                         <td style="text-align: right;">
-                                            ØªÙŠØ³ÙŠØ± Ø§Ù„Ù‚ÙˆØ§ÙÙ„ Ø§Ù„Ø·Ø¨ÙŠØ© Ø§Ù„Ù…Ø¬Ø§Ù†ÙŠØ© Ù„Ù„Ù‚Ø±Ù‰ØŒ Ø­Ù…Ù„Ø§Øª Ø§Ù„ØªØ¨Ø±Ø¹ Ø¨Ø§Ù„Ø¯Ù…ØŒ Ù…Ø¨Ø§Ø¯Ø±Ø§Øª Ø§Ù„ÙƒØ´Ù
-                                            Ø§Ù„Ù…Ø¨ÙƒØ± Ø¹Ù† Ø§Ù„Ø£Ù…Ø±Ø§Ø¶ Ø§Ù„Ù…Ø²Ù…Ù†Ø©ØŒ ÙˆØ§Ù„ØªÙˆØ¹ÙŠØ© Ø§Ù„ÙˆÙ‚Ø§Ø¦ÙŠØ© ÙˆØ§Ù„ØµØ­ÙŠØ©.
+                                            تيسير القوافل الطبية المجانية للقرى، حملات التبرع بالدم، مبادرات الكشف
+                                            المبكر عن الأمراض المزمنة، والتوعية الوقائية والصحية.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-blue"><b>Ù…Ø¨Ø§Ø¯Ø±Ø§Øª ØªØ¹Ù„ÙŠÙ…ÙŠØ© / ØªØ«Ù‚ÙŠÙÙŠØ© ðŸ“š</b></td>
+                                        <td class="cell-blue"><b>مبادرات تعليمية / تثقيفية 📚</b></td>
                                         <td style="text-align: right;">
-                                            ÙØµÙˆÙ„ Ù…Ø­Ùˆ Ø§Ù„Ø£Ù…ÙŠØ© Ù„Ù„ÙƒØ¨Ø§Ø±ØŒ Ø¯ÙˆØ±Ø§Øª ØªØ¹Ù„ÙŠÙ… Ø§Ù„Ø­Ø§Ø³Ø¨ ÙˆØ§Ù„ÙƒÙ…Ø¨ÙŠÙˆØªØ± Ù„ÙƒØ¨Ø§Ø± Ø§Ù„Ø³Ù†ØŒ ÙˆØªÙˆÙÙŠØ±
-                                            Ù…Ø¬Ù…ÙˆØ¹Ø§Øª Ø§Ù„ØªÙ‚ÙˆÙŠØ© ÙˆØ§Ù„Ø¯Ø±ÙˆØ³ Ø§Ù„Ù…Ø¬Ø§Ù†ÙŠØ© Ù„Ø·Ù„Ø§Ø¨ Ø§Ù„Ø£Ø³Ø± Ø§Ù„Ø£ÙƒØ«Ø± Ø§Ø­ØªÙŠØ§Ø¬Ø§Ù‹.
+                                            فصول محو الأمية للكبار، دورات تعليم الحاسب والكمبيوتر لكبار السن، وتوفير
+                                            مجموعات التقوية والدروس المجانية لطلاب الأسر الأكثر احتياجاً.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-orange"><b>Ù…Ø¨Ø§Ø¯Ø±Ø§Øª Ø¥ØºØ§Ø«ÙŠØ© (Ø£Ø²Ù…Ø§Øª) ðŸš¨</b></td>
+                                        <td class="cell-orange"><b>مبادرات إغاثية (أزمات) 🚨</b></td>
                                         <td style="text-align: right; font-weight: bold; color: #ff5500;">
-                                            ØªØ¸Ù‡Ø± Ø¨Ø´ÙƒÙ„ Ø·Ø§Ø±Ø¦ ÙˆØ³Ø±ÙŠØ¹ ÙˆÙ‚Øª Ø§Ù„ÙƒÙˆØ§Ø±Ø« ÙˆØ§Ù„Ø¬ÙˆØ§Ø¦Ø­ Ø§Ù„Ø·Ø¨ÙŠØ¹ÙŠØ© ÙˆØ§Ù„Ø¨ÙŠØ¦ÙŠØ© (Ù…Ø«Ù„ ØªÙˆØ²ÙŠØ¹
-                                            Ø¥Ø¹Ø§Ù†Ø§Øª ÙˆÙ…Ø³Ø§Ø¹Ø¯Ø§Øª Ø¹Ø§Ø¬Ù„Ø© ÙˆÙ‚Øª Ø§Ù„Ø³ÙŠÙˆÙ„ØŒ Ø£Ùˆ Ø§Ù„Ø¯Ø¹Ù… Ø§Ù„Ø·Ø¨ÙŠ ÙˆØ§Ù„ØºØ°Ø§Ø¦ÙŠ Ø£Ø«Ù†Ø§Ø¡ Ø¬Ø§Ø¦Ø­Ø©
-                                            ÙƒÙˆØ±ÙˆÙ†Ø§).
+                                            تظهر بشكل طارئ وسريع وقت الكوارث والجوائح الطبيعية والبيئية (مثل توزيع
+                                            إعانات ومساعدات عاجلة وقت السيول، أو الدعم الطبي والغذائي أثناء جائحة
+                                            كورونا).
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1370,90 +1372,90 @@
                     </div>
                 </div>
 
-                <!-- Card 11: Ø­Ø§Ø¯ÙŠ Ø¹Ø´Ø±: Ø®Ø·ÙˆØ§Øª ØªØµÙ…ÙŠÙ… ÙˆØªÙ†ÙÙŠØ° Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø© -->
+                <!-- Card 11: حادي عشر: خطوات تصميم وتنفيذ المبادرة -->
                 <div class="network-card" data-branch="11" id="card-11">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ø®Ø·ÙˆØ§Øª ØªØµÙ…ÙŠÙ… ÙˆØªÙ†ÙÙŠØ° Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø© (Ø§Ø­ÙØ¸Ù‡Ø§ Ø¨Ø§Ù„ØªØ±ØªÙŠØ¨ Ø§Ù„Ø²Ù…Ù†ÙŠ Ø§Ù„Ø¯Ù‚ÙŠÙ‚!)</h3>
+                        <h3>خطوات تصميم وتنفيذ المبادرة (احفظها بالترتيب الزمني الدقيق!)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (Ù‡Ø°Ø§ Ø§Ù„Ø¬Ø²Ø¡ Ù„Ø§ ÙŠØ®Ù„Ùˆ Ù…Ù†Ù‡ Ø£ÙŠ Ø§Ù…ØªØ­Ø§Ù†Ø› ÙˆÙŠØ£ØªÙŠ Ø¯Ø§Ø¦Ù…Ø§Ù‹ Ù„ÙŠØ³Ø£Ù„Ùƒ Ø¹Ù† Ø§Ù„ØªØ±ØªÙŠØ¨ Ø£Ùˆ Ø£ÙŠ Ø®Ø·ÙˆØ© ØªØ³Ø¨Ù‚ ÙˆØªÙ„ÙŠ
-                            Ø§Ù„Ø£Ø®Ø±Ù‰)
+                            (هذا الجزء لا يخلو منه أي امتحان؛ ويأتي دائماً ليسألك عن الترتيب أو أي خطوة تسبق وتلي
+                            الأخرى)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ø§Ù„Ø®Ø·ÙˆØ©</th>
-                                        <th>Ø§Ø³Ù… Ø§Ù„Ù…Ø±Ø­Ù„Ø© Ø§Ù„ØªÙ†Ù…ÙˆÙŠØ©</th>
-                                        <th>Ù…Ø§Ø°Ø§ ÙŠØ­Ø¯Ø« ÙÙŠÙ‡Ø§ØŸ (Ø§Ù„ÙƒÙ„Ù…Ø§Øª Ø§Ù„Ù…ÙØªØ§Ø­ÙŠØ© ÙˆØ§Ù„Ø³Ø±ÙŠØ© Ø¨Ø§Ù„Ø§Ù…ØªØ­Ø§Ù† <i
+                                        <th>الخطوة</th>
+                                        <th>اسم المرحلة التنموية</th>
+                                        <th>ماذا يحدث فيها؟ (الكلمات المفتاحية والسرية بالامتحان <i
                                                 class="fas fa-user-secret" style="color: gold;"></i>)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td class="cell-gold"><b>1</b></td>
-                                        <td><b>Ø§Ù„Ø´Ø¹ÙˆØ± Ø¨Ø§Ù„Ù…Ø´ÙƒÙ„Ø© ÙˆØªØ­Ø¯ÙŠØ¯ Ø§Ù„ÙÙƒØ±Ø©</b></td>
+                                        <td><b>الشعور بالمشكلة وتحديد الفكرة</b></td>
                                         <td style="text-align: right;">
-                                            Ù‡ÙŠ **Ø§Ù„Ø§Ù†Ø·Ù„Ø§Ù‚Ø© ÙˆØ§Ù„Ø´Ø±Ø§Ø±Ø© Ø§Ù„Ø£ÙˆÙ„Ù‰** Ù„Ù„Ù…Ø´Ø±ÙˆØ¹ØŒ Ø­ÙŠØ« ÙŠØ¯Ø±Ùƒ Ø§Ù„Ø£Ù‡Ø§Ù„ÙŠ Ø£Ùˆ Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±ÙˆÙ† ÙˆØ¬ÙˆØ¯
-                                            ÙØ¬ÙˆØ© Ø£Ùˆ ØµØ¹ÙˆØ¨Ø© ØªØªØ·Ù„Ø¨ Ø§Ù„ØªØ¯Ø®Ù„ Ø§Ù„ÙÙˆØ±ÙŠ.
+                                            هي **الانطلاقة والشرارة الأولى** للمشروع، حيث يدرك الأهالي أو المبادرون وجود
+                                            فجوة أو صعوبة تتطلب التدخل الفوري.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-orange"><b>2</b></td>
-                                        <td><b>ØªÙ‚Ø¯ÙŠØ± Ø§Ù„Ø§Ø­ØªÙŠØ§Ø¬Ø§Øª (Ø§Ù„Ù…Ø³Ø­ Ø§Ù„Ù…ÙŠØ¯Ø§Ù†ÙŠ)</b></td>
+                                        <td><b>تقدير الاحتياجات (المسح الميداني)</b></td>
                                         <td style="text-align: right;">
-                                            Ø§Ù„Ù†Ø²ÙˆÙ„ Ù„Ù„ÙˆØ§Ù‚Ø¹ Ù„Ø¬Ù…Ø¹ Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª Ø¨Ø¯Ù‚Ø© ÙˆÙˆØ¶ÙˆØ­ ÙˆØªØ­Ø¯ÙŠØ¯: **Ø­Ø¬Ù… Ø§Ù„Ù…Ø´ÙƒÙ„Ø© Ø§Ù„ÙØ¹Ù„ÙŠ**ØŒ
-                                            **Ø§Ù„ÙØ¦Ø§Øª Ø§Ù„Ù…ØªØ¶Ø±Ø±Ø©**ØŒ Ùˆ **Ø§Ù„Ù…ÙˆØ§Ø±Ø¯ Ø§Ù„Ù…Ø­Ù„ÙŠØ© Ø§Ù„Ù…ØªØ§Ø­Ø©**.
+                                            النزول للواقع لجمع البيانات بدقة ووضوح وتحديد: **حجم المشكلة الفعلي**،
+                                            **الفئات المتضررة**، و **الموارد المحلية المتاحة**.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-green"><b>3</b></td>
-                                        <td><b>ØªØ­Ø¯ÙŠØ¯ Ø§Ù„Ø£Ù‡Ø¯Ø§Ù</b></td>
+                                        <td><b>تحديد الأهداف</b></td>
                                         <td style="text-align: right;">
-                                            ØµÙŠØ§ØºØ© ØºØ§ÙŠØ§Øª Ù…Ø­Ø¯Ø¯Ø© Ù…Ø±Ø§Ø¯ Ø§Ù„ÙˆØµÙˆÙ„ Ø¥Ù„ÙŠÙ‡Ø§Ø› ØªÙ†Ù‚Ø³Ù… Ø¥Ù„Ù‰: **Ø£Ù‡Ø¯Ø§Ù Ø¹Ø§Ù…Ø© Ø´Ø§Ù…Ù„Ø©**ØŒ Ùˆ
-                                            **Ø£Ù‡Ø¯Ø§Ù Ø¥Ø¬Ø±Ø§Ø¦ÙŠØ© Ù…Ø­Ø¯Ø¯Ø© Ù‚Ø§Ø¨Ù„Ø© Ù„Ù„Ù‚ÙŠØ§Ø³ ÙˆØ§Ù„ØªÙ‚ÙŠÙŠÙ…**.
+                                            صياغة غايات محددة مراد الوصول إليها؛ تنقسم إلى: **أهداف عامة شاملة**، و
+                                            **أهداف إجرائية محددة قابلة للقياس والتقييم**.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-blue"><b>4</b></td>
-                                        <td><b>Ø§Ù„ØªØ®Ø·ÙŠØ· (ÙˆØ¶Ø¹ Ø®Ø·Ø© Ø§Ù„Ø¹Ù…Ù„ Ø§Ù„Ù…ÙŠØ¯Ø§Ù†ÙŠØ©)</b></td>
+                                        <td><b>التخطيط (وضع خطة العمل الميدانية)</b></td>
                                         <td style="text-align: right;">
-                                            Ø±Ø³Ù… Ø§Ù„Ø·Ø±ÙŠÙ‚ ÙˆØªØ­Ø¯ÙŠØ¯: **Ø§Ù„Ø£Ù†Ø´Ø·Ø© Ø§Ù„ØªÙØµÙŠÙ„ÙŠØ©**ØŒ **Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ© Ø§Ù„Ù…Ø§Ù„ÙŠØ© Ø§Ù„ØªÙ‚Ø¯ÙŠØ±ÙŠØ©**ØŒ Ùˆ
-                                            **Ø§Ù„Ø¬Ø¯ÙˆÙ„ Ø§Ù„Ø²Ù…Ù†ÙŠ Ø§Ù„Ù…Ø­Ø¯Ø¯** (Ù…ØªÙ‰ Ù†Ø¨Ø¯Ø£ ÙˆÙ…ØªÙ‰ Ù†Ù†ØªÙ‡ÙŠ).
+                                            رسم الطريق وتحديد: **الأنشطة التفصيلية**، **الميزانية المالية التقديرية**، و
+                                            **الجدول الزمني المحدد** (متى نبدأ ومتى ننتهي).
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-purple"><b>5</b></td>
-                                        <td><b>Ø­Ø´Ø¯ ÙˆØªØ¹Ø¨Ø¦Ø© Ø§Ù„Ù…ÙˆØ§Ø±Ø¯</b></td>
+                                        <td><b>حشد وتعبئة الموارد</b></td>
                                         <td style="text-align: right;">
-                                            Ø¬Ù…Ø¹ Ø§Ù„ØªØ¨Ø±Ø¹Ø§Øª ÙˆØªØ¯Ø¨ÙŠØ± Ø§Ù„Ù…Ø³Ø§Ø¹Ø¯Ø§Øª (**Ø§Ù„Ù…ÙˆØ§Ø±Ø¯ Ø§Ù„Ù…Ø§Ø¯ÙŠØ©**)ØŒ ÙˆØ§Ø³ØªÙ‚Ø·Ø§Ø¨ ÙˆØªØ¯Ø±ÙŠØ¨ ÙˆØªÙˆØ²ÙŠØ¹
-                                            Ø§Ù„Ø£Ø¯ÙˆØ§Ø± Ø¹Ù„Ù‰ Ø§Ù„Ù…ØªØ·ÙˆØ¹ÙŠÙ† (**Ø§Ù„Ù…ÙˆØ§Ø±Ø¯ Ø§Ù„Ø¨Ø´Ø±ÙŠØ©**).
+                                            جمع التبرعات وتدبير المساعدات (**الموارد المادية**)، واستقطاب وتدريب وتوزيع
+                                            الأدوار على المتطوعين (**الموارد البشرية**).
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-red"><b>6</b></td>
-                                        <td><b>Ø§Ù„ØªÙ†ÙÙŠØ° Ø§Ù„ÙØ¹Ù„ÙŠ Ù„Ù„Ù…Ø´Ø±ÙˆØ¹</b></td>
+                                        <td><b>التنفيذ الفعلي للمشروع</b></td>
                                         <td style="text-align: right; font-weight: bold; color: var(--success-color);">
-                                            Ø§Ù„Ù†Ø²ÙˆÙ„ Ø§Ù„ÙØ¹Ù„ÙŠ Ù„Ù„Ù…ÙŠØ¯Ø§Ù† ÙˆØªØ·Ø¨ÙŠÙ‚ Ø®Ø·Ø© Ø§Ù„Ø¹Ù…Ù„ Ø§Ù„Ù…Ø±Ø³ÙˆÙ…Ø© Ø¨Ø§Ù„ÙƒØ§Ù…Ù„ ÙˆØªÙˆØ¬ÙŠÙ‡ Ø§Ù„Ø£Ù†Ø´Ø·Ø©
-                                            Ù„Ù„ÙØ¦Ø§Øª Ø§Ù„Ù…Ø³ØªÙ‡Ø¯ÙØ©.
+                                            النزول الفعلي للميدان وتطبيق خطة العمل المرسومة بالكامل وتوجيه الأنشطة
+                                            للفئات المستهدفة.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-gold"><b>7</b></td>
-                                        <td><b>Ø§Ù„Ù…ØªØ§Ø¨Ø¹Ø© ÙˆØ§Ù„ØªÙ‚ÙŠÙŠÙ…</b></td>
+                                        <td><b>المتابعة والتقييم</b></td>
                                         <td style="text-align: right;">
-                                            Ù…Ø±Ø§Ø¬Ø¹Ø© Ø§Ù„Ø¹Ù…Ù„ Ø§Ù„Ù…Ø³ØªÙ…Ø±Ø© Ù„Ø§ÙƒØªØ´Ø§Ù ÙˆØªØµØ­ÙŠØ­ Ø§Ù„Ø§Ù†Ø­Ø±Ø§ÙØ§Øª ÙˆÙ‚ÙˆØ§Ù†ÙŠÙ† Ù‚ÙŠØ§Ø³ Ø§Ù„Ù†Ø¬Ø§Ø­
-                                            (**Ù…ØªØ§Ø¨Ø¹Ø© Ù…Ø³ØªÙ…Ø±Ø© Ø£Ø«Ù†Ø§Ø¡ Ø§Ù„Ø¹Ù…Ù„**ØŒ Ùˆ **ØªÙ‚ÙŠÙŠÙ… Ø®ØªØ§Ù…ÙŠ Ø¨Ø¹Ø¯ Ø§Ù†ØªÙ‡Ø§Ø¦Ù‡**).
+                                            مراجعة العمل المستمرة لاكتشاف وتصحيح الانحرافات وقوانين قياس النجاح
+                                            (**متابعة مستمرة أثناء العمل**، و **تقييم ختامي بعد انتهائه**).
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="cell-orange"><b>8</b></td>
-                                        <td><b>Ø§Ù„ØªÙˆØ«ÙŠÙ‚ ÙˆÙƒØªØ§Ø¨Ø© Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±</b></td>
+                                        <td><b>التوثيق وكتابة التقارير</b></td>
                                         <td style="text-align: right;">
-                                            Ø­ÙØ¸ ÙˆØªØ³Ø¬ÙŠÙ„ ÙƒØ§ÙØ© Ø§Ù„Ø®Ø·ÙˆØ§Øª ÙˆØ§Ù„Ù†ØªØ§Ø¦Ø¬ Ø¨Ø§Ù„ÙˆØ±Ù‚ ÙˆØ§Ù„ØµÙˆØ± Ø§Ù„Ù…ÙŠØ¯Ø§Ù†ÙŠØ© Ù„Ø¶Ù…Ø§Ù† **Ù†Ù‚Ù„
-                                            Ø§Ù„Ø®Ø¨Ø±Ø§Øª** Ùˆ **Ø§Ø³ØªØ¯Ø§Ù…Ø© Ø§Ù„Ø£Ø«Ø±**.
+                                            حفظ وتسجيل كافة الخطوات والنتائج بالورق والصور الميدانية لضمان **نقل
+                                            الخبرات** و **استدامة الأثر**.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1462,65 +1464,65 @@
                     </div>
                 </div>
 
-                <!-- Card 12: Ø«Ø§Ù†ÙŠ Ø¹Ø´Ø±: Ø£Ø¯ÙˆØ§Ø± Ø§Ù„Ø£Ø®ØµØ§Ø¦ÙŠ Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ ÙÙŠ Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø§Øª -->
+                <!-- Card 12: ثاني عشر: أدوار الأخصائي الاجتماعي في المبادرات -->
                 <div class="network-card" data-branch="12" id="card-12">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ø£Ø¯ÙˆØ§Ø± Ø§Ù„Ø£Ø®ØµØ§Ø¦ÙŠ Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ ÙÙŠ Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø§Øª (Ø³Ø¤Ø§Ù„ Ù…Ø¤ÙƒØ¯ Ø¨Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†)</h3>
+                        <h3>أدوار الأخصائي الاجتماعي في المبادرات (سؤال مؤكد بالامتحان)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (ÙƒÙŠÙ ÙŠØªØ¯Ø®Ù„ Ø§Ù„Ø£Ø®ØµØ§Ø¦ÙŠ Ø§Ù„Ù…Ù‡Ù†ÙŠØŸ Ø§Ø¨Ø­Ø« Ø¹Ù† Ø§Ù„ÙƒÙ„Ù…Ø§Øª Ø§Ù„Ù…ÙØªØ§Ø­ÙŠØ© ÙÙŠ Ø³ÙŠÙ†Ø§Ø±ÙŠÙˆ Ø§Ù„Ø³Ø¤Ø§Ù„ Ù„ØªØ­Ø¯ÙŠØ¯ Ø¯ÙˆØ±Ù‡ Ø¨Ø¯Ù‚Ø©)
+                            (كيف يتدخل الأخصائي المهني؟ ابحث عن الكلمات المفتاحية في سيناريو السؤال لتحديد دوره بدقة)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ø§Ù„Ø¯ÙˆØ± Ø§Ù„Ù…Ù‡Ù†ÙŠ Ù„Ù„Ø£Ø®ØµØ§Ø¦ÙŠ</th>
-                                        <th>Ù…ØªÙ‰ ØªØ®ØªØ§Ø±Ù‡ ÙÙŠ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†? (Ø§Ù„ÙƒÙ„Ù…Ø§Øª Ø§Ù„Ø¯Ù„Ø§Ù„ÙŠØ© Ø§Ù„Ø­Ø§Ø³Ù…Ø© <i class="fas fa-search"
+                                        <th>الدور المهني للأخصائي</th>
+                                        <th>متى تختاره في الامتحان? (الكلمات الدلالية الحاسمة <i class="fas fa-search"
                                                 style="color: gold;"></i>)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-gold"><b>Ø§Ù„Ù…ÙŠØ³Ø± / Ø§Ù„Ù…ÙÙ…ÙƒÙ‘ÙÙ† (Facilitator)</b></td>
+                                        <td class="cell-gold"><b>الميسر / المُمكِّن (Facilitator)</b></td>
                                         <td style="text-align: right;">
-                                            Ø¥Ø°Ø§ ÙƒØ§Ù† Ø³ÙŠÙ†Ø§Ø±ÙŠÙˆ Ø§Ù„Ø³Ø¤Ø§Ù„ ÙŠØªØ­Ø¯Ø« Ø¹Ù†: **ØªØ³Ù‡ÙŠÙ„ Ø§Ù„ØªÙˆØ§ØµÙ„ ÙˆØ§Ù„Ø§ØªØµØ§Ù„**ØŒ **ØªØ°Ù„ÙŠÙ„ Ø§Ù„ØµØ¹Ø§Ø¨
-                                            ÙˆØ§Ù„Ø¹Ù‚Ø¨Ø§Øª**ØŒ **ØªØ´Ø¬ÙŠØ¹ ÙˆØªØ­ÙÙŠØ² Ø§Ù„Ø£Ù‡Ø§Ù„ÙŠ**ØŒ Ø£Ùˆ **Ø²ÙŠØ§Ø¯Ø© Ø­Ø¬Ù… Ø§Ù„Ù…Ø´Ø§Ø±ÙƒØ©**.<br>
-                                            <span style="color:#ff5500; font-weight: bold;">ØªØ°ÙƒØ± Ø¯Ø§Ø¦Ù…Ø§Ù‹: Ø§Ù„Ø£Ø®ØµØ§Ø¦ÙŠ Ù„Ø§
-                                                ÙŠÙ†ÙˆØ¨ Ø¹Ù† Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ ÙˆÙ„Ø§ ÙŠØ¹Ù…Ù„ Ø¨Ø¯Ù„Ø§Ù‹ Ù…Ù†Ù‡Ù…ØŒ Ø¨Ù„ ÙŠØ³Ø§Ø¹Ø¯Ù‡Ù… Ù„ÙŠØ¹Ù…Ù„ÙˆØ§ Ù‡Ù…
-                                                Ø¨Ø£Ù†ÙØ³Ù‡Ù…!</span>
+                                            إذا كان سيناريو السؤال يتحدث عن: **تسهيل التواصل والاتصال**، **تذليل الصعاب
+                                            والعقبات**، **تشجيع وتحفيز الأهالي**، أو **زيادة حجم المشاركة**.<br>
+                                            <span style="color:#ff5500; font-weight: bold;">تذكر دائماً: الأخصائي لا
+                                                ينوب عن المجتمع ولا يعمل بدلاً منهم، بل يساعدهم ليعملوا هم
+                                                بأنفسهم!</span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-orange"><b>Ø§Ù„Ø®Ø¨ÙŠØ± (Expert)</b></td>
+                                        <td class="cell-orange"><b>الخبير (Expert)</b></td>
                                         <td style="text-align: right;">
-                                            Ø¥Ø°Ø§ ÙƒØ§Ù† Ø³ÙŠÙ†Ø§Ø±ÙŠÙˆ Ø§Ù„Ø³Ø¤Ø§Ù„ ÙŠØªØ­Ø¯Ø« Ø¹Ù†: ØªÙ‚Ø¯ÙŠÙ… **Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø¥Ø­ØµØ§Ø¦ÙŠØ© Ø§Ù„Ø¯Ù‚ÙŠÙ‚Ø©**ØŒ
-                                            **Ø§Ù„Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø§Ù„Ø¹Ù„Ù…ÙŠØ© Ø§Ù„Ù…Ù†Ù‡Ø¬ÙŠØ©**ØŒ ØªÙ‚Ø¯ÙŠÙ… **Ø§Ù„Ù†ØµØ­ Ø§Ù„ÙÙ†ÙŠ ÙˆØ§Ù„Ù…Ù‡Ù†ÙŠ**ØŒ Ø£Ùˆ **ØªØµØ­ÙŠØ­
-                                            Ø§Ù„Ù…ÙØ§Ù‡ÙŠÙ… Ø§Ù„ØªÙ†Ù…ÙˆÙŠØ© Ø§Ù„Ø®Ø§Ø·Ø¦Ø©** Ù„Ø¯Ù‰ Ø§Ù„Ù‚Ø§Ø¯Ø© Ø§Ù„Ù…Ø­Ù„ÙŠÙŠÙ†.
+                                            إذا كان سيناريو السؤال يتحدث عن: تقديم **البيانات الإحصائية الدقيقة**،
+                                            **المعلومات العلمية المنهجية**، تقديم **النصح الفني والمهني**، أو **تصحيح
+                                            المفاهيم التنموية الخاطئة** لدى القادة المحليين.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-red"><b>Ø§Ù„Ù…Ø¯Ø§ÙØ¹ (Advocate)</b></td>
+                                        <td class="cell-red"><b>المدافع (Advocate)</b></td>
                                         <td style="text-align: right;">
-                                            Ø¥Ø°Ø§ ÙƒØ§Ù† Ø³ÙŠÙ†Ø§Ø±ÙŠÙˆ Ø§Ù„Ø³Ø¤Ø§Ù„ ÙŠØªØ­Ø¯Ø« Ø¹Ù†: **ØªØ¨Ù†ÙŠ Ù‚Ø¶Ø§ÙŠØ§ ÙˆØ§Ø­ØªÙŠØ§Ø¬Ø§Øª Ø§Ù„ÙØ¦Ø§Øª Ø§Ù„Ù…Ù‡Ù…Ø´Ø©
-                                            ÙˆØ§Ù„ÙÙ‚ÙŠØ±Ø©**ØŒ **Ø§Ù„Ù…Ø·Ø§Ù„Ø¨Ø© Ø¨Ø­Ù‚ÙˆÙ‚Ù‡Ù… Ø§Ù„Ù…Ø´Ø±ÙˆØ¹Ø©** Ø£Ù…Ø§Ù… Ø§Ù„Ù…Ø³Ø¤ÙˆÙ„ÙŠÙ†ØŒ Ø£Ùˆ **Ø§Ù„ÙˆÙ‚ÙˆÙ Ø¨Ø¬Ø§Ù†Ø¨
-                                            Ø§Ù„Ø¶Ø¹ÙØ§Ø¡**.
+                                            إذا كان سيناريو السؤال يتحدث عن: **تبني قضايا واحتياجات الفئات المهمشة
+                                            والفقيرة**، **المطالبة بحقوقهم المشروعة** أمام المسؤولين، أو **الوقوف بجانب
+                                            الضعفاء**.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-blue"><b>Ø§Ù„ÙˆØ³ÙŠØ· (Broker)</b></td>
+                                        <td class="cell-blue"><b>الوسيط (Broker)</b></td>
                                         <td style="text-align: right;">
-                                            Ø¥Ø°Ø§ ÙƒØ§Ù† Ø³ÙŠÙ†Ø§Ø±ÙŠÙˆ Ø§Ù„Ø³Ø¤Ø§Ù„ ÙŠØªØ­Ø¯Ø« Ø¹Ù†: **Ø±Ø¨Ø· Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ù…Ø­Ù„ÙŠ Ø¨Ù…ØµØ§Ø¯Ø± Ø§Ù„ØªÙ…ÙˆÙŠÙ„ ÙˆØ§Ù„Ù…Ù†Ø­
-                                            Ø§Ù„Ø®Ø§Ø±Ø¬ÙŠØ©**ØŒ Ø£Ùˆ **Ø¥ÙŠØµØ§Ù„ Ø§Ù„Ø£Ù‡Ø§Ù„ÙŠ Ø¨Ù…Ø¤Ø³Ø³Ø§Øª Ø§Ù„Ø¯Ø¹Ù… ÙˆØ§Ù„Ø®Ø¯Ù…Ø§Øª Ø§Ù„Ø®Ø§Ø±Ø¬ÙŠØ©**.
+                                            إذا كان سيناريو السؤال يتحدث عن: **ربط المجتمع المحلي بمصادر التمويل والمنح
+                                            الخارجية**، أو **إيصال الأهالي بمؤسسات الدعم والخدمات الخارجية**.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-green"><b>Ø§Ù„Ù…Ù†Ø¸Ù… Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ÙŠ</b></td>
+                                        <td class="cell-green"><b>المنظم المجتمعي</b></td>
                                         <td style="text-align: right;">
-                                            Ø¥Ø°Ø§ ÙƒØ§Ù† Ø³ÙŠÙ†Ø§Ø±ÙŠÙˆ Ø§Ù„Ø³Ø¤Ø§Ù„ ÙŠØªØ­Ø¯Ø« Ø¹Ù†: **ØªÙƒÙˆÙŠÙ† ØªØ­Ø§Ù„ÙØ§Øª ÙˆØ´Ø±Ø§ÙƒØ§Øª Ù…Ø¤Ø³Ø³ÙŠØ©**ØŒ **Ø¨Ù†Ø§Ø¡
-                                            ÙˆØªØ£Ø³ÙŠØ³ Ù‚Ù†ÙˆØ§Øª Ø§ØªØµØ§Ù„ Ù…Ø³ØªØ¯Ø§Ù…Ø©**ØŒ **ØªØ¹Ø¨Ø¦Ø© ÙˆØ­Ø´Ø¯ Ø§Ù„Ù…ÙˆØ§Ø±Ø¯ Ø§Ù„Ø®Ø§Ø±Ø¬ÙŠØ© ÙˆØ§Ù„Ø¯Ø§Ø®Ù„ÙŠØ©**ØŒ
-                                            ÙˆØªØ¯Ø±ÙŠØ¨ Ø§Ù„Ù‚ÙŠØ§Ø¯Ø§Øª Ø§Ù„Ù…Ø­Ù„ÙŠØ©.
+                                            إذا كان سيناريو السؤال يتحدث عن: **تكوين تحالفات وشراكات مؤسسية**، **بناء
+                                            وتأسيس قنوات اتصال مستدامة**، **تعبئة وحشد الموارد الخارجية والداخلية**،
+                                            وتدريب القيادات المحلية.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1529,56 +1531,56 @@
                     </div>
                 </div>
 
-                <!-- Card 13: Ø«Ø§Ù„Ø« Ø¹Ø´Ø±: Ù…ØµØ·Ù„Ø­Ø§Øª Ø§Ù„ØªÙ‚ÙŠÙŠÙ… ÙˆÙ†Ø¬Ø§Ø­ Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø§Øª -->
+                <!-- Card 13: ثالث عشر: مصطلحات التقييم ونجاح المبادرات -->
                 <div class="network-card" data-branch="13" id="card-13">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ù…ØµØ·Ù„Ø­Ø§Øª Ø§Ù„ØªÙ‚ÙŠÙŠÙ… ÙˆÙ†Ø¬Ø§Ø­ Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø§Øª (Ø§Ù„ÙØ±ÙˆÙ‚ Ø§Ù„Ù…Ù‡Ù†ÙŠØ© Ø§Ù„Ø¯Ù‚ÙŠÙ‚Ø©)</h3>
+                        <h3>مصطلحات التقييم ونجاح المبادرات (الفروق المهنية الدقيقة)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (Ù‡Ø°Ù‡ Ø§Ù„Ù…ÙØ§Ù‡ÙŠÙ… Ø§Ù„Ø£Ø±Ø¨Ø¹Ø© ØªØ¨Ø¯Ùˆ Ø´Ø¯ÙŠØ¯Ø© Ø§Ù„ØªØ´Ø§Ø¨Ù‡ ÙˆØ§Ù„ØªÙ‚Ø§Ø±Ø¨ ÙˆÙ„ÙƒÙ†Ù‡Ø§ ØªØ®ØªÙ„Ù ÙƒÙ„ÙŠØ§Ù‹ ÙÙŠ ØµÙŠØ§ØºØ© Ø£Ø³Ø¦Ù„Ø©
-                            Ø§Ù„Ø§Ø®ØªÙŠØ§Ø±)
+                            (هذه المفاهيم الأربعة تبدو شديدة التشابه والتقارب ولكنها تختلف كلياً في صياغة أسئلة
+                            الاختيار)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ø§Ù„Ù…ØµØ·Ù„Ø­ Ø§Ù„Ø¹Ù„Ù…ÙŠ</th>
-                                        <th>ØªØ¹Ø±ÙŠÙÙ‡ ÙˆÙ…Ø§ ÙŠÙ…ÙŠØ²Ù‡ ÙˆÙŠØ­Ø³Ù…Ù‡ Ø¨Ø§Ù„Ø§Ù…ØªØ­Ø§Ù† <i class="fas fa-check-double"
+                                        <th>المصطلح العلمي</th>
+                                        <th>تعريفه وما يميزه ويحسمه بالامتحان <i class="fas fa-check-double"
                                                 style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-orange"><b>Ø§Ù„ÙƒÙØ§Ø¡Ø© (Efficiency)</b></td>
+                                        <td class="cell-orange"><b>الكفاءة (Efficiency)</b></td>
                                         <td style="text-align: right;">
-                                            ØªØ±ØªØ¨Ø· Ø¯Ø§Ø¦Ù…Ø§Ù‹ Ø¨Ù€ **(Ø§Ù„Ù…ÙˆØ§Ø±Ø¯ ÙˆØ§Ù„ØªÙƒÙ„ÙØ©)**. ØªØ¹Ù†ÙŠ Ø§Ù„Ø§Ø³ØªØ®Ø¯Ø§Ù… ÙˆØ§Ù„ØªÙˆØ¸ÙŠÙ Ø§Ù„Ø£Ù…Ø«Ù„
-                                            Ù„Ù„Ù…ÙˆØ§Ø±Ø¯ Ù„ØªØ­Ù‚ÙŠÙ‚ Ø£ÙØ¶Ù„ Ù†ØªØ§Ø¦Ø¬ Ù…Ù…ÙƒÙ†Ø© Ø¨Ù€ **Ø£Ù‚Ù„ ØªÙƒÙ„ÙØ© ÙˆØ£Ù‚Ù„ Ø¥Ù‡Ø¯Ø§Ø± Ù„Ù„Ù…Ø§Ù„ ÙˆØ§Ù„Ø¬Ù‡Ø¯
-                                            ÙˆØ§Ù„ÙˆÙ‚Øª**.
+                                            ترتبط دائماً بـ **(الموارد والتكلفة)**. تعني الاستخدام والتوظيف الأمثل
+                                            للموارد لتحقيق أفضل نتائج ممكنة بـ **أقل تكلفة وأقل إهدار للمال والجهد
+                                            والوقت**.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-green"><b>Ø§Ù„ÙØ¹Ø§Ù„ÙŠØ© (Effectiveness)</b></td>
+                                        <td class="cell-green"><b>الفعالية (Effectiveness)</b></td>
                                         <td style="text-align: right;">
-                                            ØªØ±ØªØ¨Ø· Ø¯Ø§Ø¦Ù…Ø§Ù‹ Ø¨Ù€ **(Ø§Ù„Ù†ØªØ§Ø¦Ø¬ ÙˆØ§Ù„ÙˆØµÙˆÙ„ Ù„Ù„Ø£Ù‡Ø¯Ø§Ù)**. ØªØ¹Ù†ÙŠ Ù…Ø¯Ù‰ Ù†Ø¬Ø§Ø­ ÙˆÙ‚Ø¯Ø±Ø© Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø©
-                                            ÙÙŠ ØªØ­Ù‚ÙŠÙ‚ Ø£Ù‡Ø¯Ø§ÙÙ‡Ø§ ÙˆØ­Ù„ Ø§Ù„Ù…Ø´ÙƒÙ„Ø© Ø§Ù„ØªÙ†Ù…ÙˆÙŠØ© **Ø¨ØµØ±Ù Ø§Ù„Ù†Ø¸Ø± ØªÙ…Ø§Ù…Ø§Ù‹ Ø¹Ù† Ø§Ù„ØªÙƒÙ„ÙØ© Ø§Ù„Ù…Ø§Ù„ÙŠØ©
-                                            Ø§Ù„Ù…Ø¯ÙÙˆØ¹Ø©**.
+                                            ترتبط دائماً بـ **(النتائج والوصول للأهداف)**. تعني مدى نجاح وقدرة المبادرة
+                                            في تحقيق أهدافها وحل المشكلة التنموية **بصرف النظر تماماً عن التكلفة المالية
+                                            المدفوعة**.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-blue"><b>Ø§Ù„Ø§Ø³ØªØ¯Ø§Ù…Ø© (Sustainability)</b></td>
+                                        <td class="cell-blue"><b>الاستدامة (Sustainability)</b></td>
                                         <td style="text-align: right;">
-                                            ØªØ±ØªØ¨Ø· Ø¯Ø§Ø¦Ù…Ø§Ù‹ Ø¨Ù€ **(Ø§Ù„Ø§Ø³ØªÙ…Ø±Ø§Ø±ÙŠØ© ÙˆØ§Ù„Ù…Ø³ØªÙ‚Ø¨Ù„)**. ØªØ¹Ù†ÙŠ Ù‚Ø¯Ø±Ø© Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø© Ø§Ù„ØªÙ†Ù…ÙˆÙŠØ© Ø¹Ù„Ù‰
-                                            Ø§Ù„Ø§Ø³ØªÙ…Ø±Ø§Ø± ÙÙŠ ØªÙ‚Ø¯ÙŠÙ… Ø®Ø¯Ù…Ø§ØªÙ‡Ø§ ÙˆØ£Ù†Ø´Ø·ØªÙ‡Ø§ Ù„Ù„Ø£Ù‡Ø§Ù„ÙŠ **Ø­ØªÙ‰ Ø¨Ø¹Ø¯ Ø§Ù†Ù‚Ø·Ø§Ø¹ ÙˆØ§Ù†ØªÙ‡Ø§Ø¡ Ø§Ù„ØªÙ…ÙˆÙŠÙ„
-                                            Ø§Ù„Ø®Ø§Ø±Ø¬ÙŠ**ØŒ Ù…Ù† Ø®Ù„Ø§Ù„ ØªØ¯Ø±ÙŠØ¨ ÙƒÙˆØ§Ø¯Ø± ÙˆÙ‚Ø§Ø¯Ø© Ù…Ø­Ù„ÙŠÙŠÙ†.
+                                            ترتبط دائماً بـ **(الاستمرارية والمستقبل)**. تعني قدرة المبادرة التنموية على
+                                            الاستمرار في تقديم خدماتها وأنشطتها للأهالي **حتى بعد انقطاع وانتهاء التمويل
+                                            الخارجي**، من خلال تدريب كوادر وقادة محليين.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-gold"><b>Ø§Ù„ØªØ´Ø¨ÙŠÙƒ (Networking)</b></td>
+                                        <td class="cell-gold"><b>التشبيك (Networking)</b></td>
                                         <td style="text-align: right;">
-                                            ØªØ±ØªØ¨Ø· Ø¯Ø§Ø¦Ù…Ø§Ù‹ Ø¨Ù€ **(Ø§Ù„ØªØ¹Ø§ÙˆÙ† ÙˆØ§Ù„ØªÙ†Ø³ÙŠÙ‚ Ø¨ÙŠÙ† Ø§Ù„Ù…Ø¤Ø³Ø³Ø§Øª)**. Ø§Ù„ØªÙƒØ§Ù…Ù„ ÙˆØ§Ù„ØªÙ†Ø³ÙŠÙ‚ Ø§Ù„Ø¨ÙŠÙ†ÙŠ
-                                            Ù„Ù…Ù†Ø¹ **"Ø§Ù„Ø§Ø²Ø¯ÙˆØ§Ø¬ÙŠØ© ÙˆØ§Ù„ØªÙƒØ±Ø§Ø±"** ÙÙŠ ØªÙ‚Ø¯ÙŠÙ… Ù†ÙØ³ Ø§Ù„Ø®Ø¯Ù…Ø© Ù„Ù†ÙØ³ Ø§Ù„Ù…Ø³ØªÙÙŠØ¯ÙŠÙ†.
+                                            ترتبط دائماً بـ **(التعاون والتنسيق بين المؤسسات)**. التكامل والتنسيق البيني
+                                            لمنع **"الازدواجية والتكرار"** في تقديم نفس الخدمة لنفس المستفيدين.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1587,101 +1589,101 @@
                     </div>
                 </div>
 
-                <!-- Card 14: Ø±Ø§Ø¨Ø¹ Ø¹Ø´Ø±: ØªÙ‚ÙŠÙŠÙ… Ø§Ù„ØªØ¯Ø®Ù„ Ø§Ù„Ù…Ù‡Ù†ÙŠ Ù„Ù„Ø£Ø®ØµØ§Ø¦ÙŠ -->
+                <!-- Card 14: رابع عشر: تقييم التدخل المهني للأخصائي -->
                 <div class="network-card" data-branch="14" id="card-14">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>ØªÙ‚ÙŠÙŠÙ… Ø§Ù„ØªØ¯Ø®Ù„ Ø§Ù„Ù…Ù‡Ù†ÙŠ Ù„Ù„Ø£Ø®ØµØ§Ø¦ÙŠ (Ø§Ù„Ø¬Ø§Ù†Ø¨ Ø§Ù„Ø°Ø§ØªÙŠ ÙˆØ§Ù„Ù…ÙˆØ¶ÙˆØ¹ÙŠ)</h3>
+                        <h3>تقييم التدخل المهني للأخصائي (الجانب الذاتي والموضوعي)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            Ø¹Ù†Ø¯ ØªÙ‚ÙŠÙŠÙ… Ø£ÙŠ ØªØµØ±Ù Ø£Ùˆ Ù…ÙˆÙ‚Ù ÙŠÙ‚ÙˆÙ… Ø¨Ù‡ Ø§Ù„Ø£Ø®ØµØ§Ø¦ÙŠ Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ Ø£Ø«Ù†Ø§Ø¡ Ø¹Ù…Ù„Ù‡ ÙÙŠ Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ØŒ ÙØ¥Ù†Ù†Ø§ Ù†Ù‚ÙŠÙ…Ù‡ Ù…Ù†
-                            Ø²Ø§ÙˆÙŠØªÙŠÙ† (Ù…ÙˆØ¶Ø¹ Ø³Ø¤Ø§Ù„ Ù…Ù‚Ø§Ù„ÙŠ Ø£Ùˆ ØµØ­ ÙˆØ®Ø·Ø£):
+                            عند تقييم أي تصرف أو موقف يقوم به الأخصائي الاجتماعي أثناء عمله في المجتمع، فإننا نقيمه من
+                            زاويتين (موضع سؤال مقالي أو صح وخطأ):
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ø²Ø§ÙˆÙŠØ© Ø§Ù„ØªÙ‚ÙŠÙŠÙ…</th>
-                                        <th>Ù…Ø§Ø°Ø§ ØªØ¹Ù†ÙŠØŸ (Ø§Ù„ÙƒÙ„Ù…Ø§Øª Ø§Ù„Ø¯Ù„Ø§Ù„ÙŠØ© Ø§Ù„Ø­Ø§Ø³Ù…Ø© <i class="fas fa-tags"
+                                        <th>زاوية التقييم</th>
+                                        <th>ماذا تعني؟ (الكلمات الدلالية الحاسمة <i class="fas fa-tags"
                                                 style="color: gold;"></i>)</th>
-                                        <th>Ø£Ù…Ø«Ù„Ø© ØªØ·Ø¨ÙŠÙ‚ÙŠØ© Ù…ÙˆØ¶Ø¹ Ø³Ø¤Ø§Ù„ ÙÙŠ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†</th>
+                                        <th>أمثلة تطبيقية موضع سؤال في الامتحان</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-purple"><b>Ø§Ù„Ø¬Ø§Ù†Ø¨ Ø§Ù„Ø°Ø§ØªÙŠ (Ø§Ù„Ø´Ø®ØµÙŠ)</b></td>
-                                        <td style="text-align: right;">ÙŠØ±ØªØ¨Ø· Ø¨Ù€ **Ø´Ø®ØµÙŠØ© Ø§Ù„Ø£Ø®ØµØ§Ø¦ÙŠ ÙˆØ³Ù…Ø§ØªÙ‡ Ø§Ù„ÙØ·Ø±ÙŠØ© Ø£Ùˆ
-                                            Ø§Ù„Ù…ÙƒØªØ³Ø¨Ø©** Ø§Ù„ØªÙŠ ØªØ¤Ø«Ø± Ø¹Ù„Ù‰ Ø¬ÙˆØ¯Ø© Ø£Ø¯Ø§Ø¦Ù‡ ÙˆØªÙØ§Ø¹Ù„Ù‡.</td>
-                                        <td style="text-align: right;">Ø§Ù„Ø§ØªØ²Ø§Ù† Ø§Ù„Ø§Ù†ÙØ¹Ø§Ù„ÙŠØŒ Ø§Ù„Ù…Ø¸Ù‡Ø± Ø§Ù„Ù‡Ù†Ø¯Ø§Ù…ÙŠ Ø§Ù„Ù„Ø§Ø¦Ù‚ØŒ Ù†Ø¨Ø±Ø©
-                                            Ø§Ù„ØµÙˆØª Ø§Ù„Ù…Ø±ÙŠØ­Ø© ÙˆØ§Ù„Ù‡Ø§Ø¯Ø¦Ø©ØŒ Ø§Ù„ØµØ¨Ø± Ø§Ù„Ø·ÙˆÙŠÙ„ØŒ Ø³Ø±Ø¹Ø© Ø§Ù„Ø¨Ø¯ÙŠÙ‡Ø©ØŒ ÙˆØ§Ù„Ù‚Ø¯Ø±Ø© Ø¹Ù„Ù‰ Ø§Ù„ØªØ¹Ø§Ø·Ù
-                                            Ø§Ù„Ø¥Ù†Ø³Ø§Ù†ÙŠ.</td>
+                                        <td class="cell-purple"><b>الجانب الذاتي (الشخصي)</b></td>
+                                        <td style="text-align: right;">يرتبط بـ **شخصية الأخصائي وسماته الفطرية أو
+                                            المكتسبة** التي تؤثر على جودة أدائه وتفاعله.</td>
+                                        <td style="text-align: right;">الاتزان الانفعالي، المظهر الهندامي اللائق، نبرة
+                                            الصوت المريحة والهادئة، الصبر الطويل، سرعة البديهة، والقدرة على التعاطف
+                                            الإنساني.</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-blue"><b>Ø§Ù„Ø¬Ø§Ù†Ø¨ Ø§Ù„Ù…ÙˆØ¶ÙˆØ¹ÙŠ (Ø§Ù„Ù…Ù‡Ù†ÙŠ)</b></td>
-                                        <td style="text-align: right;">ÙŠØ±ØªØ¨Ø· Ø¨Ù€ **ØªØ·Ø¨ÙŠÙ‚ Ø§Ù„Ø¹Ù„Ù…ØŒ Ø§Ù„Ù…Ù†Ù‡Ø¬ÙŠØ©ØŒ ÙˆØ§Ù„Ù…Ø¨Ø§Ø¯Ø¦
-                                            Ø§Ù„Ù…Ù‡Ù†ÙŠØ© Ø§Ù„Ø¯Ø³ØªÙˆØ±ÙŠØ©**. ÙˆÙ‡Ùˆ Ø§Ù„Ø£Ø³Ø§Ø³ Ø§Ù„Ù…Ø¨Ø§Ø´Ø± Ø§Ù„Ø°ÙŠ ÙŠØ­Ø§Ø³Ø¨ Ø¹Ù„ÙŠÙ‡ Ø§Ù„Ø£Ø®ØµØ§Ø¦ÙŠ Ù…Ù‡Ù†ÙŠØ§Ù‹
-                                            ÙˆÙ‚Ø§Ù†ÙˆÙ†ÙŠØ§Ù‹.</td>
-                                        <td style="text-align: right;">Ø§Ù„Ø§Ù„ØªØ²Ø§Ù… Ø§Ù„Ø¯Ù‚ÙŠÙ‚ Ø¨Ø®Ø·ÙˆØ§Øª Ø§Ù„ØªØ¯Ø®Ù„ØŒ ØªØ·Ø¨ÙŠÙ‚ Ù…Ø¨Ø§Ø¯Ø¦ Ø§Ù„Ø®Ø¯Ù…Ø©
-                                            Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© (ÙƒØ§Ù„ØªÙ‚Ø¨Ù„ ÙˆØ§Ù„Ø³Ø±ÙŠØ©)ØŒ Ø§Ø­ØªØ±Ø§Ù… ØªÙ‚Ø§Ù„ÙŠØ¯ Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ØŒ Ø§Ù„Ø§Ø³ØªØ¹Ø§Ù†Ø© Ø¨Ø§Ù„Ù†Ø¸Ø±ÙŠØ§Øª
-                                            Ø§Ù„Ù…ÙØ³Ø±Ø©ØŒ ÙˆØ§Ù„ØªØ³Ø¬ÙŠÙ„ ÙˆØ§Ù„ØªØ¯ÙˆÙŠÙ† Ø§Ù„Ø¯Ù‚ÙŠÙ‚ Ù„Ù„Ø¨ÙŠØ§Ù†Ø§Øª.</td>
+                                        <td class="cell-blue"><b>الجانب الموضوعي (المهني)</b></td>
+                                        <td style="text-align: right;">يرتبط بـ **تطبيق العلم، المنهجية، والمبادئ
+                                            المهنية الدستورية**. وهو الأساس المباشر الذي يحاسب عليه الأخصائي مهنياً
+                                            وقانونياً.</td>
+                                        <td style="text-align: right;">الالتزام الدقيق بخطوات التدخل، تطبيق مبادئ الخدمة
+                                            الاجتماعية (كالتقبل والسرية)، احترام تقاليد المجتمع، الاستعانة بالنظريات
+                                            المفسرة، والتسجيل والتدوين الدقيق للبيانات.</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="info-box danger" style="margin-top: 0.5rem; text-align: right;">
-                            <strong><i class="fas fa-exclamation-triangle"></i> Ù…Ù„Ø­ÙˆØ¸Ø© Ø­Ø§Ø³Ù…Ø© Ù„Ù„Ø§Ù…ØªØ­Ø§Ù†:</strong> Ø¥Ø°Ø§ Ø¬Ø§Ø¡Ùƒ
-                            Ù…ÙˆÙ‚Ù Ø³Ù„Ø¨ÙŠ (Ù…Ø«Ù„: Ø§Ù†Ø´ØºØ§Ù„ Ø§Ù„Ø£Ø®ØµØ§Ø¦ÙŠ Ø¨Ù‡Ø§ØªÙÙ‡ Ø§Ù„Ù…Ø­Ù…ÙˆÙ„ Ø£Ùˆ Ø§Ù„Ø³Ø§Ø¹Ø© Ø£Ø«Ù†Ø§Ø¡ Ø­Ø¯ÙŠØ« Ù‚Ø§Ø¯Ø© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø£Ùˆ Ø§Ù„Ø¹Ù…ÙŠÙ„)ØŒ
-                            ÙÙ‡Ø°Ø§ ÙŠØ¹ØªØ¨Ø± Ø®Ù„Ù„Ø§Ù‹ Ø¬Ø³ÙŠÙ…Ø§Ù‹ ÙÙŠ <b>(Ø§Ù„Ø¬Ø§Ù†Ø¨ Ø§Ù„Ù…ÙˆØ¶ÙˆØ¹ÙŠ ÙˆØ§Ù„Ù…Ù‡Ù†ÙŠ)</b> Ù„Ø£Ù†Ù‡ Ø£Ø®Ù„ Ù…Ø¨Ø§Ø´Ø±Ø© Ø¨Ù…Ø¨Ø¯Ø£ "Ø§Ù„ØªÙ‚Ø¨Ù„
-                            ÙˆØ§Ù„Ø§Ù‡ØªÙ…Ø§Ù… Ø§Ù„Ù…Ù‡Ù†ÙŠ ÙˆØ§Ù„Ø¥Ù†ØµØ§Øª".
+                            <strong><i class="fas fa-exclamation-triangle"></i> ملحوظة حاسمة للامتحان:</strong> إذا جاءك
+                            موقف سلبي (مثل: انشغال الأخصائي بهاتفه المحمول أو الساعة أثناء حديث قادة المجتمع أو العميل)،
+                            فهذا يعتبر خللاً جسيماً في <b>(الجانب الموضوعي والمهني)</b> لأنه أخل مباشرة بمبدأ "التقبل
+                            والاهتمام المهني والإنصات".
                         </div>
                     </div>
                 </div>
 
-                <!-- Card 15: Ø®Ø§Ù…Ø³ Ø¹Ø´Ø±: Ø§Ù„Ù…Ø¨Ø§Ø¯Ø¦ Ø§Ù„Ù…Ù‡Ù†ÙŠØ© Ø§Ù„Ø­Ø§ÙƒÙ…Ø© Ù„Ø¹Ù…Ù„ Ø§Ù„Ø£Ø®ØµØ§Ø¦ÙŠ -->
+                <!-- Card 15: خامس عشر: المبادئ المهنية الحاكمة لعمل الأخصائي -->
                 <div class="network-card" data-branch="15" id="card-15">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ø§Ù„Ù…Ø¨Ø§Ø¯Ø¦ Ø§Ù„Ù…Ù‡Ù†ÙŠØ© Ø§Ù„Ø­Ø§ÙƒÙ…Ø© Ù„Ø¹Ù…Ù„ Ø§Ù„Ø£Ø®ØµØ§Ø¦ÙŠ ÙÙŠ Ø§Ù„ØªÙ†Ù…ÙŠØ© (Ø§Ù„Ø¯Ø³ØªÙˆØ± Ø§Ù„Ù…Ù‡Ù†ÙŠ)</h3>
+                        <h3>المبادئ المهنية الحاكمة لعمل الأخصائي في التنمية (الدستور المهني)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            Ù‡ÙŠ Ø§Ù„Ø¯Ø³ØªÙˆØ± Ø§Ù„Ø°ÙŠ ÙŠØ­ÙƒÙ… Ø®Ø·ÙˆØ§Øª Ø¹Ù…Ù„ÙƒØ› ÙˆØ£ÙŠ ØªØµØ±Ù ÙŠØ®Ø§Ù„ÙÙ‡Ø§ ÙŠØ¹ØªØ¨Ø± (ØªØµØ±ÙØ§Ù‹ ØºÙŠØ± Ù…Ù‡Ù†ÙŠ Ø¹Ù„Ù‰ Ø§Ù„Ø¥Ø·Ù„Ø§Ù‚):
+                            هي الدستور الذي يحكم خطوات عملك؛ وأي تصرف يخالفها يعتبر (تصرفاً غير مهني على الإطلاق):
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ø§Ù„Ù…Ø¨Ø¯Ø£ Ø§Ù„Ù…Ù‡Ù†ÙŠ</th>
-                                        <th>Ø§Ù„Ø´Ø±Ø­ Ø§Ù„Ù…Ù†Ù‡Ø¬ÙŠ ÙˆÙƒÙŠÙÙŠØ© Ù…Ø¬ÙŠØ¦Ù‡ ÙÙŠ Ø£Ø³Ø¦Ù„Ø© Ø§Ù„Ø§Ù…ØªØ­Ø§Ù† <i
+                                        <th>المبدأ المهني</th>
+                                        <th>الشرح المنهجي وكيفية مجيئه في أسئلة الامتحان <i
                                                 class="fas fa-question-circle" style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-green"><b>Ø§Ù„ØªÙ‚Ø¨Ù„ (Acceptance)</b></td>
-                                        <td style="text-align: right;">Ù‚Ø¨ÙˆÙ„ Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø£Ùˆ Ø§Ù„Ø¹Ù…ÙŠÙ„ **(ÙƒÙ…Ø§ Ù‡ÙˆØŒ Ù„Ø§ ÙƒÙ…Ø§ ÙŠØ¬Ø¨ Ø£Ù†
-                                            ÙŠÙƒÙˆÙ†)** Ø¨ÙƒÙ„ Ø¹ÙŠÙˆØ¨Ù‡ØŒ Ù…Ù…ÙŠØ²Ø§ØªÙ‡ØŒ ÙˆØ¹Ø§Ø¯Ø§ØªÙ‡ Ø¯ÙˆÙ† Ø¥ØµØ¯Ø§Ø± Ø£ÙŠ Ø£Ø­ÙƒØ§Ù… Ø£Ø®Ù„Ø§Ù‚ÙŠØ© Ø£Ùˆ Ø¯ÙŠÙ†ÙŠØ© Ø£Ùˆ
-                                            ØªÙ‚ÙŠÙŠÙ…ÙŠØ© Ø¹Ù„ÙŠÙ‡. (Ù…Ø«Ù„: Ø§Ù„ØªØ±Ø­ÙŠØ¨ Ø§Ù„Ø­Ø§Ø± ÙˆØ§Ù„Ø¥Ù†ØµØ§Øª Ø§Ù„Ø¹Ù…ÙŠÙ‚ Ù„Ù„Ø¹Ù…Ù„Ø§Ø¡ ÙŠØ¹Ø¨Ø± Ø¹Ù† Ø§Ù„ØªÙ‚Ø¨Ù„).
+                                        <td class="cell-green"><b>التقبل (Acceptance)</b></td>
+                                        <td style="text-align: right;">قبول المجتمع أو العميل **(كما هو، لا كما يجب أن
+                                            يكون)** بكل عيوبه، مميزاته، وعاداته دون إصدار أي أحكام أخلاقية أو دينية أو
+                                            تقييمية عليه. (مثل: الترحيب الحار والإنصات العميق للعملاء يعبر عن التقبل).
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-orange"><b>Ø­Ù‚ ØªÙ‚Ø±ÙŠØ± Ø§Ù„Ù…ØµÙŠØ±</b></td>
-                                        <td style="text-align: right;">Ø¥Ø¹Ø·Ø§Ø¡ Ø§Ù„Ø£Ù‡Ø§Ù„ÙŠ ÙˆÙ‚Ø§Ø¯Ø© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ **Ø§Ù„Ø­Ù‚ Ø§Ù„Ù…Ø·Ù„Ù‚ ÙˆØ§Ù„Ø­Ø±ÙŠØ©
-                                            Ø§Ù„ÙƒØ§Ù…Ù„Ø©** ÙÙŠ Ø§Ø®ØªÙŠØ§Ø± Ø§Ù„Ù…Ø´Ø±ÙˆØ¹Ø§Øª Ø§Ù„ØªÙŠ ØªÙ†Ø§Ø³Ø¨Ù‡Ù…ØŒ ÙˆØ¹Ø¯Ù… ÙØ±Ø¶ Ø£ÙŠ Ø®Ø·Ø· Ø£Ùˆ Ø¨Ø±Ø§Ù…Ø¬ ÙÙˆÙ‚ÙŠØ©
-                                            Ø¹Ù„ÙŠÙ‡Ù… Ù…Ù† Ø§Ù„Ø®Ø§Ø±Ø¬.</td>
+                                        <td class="cell-orange"><b>حق تقرير المصير</b></td>
+                                        <td style="text-align: right;">إعطاء الأهالي وقادة المجتمع **الحق المطلق والحرية
+                                            الكاملة** في اختيار المشروعات التي تناسبهم، وعدم فرض أي خطط أو برامج فوقية
+                                            عليهم من الخارج.</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-blue"><b>Ø§Ù„Ù…ÙˆØ¶ÙˆØ¹ÙŠØ© (Objectivity)</b></td>
-                                        <td style="text-align: right;">ØªÙ†Ø­ÙŠØ© Ø§Ù„Ù…Ø´Ø§Ø¹Ø± Ø§Ù„Ø´Ø®ØµÙŠØ©ØŒ Ø§Ù„Ø§Ù†Ø­ÙŠØ§Ø²Ø§ØªØŒ ÙˆØ§Ù„Ø£Ø­ÙƒØ§Ù…
-                                            Ø§Ù„Ù…Ø³Ø¨Ù‚Ø© Ø¬Ø§Ù†Ø¨Ø§Ù‹ØŒ ÙˆØ§Ù„ØªØ¹Ø§Ù…Ù„ Ù…Ø¹ Ø§Ù„Ù…Ø´ÙƒÙ„Ø§Øª ÙˆØ§Ù„Ø­Ù‚Ø§Ø¦Ù‚ Ø§Ù„Ù…ÙŠØ¯Ø§Ù†ÙŠØ© Ø¨Ø­ÙŠØ§Ø¯ ØªØ§Ù… (Ø¯ÙˆÙ† Ø£ÙŠ
-                                            ØªÙ…ÙŠÙŠØ² Ø£Ùˆ Ù…Ø­Ø§Ø¨Ø§Ø© Ø¨ÙŠÙ† Ø§Ù„Ø£Ù‡Ø§Ù„ÙŠ).</td>
+                                        <td class="cell-blue"><b>الموضوعية (Objectivity)</b></td>
+                                        <td style="text-align: right;">تنحية المشاعر الشخصية، الانحيازات، والأحكام
+                                            المسبقة جانباً، والتعامل مع المشكلات والحقائق الميدانية بحياد تام (دون أي
+                                            تمييز أو محاباة بين الأهالي).</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-purple"><b>Ø§Ù„Ø³Ø±ÙŠØ© (Confidentiality)</b></td>
-                                        <td style="text-align: right;">Ø§Ù„Ø­ÙØ§Ø¸ Ø§Ù„ØªØ§Ù… ÙˆØ§Ù„Ù…Ø·Ø¨Ù‚ Ø¹Ù„Ù‰ Ø£Ø³Ø±Ø§Ø± ÙˆØ¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ù…Ø¬ØªÙ…Ø¹
-                                            ÙˆØ§Ù„Ø¹Ù…Ù„Ø§Ø¡ØŒ ÙˆØ¹Ø¯Ù… ÙƒØ´ÙÙ‡Ø§ Ø£Ùˆ Ø¥ÙØ´Ø§Ø¦Ù‡Ø§ Ø¥Ù„Ø§ ÙÙŠ Ø£Ø¶ÙŠÙ‚ Ø§Ù„Ø­Ø¯ÙˆØ¯ Ø§Ù„Ù…Ù‡Ù†ÙŠØ© ÙˆØ¨Ù…ÙˆØ§ÙÙ‚ØªÙ‡Ù…
-                                            Ø§Ù„ØµØ±ÙŠØ­Ø© Ù„ØµØ§Ù„Ø­ Ù†Ø¬Ø§Ø­ Ø§Ù„Ø¹Ù…Ù„.</td>
+                                        <td class="cell-purple"><b>السرية (Confidentiality)</b></td>
+                                        <td style="text-align: right;">الحفاظ التام والمطبق على أسرار وبيانات المجتمع
+                                            والعملاء، وعدم كشفها أو إفشائها إلا في أضيق الحدود المهنية وبموافقتهم
+                                            الصريحة لصالح نجاح العمل.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1689,52 +1691,52 @@
                     </div>
                 </div>
 
-                <!-- Card 16: Ø³Ø§Ø¯Ø³ Ø¹Ø´Ø±: Ù…ÙØ§Ù‡ÙŠÙ… Ø§Ù„ØªØ®Ø·ÙŠØ· ÙˆØ§Ù„Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© -->
+                <!-- Card 16: سادس عشر: مفاهيم التخطيط والسياسة الاجتماعية -->
                 <div class="network-card" data-branch="16" id="card-16">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ù…ÙØ§Ù‡ÙŠÙ… Ø§Ù„ØªØ®Ø·ÙŠØ· ÙˆØ§Ù„Ø³ÙŠØ§Ø³Ø© Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© (Ù…Ù‚Ø§Ø±Ù†Ø§Øª Ù‡Ø§Ù…Ø©)</h3>
+                        <h3>مفاهيم التخطيط والسياسة الاجتماعية (مقارنات هامة)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (Ø§Ù„ØªÙ†Ù…ÙŠØ© Ø¹Ù…Ù„ÙŠØ© ÙˆØ§Ø¹ÙŠØ© Ù„Ø§ ØªØ­Ø¯Ø« Ø¨Ø§Ù„ØµØ¯ÙØ© Ø§Ù„Ø¹Ø´ÙˆØ§Ø¦ÙŠØ©ØŒ Ø¨Ù„ Ù…Ù† Ø®Ù„Ø§Ù„ Ø§Ù„ØªØ®Ø·ÙŠØ·. Ø¥Ù„ÙŠÙƒ Ø£Ù‡Ù… Ù…ØµØ·Ù„Ø­Ø§ØªÙ‡
-                            Ù„Ù„ØªÙ…ÙŠÙŠØ² Ø¨ÙŠÙ†Ù‡Ø§)
+                            (التنمية عملية واعية لا تحدث بالصدفة العشوائية، بل من خلال التخطيط. إليك أهم مصطلحاته
+                            للتمييز بينها)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ø§Ù„Ù…ØµØ·Ù„Ø­ Ø§Ù„Ø¹Ù„Ù…ÙŠ</th>
-                                        <th>ØªØ¹Ø±ÙŠÙÙ‡ ÙˆÙ…Ø§ ÙŠÙ…ÙŠØ²Ù‡ ÙˆÙŠØ­Ø³Ù…Ù‡ ÙÙŠ Ø£Ø³Ø¦Ù„Ø© Ø§Ù„Ø§Ù…ØªØ­Ø§Ù† <i class="fas fa-tasks"
+                                        <th>المصطلح العلمي</th>
+                                        <th>تعريفه وما يميزه ويحسمه في أسئلة الامتحان <i class="fas fa-tasks"
                                                 style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-green"><b>Ø§Ù„ØªØ®Ø·ÙŠØ· Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ</b></td>
-                                        <td style="text-align: right;">Ù‡Ùˆ Ø£Ø³Ù„ÙˆØ¨ ÙˆÙ…Ù†Ù‡Ø¬ Ø¹Ù„Ù…ÙŠ ÙˆØ§Ø¹Ù ÙŠÙ‡Ø¯Ù Ø¥Ù„Ù‰ Ø¥Ø­Ø¯Ø§Ø« ØªØºÙŠÙŠØ±
-                                            Ù…ÙˆØ¬Ù‡ Ù…Ù‚ØµÙˆØ¯ ÙÙŠ Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ØŒ Ù…Ù† Ø®Ù„Ø§Ù„ Ø­ØµØ± Ø§Ù„Ù…ÙˆØ§Ø±Ø¯ Ø§Ù„Ù…ØªØ§Ø­Ø© ÙˆØªØ­Ø¯ÙŠØ¯ Ø§Ù„Ø£Ù‡Ø¯Ø§Ù Ø¨Ø¬Ø¯ÙˆÙ„ Ø²Ù…Ù†ÙŠ
-                                            Ù…Ø­Ø¯Ø¯ ÙˆÙØªØ±Ø© Ù…Ø¹ÙŠÙ†Ø©.</td>
+                                        <td class="cell-green"><b>التخطيط الاجتماعي</b></td>
+                                        <td style="text-align: right;">هو أسلوب ومنهج علمي واعٍ يهدف إلى إحداث تغيير
+                                            موجه مقصود في المجتمع، من خلال حصر الموارد المتاحة وتحديد الأهداف بجدول زمني
+                                            محدد وفترة معينة.</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-blue"><b>Ø§Ù„ØªØ®Ø·ÙŠØ· Ø§Ù„Ø¥Ù‚Ù„ÙŠÙ…ÙŠ</b></td>
-                                        <td style="text-align: right; font-weight: bold;">ÙŠØ±ÙƒØ² Ø¹Ù„Ù‰ Ù…Ø³Ø§Ø­Ø© Ø¬ØºØ±Ø§ÙÙŠØ© Ù…Ø¹ÙŠÙ†Ø©
-                                            Ù…Ø­Ø¯Ø¯Ø© (Ø¥Ù‚Ù„ÙŠÙ…)ØŒ ÙˆÙ‡Ø¯ÙÙ‡ Ø§Ù„Ø£Ø³Ø§Ø³ÙŠ Ø§Ù„Ø¯Ø§Ø¦Ù… Ø¨Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†: **(ØªÙ‚Ù„ÙŠÙ„ Ø§Ù„ÙØ¬ÙˆØ© ÙˆØ§Ù„ØªØ¨Ø§ÙŠÙ†
-                                            Ø§Ù„ØªÙ†Ù…ÙˆÙŠ Ø¨ÙŠÙ† Ø§Ù„Ø±ÙŠÙ ÙˆØ§Ù„Ø­Ø¶Ø±)** ÙˆØªØ­Ù‚ÙŠÙ‚ Ø§Ù„Ø¹Ø¯Ø§Ù„Ø© Ù„Ù„Ø­Ø¯ Ù…Ù† ØªÙŠØ§Ø±Ø§Øª Ø§Ù„Ù‡Ø¬Ø±Ø© Ø§Ù„Ø¯Ø§Ø®Ù„ÙŠØ©.
+                                        <td class="cell-blue"><b>التخطيط الإقليمي</b></td>
+                                        <td style="text-align: right; font-weight: bold;">يركز على مساحة جغرافية معينة
+                                            محددة (إقليم)، وهدفه الأساسي الدائم بالامتحان: **(تقليل الفجوة والتباين
+                                            التنموي بين الريف والحضر)** وتحقيق العدالة للحد من تيارات الهجرة الداخلية.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-orange"><b>Ø§Ù„Ù„Ø§Ù…Ø±ÙƒØ²ÙŠØ© (Decentralization)</b></td>
-                                        <td style="text-align: right;">ØªÙˆØ²ÙŠØ¹ ÙˆÙ†Ù‚Ù„ Ø§Ù„Ø³Ù„Ø·Ø§ØªØŒ Ø§Ù„Ø®Ø¯Ù…Ø§ØªØŒ ÙˆØ§Ù„Ù‚Ø±Ø§Ø±Ø§Øª ÙˆØ§Ù„Ù…Ø´Ø±ÙˆØ¹Ø§Øª
-                                            Ø¹Ù„Ù‰ Ø§Ù„Ù…Ø­Ø§ÙØ¸Ø§Øª ÙˆØ§Ù„Ø£Ù‚Ø§Ù„ÙŠÙ… ÙˆØ§Ù„Ø£Ø·Ø±Ø§ÙØŒ ÙˆØ¹Ø¯Ù… ØªÙƒØ¯ÙŠØ³Ù‡Ø§ ÙˆØªÙƒØ«ÙŠÙÙ‡Ø§ ÙÙŠ Ø§Ù„Ø¹Ø§ØµÙ…Ø©. <span
-                                                style="color:#38ef7d; font-weight:bold;">(ØªØ¹ØªØ¨Ø± Ø§Ù„Ø­Ù„ Ø§Ù„Ù†Ù…ÙˆØ°Ø¬ÙŠ Ù„Ø¹Ù„Ø§Ø¬
-                                                Ù…Ø´ÙƒÙ„Ø§Øª Ø§Ù„Ø¹Ø´ÙˆØ§Ø¦ÙŠØ§Øª ÙˆØ§Ù„Ù‡Ø¬Ø±Ø© Ø§Ù„Ø±ÙŠÙÙŠØ©)</span>.</td>
+                                        <td class="cell-orange"><b>اللامركزية (Decentralization)</b></td>
+                                        <td style="text-align: right;">توزيع ونقل السلطات، الخدمات، والقرارات والمشروعات
+                                            على المحافظات والأقاليم والأطراف، وعدم تكديسها وتكثيفها في العاصمة. <span
+                                                style="color:#38ef7d; font-weight:bold;">(تعتبر الحل النموذجي لعلاج
+                                                مشكلات العشوائيات والهجرة الريفية)</span>.</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-red"><b>Ø§Ù„Ù…Ø±ÙƒØ²ÙŠØ© (Centralization)</b></td>
-                                        <td style="text-align: right;">ØªØ±ÙƒØ² Ø§Ù„Ø³Ù„Ø·Ø©ØŒ Ø§Ù„Ù‚Ø±Ø§Ø±Ø§ØªØŒ ÙˆØ§Ù„Ø¥Ø´Ø±Ø§Ù ÙˆØ§Ù„Ø®Ø¯Ù…Ø§Øª Ø¨Ø§Ù„ÙƒØ§Ù…Ù„
-                                            ÙÙŠ ÙŠØ¯ Ø¬Ù‡Ø© ÙˆØ§Ø­Ø¯Ø© Ø¹Ù„ÙŠØ§ Ù…Ø±ÙƒØ²ÙŠØ© (ØºØ§Ù„Ø¨Ø§Ù‹ Ø§Ù„Ø¹Ø§ØµÙ…Ø©)ØŒ Ù…Ù…Ø§ ÙŠØ¹ÙŠÙ‚ Ø§Ù„ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…ÙŠØ¯Ø§Ù†ÙŠØ©
-                                            Ø§Ù„Ø³Ø±ÙŠØ¹Ø© ÙÙŠ Ø§Ù„Ø£Ø·Ø±Ø§Ù ÙˆØ§Ù„Ù‚Ø±Ù‰ ÙˆØ§Ù„Ù…Ø­Ø§ÙØ¸Ø§Øª Ø§Ù„Ø¨Ø¹ÙŠØ¯Ø©.</td>
+                                        <td class="cell-red"><b>المركزية (Centralization)</b></td>
+                                        <td style="text-align: right;">تركز السلطة، القرارات، والإشراف والخدمات بالكامل
+                                            في يد جهة واحدة عليا مركزية (غالباً العاصمة)، مما يعيق التنمية الميدانية
+                                            السريعة في الأطراف والقرى والمحافظات البعيدة.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1742,61 +1744,61 @@
                     </div>
                 </div>
 
-                <!-- Card 18: Ù…Ø¹ÙˆÙ‚Ø§Øª ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª Ø§Ù„Ù…Ø­Ù„ÙŠØ© -->
+                <!-- Card 18: معوقات تنمية المجتمعات المحلية -->
                 <div class="network-card" data-branch="18" id="card-18">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ù…Ø¹ÙˆÙ‚Ø§Øª ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø¬ØªÙ…Ø¹Ø§Øª Ø§Ù„Ù…Ø­Ù„ÙŠØ© (Ø³Ø¤Ø§Ù„ ØªØµÙ†ÙŠÙ Ø§Ù„Ù…Ø¹ÙˆÙ‚Ø§Øª)</h3>
+                        <h3>معوقات تنمية المجتمعات المحلية (سؤال تصنيف المعوقات)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (ÙÙŠ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù† Ø³ÙŠØ£ØªÙŠÙƒ Ø¨Ù…Ø«Ø§Ù„ Ù„Ù…Ø´ÙƒÙ„Ø© ÙˆÙŠØ·Ù„Ø¨ Ù…Ù†Ùƒ ØªØµÙ†ÙŠÙÙ‡Ø§ØŒ Ù‡Ù„ Ù‡ÙŠ Ø¹Ø§Ø¦Ù‚ Ø§Ù‚ØªØµØ§Ø¯ÙŠ Ø£Ù… Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ Ø£Ù… Ø¥Ø¯Ø§Ø±ÙŠØŸ)
+                            (في الامتحان سيأتيك بمثال لمشكلة ويطلب منك تصنيفها، هل هي عائق اقتصادي أم اجتماعي أم إداري؟)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ù†ÙˆØ¹ Ø§Ù„Ø¹Ø§Ø¦Ù‚</th>
-                                        <th>Ø£Ù…Ø«Ù„Ø© ØªØ·Ø¨ÙŠÙ‚ÙŠØ© (Ø§Ù„ÙƒÙ„Ù…Ø§Øª Ø§Ù„Ø¯Ù„Ø§Ù„ÙŠØ© ÙÙŠ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†) <i class="fas fa-key"
+                                        <th>نوع العائق</th>
+                                        <th>أمثلة تطبيقية (الكلمات الدلالية في الامتحان) <i class="fas fa-key"
                                                 style="color: gold;"></i></th>
-                                        <th>Ø§Ù„Ø´Ø±Ø­ / Ø§Ù„Ù…Ù„Ø§Ø­Ø¸Ø§Øª</th>
+                                        <th>الشرح / الملاحظات</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-red"><b>Ø§Ù„Ù…Ø¹ÙˆÙ‚Ø§Øª Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠØ© ÙˆØ§Ù„Ø«Ù‚Ø§ÙÙŠØ©</b></td>
+                                        <td class="cell-red"><b>المعوقات الاجتماعية والثقافية</b></td>
                                         <td style="text-align: right;">
-                                            - Ø§Ù„Ø²ÙŠØ§Ø¯Ø© Ø§Ù„Ø³ÙƒØ§Ù†ÙŠØ© (ØªÙ„ØªÙ‡Ù… Ø¹ÙˆØ§Ø¦Ø¯ Ø§Ù„ØªÙ†Ù…ÙŠØ©).<br>
-                                            - Ø§Ù†ØªØ´Ø§Ø± Ø§Ù„Ø£Ù…ÙŠØ© ÙˆØ§Ù„Ø¬Ù‡Ù„.<br>
-                                            - Ø§Ù„Ø¹Ø§Ø¯Ø§Øª ÙˆØ§Ù„ØªÙ‚Ø§Ù„ÙŠØ¯ Ø§Ù„Ø¨Ø§Ù„ÙŠØ© (Ù…Ø«Ù„ Ø§Ù„Ù†Ø¸Ø±Ø© Ø§Ù„Ø¯ÙˆÙ†ÙŠØ© Ù„Ø¹Ù…Ù„ Ø§Ù„Ù…Ø±Ø£Ø© Ø£Ùˆ Ù…Ù‚Ø§ÙˆÙ…Ø©
-                                            Ø§Ù„ØªØºÙŠÙŠØ±).<br>
-                                            - Ø§Ù„ØªÙˆØ§ÙƒÙ„ ÙˆØ§Ù„Ù„Ø§Ù…Ø¨Ø§Ù„Ø§Ø©.
+                                            - الزيادة السكانية (تلتهم عوائد التنمية).<br>
+                                            - انتشار الأمية والجهل.<br>
+                                            - العادات والتقاليد البالية (مثل النظرة الدونية لعمل المرأة أو مقاومة
+                                            التغيير).<br>
+                                            - التواكل واللامبالاة.
                                         </td>
                                         <td style="text-align: right;">
-                                            ØªØ±ØªØ¨Ø· Ø¨Ø§Ù„Ø¨Ø´Ø± ÙˆØ«Ù‚Ø§ÙØªÙ‡Ù… ÙˆØ·Ø±ÙŠÙ‚Ø© ØªÙÙƒÙŠØ±Ù‡Ù…. ÙˆÙ‡ÙŠ Ø£ØµØ¹Ø¨ Ø§Ù„Ù…Ø¹ÙˆÙ‚Ø§Øª Ù„Ø£Ù† ØªØºÙŠÙŠØ± Ø«Ù‚Ø§ÙØ©
-                                            Ø§Ù„Ù†Ø§Ø³ ÙŠØ­ØªØ§Ø¬ Ù„ÙˆÙ‚Øª Ø·ÙˆÙŠÙ„.
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="cell-orange"><b>Ø§Ù„Ù…Ø¹ÙˆÙ‚Ø§Øª Ø§Ù„Ø§Ù‚ØªØµØ§Ø¯ÙŠØ©</b></td>
-                                        <td style="text-align: right;">
-                                            - Ù†Ù‚Øµ Ø§Ù„ØªÙ…ÙˆÙŠÙ„ ÙˆØ§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ§Øª.<br>
-                                            - ØªØ¯Ù‡ÙˆØ± Ø§Ù„Ø¨Ù†ÙŠØ© Ø§Ù„ØªØ­ØªÙŠØ© (Ø·Ø±Ù‚ØŒ Ù…Ø³ØªØ´ÙÙŠØ§Øª).<br>
-                                            - Ø§Ù„Ø§Ø¹ØªÙ…Ø§Ø¯ Ø¹Ù„Ù‰ Ù…ÙˆØ±Ø¯ ÙˆØ§Ø­Ø¯ (ÙƒØ­ÙØ± Ø§Ù„Ø¢Ø¨Ø§Ø± ÙÙ‚Ø· ÙÙŠ Ø§Ù„Ø¨Ø§Ø¯ÙŠØ©).
-                                        </td>
-                                        <td style="text-align: right;">
-                                            ØªØ±ØªØ¨Ø· Ø¨Ø§Ù„Ù…Ø§Ù„ØŒ Ø§Ù„Ù…ÙˆØ§Ø±Ø¯ Ø§Ù„Ù…Ø§Ø¯ÙŠØ©ØŒ ÙˆØ§Ù„Ù…Ø±Ø§ÙÙ‚ Ø§Ù„Ø£Ø³Ø§Ø³ÙŠØ©.
+                                            ترتبط بالبشر وثقافتهم وطريقة تفكيرهم. وهي أصعب المعوقات لأن تغيير ثقافة
+                                            الناس يحتاج لوقت طويل.
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-blue"><b>Ø§Ù„Ù…Ø¹ÙˆÙ‚Ø§Øª Ø§Ù„Ø¥Ø¯Ø§Ø±ÙŠØ© ÙˆØ§Ù„ØªÙ†Ø¸ÙŠÙ…ÙŠØ©</b></td>
+                                        <td class="cell-orange"><b>المعوقات الاقتصادية</b></td>
                                         <td style="text-align: right;">
-                                            - Ø§Ù„Ø±ÙˆØªÙŠÙ† ÙˆØ§Ù„Ø¨ÙŠØ±ÙˆÙ‚Ø±Ø§Ø·ÙŠØ© ÙˆØ§Ù„Ù…Ø±ÙƒØ²ÙŠØ© Ø§Ù„Ø´Ø¯ÙŠØ¯Ø©.<br>
-                                            - ØºÙŠØ§Ø¨ Ø§Ù„ØªÙ†Ø³ÙŠÙ‚ Ø¨ÙŠÙ† Ø§Ù„Ù…Ø¤Ø³Ø³Ø§Øª (Ù…Ù…Ø§ ÙŠØ³Ø¨Ø¨ Ø§Ø²Ø¯ÙˆØ§Ø¬ÙŠØ©).<br>
-                                            - Ù†Ù‚Øµ Ø§Ù„ÙƒÙˆØ§Ø¯Ø± Ø§Ù„Ø¨Ø´Ø±ÙŠØ© Ø§Ù„Ù…Ø¯Ø±Ø¨Ø© Ø¥Ø¯Ø§Ø±ÙŠØ§Ù‹.
+                                            - نقص التمويل والميزانيات.<br>
+                                            - تدهور البنية التحتية (طرق، مستشفيات).<br>
+                                            - الاعتماد على مورد واحد (كحفر الآبار فقط في البادية).
                                         </td>
                                         <td style="text-align: right;">
-                                            ØªØ±ØªØ¨Ø· Ø¨Ù€ "Ø·Ø±ÙŠÙ‚Ø© Ø§Ù„Ø¥Ø¯Ø§Ø±Ø©" ÙˆÙ‚ÙˆØ§Ù†ÙŠÙ† Ø§Ù„Ø¹Ù…Ù„ Ø§Ù„Ø­ÙƒÙˆÙ…ÙŠ Ø§Ù„ØªÙŠ ØªØ¹Ø·Ù„ Ø³Ø±Ø¹Ø© Ø§Ù„ØªÙ†ÙÙŠØ°.
+                                            ترتبط بالمال، الموارد المادية، والمرافق الأساسية.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cell-blue"><b>المعوقات الإدارية والتنظيمية</b></td>
+                                        <td style="text-align: right;">
+                                            - الروتين والبيروقراطية والمركزية الشديدة.<br>
+                                            - غياب التنسيق بين المؤسسات (مما يسبب ازدواجية).<br>
+                                            - نقص الكوادر البشرية المدربة إدارياً.
+                                        </td>
+                                        <td style="text-align: right;">
+                                            ترتبط بـ "طريقة الإدارة" وقوانين العمل الحكومي التي تعطل سرعة التنفيذ.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1805,54 +1807,54 @@
                     </div>
                 </div>
 
-                <!-- Card 19: Ø§Ù„Ø£Ø¬Ù‡Ø²Ø© Ø§Ù„ØªÙ†Ù…ÙˆÙŠØ© (Ø§Ù„Ø­ÙƒÙˆÙ…ÙŠØ© Ù…Ù‚Ø§Ø¨Ù„ Ø§Ù„Ø£Ù‡Ù„ÙŠØ©/Ø§Ù„ØªØ·ÙˆØ¹ÙŠØ©) -->
+                <!-- Card 19: الأجهزة التنموية (الحكومية مقابل الأهلية/التطوعية) -->
                 <div class="network-card" data-branch="19" id="card-19">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ø§Ù„Ø£Ø¬Ù‡Ø²Ø© Ø§Ù„ØªÙ†Ù…ÙˆÙŠØ© (Ø§Ù„Ø­ÙƒÙˆÙ…ÙŠØ© Ù…Ù‚Ø§Ø¨Ù„ Ø§Ù„Ø£Ù‡Ù„ÙŠØ©/Ø§Ù„ØªØ·ÙˆØ¹ÙŠØ©)</h3>
+                        <h3>الأجهزة التنموية (الحكومية مقابل الأهلية/التطوعية)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
                         <p style="font-size:0.85rem; color:var(--text-color); margin-bottom: 1rem; text-align: center;">
-                            (Ø§Ù„ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø­Ù„ÙŠØ© ØªØ¹ØªÙ…Ø¯ Ø¹Ù„Ù‰ Ø¬Ù†Ø§Ø­ÙŠÙ† (Ø­ÙƒÙˆÙ…ÙŠ ÙˆØ£Ù‡Ù„ÙŠ)ØŒ ÙˆÙ‡Ø°Ø§ Ø§Ù„Ø¬Ø¯ÙˆÙ„ ÙŠÙˆØ¶Ø­ Ø§Ù„ÙØ±Ù‚ Ø¨ÙŠÙ†Ù‡Ù…Ø§)
+                            (التنمية المحلية تعتمد على جناحين (حكومي وأهلي)، وهذا الجدول يوضح الفرق بينهما)
                         </p>
                         <div class="table-responsive-wrapper">
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>ÙˆØ¬Ù‡ Ø§Ù„Ù…Ù‚Ø§Ø±Ù†Ø©</th>
-                                        <th>Ø§Ù„Ù…Ù†Ø¸Ù…Ø§Øª Ø§Ù„Ø­ÙƒÙˆÙ…ÙŠØ© (Ø§Ù„Ø±Ø³Ù…ÙŠØ©) <i class="fas fa-building"
+                                        <th>وجه المقارنة</th>
+                                        <th>المنظمات الحكومية (الرسمية) <i class="fas fa-building"
                                                 style="color: gold;"></i></th>
-                                        <th>Ø§Ù„Ù…Ù†Ø¸Ù…Ø§Øª Ø§Ù„Ø£Ù‡Ù„ÙŠØ© / Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ù…Ø¯Ù†ÙŠ <i class="fas fa-hands-helping"
+                                        <th>المنظمات الأهلية / المجتمع المدني <i class="fas fa-hands-helping"
                                                 style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-gold"><b>Ø§Ù„ØªØ£Ø³ÙŠØ³ ÙˆØ§Ù„ØªÙ…ÙˆÙŠÙ„</b></td>
-                                        <td style="text-align: right;">ØªÙ†Ø´Ø£ Ø¨Ù‚Ø±Ø§Ø± Ù…Ù† Ø§Ù„Ø¯ÙˆÙ„Ø©ØŒ ÙˆØªÙ…ÙˆÙ„ Ù…Ù† Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ© Ø§Ù„Ø¹Ø§Ù…Ø© /
-                                            Ø§Ù„Ø¶Ø±Ø§Ø¦Ø¨.</td>
-                                        <td style="text-align: right;">ØªÙ†Ø´Ø£ Ø¨Ø¬Ù‡ÙˆØ¯ ØªØ·ÙˆØ¹ÙŠØ© Ù…Ù† Ø§Ù„Ø£Ù‡Ø§Ù„ÙŠØŒ ÙˆØªÙ…ÙˆÙ„ Ù…Ù† Ø§Ù„ØªØ¨Ø±Ø¹Ø§Øª
-                                            ÙˆØ§Ù„Ø§Ø´ØªØ±Ø§ÙƒØ§Øª.</td>
+                                        <td class="cell-gold"><b>التأسيس والتمويل</b></td>
+                                        <td style="text-align: right;">تنشأ بقرار من الدولة، وتمول من الميزانية العامة /
+                                            الضرائب.</td>
+                                        <td style="text-align: right;">تنشأ بجهود تطوعية من الأهالي، وتمول من التبرعات
+                                            والاشتراكات.</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-orange"><b>Ø§Ù„Ù…Ø±ÙˆÙ†Ø© ÙˆØ§Ù„Ø±ÙˆØªÙŠÙ†</b></td>
-                                        <td style="text-align: right;">ØªØªØ³Ù… Ø¨Ø§Ù„Ø¨ÙŠØ±ÙˆÙ‚Ø±Ø§Ø·ÙŠØ© ÙˆØ§Ù„Ø¨Ø·Ø¡ ÙÙŠ Ø§ØªØ®Ø§Ø° Ø§Ù„Ù‚Ø±Ø§Ø±
-                                            Ù„Ø§Ù„ØªØ²Ø§Ù…Ù‡Ø§ Ø¨Ù‚ÙˆØ§Ù†ÙŠÙ† ØµØ§Ø±Ù…Ø©.</td>
-                                        <td style="text-align: right;">ØªØªØ³Ù… Ø¨Ø§Ù„Ù…Ø±ÙˆÙ†Ø© Ø§Ù„Ø¹Ø§Ù„ÙŠØ© ÙˆØ§Ù„Ø³Ø±Ø¹Ø© ÙÙŠ Ø§ØªØ®Ø§Ø° Ø§Ù„Ù‚Ø±Ø§Ø± ÙˆØ­Ù„
-                                            Ø§Ù„Ø£Ø²Ù…Ø§Øª.</td>
+                                        <td class="cell-orange"><b>المرونة والروتين</b></td>
+                                        <td style="text-align: right;">تتسم بالبيروقراطية والبطء في اتخاذ القرار
+                                            لالتزامها بقوانين صارمة.</td>
+                                        <td style="text-align: right;">تتسم بالمرونة العالية والسرعة في اتخاذ القرار وحل
+                                            الأزمات.</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-green"><b>Ù†Ø·Ø§Ù‚ Ø§Ù„Ø¹Ù…Ù„</b></td>
-                                        <td style="text-align: right;">ØªØ¹Ù…Ù„ Ø¹Ù„Ù‰ Ù†Ø·Ø§Ù‚ ÙˆØ§Ø³Ø¹ ÙˆÙ‚ÙˆÙ…ÙŠ (Ù…Ø´Ø§Ø±ÙŠØ¹ ÙƒØ¨Ø±Ù‰).</td>
-                                        <td style="text-align: right;">Ù‚Ø±ÙŠØ¨Ø© Ø¬Ø¯Ø§Ù‹ Ù…Ù† Ø§Ù„Ø¬Ù…Ø§Ù‡ÙŠØ± ÙˆØªØ¹Ù…Ù„ Ø¹Ù„Ù‰ Ù†Ø·Ø§Ù‚ Ù…Ø­Ù„ÙŠ (ÙÙ‡Ù…
-                                            Ø£Ø¹Ù…Ù‚ Ù„Ø§Ø­ØªÙŠØ§Ø¬Ø§Øª Ø§Ù„Ù†Ø§Ø³).</td>
+                                        <td class="cell-green"><b>نطاق العمل</b></td>
+                                        <td style="text-align: right;">تعمل على نطاق واسع وقومي (مشاريع كبرى).</td>
+                                        <td style="text-align: right;">قريبة جداً من الجماهير وتعمل على نطاق محلي (فهم
+                                            أعمق لاحتياجات الناس).</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-blue"><b>Ø¹Ù„Ø§Ù‚ØªÙ‡Ø§ Ø¨Ø§Ù„Ù…ÙˆØ§Ø·Ù†</b></td>
-                                        <td style="text-align: right;">Ù‚Ø¯ ÙŠÙ†Ø¸Ø± Ù„Ù‡Ø§ Ø§Ù„Ù…ÙˆØ§Ø·Ù† ÙƒØ¬Ù‡Ø© Ù…Ù„Ø²Ù…Ø© Ø£Ùˆ Ù…ÙØ±ÙˆØ¶Ø© Ø¹Ù„ÙŠÙ‡.
+                                        <td class="cell-blue"><b>علاقتها بالمواطن</b></td>
+                                        <td style="text-align: right;">قد ينظر لها المواطن كجهة ملزمة أو مفروضة عليه.
                                         </td>
-                                        <td style="text-align: right;">ØªØ­Ø¸Ù‰ Ø¨Ø«Ù‚Ø© Ø§Ù„Ù…ÙˆØ§Ø·Ù†ÙŠÙ† Ù„Ø£Ù†Ù‡Ø§ Ù†Ø§Ø¨Ø¹Ø© Ù…Ù†Ù‡Ù… ÙˆØªØ¹ØªÙ…Ø¯ Ø¹Ù„Ù‰
-                                            Ø§Ù„Ù‚ÙŠØ§Ø¯Ø§Øª Ø§Ù„Ø·Ø¨ÙŠØ¹ÙŠØ©.</td>
+                                        <td style="text-align: right;">تحظى بثقة المواطنين لأنها نابعة منهم وتعتمد على
+                                            القيادات الطبيعية.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1860,10 +1862,10 @@
                     </div>
                 </div>
 
-                <!-- Card 20: Ù†Ù…Ø§Ø°Ø¬ Ø§Ù„Ù…Ù…Ø§Ø±Ø³Ø© Ø§Ù„Ù…Ù‡Ù†ÙŠØ© Ù„Ù€ "Ø¬Ø§Ùƒ Ø±ÙˆØ«Ù…Ø§Ù†" -->
+                <!-- Card 20: نماذج الممارسة المهنية لـ "جاك روثمان" -->
                 <div class="network-card" data-branch="20" id="card-20">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ù†Ù…Ø§Ø°Ø¬ Ø§Ù„Ù…Ù…Ø§Ø±Ø³Ø© Ø§Ù„Ù…Ù‡Ù†ÙŠØ© Ù„Ù€ "Ø¬Ø§Ùƒ Ø±ÙˆØ«Ù…Ø§Ù†" (Ù…ÙØ§ØªÙŠØ­ Ø³Ø±ÙŠØ¹Ø©)</h3>
+                        <h3>نماذج الممارسة المهنية لـ "جاك روثمان" (مفاتيح سريعة)</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body">
@@ -1873,32 +1875,32 @@
                             <table class="comparison-table">
                                 <thead>
                                     <tr>
-                                        <th>Ø§Ù„Ù†Ù…ÙˆØ°Ø¬</th>
-                                        <th>Ø§Ù„Ù‡Ø¯Ù Ø§Ù„Ø£Ø³Ø§Ø³ÙŠ <i class="fas fa-bullseye" style="color: gold;"></i></th>
-                                        <th>Ø¯ÙˆØ± Ø§Ù„Ø£Ø®ØµØ§Ø¦ÙŠ Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ ÙÙŠÙ‡ <i class="fas fa-user-tie"
+                                        <th>النموذج</th>
+                                        <th>الهدف الأساسي <i class="fas fa-bullseye" style="color: gold;"></i></th>
+                                        <th>دور الأخصائي الاجتماعي فيه <i class="fas fa-user-tie"
                                                 style="color: gold;"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="cell-gold"><b>Ù†Ù…ÙˆØ°Ø¬ Ø§Ù„ØªÙ†Ù…ÙŠØ© Ø§Ù„Ù…Ø­Ù„ÙŠØ©</b></td>
-                                        <td style="text-align: right;">ÙŠØ³ØªÙ‡Ø¯Ù ØªØºÙŠÙŠØ± "Ø§Ù„Ø¹Ù…Ù„ÙŠØ§Øª Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ÙŠØ©" (Ø¨Ù†Ø§Ø¡ Ù‚Ø¯Ø±Ø§Øª
-                                            Ø§Ù„Ø£Ù‡Ø§Ù„ÙŠØŒ Ø§Ù„Ø§Ø¹ØªÙ…Ø§Ø¯ Ø¹Ù„Ù‰ Ø§Ù„Ø°Ø§ØªØŒ Ø§Ù„Ù…Ø´Ø§Ø±ÙƒØ©).</td>
-                                        <td style="text-align: right;">Ù…ÙÙ…ÙƒÙ‘ÙÙ† (Ù…ÙÙŠØ³Ø±)ØŒ ÙˆÙ…ÙØ´Ø¬Ø¹ Ù„Ù„Ø£Ù‡Ø§Ù„ÙŠ Ù„ÙŠØ¹Ù…Ù„ÙˆØ§ Ù…Ø¹Ø§Ù‹.
-                                            (ÙŠØ¹ØªÙ…Ø¯ Ø¹Ù„Ù‰ Ø§Ù„ØªÙˆØ§ÙÙ‚).</td>
+                                        <td class="cell-gold"><b>نموذج التنمية المحلية</b></td>
+                                        <td style="text-align: right;">يستهدف تغيير "العمليات المجتمعية" (بناء قدرات
+                                            الأهالي، الاعتماد على الذات، المشاركة).</td>
+                                        <td style="text-align: right;">مُمكِّن (مُيسر)، ومُشجع للأهالي ليعملوا معاً.
+                                            (يعتمد على التوافق).</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-blue"><b>Ù†Ù…ÙˆØ°Ø¬ Ø§Ù„ØªØ®Ø·ÙŠØ· Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ</b></td>
-                                        <td style="text-align: right;">ÙŠØ³ØªÙ‡Ø¯Ù "Ø¥Ù†Ø¬Ø§Ø² Ø§Ù„Ù…Ù‡Ø§Ù…" (Ø­Ù„ Ù…Ø´ÙƒÙ„Ø§Øª Ù…Ø¹Ù‚Ø¯Ø© Ù…Ø«Ù„
-                                            Ø§Ù„Ø¥Ø³ÙƒØ§Ù†ØŒ Ø§Ù„ØµØ­Ø©ØŒ Ø§Ù„Ø¨Ø·Ø§Ù„Ø©).</td>
-                                        <td style="text-align: right;">Ø®Ø¨ÙŠØ± ÙÙ†ÙŠ (ÙŠØ¬Ù…Ø¹ Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª ÙˆÙŠØ¶Ø¹ Ø§Ù„Ø®Ø·Ø· Ø§Ù„Ù…Ø¹Ù‚Ø¯Ø©).</td>
+                                        <td class="cell-blue"><b>نموذج التخطيط الاجتماعي</b></td>
+                                        <td style="text-align: right;">يستهدف "إنجاز المهام" (حل مشكلات معقدة مثل
+                                            الإسكان، الصحة، البطالة).</td>
+                                        <td style="text-align: right;">خبير فني (يجمع البيانات ويضع الخطط المعقدة).</td>
                                     </tr>
                                     <tr>
-                                        <td class="cell-purple"><b>Ù†Ù…ÙˆØ°Ø¬ Ø§Ù„Ø¹Ù…Ù„ Ø§Ù„Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ</b></td>
-                                        <td style="text-align: right;">ÙŠØ³ØªÙ‡Ø¯Ù Ø¥Ø­Ø¯Ø§Ø« "ØªØºÙŠÙŠØ± ÙÙŠ Ù…ÙˆØ§Ø²ÙŠÙ† Ø§Ù„Ù‚ÙˆÙ‰" (Ù†ØµØ±Ø© Ø§Ù„ÙØ¦Ø§Øª
-                                            Ø§Ù„Ù…Ù‡Ù…Ø´Ø© ÙˆØ§Ù„Ù…Ø¸Ù„ÙˆÙ…Ø©).</td>
-                                        <td style="text-align: right;">Ù…Ø¯Ø§ÙØ¹ (Advocate)ØŒ ÙŠÙ†Ø­Ø§Ø² Ù„Ù„Ø¶Ø¹ÙØ§Ø¡ ÙˆÙŠØ·Ø§Ù„Ø¨ Ø¨Ø­Ù‚ÙˆÙ‚Ù‡Ù….
-                                            (ÙŠØ¹ØªÙ…Ø¯ Ø¹Ù„Ù‰ Ø§Ù„Ø¶ØºØ· ÙˆØ§Ù„ØµØ±Ø§Ø¹).</td>
+                                        <td class="cell-purple"><b>نموذج العمل الاجتماعي</b></td>
+                                        <td style="text-align: right;">يستهدف إحداث "تغيير في موازين القوى" (نصرة الفئات
+                                            المهمشة والمظلومة).</td>
+                                        <td style="text-align: right;">مدافع (Advocate)، ينحاز للضعفاء ويطالب بحقوقهم.
+                                            (يعتمد على الضغط والصراع).</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1906,106 +1908,106 @@
                     </div>
                 </div>
 
-                <!-- Card 17: Ø´ÙØ±Ø§Øª (Ù…ÙØ§ØªÙŠØ­) Ø­Ù„ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù† ÙÙŠ Ø«ÙˆØ§Ù†Ù -->
+                <!-- Card 17: شفرات (مفاتيح) حل الامتحان في ثوانٍ -->
                 <div class="network-card" data-branch="17" id="card-17">
                     <div class="network-card-header" onclick="toggleNetworkCard(this.parentElement)">
-                        <h3>Ø´ÙØ±Ø§Øª (Ù…ÙØ§ØªÙŠØ­) Ø­Ù„ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù† ÙÙŠ Ø«ÙˆØ§Ù†Ù Ù…Ø¹Ø¯ÙˆØ¯Ø© ðŸ”‘</h3>
+                        <h3>شفرات (مفاتيح) حل الامتحان في ثوانٍ معدودة 🔑</h3>
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="network-card-body" style="padding: 0;">
                         <div class="info-box success" style="margin: 1rem; text-align: center;">
-                            <strong>ðŸ”‘ ÙƒÙˆØ¯ Ø§Ù„Ø§Ù…ØªØ­Ø§Ù† Ø§Ù„Ø³Ø±ÙŠ:</strong> Ø§Ø­ÙØ¸ Ù‡Ø°Ù‡ Ø§Ù„Ø´ÙØ±Ø§Øª Ø§Ù„Ø¯Ù„Ø§Ù„ÙŠØ© Ù„ØªÙ„ØªÙ‚Ø· ÙˆØªØ­Ø¯Ø¯ Ø§Ù„Ø¥Ø¬Ø§Ø¨Ø©
-                            Ø§Ù„ØµØ­ÙŠØ­Ø© ÙÙˆØ±Ø§Ù‹ Ø¨Ù…Ø¬Ø±Ø¯ Ù‚Ø±Ø§Ø¡Ø© ÙƒÙ„Ù…Ø§Øª Ø§Ù„Ø³Ø¤Ø§Ù„ Ø¨Ø§Ù„Ø§Ù…ØªØ­Ø§Ù†!
+                            <strong>🔑 كود الامتحان السري:</strong> احفظ هذه الشفرات الدلالية لتلتقط وتحدد الإجابة
+                            الصحيحة فوراً بمجرد قراءة كلمات السؤال بالامتحان!
                         </div>
                         <ul class="cheat-list">
                             <li class="cheat-item">
                                 <div class="cheat-left">
                                     <span class="cheat-badge">1</span>
-                                    <span>Ø¥Ø°Ø§ Ø±Ø£ÙŠØª ÙÙŠ Ø§Ù„Ø³Ø¤Ø§Ù„ ÙƒÙ„Ù…Ø©: (ØªÙ„Ù‚Ø§Ø¦ÙŠ - Ø¹Ø´ÙˆØ§Ø¦ÙŠ - Ø¬Ø§Ù†Ø¨ ÙˆØ§Ø­Ø¯ ÙÙ‚Ø·)</span>
+                                    <span>إذا رأيت في السؤال كلمة: (تلقائي - عشوائي - جانب واحد فقط)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
-                                <span class="cheat-output" style="color: #ff9900;">Ø§Ù„Ù†Ù…Ùˆ (Growth)</span>
+                                <span class="cheat-output" style="color: #ff9900;">النمو (Growth)</span>
                             </li>
                             <li class="cheat-item">
                                 <div class="cheat-left">
                                     <span class="cheat-badge">2</span>
-                                    <span>Ø¥Ø°Ø§ Ø±Ø£ÙŠØª ÙÙŠ Ø§Ù„Ø³Ø¤Ø§Ù„ ÙƒÙ„Ù…Ø©: (Ù…Ù‚ØµÙˆØ¯ - Ù…Ø®Ø·Ø· - Ø´Ø§Ù…Ù„ - ÙƒÙ…ÙŠ ÙˆÙƒÙŠÙÙŠ Ù…Ø¹Ø§Ù‹)</span>
+                                    <span>إذا رأيت في السؤال كلمة: (مقصود - مخطط - شامل - كمي وكيفي معاً)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
-                                <span class="cheat-output" style="color: #38ef7d;">Ø§Ù„ØªÙ†Ù…ÙŠØ© (Development)</span>
+                                <span class="cheat-output" style="color: #38ef7d;">التنمية (Development)</span>
                             </li>
                             <li class="cheat-item">
                                 <div class="cheat-left">
                                     <span class="cheat-badge">3</span>
-                                    <span>Ø¥Ø°Ø§ Ø±Ø£ÙŠØª ÙÙŠ Ø§Ù„Ø³Ø¤Ø§Ù„ ÙƒÙ„Ù…Ø©: (ØªØ¬Ø§Ù†Ø³ Ø«Ù‚Ø§ÙÙŠ ÙˆÙ…Ù‡Ù†ÙŠ - Ø¨Ø·Ø§Ù„Ø© Ù…Ù‚Ù†Ø¹Ø© - ØªÙØªØª
-                                        Ø§Ù„Ø­ÙŠØ§Ø²Ø©)</span>
+                                    <span>إذا رأيت في السؤال كلمة: (تجانس ثقافي ومهني - بطالة مقنعة - تفتت
+                                        الحيازة)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
-                                <span class="cheat-output" style="color: #FFD700;">Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø±ÙŠÙÙŠ ðŸŒ¾</span>
+                                <span class="cheat-output" style="color: #FFD700;">المجتمع الريفي 🌾</span>
                             </li>
                             <li class="cheat-item">
                                 <div class="cheat-left">
                                     <span class="cheat-badge">4</span>
-                                    <span>Ø¥Ø°Ø§ Ø±Ø£ÙŠØª ÙÙŠ Ø§Ù„Ø³Ø¤Ø§Ù„ ÙƒÙ„Ù…Ø©: (Ø¹Ù„Ø§Ù‚Ø§Øª Ø«Ø§Ù†ÙˆÙŠØ©/Ø±Ø³Ù…ÙŠØ© - Ø±Ù‚Ø§Ø¨Ø© Ø±Ø³Ù…ÙŠØ© Ø¨Ø§Ù„Ù‚Ø§Ù†ÙˆÙ† -
-                                        ØªÙ„ÙˆØ«)</span>
+                                    <span>إذا رأيت في السؤال كلمة: (علاقات ثانوية/رسمية - رقابة رسمية بالقانون -
+                                        تلوث)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
-                                <span class="cheat-output" style="color: #00b4db;">Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø­Ø¶Ø±ÙŠ ðŸ™ï¸</span>
+                                <span class="cheat-output" style="color: #00b4db;">المجتمع الحضري 🏙️</span>
                             </li>
                             <li class="cheat-item">
                                 <div class="cheat-left">
                                     <span class="cheat-badge">5</span>
-                                    <span>Ø¥Ø°Ø§ Ø±Ø£ÙŠØª ÙÙŠ Ø§Ù„Ø³Ø¤Ø§Ù„ ÙƒÙ„Ù…Ø©: (Ø¹ØµØ¨ÙŠØ© Ù‚Ø¨Ù„ÙŠØ© - ØªØ±Ø­Ø§Ù„ Ù…Ø³ØªÙ…Ø± - ØªÙˆØ·ÙŠÙ† Ù…ÙˆØ¬Ù‡ -
-                                        Ø¹Ø²Ù„Ø©)</span>
+                                    <span>إذا رأيت في السؤال كلمة: (عصبية قبلية - ترحال مستمر - توطين موجه -
+                                        عزلة)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
-                                <span class="cheat-output" style="color: #bc4e9c;">Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø¨Ø¯ÙˆÙŠ ðŸ«</span>
+                                <span class="cheat-output" style="color: #bc4e9c;">المجتمع البدوي 🐫</span>
                             </li>
                             <li class="cheat-item">
                                 <div class="cheat-left">
                                     <span class="cheat-badge">6</span>
-                                    <span>Ø¥Ø°Ø§ Ø±Ø£ÙŠØª ÙÙŠ Ø§Ù„Ø³Ø¤Ø§Ù„ ÙƒÙ„Ù…Ø©: (ØºÙŠØ§Ø¨ Ø§Ù„ØªØ®Ø·ÙŠØ· - Ù‡Ø¬Ø±Ø© ÙƒØ«ÙŠÙØ© - ØªØ¯Ù‡ÙˆØ± Ø­Ø§Ø¯ Ù„Ù„Ø¨Ù†ÙŠØ©)</span>
+                                    <span>إذا رأيت في السؤال كلمة: (غياب التخطيط - هجرة كثيفة - تدهور حاد للبنية)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
-                                <span class="cheat-output" style="color: #ee0979;">Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ Ø§Ù„Ø¹Ø´ÙˆØ§Ø¦ÙŠ ðŸšï¸</span>
+                                <span class="cheat-output" style="color: #ee0979;">المجتمع العشوائي 🏚️</span>
                             </li>
                             <li class="cheat-item">
                                 <div class="cheat-left">
                                     <span class="cheat-badge">7</span>
-                                    <span>Ø¥Ø°Ø§ Ø±Ø£ÙŠØª ÙÙŠ Ø§Ù„Ø³Ø¤Ø§Ù„ ÙƒÙ„Ù…Ø©: (Ø¬Ù‡Ø¯ ØªØ·ÙˆØ¹ÙŠ ÙˆÙ…Ù†Ø¸Ù… - Ø³Ø¯ ÙØ¬ÙˆØ© Ù…ÙˆØ§Ø±Ø¯ - Ù‚ÙŠØ§Ø¯Ø§Øª
-                                        Ø·Ø¨ÙŠØ¹ÙŠØ©)</span>
+                                    <span>إذا رأيت في السؤال كلمة: (جهد تطوعي ومنظم - سد فجوة موارد - قيادات
+                                        طبيعية)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
-                                <span class="cheat-output" style="color: #00cdac;">Ø§Ù„Ù…Ø¨Ø§Ø¯Ø±Ø§Øª Ø§Ù„Ù…Ø¬ØªÙ…Ø¹ÙŠØ©</span>
+                                <span class="cheat-output" style="color: #00cdac;">المبادرات المجتمعية</span>
                             </li>
                             <li class="cheat-item">
                                 <div class="cheat-left">
                                     <span class="cheat-badge">8</span>
-                                    <span>Ø¥Ø°Ø§ Ø±Ø£ÙŠØª ÙÙŠ Ø§Ù„Ø³Ø¤Ø§Ù„ ÙƒÙ„Ù…Ø©: (Ø§Ù…ØªÙ„Ø§Ùƒ Ø§Ù„Ù‚ÙˆØ© ÙˆØ§Ù„Ù…Ù‡Ø§Ø±Ø© - Ø§Ù„Ù‚Ø¯Ø±Ø© Ø¹Ù„Ù‰ Ø§ØªØ®Ø§Ø° Ø§Ù„Ù‚Ø±Ø§Ø±
-                                        ÙˆØ§Ù„ØªØ­ÙƒÙ…)</span>
+                                    <span>إذا رأيت في السؤال كلمة: (امتلاك القوة والمهارة - القدرة على اتخاذ القرار
+                                        والتحكم)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
-                                <span class="cheat-output" style="color: #ff5500;">Ø§Ù„ØªÙ…ÙƒÙŠÙ† (Empowerment)</span>
+                                <span class="cheat-output" style="color: #ff5500;">التمكين (Empowerment)</span>
                             </li>
                             <li class="cheat-item">
                                 <div class="cheat-left">
                                     <span class="cheat-badge">9</span>
-                                    <span>Ø¥Ø°Ø§ Ø±Ø£ÙŠØª ÙÙŠ Ø§Ù„Ø³Ø¤Ø§Ù„ ÙƒÙ„Ù…Ø©: (ØªÙ†Ø³ÙŠÙ‚ Ø¬Ù‡ÙˆØ¯ Ø¨ÙŠÙ† Ù…Ø¤Ø³Ø³Ø§Øª - Ù…Ù†Ø¹ Ø§Ù„Ø§Ø²Ø¯ÙˆØ§Ø¬ÙŠØ© ÙˆØªÙƒØ±Ø§Ø±
-                                        Ø§Ù„Ø®Ø¯Ù…Ø©)</span>
+                                    <span>إذا رأيت في السؤال كلمة: (تنسيق جهود بين مؤسسات - منع الازدواجية وتكرار
+                                        الخدمة)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
-                                <span class="cheat-output" style="color: #d76d77;">Ø§Ù„ØªØ´Ø¨ÙŠÙƒ (Networking)</span>
+                                <span class="cheat-output" style="color: #d76d77;">التشبيك (Networking)</span>
                             </li>
                             <li class="cheat-item" style="background: rgba(212, 175, 55, 0.08);">
                                 <div class="cheat-left">
                                     <span class="cheat-badge" style="background: gold; color: black;">10</span>
-                                    <span style="font-weight: 700;">Ø£ÙŠ Ø³Ø¤Ø§Ù„ ÙŠØ®ÙŠÙ‘Ø±Ùƒ Ø¨ÙŠÙ† (Ø§Ø³ØªØ±Ø§ØªÙŠØ¬ÙŠØ© Ø§Ù„Ø¥Ù‚Ù†Ø§Ø¹) Ùˆ(Ø§Ø³ØªØ±Ø§ØªÙŠØ¬ÙŠØ©
-                                        Ø§Ù„Ø¥Ø¬Ø¨Ø§Ø±/Ø§Ù„Ø¶ØºØ·)</span>
+                                    <span style="font-weight: 700;">أي سؤال يخيّرك بين (استراتيجية الإقناع) و(استراتيجية
+                                        الإجبار/الضغط)</span>
                                 </div>
                                 <span class="cheat-arrow"><i class="fas fa-arrow-left"></i></span>
                                 <span class="cheat-output"
-                                    style="background: gold; color: black; border-color: gold;">Ø§Ø®ØªØ± Ø¯Ø§Ø¦Ù…Ø§Ù‹: Ø§Ù„Ø¥Ù‚Ù†Ø§Ø¹
-                                    ÙˆØ§Ù„ØªÙˆØ¹ÙŠØ©</span>
+                                    style="background: gold; color: black; border-color: gold;">اختر دائماً: الإقناع
+                                    والتوعية</span>
                             </li>
                         </ul>
                     </div>

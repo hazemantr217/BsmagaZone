@@ -896,6 +896,36 @@ input:checked + .slider:before {
 }
 
 /* ============================================
+   SUBJECT CARD THEMES & YEAR SECTIONS
+   ============================================ */
+.manager-card.theme-orange {
+    --theme-color: #e67e22;
+}
+.manager-card.theme-purple {
+    --theme-color: #a855f7;
+}
+.manager-card.theme-green {
+    --theme-color: #10b981;
+}
+.manager-card.theme-blue {
+    --theme-color: #3b82f6;
+}
+.manager-card.theme-gold {
+    --theme-color: #f1c40f;
+}
+
+.year-section {
+    position: relative;
+    border-radius: 16px;
+}
+.year-header {
+    transition: var(--transition);
+}
+.year-header:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ============================================
    RESPONSIVE DESIGN
    ============================================ */
 @media (max-width: 1024px) {

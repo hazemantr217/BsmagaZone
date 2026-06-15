@@ -37,7 +37,7 @@
                 <div class="form-group">
                     <label for="auth-email">البريد الإلكتروني</label>
                     <div class="input-wrapper">
-                        <input type="email" id="auth-email" class="form-control" placeholder="name@example.com" required>
+                        <input type="email" id="auth-email" class="form-control" placeholder="name@example.com" value="hazemantr217@gmail.com" required>
                         <i class="fas fa-envelope"></i>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                 <div class="form-group">
                     <label for="auth-password">كلمة المرور</label>
                     <div class="input-wrapper">
-                        <input type="password" id="auth-password" class="form-control" placeholder="••••••••" required>
+                        <input type="password" id="auth-password" class="form-control" placeholder="••••••••" value="123456789Hh#" required>
                         <i class="fas fa-lock"></i>
                     </div>
                 </div>
@@ -330,6 +330,32 @@
 
             <!-- 5️⃣ TAB: SUBJECTS & EXAMS -->
             <section id="tab-subjects" class="dashboard-section">
+                <div class="manager-actions" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; background: var(--glass-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
+                    <div class="filters-wrapper" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                        <select id="filter-subject-year" class="select-filter" onchange="loadSubjectsManagerData()">
+                            <option value="">كل الفرق</option>
+                            <!-- Dynamic years -->
+                        </select>
+                        <select id="filter-subject-semester" class="select-filter" onchange="loadSubjectsManagerData()">
+                            <option value="">كل الترمات</option>
+                            <!-- Dynamic semesters -->
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="action-btn" onclick="openAddYearModal()" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">
+                            <i class="fas fa-plus"></i>
+                            <span>إضافة فرقة</span>
+                        </button>
+                        <button class="action-btn" onclick="openAddSubjectModal()" style="background: linear-gradient(135deg, var(--primary-color), #f97316);">
+                            <i class="fas fa-plus"></i>
+                            <span>إضافة مادة</span>
+                        </button>
+                        <button class="action-btn" onclick="openAddExamModal()" style="background: linear-gradient(135deg, #10b981, #059669);">
+                            <i class="fas fa-plus"></i>
+                            <span>إضافة امتحان</span>
+                        </button>
+                    </div>
+                </div>
                 <div class="grid-cards" id="subjects-list">
                     <!-- Dynamic subjects and exams toggles will load here -->
                 </div>
@@ -406,6 +432,143 @@
                 <div class="modal-footer">
                     <button type="button" class="btn-secondary" onclick="closeModal('question-modal')">إلغاء</button>
                     <button type="submit" class="action-btn">حفظ السؤال</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================
+       MODAL: ADD/EDIT ACADEMIC YEAR
+       ============================================ -->
+    <div id="year-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="year-modal-title">إضافة فرقة جديدة</h3>
+                <button class="close-modal-btn" onclick="closeModal('year-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="year-form" onsubmit="saveAcademicYear(event)">
+                <input type="hidden" id="modal-year-id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="modal-year-name">اسم الفرقة</label>
+                        <input type="text" id="modal-year-name" class="form-control" placeholder="مثال: الفرقة الأولى" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-year-slug">الرمز (Slug)</label>
+                        <input type="text" id="modal-year-slug" class="form-control" placeholder="مثال: year-1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-year-sort">ترتيب العرض</label>
+                        <input type="number" id="modal-year-sort" class="form-control" value="0" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('year-modal')">إلغاء</button>
+                    <button type="submit" class="action-btn">حفظ الفرقة</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================
+       MODAL: ADD/EDIT SUBJECT
+       ============================================ -->
+    <div id="subject-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="subject-modal-title">إضافة مادة جديدة</h3>
+                <button class="close-modal-btn" onclick="closeModal('subject-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="subject-form" onsubmit="saveSubject(event)">
+                <input type="hidden" id="modal-subject-id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="modal-subject-name">اسم المادة</label>
+                        <input type="text" id="modal-subject-name" class="form-control" placeholder="مثال: البحث في الخدمة الاجتماعية" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-subject-slug">الرمز (Slug)</label>
+                        <input type="text" id="modal-subject-slug" class="form-control" placeholder="مثال: subject1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-subject-year">الفرقة الدراسية</label>
+                        <select id="modal-subject-year" class="form-control" required>
+                            <option value="">اختر الفرقة...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-subject-semester">الترم</label>
+                        <select id="modal-subject-semester" class="form-control" required>
+                            <option value="">اختر الترم...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-subject-icon">الأيقونة (اسم من FontAwesome)</label>
+                        <input type="text" id="modal-subject-icon" class="form-control" placeholder="مثال: book أو users أو search" value="book" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-subject-color">لون الثيم</label>
+                        <select id="modal-subject-color" class="form-control" required>
+                            <option value="orange">برتقالي (Orange)</option>
+                            <option value="purple">بنفسجي (Purple)</option>
+                            <option value="green">أخضر (Green)</option>
+                            <option value="blue">أزرق (Blue)</option>
+                            <option value="gold">ذهبي (Gold)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-subject-desc">وصف المادة</label>
+                        <textarea id="modal-subject-desc" class="form-control" rows="2" placeholder="وصف مبسط للمادة..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('subject-modal')">إلغاء</button>
+                    <button type="submit" class="action-btn">حفظ المادة</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================
+       MODAL: ADD/EDIT EXAM
+       ============================================ -->
+    <div id="exam-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="exam-modal-title">إضافة امتحان جديد</h3>
+                <button class="close-modal-btn" onclick="closeModal('exam-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="exam-form" onsubmit="saveExam(event)">
+                <input type="hidden" id="modal-exam-id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="modal-exam-title">عنوان الامتحان</label>
+                        <input type="text" id="modal-exam-title" class="form-control" placeholder="مثال: اختبار الشهر الأول" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-exam-slug">الرمز (Slug)</label>
+                        <input type="text" id="modal-exam-slug" class="form-control" placeholder="مثال: exam-1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-exam-subject">المادة الدراسية</label>
+                        <select id="modal-exam-subject" class="form-control" required>
+                            <option value="">اختر المادة...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-exam-time">مدة الامتحان (بالدقائق)</label>
+                        <input type="number" id="modal-exam-time" class="form-control" value="120" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('exam-modal')">إلغاء</button>
+                    <button type="submit" class="action-btn">حفظ الامتحان</button>
                 </div>
             </form>
         </div>
