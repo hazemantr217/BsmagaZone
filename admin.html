@@ -88,7 +88,7 @@
                         <span>نتائج الطلاب</span>
                     </button>
                 </li>
-                <li class="menu-item" id="menu-questions">
+                <li class="menu-item" id="menu-questions" style="display: none;">
                     <button onclick="switchTab('questions')">
                         <i class="fas fa-question-circle"></i>
                         <span>إدارة الأسئلة</span>
@@ -305,6 +305,10 @@
                         <i class="fas fa-search"></i>
                     </div>
                     <div class="filters-wrapper">
+                        <select id="filter-question-year" class="select-filter" onchange="onQuestionYearFilterChange()">
+                            <option value="">اختر الفرقة...</option>
+                            <!-- Dynamic years -->
+                        </select>
                         <select id="filter-question-subject" class="select-filter" onchange="onQuestionSubjectFilterChange()">
                             <option value="">اختر المادة...</option>
                             <!-- Dynamic subjects -->
@@ -315,6 +319,10 @@
                         <button class="action-btn" onclick="openAddQuestionModal()" id="btn-add-question" disabled>
                             <i class="fas fa-plus"></i>
                             <span>إضافة سؤال جديد</span>
+                        </button>
+                        <button class="action-btn" onclick="openBulkImportModal()" id="btn-bulk-import-question" disabled style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">
+                            <i class="fas fa-file-import"></i>
+                            <span>استيراد دفعة واحدة</span>
                         </button>
                     </div>
                 </div>
@@ -330,34 +338,70 @@
 
             <!-- 5️⃣ TAB: SUBJECTS & EXAMS -->
             <section id="tab-subjects" class="dashboard-section">
-                <div class="manager-actions" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; background: var(--glass-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
-                    <div class="filters-wrapper" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-                        <select id="filter-subject-year" class="select-filter" onchange="loadSubjectsManagerData()">
-                            <option value="">كل الفرق</option>
-                            <!-- Dynamic years -->
-                        </select>
-                        <select id="filter-subject-semester" class="select-filter" onchange="loadSubjectsManagerData()">
-                            <option value="">كل الترمات</option>
-                            <!-- Dynamic semesters -->
-                        </select>
+                <!-- Main subjects/exams list -->
+                <div id="subjects-manager-main-view">
+                    <div class="manager-actions" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; background: var(--glass-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
+                        <div class="filters-wrapper" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                            <select id="filter-subject-year" class="select-filter" onchange="loadSubjectsManagerData()">
+                                <option value="">كل الفرق</option>
+                                <!-- Dynamic years -->
+                            </select>
+                            <select id="filter-subject-semester" class="select-filter" onchange="loadSubjectsManagerData()">
+                                <option value="">كل الترمات</option>
+                                <!-- Dynamic semesters -->
+                            </select>
+                        </div>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="action-btn" onclick="openAddYearModal()" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">
+                                <i class="fas fa-plus"></i>
+                                <span>إضافة فرقة</span>
+                            </button>
+                            <button class="action-btn" onclick="openAddSubjectModal()" style="background: linear-gradient(135deg, var(--primary-color), #f97316);">
+                                <i class="fas fa-plus"></i>
+                                <span>إضافة مادة</span>
+                            </button>
+                            <button class="action-btn" onclick="openAddExamModal()" style="background: linear-gradient(135deg, #10b981, #059669);">
+                                <i class="fas fa-plus"></i>
+                                <span>إضافة امتحان</span>
+                            </button>
+                        </div>
                     </div>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button class="action-btn" onclick="openAddYearModal()" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">
-                            <i class="fas fa-plus"></i>
-                            <span>إضافة فرقة</span>
-                        </button>
-                        <button class="action-btn" onclick="openAddSubjectModal()" style="background: linear-gradient(135deg, var(--primary-color), #f97316);">
-                            <i class="fas fa-plus"></i>
-                            <span>إضافة مادة</span>
-                        </button>
-                        <button class="action-btn" onclick="openAddExamModal()" style="background: linear-gradient(135deg, #10b981, #059669);">
-                            <i class="fas fa-plus"></i>
-                            <span>إضافة امتحان</span>
-                        </button>
+                    <div class="grid-cards" id="subjects-list">
+                        <!-- Dynamic subjects and exams toggles will load here -->
                     </div>
                 </div>
-                <div class="grid-cards" id="subjects-list">
-                    <!-- Dynamic subjects and exams toggles will load here -->
+
+                <!-- Integrated questions management sub-view -->
+                <div id="subjects-manager-questions-view" style="display: none;">
+                    <div class="manager-actions" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; background: var(--glass-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
+                        <button class="action-btn" onclick="backToSubjectsMainView()" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-color);">
+                            <i class="fas fa-arrow-right" style="margin-left: 5px;"></i>
+                            <span>العودة للمواد</span>
+                        </button>
+                        <h3 id="integrated-questions-title" style="margin: 0; font-size: 1.1rem; font-weight: 700; color: var(--primary-color);">إدارة الأسئلة</h3>
+                        <div class="search-box" style="flex: 1; min-width: 200px; max-width: 300px; margin: 0;">
+                            <input type="text" id="integrated-search-questions-input" class="form-control" placeholder="ابحث عن سؤال..." onkeyup="filterIntegratedQuestions()">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="action-btn" onclick="openAddQuestionModalIntegrated()" id="integrated-btn-add-question" style="background: linear-gradient(135deg, var(--primary-color), #f97316);">
+                                <i class="fas fa-plus"></i>
+                                <span>إضافة سؤال جديد</span>
+                            </button>
+                            <button class="action-btn" onclick="openBulkImportModalIntegrated()" id="integrated-btn-bulk-import-question" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">
+                                <i class="fas fa-file-import"></i>
+                                <span>استيراد دفعة واحدة</span>
+                            </button>
+                            <button class="action-btn btn-delete-all" onclick="deleteAllExamQuestions()" id="integrated-btn-delete-all">
+                                <i class="fas fa-trash-alt"></i>
+                                <span>حذف كل الأسئلة</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="warning-banner-container"></div>
+                    <div class="grid-cards" id="integrated-questions-list">
+                        <!-- Questions will load here -->
+                    </div>
                 </div>
             </section>
         </main>
@@ -434,6 +478,59 @@
                     <button type="submit" class="action-btn">حفظ السؤال</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- ============================================
+       MODAL: BULK IMPORT QUESTIONS
+       ============================================ -->
+    <div id="bulk-import-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px; width: 90%;">
+            <div class="modal-header">
+                <h3>استيراد الأسئلة دفعة واحدة</h3>
+                <button class="close-modal-btn" onclick="closeModal('bulk-import-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="bulk-import-textarea">انسخ والصق نص الأسئلة الكامل هنا:</label>
+                    <textarea id="bulk-import-textarea" class="form-control" rows="12" placeholder="مثال للصق بنك الأسئلة...
+1. السؤال الأول صح وخطأ؟
+الإجابة: صح
+التعليل: التعليل هنا...
+
+26. السؤال الأول اختيار من متعدد؟
+أ) خيار أ
+ب) خيار ب
+ج) خيار ج
+د) خيار د
+الإجابة الصحيحة: (ب) خيار ب
+التعليل: التعليل هنا...
+
+51. السؤال:
+السؤال المقالي هنا...
+الإجابة النموذجية والتعليل:
+الإجابة والتعليل هنا..." required></textarea>
+                </div>
+                
+                <div id="bulk-import-preview-container" style="display: none; margin-top: 20px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border: 1px solid var(--glass-border);">
+                    <h4 style="color: var(--primary-color); margin-bottom: 10px;"><i class="fas fa-eye"></i> معاينة الأسئلة التي تم تحليلها (<span id="bulk-import-count">0</span> سؤال)</h4>
+                    <div id="bulk-import-summary" style="font-size: 0.9rem; margin-bottom: 10px; display: flex; gap: 15px;">
+                        <span>صح/خطأ: <strong id="bulk-tf-count" style="color: #60a5fa;">0</strong></span>
+                        <span>اختيار من متعدد: <strong id="bulk-mcq-count" style="color: #34d399;">0</strong></span>
+                        <span>مقالي: <strong id="bulk-essay-count" style="color: #fbbf24;">0</strong></span>
+                    </div>
+                    <div id="bulk-import-preview-list" style="max-height: 250px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.05); padding: 10px; border-radius: 6px; background: rgba(0,0,0,0.2); font-size: 0.85rem; display: flex; flex-direction: column; gap: 10px;">
+                        <!-- Dynamic preview list -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeModal('bulk-import-modal')">إلغاء</button>
+                <button type="button" class="action-btn" id="btn-parse-bulk" onclick="parseBulkQuestions()" style="background: linear-gradient(135deg, #10b981, #059669);">تحليل النص</button>
+                <button type="button" class="action-btn" id="btn-submit-bulk" onclick="submitBulkQuestions()" style="background: linear-gradient(135deg, var(--primary-color), #f97316); display: none;">تأكيد وإضافة الأسئلة</button>
+            </div>
         </div>
     </div>
 
@@ -571,6 +668,36 @@
                     <button type="submit" class="action-btn">حفظ الامتحان</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Custom Confirmation Modal -->
+    <div class="confirm-modal-overlay" id="confirm-modal-overlay">
+        <div class="confirm-modal-box">
+            <div class="confirm-modal-body">
+                <div class="confirm-modal-icon danger" id="confirm-modal-icon">
+                    <i class="fas fa-exclamation-triangle" id="confirm-modal-icon-i"></i>
+                </div>
+                <h3 id="confirm-modal-title">تأكيد الحذف</h3>
+                <p id="confirm-modal-message">هل أنت متأكد من هذا الإجراء؟</p>
+                <div class="confirm-modal-input-wrap" id="confirm-modal-input-wrap" style="display: none;">
+                    <label id="confirm-modal-input-label">اكتب اسم المادة للتأكيد:</label>
+                    <input type="text" id="confirm-modal-input" placeholder="" autocomplete="off">
+                </div>
+                <div class="confirm-modal-checkbox-wrap" id="confirm-modal-checkbox-wrap" style="display: none; margin-top: 15px; text-align: right;">
+                    <label style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer; user-select: none;">
+                        <input type="checkbox" id="confirm-modal-checkbox" style="accent-color: var(--primary-color);">
+                        <span id="confirm-modal-checkbox-label">عدم إظهار هذا التأكيد مرة أخرى في هذه الجلسة</span>
+                    </label>
+                </div>
+            </div>
+            <div class="confirm-modal-footer">
+                <button class="btn-confirm-cancel" id="confirm-modal-cancel" onclick="closeConfirmDialog()">إلغاء</button>
+                <button class="btn-confirm-action danger" id="confirm-modal-action" onclick="executeConfirmAction()">حذف</button>
+            </div>
         </div>
     </div>
 

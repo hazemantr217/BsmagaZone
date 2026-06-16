@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تحميل الامتحان...</title>
+    <link rel="icon" type="image/svg+xml" href="shared/favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="shared/styles.css">
+
+    <!-- Supabase Integration -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="shared/supabase-config.js"></script>
+</head>
+
+<body>
+
+    <div id="loading-screen">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <h2>جاري تحميل الامتحان...</h2>
+            <p>تجهيز الأسئلة</p>
+        </div>
+    </div>
+
+    <div id="confetti-container"></div>
+
+    <div class="bg-animation">
+        <div class="shape circle shape-1"></div>
+        <div class="shape square shape-2"></div>
+        <div class="shape circle shape-3"></div>
+        <div class="shape square shape-4"></div>
+    </div>
+
+    <div id="landing-page">
+        <div class="landing-container">
+            <div class="landing-header">
+                <h1 id="exam-title-header"><i class="fas fa-graduation-cap"></i> جاري التحميل...</h1>
+                <p>اختر الوضع المناسب للدراسة</p>
+            </div>
+
+            <div class="mode-cards">
+                <div class="mode-card exam-card" onclick="startExam()">
+                    <div class="card-icon"><i class="fas fa-file-alt"></i></div>
+                    <h2>ابدأ الامتحان</h2>
+                    <p id="exam-questions-count">جاري حساب عدد الأسئلة...</p>
+                    <div class="card-buttons">
+                        <button class="card-btn btn-exam">
+                            <i class="fas fa-play"></i> ابدأ الآن
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="landing-theme-switcher">
+                <span>المظهر:</span>
+                <button onclick="setTheme('')" title="داكن"><i class="fas fa-moon"></i></button>
+                <button onclick="setTheme('light-mode')" title="فاتح"><i class="fas fa-sun"></i></button>
+                <button onclick="setTheme('pro-mode')" title="Pro"><i class="fas fa-gem"></i></button>
+                <button onclick="setTheme('contrast-mode')" title="تباين"><i class="fas fa-adjust"></i></button>
+            </div>
+            <div style="margin-top: 2rem; opacity: 0.7; font-size: 0.9rem; direction: ltr; font-family: sans-serif;">
+                Created by Hazem Anter
+            </div>
+        </div>
+    </div>
+
+    <div id="exam-interface" style="display: none;">
+
+        <div id="progress-bar-container">
+            <div id="progress-bar"></div>
+            <span id="progress-text">0 / 0</span>
+        </div>
+
+        <header>
+            <div class="header-content">
+                <button class="back-btn" onclick="backToMenu()" title="العودة"><i
+                        class="fas fa-arrow-right"></i></button>
+                <div class="theme-dropdown">
+                    <button type="button" id="theme-toggle-btn" title="المظهر" onclick="toggleThemeDropdown(event)"><i
+                            class="fas fa-palette"></i></button>
+                    <div class="theme-menu">
+                        <button onclick="setTheme('')"><i class="fas fa-moon"></i> داكن</button>
+                        <button onclick="setTheme('light-mode')"><i class="fas fa-sun"></i> فاتح</button>
+                        <button onclick="setTheme('pro-mode')"><i class="fas fa-gem"></i> Pro</button>
+                        <button onclick="setTheme('contrast-mode')"><i class="fas fa-adjust"></i> تباين</button>
+                    </div>
+                </div>
+                <h1 id="exam-run-title">الامتحان</h1>
+                <div class="score-box" id="header-score-box">
+                    <i class="fas fa-chart-pie"></i>
+                    <span class="score-value" id="header-score">0</span>/<span id="header-total">0</span>
+                </div>
+                <div id="timer-container">
+                    <i class="fas fa-clock"></i>
+                    <span id="timer">02:00:00</span>
+                </div>
+            </div>
+        </header>
+
+        <div id="question-navigator">
+            <div class="nav-header">
+                <i class="fas fa-list-ol"></i>
+                <span>الأسئلة</span>
+            </div>
+            <div id="nav-buttons"></div>
+        </div>
+
+        <main class="container">
+            <div class="exam-instructions" id="exam-instructions">
+                <h2><i class="fas fa-info-circle"></i> <span id="mode-title">ملاحظات</span></h2>
+                <ul id="mode-instructions">
+                    <li>الإجابة والتعليل يظهران <strong style="color:var(--success-color)">فوراً</strong> بعد الحل.</li>
+                    <li>الأسئلة مقسمة: صح/خطأ ثم اختيار من متعدد ثم مقالي.</li>
+                </ul>
+            </div>
+
+            <form id="exam-form">
+                <div id="questions-container"></div>
+            </form>
+        </main>
+
+        <!-- Mobile Navigation Toggle -->
+        <button class="mobile-nav-toggle" onclick="toggleMobileNavigator()" aria-label="قائمة الأسئلة">
+            <i class="fas fa-list-ol"></i>
+        </button>
+
+        <footer>
+            <div class="score-live" id="score-live-container">
+                <span>النتيجة: </span>
+                <strong id="live-score">0</strong>/<strong id="live-total">0</strong>
+                (<span id="live-percentage">0</span>%)
+            </div>
+            <button id="submit-btn" onclick="confirmSubmit()">
+                <i class="fas fa-flag-checkered"></i> إنهاء
+            </button>
+        </footer>
+    </div>
+
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content confirm-modal-content">
+            <i class="fas fa-flag-checkered finish-icon"></i>
+            <h2>إنهاء الامتحان</h2>
+            <div class="final-score-preview">
+                <div class="score-big" id="final-score-preview">0%</div>
+            </div>
+            <p>إجاباتك الصحيحة: <strong><span id="answered-count">0</span></strong> من <span id="confirm-total-questions">0</span></p>
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeConfirmModal()"><i class="fas fa-arrow-right"></i>
+                    العودة</button>
+                <button class="btn-confirm" onclick="finishExam()"><i class="fas fa-check"></i> إنهاء</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Placeholder dynamic questions variable that shared/exam.js overrides
+        let questions = [];
+
+        async function initDynamicExamTitle() {
+            const client = typeof getSupabaseClient === 'function' ? getSupabaseClient() : null;
+            if (!client) return;
+
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const slug = urlParams.get('slug');
+                if (!slug) return;
+
+                // Get exam title
+                const { data: examData } = await client
+                    .from('exams')
+                    .select('id, title')
+                    .eq('slug', slug)
+                    .single();
+
+                if (examData) {
+                    document.title = examData.title;
+                    const titleHeader = document.getElementById('exam-title-header');
+                    if (titleHeader) titleHeader.innerHTML = `<i class="fas fa-graduation-cap"></i> ${examData.title}`;
+                    
+                    const runTitle = document.getElementById('exam-run-title');
+                    if (runTitle) runTitle.textContent = examData.title;
+
+                    // Get questions count
+                    const { count, error } = await client
+                        .from('questions')
+                        .select('*', { count: 'exact', head: true })
+                        .eq('exam_id', examData.id);
+                    
+                    if (!error && count) {
+                        const countEl = document.getElementById('exam-questions-count');
+                        if (countEl) countEl.textContent = `${count} سؤال - صح وخطأ + اختيار من متعدد + مقالي`;
+                        
+                        const confirmTotal = document.getElementById('confirm-total-questions');
+                        if (confirmTotal) confirmTotal.textContent = count;
+                    }
+                }
+            } catch (e) {
+                console.error("Error setting dynamic exam title:", e);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initDynamicExamTitle();
+        });
+    </script>
+    <script src="shared/exam.js"></script>
+
+</body>
+
+</html>

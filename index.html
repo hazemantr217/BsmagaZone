@@ -655,6 +655,201 @@
             direction: ltr !important;
         }
 
+            border-top: 1px solid var(--border-color);
+        }
+
+        .hub-footer-text {
+            opacity: 0.5;
+            font-size: 0.85rem;
+            direction: ltr;
+            font-family: sans-serif;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .landing-header h1 {
+                font-size: 1.5rem !important;
+            }
+
+            .subject-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .subject-card {
+                padding: 24px 18px;
+            }
+
+            .card-arrow {
+                display: none;
+            }
+        }
+
+        /* Farewell Premium Modal Custom Styles */
+        .farewell-modal-content {
+            background: linear-gradient(135deg, rgba(20, 24, 33, 0.96), rgba(35, 20, 44, 0.96)) !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            box-shadow: 0 20px 50px rgba(230, 126, 34, 0.18), 0 0 40px rgba(155, 89, 182, 0.15) !important;
+            max-width: 550px !important;
+            padding: 35px 25px 30px !important;
+            border-radius: 24px !important;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Light mode adjustments */
+        body.light-mode .farewell-modal-content {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(245, 240, 250, 0.98)) !important;
+            border: 1px solid rgba(230, 126, 34, 0.2) !important;
+            box-shadow: 0 20px 50px rgba(230, 126, 34, 0.1), 0 0 30px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .farewell-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .farewell-header .header-cap {
+            font-size: 2.8rem;
+            color: #f1c40f !important;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 2px 8px rgba(241, 196, 15, 0.3));
+            animation: pulse-cap 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-cap {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .farewell-header h2 {
+            font-size: 1.6rem !important;
+            font-weight: 800;
+            color: var(--primary-color) !important;
+            margin-bottom: 0 !important;
+            text-shadow: none !important;
+        }
+
+        body.light-mode .farewell-header h2 {
+            color: var(--primary-color) !important;
+        }
+
+        .farewell-body {
+            text-align: right;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .farewell-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 14px 18px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .farewell-card {
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .farewell-card:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(230, 126, 34, 0.25);
+        }
+
+        body.light-mode .farewell-card:hover {
+            background: rgba(230, 126, 34, 0.05);
+            border-color: rgba(230, 126, 34, 0.2);
+        }
+
+        .farewell-card-icon {
+            font-size: 1.2rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .fc-orange {
+            background: rgba(230, 126, 34, 0.15);
+            color: #e67e22;
+        }
+        .fc-green {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+        }
+        .fc-purple {
+            background: rgba(155, 89, 182, 0.15);
+            color: #9b59b6;
+        }
+        .fc-blue {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+        }
+
+        .farewell-card-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .farewell-highlight {
+            background: linear-gradient(135deg, rgba(230, 126, 34, 0.12), rgba(155, 89, 182, 0.12)) !important;
+            border: 1px solid rgba(230, 126, 34, 0.25) !important;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.05);
+        }
+
+        .farewell-signature {
+            text-align: center;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-top: 15px;
+            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, #f1c40f, #e67e22, #9b59b6, #f1c40f);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-text 3s linear infinite;
+        }
+
+        @keyframes gradient-text {
+            to { background-position: 200% center; }
+        }
+
+        .farewell-btn {
+            background: var(--primary-color) !important;
+            color: white !important;
+            padding: 12px 30px !important;
+            font-size: 1rem !important;
+            font-weight: 700 !important;
+            border: none !important;
+            border-radius: 50px !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3) !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            margin-top: 15px;
+            direction: ltr !important;
+        }
+
         .farewell-btn:hover {
             transform: translateY(-3px) scale(1.03) !important;
             box-shadow: 0 6px 20px rgba(230, 126, 34, 0.45) !important;
@@ -663,9 +858,63 @@
         .farewell-btn:active {
             transform: translateY(-1px) scale(0.98) !important;
         }
+
+        /* Dynamic filters styles */
+        .filters-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 24px;
+            animation: slideUp 0.4s ease-out;
+            flex-wrap: wrap;
+        }
+
+        .custom-select-wrapper {
+            position: relative;
+            min-width: 180px;
+        }
+
+        .custom-select-wrapper i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            pointer-events: none;
+            font-size: 0.9rem;
+        }
+
+        .hub-select {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            border-radius: 50px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(230, 126, 34, 0.3);
+            color: var(--text-color);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .hub-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(230, 126, 34, 0.2);
+        }
+
+        .hub-select option {
+            background: #141821;
+            color: #fff;
+        }
     </style>
 
-    <!-- Supabase Integration -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="shared/supabase-config.js"></script>
 
@@ -691,9 +940,19 @@
     <div id="landing-page">
         <div class="landing-container">
             <div class="landing-header">
-                <div class="hub-badge">
-                    <i class="fas fa-circle"></i>
-                    الفرقة الثالثة — الترم الثاني
+                <div class="filters-container">
+                    <div class="custom-select-wrapper">
+                        <select id="hub-year-select" class="hub-select" onchange="renderDynamicSubjects()">
+                            <!-- Dynamic years -->
+                        </select>
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="custom-select-wrapper">
+                        <select id="hub-semester-select" class="hub-select" onchange="renderDynamicSubjects()">
+                            <!-- Dynamic semesters -->
+                        </select>
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
                 </div>
                 <h1><i class="fas fa-graduation-cap"></i> منصة الامتحانات</h1>
                 <p class="subtitle">اختر المادة للبدء في المذاكرة والتدريب على الامتحانات</p>
@@ -964,10 +1223,147 @@
             }
         }
 
+        let activeYears = [];
+        let activeSemesters = [];
+        let allSubjects = [];
+        let allExams = [];
+
+        async function initDynamicLanding() {
+            const client = typeof getSupabaseClient === 'function' ? getSupabaseClient() : null;
+            if (!client) {
+                console.error("Supabase client not loaded, using static fallback.");
+                setTimeout(() => document.getElementById('loading-screen').classList.add('hidden'), 600);
+                return;
+            }
+
+            try {
+                // Fetch Years, Semesters, Subjects, Exams
+                const [yearsRes, semRes, subRes, examsRes] = await Promise.all([
+                    client.from('academic_years').select('*').order('sort_order', { ascending: true }),
+                    client.from('semesters').select('*').order('sort_order', { ascending: true }),
+                    client.from('subjects').select('*').eq('is_active', true).order('id', { ascending: true }),
+                    client.from('exams').select('*').eq('is_active', true)
+                ]);
+
+                if (yearsRes.error) throw yearsRes.error;
+                if (semRes.error) throw semRes.error;
+                if (subRes.error) throw subRes.error;
+                if (examsRes.error) throw examsRes.error;
+
+                activeYears = yearsRes.data || [];
+                activeSemesters = semRes.data || [];
+                allSubjects = subRes.data || [];
+                allExams = examsRes.data || [];
+
+                populateFilters();
+
+                let savedYear = localStorage.getItem('selected_year');
+                let savedSem = localStorage.getItem('selected_semester');
+
+                if (!savedYear && activeYears.some(y => y.id === 3)) savedYear = '3';
+                else if (!savedYear && activeYears.length > 0) savedYear = activeYears[0].id.toString();
+
+                if (!savedSem && activeSemesters.some(s => s.id === 2)) savedSem = '2';
+                else if (!savedSem && activeSemesters.length > 0) savedSem = activeSemesters[0].id.toString();
+
+                const yearSelect = document.getElementById('hub-year-select');
+                const semSelect = document.getElementById('hub-semester-select');
+
+                if (yearSelect && savedYear) yearSelect.value = savedYear;
+                if (semSelect && savedSem) semSelect.value = savedSem;
+
+                renderDynamicSubjects();
+            } catch (e) {
+                console.error("Error loading dynamic landing data:", e);
+            } finally {
+                setTimeout(() => document.getElementById('loading-screen').classList.add('hidden'), 600);
+            }
+        }
+
+        function populateFilters() {
+            const yearSelect = document.getElementById('hub-year-select');
+            const semSelect = document.getElementById('hub-semester-select');
+
+            if (yearSelect) {
+                yearSelect.innerHTML = '';
+                activeYears.forEach(y => {
+                    yearSelect.innerHTML += `<option value="${y.id}">${y.name}</option>`;
+                });
+            }
+
+            if (semSelect) {
+                semSelect.innerHTML = '';
+                activeSemesters.forEach(s => {
+                    semSelect.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+                });
+            }
+        }
+
+        function renderDynamicSubjects() {
+            const yearSelect = document.getElementById('hub-year-select');
+            const semSelect = document.getElementById('hub-semester-select');
+            if (!yearSelect || !semSelect) return;
+
+            const yearVal = yearSelect.value;
+            const semVal = semSelect.value;
+
+            localStorage.setItem('selected_year', yearVal);
+            localStorage.setItem('selected_semester', semVal);
+
+            const selectedYearId = parseInt(yearVal);
+            const selectedSemId = parseInt(semVal);
+
+            const filteredSubjects = allSubjects.filter(s => s.academic_year_id === selectedYearId && s.semester_id === selectedSemId);
+            const container = document.getElementById('subject-cards');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (filteredSubjects.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-color); opacity: 0.6;">
+                        <i class="fas fa-book-open" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>لا توجد مواد مضافة أو نشطة لهذه الفرقة والترم حالياً</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredSubjects.forEach((s, idx) => {
+                const exams = allExams.filter(e => e.subject_id === s.id);
+                const examsCount = exams.length;
+                
+                const href = ['subject1', 'subject2', 'subject3', 'subject4', 'subject5', 'subject6', 'subject7'].includes(s.slug)
+                    ? `${s.slug}.html`
+                    : `subject.html?slug=${s.slug}`;
+
+                const cardHtml = `
+                    <a href="${href}" class="subject-card theme-${s.color_theme || 'orange'}" id="subject-${s.id}" style="animation-delay: ${0.1 * (idx + 1)}s">
+                        <div class="subject-icon">
+                            <i class="fas fa-${s.icon || 'book'}"></i>
+                        </div>
+                        <div class="subject-name">${s.name}</div>
+                        ${s.description ? `<div class="subject-description" style="font-size:0.8rem; margin-bottom:12px; opacity:0.7;">${s.description}</div>` : ''}
+                        <div class="subject-stats">
+                            <div class="subject-stat">
+                                <i class="fas fa-file-alt stat-icon"></i>
+                                <span>${examsCount} امتحان${examsCount > 10 ? '' : (examsCount === 1 ? '' : (examsCount === 2 ? 'ين' : 'ات'))}</span>
+                            </div>
+                            <div class="subject-stat">
+                                <i class="fas fa-sitemap stat-icon"></i>
+                                <span>كبسولة المراجعة</span>
+                            </div>
+                        </div>
+                        <div class="card-arrow"><i class="fas fa-arrow-left"></i></div>
+                    </a>
+                `;
+                container.innerHTML += cardHtml;
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             loadTheme();
             checkNoticeModal();
-            setTimeout(() => document.getElementById('loading-screen').classList.add('hidden'), 600);
+            initDynamicLanding();
         });
 
         window.setTheme = setTheme;

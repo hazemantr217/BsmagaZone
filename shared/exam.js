@@ -472,8 +472,14 @@ async function initExam() {
     const client = typeof getSupabaseClient === 'function' ? getSupabaseClient() : null;
     if (client) {
         try {
-            const filename = window.location.pathname.split('/').pop().replace('.html', '');
-            const decodedExamSlug = decodeURIComponent(filename);
+            const urlParams = new URLSearchParams(window.location.search);
+            let decodedExamSlug = urlParams.get('slug');
+            if (decodedExamSlug) {
+                decodedExamSlug = decodeURIComponent(decodedExamSlug);
+            } else {
+                const filename = window.location.pathname.split('/').pop().replace('.html', '');
+                decodedExamSlug = decodeURIComponent(filename);
+            }
             
             // Find exam ID
             const { data: examData } = await client

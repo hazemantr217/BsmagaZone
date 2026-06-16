@@ -149,21 +149,15 @@ async function trackExamResult(examSlug, subjectSlug, score, totalQuestions, tim
         const sessionId = await getOrCreateSession();
         if (!sessionId) return;
 
-        // Find subject and exam IDs
-        const { data: subjectData } = await client
-            .from("subjects")
-            .select("id")
-            .eq("slug", subjectSlug)
-            .single();
-
+        // Find exam and its linked subject ID directly
         const { data: examData } = await client
             .from("exams")
-            .select("id")
+            .select("id, subject_id")
             .eq("slug", examSlug)
             .single();
 
-        if (!subjectData || !examData) {
-            console.error("Subject or Exam not found in Supabase database");
+        if (!examData) {
+            console.error("Exam not found in Supabase database");
             return;
         }
 
@@ -174,7 +168,7 @@ async function trackExamResult(examSlug, subjectSlug, score, totalQuestions, tim
             .insert({
                 session_id: sessionId,
                 exam_id: examData.id,
-                subject_id: subjectData.id,
+                subject_id: examData.subject_id,
                 score: score,
                 total_questions: totalQuestions,
                 percentage: parseFloat(percentage.toFixed(2)),
