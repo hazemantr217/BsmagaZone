@@ -36,3 +36,13 @@ for (const file of fs.readdirSync('.').filter(name => name.endsWith('.html'))) {
 }
 
 console.log('BsmagaZone tracking and authentication security checks passed.');
+
+
+const grantsMigration = fs.readFileSync(
+    'supabase/migrations/20260901193000_minimize_anon_grants.sql',
+    'utf8'
+);
+assert.match(grantsMigration, /revoke all privileges on table[\s\S]*public\.questions[\s\S]*from anon/i);
+assert.match(grantsMigration, /grant select on table[\s\S]*public\.questions[\s\S]*to anon/i);
+assert.match(grantsMigration, /revoke all privileges on table public\.exam_results from anon/i);
+assert.match(grantsMigration, /grant insert on table public\.exam_results to anon/i);
