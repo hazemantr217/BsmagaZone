@@ -1,10 +1,14 @@
-// Supabase configuration and tracking library for BsmagaZone
+// Supabase configuration and secure visitor tracking for BsmagaZone
 const SUPABASE_URL = "https://vdxkzgccwuojjkxmebdx.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZkeGt6Z2Njd3VvampreG1lYmR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1MTE0OTUsImV4cCI6MjA5NzA4NzQ5NX0.MZ_P82DBjPoDyVa55V5-V4hwA5VeLkcBTU6CvG1bThY";
 
+const SESSION_ID_KEY = "bsmaga_session_id";
+const SESSION_TOKEN_KEY = "bsmaga_session_token";
+const STUDENT_NAME_KEY = "bsmaga_student_name";
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 let supabaseClient = null;
 
-// Initialize Supabase Client
 function getSupabaseClient() {
     if (!supabaseClient && window.supabase) {
         supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -12,7 +16,59 @@ function getSupabaseClient() {
     return supabaseClient;
 }
 
-// Helper to get device info
+function getSessionSupabaseClient(credentials) {
+    if (!window.supabase || !credentials) return null;
+
+    return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        global: {
+            headers: {
+                "x-bsmaga-session-id": credentials.id,
+                "x-bsmaga-session-token": credentials.token
+            }
+        },
+        auth: {
+            persistSession: false,
+            autoRefreshToken: false,
+            detectSessionInUrl: false
+        }
+    });
+}
+
+function generateClientUuid() {
+    if (window.crypto?.randomUUID) return window.crypto.randomUUID();
+
+    const bytes = new Uint8Array(16);
+    window.crypto.getRandomValues(bytes);
+    bytes[6] = (bytes[6] & 0x0f) | 0x40;
+    bytes[8] = (bytes[8] & 0x3f) | 0x80;
+    const hex = [...bytes].map(value => value.toString(16).padStart(2, "0"));
+    return [
+        hex.slice(0, 4).join(""),
+        hex.slice(4, 6).join(""),
+        hex.slice(6, 8).join(""),
+        hex.slice(8, 10).join(""),
+        hex.slice(10, 16).join("")
+    ].join("-");
+}
+
+function getStoredSessionCredentials() {
+    const id = localStorage.getItem(SESSION_ID_KEY);
+    const token = localStorage.getItem(SESSION_TOKEN_KEY);
+
+    if (!id || !token || !UUID_PATTERN.test(id) || !UUID_PATTERN.test(token)) {
+        localStorage.removeItem(SESSION_ID_KEY);
+        localStorage.removeItem(SESSION_TOKEN_KEY);
+        return null;
+    }
+
+    return { id, token };
+}
+
+function clearStoredSessionCredentials() {
+    localStorage.removeItem(SESSION_ID_KEY);
+    localStorage.removeItem(SESSION_TOKEN_KEY);
+}
+
 function getDeviceInfo() {
     const ua = navigator.userAgent;
     let browser = "Unknown Browser";
@@ -38,164 +94,173 @@ function getDeviceInfo() {
     };
 }
 
-// Simple browser fingerprint generator
 function generateFingerprint() {
     const devInfo = getDeviceInfo();
-    const str = `${devInfo.userAgent}|${devInfo.screenResolution}|${devInfo.language}|${new Date().getTimezoneOffset()}`;
-    // Simple hash
+    const input = `${devInfo.userAgent}|${devInfo.screenResolution}|${devInfo.language}|${new Date().getTimezoneOffset()}`;
     let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i);
-        hash = (hash << 5) - hash + char;
-        hash = hash & hash; // Convert to 32bit integer
+    for (let index = 0; index < input.length; index++) {
+        hash = ((hash << 5) - hash + input.charCodeAt(index)) | 0;
     }
     return Math.abs(hash).toString(16);
 }
 
-// Initialize or retrieve student session
-async function getOrCreateSession() {
-    const client = getSupabaseClient();
-    if (!client) return null;
+async function getOrCreateSessionCredentials() {
+    const baseClient = getSupabaseClient();
+    if (!baseClient) return null;
 
-    let sessionId = localStorage.getItem("bsmaga_session_id");
-    const storedName = localStorage.getItem("bsmaga_student_name") || null;
-    const fingerprint = generateFingerprint();
-    const devInfo = getDeviceInfo();
+    const studentName = (localStorage.getItem(STUDENT_NAME_KEY) || "").trim().slice(0, 150) || null;
+    const existing = getStoredSessionCredentials();
 
-    if (sessionId) {
-        try {
-            // Update last visit
-            await client
-                .from("student_sessions")
-                .update({ last_visit: new Date().toISOString(), student_name: storedName })
-                .eq("id", sessionId);
-            return sessionId;
-        } catch (e) {
-            console.error("Error updating session, creating a new one:", e);
-        }
-    }
-
-    // Create a new session
-    try {
-        const { data, error } = await client
+    if (existing) {
+        const sessionClient = getSessionSupabaseClient(existing);
+        const { data, error } = await sessionClient
             .from("student_sessions")
-            .insert({
-                student_name: storedName,
-                fingerprint: fingerprint,
-                device_type: devInfo.deviceType,
-                browser: devInfo.browser,
-                ip_country: "unknown" // Handled by Supabase DB default or Edge Functions if available, or just leave as is
+            .update({
+                last_visit: new Date().toISOString(),
+                student_name: studentName
             })
+            .eq("id", existing.id)
             .select("id")
-            .single();
+            .maybeSingle();
 
-        if (error) throw error;
-        if (data && data.id) {
-            localStorage.setItem("bsmaga_session_id", data.id);
-            return data.id;
-        }
-    } catch (e) {
-        console.error("Error creating student session:", e);
+        if (!error && data?.id === existing.id) return existing;
+        clearStoredSessionCredentials();
     }
-    return null;
+
+    const created = {
+        id: generateClientUuid(),
+        token: generateClientUuid()
+    };
+    const sessionClient = getSessionSupabaseClient(created);
+    const deviceInfo = getDeviceInfo();
+    const { error } = await sessionClient
+        .from("student_sessions")
+        .insert({
+            id: created.id,
+            client_token: created.token,
+            student_name: studentName,
+            fingerprint: generateFingerprint(),
+            device_type: deviceInfo.deviceType,
+            browser: deviceInfo.browser,
+            ip_country: "unknown"
+        });
+
+    if (error) {
+        console.error("Error creating student session:", error);
+        return null;
+    }
+
+    localStorage.setItem(SESSION_ID_KEY, created.id);
+    localStorage.setItem(SESSION_TOKEN_KEY, created.token);
+    return created;
 }
 
-// Track page visit
-async function trackPageVisit(pageName, pageType) {
-    const client = getSupabaseClient();
-    if (!client) return;
+async function getOrCreateSession() {
+    const credentials = await getOrCreateSessionCredentials();
+    return credentials?.id || null;
+}
 
+async function trackPageVisit(pageName, pageType) {
     try {
-        const sessionId = await getOrCreateSession();
-        if (!sessionId) return;
+        const credentials = await getOrCreateSessionCredentials();
+        const client = getSessionSupabaseClient(credentials);
+        if (!client || !credentials) return;
 
         const { data, error } = await client
             .from("page_visits")
             .insert({
-                session_id: sessionId,
-                page_name: pageName,
-                page_type: pageType
+                session_id: credentials.id,
+                page_name: String(pageName || "unknown").slice(0, 160),
+                page_type: String(pageType || "page").slice(0, 40)
             })
             .select("id")
             .single();
 
         if (error) throw error;
+        if (!data?.id) return;
 
-        // Keep track of visit record to update time_on_page on unload
-        if (data && data.id) {
-            const startTime = Date.now();
-            window.addEventListener("beforeunload", async () => {
-                const timeSpent = Math.round((Date.now() - startTime) / 1000);
-                // We use standard fetch to update or keep it simple
-                // navigator.sendBeacon is more reliable for unload, but a simple updates query is fine
-                const anonClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                await anonClient
-                    .from("page_visits")
-                    .update({ time_on_page_seconds: timeSpent })
-                    .eq("id", data.id);
-            });
-        }
-    } catch (e) {
-        console.error("Error tracking page visit:", e);
+        const startTime = Date.now();
+        window.addEventListener("pagehide", () => {
+            const timeSpent = Math.min(86400, Math.max(0, Math.round((Date.now() - startTime) / 1000)));
+            fetch(`${SUPABASE_URL}/rest/v1/page_visits?id=eq.${encodeURIComponent(data.id)}`, {
+                method: "PATCH",
+                keepalive: true,
+                headers: {
+                    apikey: SUPABASE_ANON_KEY,
+                    Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+                    "Content-Type": "application/json",
+                    Prefer: "return=minimal",
+                    "x-bsmaga-session-id": credentials.id,
+                    "x-bsmaga-session-token": credentials.token
+                },
+                body: JSON.stringify({ time_on_page_seconds: timeSpent })
+            }).catch(error => console.error("Error finalizing page visit:", error));
+        }, { once: true });
+    } catch (error) {
+        console.error("Error tracking page visit:", error);
     }
 }
 
-// Track exam result
 async function trackExamResult(examSlug, subjectSlug, score, totalQuestions, timeSpentSeconds, answers) {
-    const client = getSupabaseClient();
-    if (!client) return;
+    const publicClient = getSupabaseClient();
+    if (!publicClient) return;
 
     try {
-        const sessionId = await getOrCreateSession();
-        if (!sessionId) return;
+        const credentials = await getOrCreateSessionCredentials();
+        const sessionClient = getSessionSupabaseClient(credentials);
+        if (!sessionClient || !credentials) return;
 
-        // Find exam and its linked subject ID directly
-        const { data: examData } = await client
+        const { data: examData, error: examError } = await publicClient
             .from("exams")
             .select("id, subject_id")
             .eq("slug", examSlug)
             .single();
 
-        if (!examData) {
-            console.error("Exam not found in Supabase database");
-            return;
-        }
+        if (examError || !examData) throw examError || new Error("Exam not found");
 
-        const percentage = (score / totalQuestions) * 100;
-
-        await client
+        const safeTotal = Number(totalQuestions);
+        const safeScore = Number(score);
+        const safeSeconds = Math.min(86400, Math.max(0, Number(timeSpentSeconds) || 0));
+        const percentage = safeTotal > 0 ? (safeScore / safeTotal) * 100 : 0;
+        const { error } = await sessionClient
             .from("exam_results")
             .insert({
-                session_id: sessionId,
+                session_id: credentials.id,
                 exam_id: examData.id,
                 subject_id: examData.subject_id,
-                score: score,
-                total_questions: totalQuestions,
-                percentage: parseFloat(percentage.toFixed(2)),
-                time_spent_seconds: timeSpentSeconds,
-                answers: answers,
-                started_at: new Date(Date.now() - timeSpentSeconds * 1000).toISOString(),
+                score: safeScore,
+                total_questions: safeTotal,
+                percentage: Number(percentage.toFixed(2)),
+                time_spent_seconds: safeSeconds,
+                answers,
+                started_at: new Date(Date.now() - safeSeconds * 1000).toISOString(),
                 completed_at: new Date().toISOString()
             });
-    } catch (e) {
-        console.error("Error tracking exam result:", e);
+
+        if (error) throw error;
+    } catch (error) {
+        console.error("Error tracking exam result:", error);
     }
 }
 
-// Set student name
 async function setStudentName(name) {
-    localStorage.setItem("bsmaga_student_name", name);
-    const sessionId = localStorage.getItem("bsmaga_session_id");
-    const client = getSupabaseClient();
-    if (sessionId && client) {
-        try {
-            await client
-                .from("student_sessions")
-                .update({ student_name: name })
-                .eq("id", sessionId);
-        } catch (e) {
-            console.error("Error updating student name in session:", e);
-        }
+    const safeName = String(name || "").trim().slice(0, 150);
+    if (safeName) localStorage.setItem(STUDENT_NAME_KEY, safeName);
+    else localStorage.removeItem(STUDENT_NAME_KEY);
+
+    try {
+        const credentials = await getOrCreateSessionCredentials();
+        const client = getSessionSupabaseClient(credentials);
+        if (!client || !credentials) return;
+
+        const { error } = await client
+            .from("student_sessions")
+            .update({ student_name: safeName || null })
+            .eq("id", credentials.id);
+
+        if (error) throw error;
+    } catch (error) {
+        console.error("Error updating student name in session:", error);
     }
 }
 

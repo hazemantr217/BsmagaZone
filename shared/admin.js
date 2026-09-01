@@ -183,16 +183,136 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Authentication and admin authorization
 let authCheckVersion = 0;
+let passwordRecoveryMode = false;
 
 function showAuthScreen() {
     isDashboardInitialized = false;
     document.getElementById('auth-section').style.display = 'flex';
     document.getElementById('dashboard-section').style.display = 'none';
+
+    if (!passwordRecoveryMode) {
+        const loginForm = document.getElementById('auth-form');
+        const resetButton = document.getElementById('auth-reset-request');
+        const recoveryForm = document.getElementById('auth-recovery-form');
+        if (loginForm) loginForm.hidden = false;
+        if (resetButton) resetButton.hidden = false;
+        if (recoveryForm) recoveryForm.hidden = true;
+    }
+}
+
+function setAuthFeedback(message, type = 'error') {
+    const feedback = document.getElementById('auth-feedback');
+    if (!feedback) return;
+    feedback.textContent = message;
+    feedback.className = `auth-feedback visible ${type}`;
+}
+
+function showPasswordRecoveryForm() {
+    passwordRecoveryMode = true;
+    isDashboardInitialized = false;
+    document.getElementById('auth-section').style.display = 'flex';
+    document.getElementById('dashboard-section').style.display = 'none';
+
+    const loginForm = document.getElementById('auth-form');
+    const resetButton = document.getElementById('auth-reset-request');
+    const recoveryForm = document.getElementById('auth-recovery-form');
+    if (loginForm) loginForm.hidden = true;
+    if (resetButton) resetButton.hidden = true;
+    if (recoveryForm) recoveryForm.hidden = false;
+    document.getElementById('auth-new-password')?.focus();
+}
+
+async function requestAdminPasswordReset() {
+    const email = document.getElementById('auth-email')?.value.trim();
+    const client = getSupabaseClient();
+
+    if (!email) {
+        setAuthFeedback('اكتب بريد الإدارة أولًا ثم اضغط «نسيت كلمة المرور؟».');
+        document.getElementById('auth-email')?.focus();
+        return;
+    }
+
+    if (!client) {
+        setAuthFeedback('تعذر الاتصال بالخدمة الآن.');
+        return;
+    }
+
+    const button = document.getElementById('auth-reset-request');
+    if (button) {
+        button.disabled = true;
+        button.textContent = 'جاري إرسال الرابط...';
+    }
+
+    try {
+        const redirectTo = window.location.origin + window.location.pathname;
+        const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo });
+        if (error) throw error;
+        setAuthFeedback('إذا كان البريد معتمدًا فسيصلك رابط آمن لتغيير كلمة المرور.', 'success');
+    } catch (error) {
+        console.error('Password reset request failed', error);
+        setAuthFeedback('تعذر إرسال رابط الاستعادة الآن. حاول لاحقًا.');
+    } finally {
+        if (button) {
+            button.disabled = false;
+            button.textContent = 'نسيت كلمة المرور؟';
+        }
+    }
+}
+
+async function handleAdminPasswordUpdate(event) {
+    event.preventDefault();
+    const client = getSupabaseClient();
+    const password = document.getElementById('auth-new-password')?.value || '';
+    const confirmation = document.getElementById('auth-confirm-password')?.value || '';
+    const isStrong = password.length >= 12
+        && /[a-z]/.test(password)
+        && /[A-Z]/.test(password)
+        && /\d/.test(password);
+
+    if (!client) {
+        setAuthFeedback('تعذر الاتصال بالخدمة الآن.');
+        return;
+    }
+
+    if (!isStrong) {
+        setAuthFeedback('استخدم 12 حرفًا على الأقل مع حرف كبير وحرف صغير ورقم.');
+        return;
+    }
+
+    if (password !== confirmation) {
+        setAuthFeedback('كلمتا المرور غير متطابقتين.');
+        return;
+    }
+
+    const button = document.querySelector('#auth-recovery-form button[type="submit"]');
+    if (button) button.disabled = true;
+
+    try {
+        const { error } = await client.auth.updateUser({ password });
+        if (error) throw error;
+        await client.auth.signOut();
+        passwordRecoveryMode = false;
+        history.replaceState(null, '', window.location.pathname);
+        document.getElementById('auth-new-password').value = '';
+        document.getElementById('auth-confirm-password').value = '';
+        showAuthScreen();
+        setAuthFeedback('تم تغيير كلمة المرور. يمكنك تسجيل الدخول الآن.', 'success');
+    } catch (error) {
+        console.error('Password update failed', error);
+        setAuthFeedback('تعذر تحديث كلمة المرور. استخدم أحدث رابط استعادة وحاول مرة أخرى.');
+    } finally {
+        if (button) button.disabled = false;
+    }
 }
 
 async function applyAuthSession(session) {
     const checkVersion = ++authCheckVersion;
     const client = getSupabaseClient();
+
+    if (passwordRecoveryMode) {
+        showPasswordRecoveryForm();
+        return;
+    }
 
     if (!client || !session) {
         showAuthScreen();
@@ -230,11 +350,25 @@ function initAuthListener() {
     const client = getSupabaseClient();
     if (!client) return;
 
-    client.auth.getSession().then(({ data }) => applyAuthSession(data.session));
+    const recoveryLink = window.location.hash.includes('type=recovery')
+        || new URLSearchParams(window.location.search).get('type') === 'recovery';
 
-    client.auth.onAuthStateChange((_event, session) => {
-        window.setTimeout(() => applyAuthSession(session), 0);
+    client.auth.onAuthStateChange((event, session) => {
+        if (event === 'PASSWORD_RECOVERY') {
+            showPasswordRecoveryForm();
+            return;
+        }
+
+        if (!passwordRecoveryMode) {
+            window.setTimeout(() => applyAuthSession(session), 0);
+        }
     });
+
+    if (recoveryLink) {
+        showPasswordRecoveryForm();
+    } else {
+        client.auth.getSession().then(({ data }) => applyAuthSession(data.session));
+    }
 }
 
 // Handle admin login
