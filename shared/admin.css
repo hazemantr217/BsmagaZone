@@ -1448,3 +1448,154 @@ input:checked + .slider:before {
 .auth-feedback.error {
     color: var(--error-color);
 }
+
+/* Atomic bulk importer */
+.bulk-import-modal-content {
+    width: min(940px, 94vw);
+    max-width: 940px;
+}
+
+.bulk-sheet-import {
+    margin-top: 18px;
+    padding: 16px;
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    background: rgba(59, 130, 246, 0.06);
+}
+
+.bulk-sheet-import > label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.bulk-sheet-row {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.bulk-sheet-row .form-control {
+    flex: 1;
+    min-width: 0;
+}
+
+.bulk-sheet-row .btn-secondary {
+    white-space: nowrap;
+}
+
+.bulk-sheet-import small {
+    display: block;
+    margin-top: 8px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.bulk-import-source {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    color: #93c5fd;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.bulk-import-history {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--glass-border);
+}
+
+.bulk-import-history-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.bulk-import-history-header h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-primary);
+}
+
+.bulk-history-refresh {
+    padding: 7px 10px;
+}
+
+.bulk-import-history-list {
+    display: grid;
+    gap: 10px;
+}
+
+.bulk-history-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.bulk-history-item.is-rolled-back {
+    opacity: 0.65;
+}
+
+.bulk-history-title {
+    overflow-wrap: anywhere;
+    font-size: 0.88rem;
+    font-weight: 800;
+}
+
+.bulk-history-meta {
+    margin-top: 5px;
+    color: var(--text-secondary);
+    font-size: 0.77rem;
+    line-height: 1.7;
+}
+
+.bulk-history-status {
+    color: #fbbf24;
+}
+
+.bulk-history-rollback {
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    background: rgba(239, 68, 68, 0.08);
+    color: #fecaca;
+    padding: 7px 11px;
+    border-radius: 9px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.bulk-history-rollback:hover {
+    background: rgba(239, 68, 68, 0.18);
+}
+
+.bulk-history-empty {
+    color: var(--text-secondary);
+    font-size: 0.84rem;
+    text-align: center;
+    padding: 12px;
+}
+
+@media (max-width: 640px) {
+    .bulk-sheet-row {
+        flex-direction: column;
+    }
+
+    .bulk-sheet-row .btn-secondary {
+        justify-content: center;
+    }
+
+    .bulk-history-item {
+        grid-template-columns: 1fr;
+    }
+}

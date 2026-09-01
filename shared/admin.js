@@ -2689,16 +2689,21 @@ async function deleteAllExamQuestions() {
 // ============================================
 let parsedBulkQuestions = [];
 let bulkImportErrors = [];
+let bulkImportSource = { type: 'manual', name: null };
 
 function openBulkImportModal() {
     document.getElementById('bulk-import-textarea').value = '';
     document.getElementById('bulk-import-file').value = '';
+    document.getElementById('bulk-google-sheet-url').value = '';
     document.getElementById('bulk-import-preview-container').style.display = 'none';
     document.getElementById('btn-parse-bulk').style.display = 'inline-block';
     document.getElementById('btn-submit-bulk').style.display = 'none';
+    document.getElementById('btn-submit-bulk').disabled = false;
     parsedBulkQuestions = [];
     bulkImportErrors = [];
+    setBulkImportSource('manual', null);
     document.getElementById('bulk-import-modal').classList.add('active');
+    loadQuestionImportHistory();
 }
 
 async function handleBulkImportFile(event) {
@@ -2706,7 +2711,29 @@ async function handleBulkImportFile(event) {
     if (!file) return;
 
     try {
-        const content = await file.text();
+        const extension = file.name.split('.').pop()?.toLowerCase() || 'txt';
+        let content;
+
+        if (extension === 'xlsx' || extension === 'xls') {
+            if (!window.XLSX) {
+                throw new Error('مكتبة قراءة Excel لم تكتمل. حدّث الصفحة ثم حاول مرة أخرى.');
+            }
+            const workbook = window.XLSX.read(await file.arrayBuffer(), { type: 'array' });
+            const firstSheetName = workbook.SheetNames[0];
+            if (!firstSheetName) throw new Error('ملف Excel لا يحتوي على أوراق.');
+            const rows = window.XLSX.utils.sheet_to_json(workbook.Sheets[firstSheetName], {
+                defval: '',
+                raw: false
+            }).map((row, index) => ({ ...row, __source_row: index + 2 }));
+            if (rows.length === 0) throw new Error('ورقة Excel لا تحتوي على صفوف أسئلة.');
+            content = JSON.stringify(rows, null, 2);
+            setBulkImportSource('xlsx', file.name);
+        } else {
+            content = await file.text();
+            const sourceType = ['csv', 'json', 'txt'].includes(extension) ? extension : 'txt';
+            setBulkImportSource(sourceType, file.name);
+        }
+
         document.getElementById('bulk-import-textarea').value = content;
         parseBulkQuestions();
     } catch (error) {
@@ -2714,11 +2741,64 @@ async function handleBulkImportFile(event) {
     }
 }
 
+function setBulkImportSource(type, name) {
+    bulkImportSource = { type, name: name || null };
+    const sourceElement = document.getElementById('bulk-import-source');
+    if (!sourceElement) return;
+    const labels = {
+        manual: 'إدخال يدوي',
+        txt: 'ملف TXT',
+        csv: 'ملف CSV',
+        json: 'ملف JSON',
+        xlsx: 'ملف Excel',
+        google_sheets: 'Google Sheets'
+    };
+    sourceElement.textContent = `المصدر: ${labels[type] || 'إدخال يدوي'}${name ? ` — ${name}` : ''}`;
+}
+
+function parseGoogleSheetUrl(value) {
+    const input = String(value || '').trim();
+    const idMatch = input.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
+    if (!idMatch) throw new Error('رابط Google Sheets غير صالح.');
+    const gidMatch = input.match(/[?#&]gid=(\d+)/);
+    return { spreadsheetId: idMatch[1], gid: gidMatch?.[1] || '0' };
+}
+
+async function loadGoogleSheetForImport() {
+    const input = document.getElementById('bulk-google-sheet-url');
+    const button = document.getElementById('btn-load-google-sheet');
+    const originalText = button.innerHTML;
+
+    try {
+        const { spreadsheetId, gid } = parseGoogleSheetUrl(input.value);
+        button.disabled = true;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحميل';
+
+        const exportUrl = `https://docs.google.com/spreadsheets/d/${encodeURIComponent(spreadsheetId)}/gviz/tq?tqx=out:csv&gid=${encodeURIComponent(gid)}`;
+        const response = await fetch(exportUrl, { method: 'GET', credentials: 'omit' });
+        if (!response.ok) throw new Error(`تعذر الوصول إلى الجدول (${response.status}).`);
+
+        const csv = await response.text();
+        if (!csv.trim() || /^\s*</.test(csv)) {
+            throw new Error('لم يرجع Google جدول CSV قابلًا للقراءة.');
+        }
+
+        document.getElementById('bulk-import-textarea').value = csv;
+        setBulkImportSource('google_sheets', `Sheet ${spreadsheetId.slice(0, 10)}… / gid ${gid}`);
+        parseBulkQuestions();
+    } catch (error) {
+        showToast(`تعذر تحميل Google Sheets: ${error.message} تأكد أن المشاركة متاحة لأي شخص لديه الرابط.`, 'error');
+    } finally {
+        button.disabled = false;
+        button.innerHTML = originalText;
+    }
+}
+
 function downloadBulkImportTemplate() {
     const csv = [
         ['type', 'text', 'options', 'correct_answer', 'explanation', 'sort_order'],
         ['tf', 'مثال لسؤال صح أو خطأ', '', 'true', 'تعليل الإجابة', '1'],
-        ['mcq', 'مثال لسؤال اختيار من متعدد', 'الخيار الأول|الخيار الثاني|الخيار الثالث|الخيار الرابع', '1', 'تعليل الإجابة', '2'],
+        ['mcq', 'مثال لسؤال اختيار من متعدد', 'الخيار الأول|الخيار الثاني|الخيار الثالث|الخيار الرابع', 'ب', 'تعليل الإجابة', '2'],
         ['essay', 'مثال لسؤال مقالي', '', 'essay', 'الإجابة النموذجية', '3']
     ];
     const content = '\uFEFF' + csv.map(row => row.map(csvEscape).join(',')).join('\n');
@@ -2751,12 +2831,6 @@ function parseBulkQuestions() {
         bulkImportErrors = [error.message];
     }
 
-    if (parsedBulkQuestions.length === 0) {
-        showToast(bulkImportErrors[0] || "فشل تحليل النص. راجع التنسيق وحاول مرة أخرى.", "error");
-        return;
-    }
-
-    // Calculate counts
     const tfCount = parsedBulkQuestions.filter(q => q.type === 'tf').length;
     const mcqCount = parsedBulkQuestions.filter(q => q.type === 'mcq').length;
     const essayCount = parsedBulkQuestions.filter(q => q.type === 'essay').length;
@@ -2772,52 +2846,72 @@ function parseBulkQuestions() {
         summary.insertAdjacentHTML('beforeend', `<span class="bulk-error-count" style="color:#f87171;">مرفوضة: <strong>${bulkImportErrors.length}</strong></span>`);
     }
 
-    // Render Preview list
     const previewList = document.getElementById('bulk-import-preview-list');
-    previewList.innerHTML = '';
-
-    parsedBulkQuestions.forEach((q, idx) => {
+    const questionCards = parsedBulkQuestions.map(q => {
         const typeLabel = q.type === 'tf' ? 'صح/خطأ' : (q.type === 'mcq' ? 'اختيار من متعدد' : 'مقالي');
         const color = q.type === 'tf' ? '#60a5fa' : (q.type === 'mcq' ? '#34d399' : '#fbbf24');
-        
         let ansDesc = '';
+
         if (q.type === 'tf') {
             ansDesc = `الإجابة: ${q.correct_answer === 'true' ? 'صح' : 'خطأ'}`;
         } else if (q.type === 'mcq') {
-            ansDesc = `الخيارات: [${q.options.join(' | ')}] - الإجابة الصحيحة: الخيار ${q.correct_answer}`;
+            ansDesc = `الخيارات: [${q.options.join(' | ')}] — الإجابة الصحيحة: الخيار ${Number(q.correct_answer) + 1}`;
         } else {
-            ansDesc = `الإجابة النموذجية: ${q.explanation ? q.explanation.substring(0, 60) + '...' : 'لا يوجد'}`;
+            ansDesc = `الإجابة النموذجية: ${q.explanation ? q.explanation.substring(0, 100) : 'لا يوجد'}`;
         }
 
-        previewList.innerHTML += `
+        return `
             <div style="border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                    <strong>سؤال ${q.sort_order}: ${q.text.substring(0, 70)}...</strong>
+                    <strong>صف ${escapeAdminHtml(q.source_row)} — سؤال ${escapeAdminHtml(q.sort_order)}: ${escapeAdminHtml(q.text.substring(0, 100))}</strong>
                     <span style="color: ${color}; font-weight: bold; font-size: 0.8rem;">[${typeLabel}]</span>
                 </div>
                 <div style="color: var(--text-secondary); font-size: 0.8rem;">
-                    ${ansDesc}
+                    ${escapeAdminHtml(ansDesc)}
                 </div>
-                ${q.type !== 'essay' && q.explanation ? `<div style="color: var(--warning-color); font-size: 0.75rem; margin-top: 2px;">التعليل: ${q.explanation}</div>` : ''}
+                ${q.type !== 'essay' && q.explanation ? `<div style="color: var(--warning-color); font-size: 0.75rem; margin-top: 2px;">التعليل: ${escapeAdminHtml(q.explanation)}</div>` : ''}
             </div>
         `;
-    });
+    }).join('');
 
+    let errorsCard = '';
     if (bulkImportErrors.length > 0) {
-        previewList.insertAdjacentHTML('beforeend', `
+        errorsCard = `
             <div style="border:1px solid rgba(248,113,113,.35);background:rgba(248,113,113,.08);padding:10px;border-radius:8px;color:#fecaca;">
-                <strong>أسئلة تحتاج تصحيحًا قبل الاستيراد:</strong>
-                <ul style="margin:8px 18px 0;line-height:1.8;">${bulkImportErrors.slice(0, 20).map(error => `<li>${error}</li>`).join('')}</ul>
+                <strong>صفوف تحتاج تصحيحًا قبل الاستيراد:</strong>
+                <ul style="margin:8px 18px 0;line-height:1.8;">${bulkImportErrors.slice(0, 30).map(error => `<li>${escapeAdminHtml(error)}</li>`).join('')}</ul>
             </div>
-        `);
+        `;
     }
+
+    previewList.innerHTML = questionCards || errorsCard
+        ? questionCards + errorsCard
+        : '<p class="bulk-history-empty">لم يتم العثور على أسئلة قابلة للتحليل.</p>';
 
     document.getElementById('bulk-import-preview-container').style.display = 'block';
     document.getElementById('btn-parse-bulk').style.display = 'none';
-    document.getElementById('btn-submit-bulk').style.display = 'inline-block';
-    document.getElementById('btn-submit-bulk').textContent = bulkImportErrors.length > 0
-        ? `إضافة ${parsedBulkQuestions.length} سؤال سليم`
+    const submitButton = document.getElementById('btn-submit-bulk');
+    submitButton.style.display = 'inline-block';
+    submitButton.disabled = parsedBulkQuestions.length === 0 || bulkImportErrors.length > 0;
+    submitButton.textContent = bulkImportErrors.length > 0
+        ? `صحّح ${bulkImportErrors.length} صف قبل الحفظ`
         : `تأكيد وإضافة ${parsedBulkQuestions.length} سؤال`;
+
+    if (parsedBulkQuestions.length === 0) {
+        showToast(bulkImportErrors[0] || "فشل تحليل النص. راجع التنسيق وحاول مرة أخرى.", "error");
+    } else if (bulkImportErrors.length > 0) {
+        showToast('لن يُحفظ أي سؤال قبل تصحيح كل الصفوف المرفوضة.', 'warning');
+    }
+}
+
+function escapeAdminHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, character => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    }[character]));
 }
 
 function parseBulkInput(text) {
@@ -2830,7 +2924,8 @@ function parseBulkInput(text) {
     }
 
     const firstLine = trimmed.split(/\r?\n/, 1)[0].toLowerCase();
-    if (firstLine.includes('type') && firstLine.includes('text') && firstLine.includes(',')) {
+    const looksLikeCsv = firstLine.includes(',') && /(type|question_type|text|question|نوع|السؤال|نص السؤال)/i.test(firstLine);
+    if (looksLikeCsv) {
         return normalizeImportedQuestions(parseQuestionsCsv(trimmed));
     }
 
@@ -2868,20 +2963,53 @@ function parseQuestionsCsv(text) {
 
     row.push(field);
     if (row.some(value => value.trim())) rows.push(row);
+    if (quoted) throw new Error('ملف CSV يحتوي على علامة اقتباس غير مغلقة.');
     if (rows.length < 2) return [];
 
     const headers = rows[0].map(header => header.replace(/^\uFEFF/, '').trim().toLowerCase());
-    return rows.slice(1).map(values => Object.fromEntries(headers.map((header, index) => [header, values[index] ?? ''])));
+    return rows.slice(1).map((values, rowIndex) => ({
+        ...Object.fromEntries(headers.map((header, index) => [header, values[index] ?? ''])),
+        __source_row: rowIndex + 2
+    }));
 }
 
 function normalizeImportedQuestions(rows) {
     return rows.map((row, index) => {
-        let type = String(row.type || row.question_type || '').trim().toLowerCase();
-        if (['صح', 'خطأ', 'صح/خطأ', 'true_false', 'true-false'].includes(type)) type = 'tf';
-        if (['اختيار', 'اختيار من متعدد', 'multiple_choice'].includes(type)) type = 'mcq';
-        if (['مقالي', 'essay_question'].includes(type)) type = 'essay';
+        const normalizedRow = Object.fromEntries(
+            Object.entries(row || {}).map(([key, value]) => [normalizeImportHeader(key), value])
+        );
+        const pick = (...aliases) => {
+            for (const alias of aliases) {
+                const key = normalizeImportHeader(alias);
+                if (normalizedRow[key] !== undefined && normalizedRow[key] !== null && normalizedRow[key] !== '') {
+                    return normalizedRow[key];
+                }
+            }
+            return '';
+        };
 
-        let options = row.options ?? [];
+        let type = String(pick('type', 'question_type', 'question type', 'النوع', 'نوع', 'نوع السؤال')).trim().toLowerCase();
+        if (['صح', 'خطأ', 'صح/خطأ', 'صواب وخطأ', 'true_false', 'true-false', 'true/false'].includes(type)) type = 'tf';
+        if (['اختيار', 'اختيار من متعدد', 'multiple_choice', 'multiple choice'].includes(type)) type = 'mcq';
+        if (['مقالي', 'essay_question', 'essay question'].includes(type)) type = 'essay';
+
+        let options = pick('options', 'choices', 'الاختيارات', 'الخيارات');
+        if (!options) {
+            options = [];
+            for (let optionNumber = 1; optionNumber <= 10; optionNumber++) {
+                const option = pick(
+                    `option${optionNumber}`,
+                    `option_${optionNumber}`,
+                    `choice${optionNumber}`,
+                    `choice_${optionNumber}`,
+                    `اختيار ${optionNumber}`,
+                    `اختيار${optionNumber}`,
+                    `الخيار ${optionNumber}`,
+                    `الخيار${optionNumber}`
+                );
+                if (option !== '') options.push(option);
+            }
+        }
         if (typeof options === 'string') {
             const optionText = options.trim();
             if (optionText.startsWith('[')) {
@@ -2892,7 +3020,15 @@ function normalizeImportedQuestions(rows) {
         }
         options = Array.isArray(options) ? options.map(option => String(option).trim()).filter(Boolean) : [];
 
-        let correctAnswer = String(row.correct_answer ?? row.answer ?? '').trim();
+        let correctAnswer = String(pick(
+            'correct_answer',
+            'correct answer',
+            'answer',
+            'الإجابة الصحيحة',
+            'الاجابة الصحيحة',
+            'الإجابة',
+            'الاجابة'
+        )).trim();
         if (type === 'tf') {
             correctAnswer = /^(true|صح|صواب|1)$/i.test(correctAnswer) ? 'true' :
                 (/^(false|خطأ|خطا|0)$/i.test(correctAnswer) ? 'false' : correctAnswer);
@@ -2907,44 +3043,86 @@ function normalizeImportedQuestions(rows) {
             correctAnswer = 'essay';
         }
 
+        const rawSortOrder = Number.parseInt(
+            pick('sort_order', 'sort order', 'order', 'الترتيب', 'ترتيب', 'رقم السؤال'),
+            10
+        );
+
         return {
             type,
-            text: String(row.text ?? row.question ?? '').trim(),
+            text: String(pick('text', 'question', 'question_text', 'question text', 'السؤال', 'نص السؤال')).trim(),
             options,
             correct_answer: correctAnswer,
-            explanation: String(row.explanation ?? row.model_answer ?? '').trim(),
-            sort_order: Number.parseInt(row.sort_order ?? row.order ?? index + 1, 10) || index + 1
+            explanation: String(pick(
+                'explanation',
+                'model_answer',
+                'model answer',
+                'التعليل',
+                'الإجابة النموذجية',
+                'الاجابة النموذجية'
+            )).trim(),
+            sort_order: Number.isInteger(rawSortOrder) ? rawSortOrder : index + 1,
+            source_row: Number.parseInt(row?.__source_row, 10) || index + 1
         };
     });
+}
+
+function normalizeImportHeader(value) {
+    return String(value ?? '')
+        .replace(/^\uFEFF/, '')
+        .trim()
+        .toLowerCase()
+        .replace(/[\s-]+/g, '_');
 }
 
 function validateBulkQuestions(questions) {
     const valid = [];
     const errors = [];
+    const seenQuestions = new Map();
+
+    if (questions.length > 1000) {
+        errors.push(`الملف يحتوي على ${questions.length} سؤالًا؛ الحد الأقصى للعملية الواحدة 1000 سؤال.`);
+    }
 
     questions.forEach((question, index) => {
-        const number = question.sort_order || index + 1;
+        const sourceRow = question.source_row || index + 1;
+        const fingerprint = question.text.toLocaleLowerCase('ar').trim().replace(/\s+/g, ' ');
         let error = '';
 
         if (!['tf', 'mcq', 'essay'].includes(question.type)) {
-            error = `السؤال ${number}: نوع السؤال غير معروف.`;
+            error = `الصف ${sourceRow}: نوع السؤال غير معروف.`;
         } else if (!question.text) {
-            error = `السؤال ${number}: نص السؤال فارغ.`;
+            error = `الصف ${sourceRow}: نص السؤال فارغ.`;
+        } else if (question.text.length > 20000) {
+            error = `الصف ${sourceRow}: نص السؤال أطول من الحد المسموح.`;
+        } else if (seenQuestions.has(fingerprint)) {
+            error = `الصف ${sourceRow}: السؤال مكرر مع الصف ${seenQuestions.get(fingerprint)}.`;
         } else if (question.type === 'tf' && !['true', 'false'].includes(question.correct_answer)) {
-            error = `السؤال ${number}: إجابة الصح والخطأ يجب أن تكون صح أو خطأ.`;
+            error = `الصف ${sourceRow}: إجابة الصح والخطأ يجب أن تكون صح أو خطأ.`;
         } else if (question.type === 'mcq' && question.options.length < 2) {
-            error = `السؤال ${number}: سؤال الاختيار يحتاج خيارين على الأقل.`;
+            error = `الصف ${sourceRow}: سؤال الاختيار يحتاج خيارين على الأقل.`;
+        } else if (question.type === 'mcq' && question.options.length > 10) {
+            error = `الصف ${sourceRow}: الحد الأقصى 10 اختيارات.`;
+        } else if (question.type === 'mcq' && question.options.some(option => option.length > 1000)) {
+            error = `الصف ${sourceRow}: أحد الاختيارات أطول من الحد المسموح.`;
         } else if (question.type === 'mcq' && (!/^\d+$/.test(question.correct_answer) || Number(question.correct_answer) >= question.options.length)) {
-            error = `السؤال ${number}: الإجابة الصحيحة لا تطابق أحد الخيارات.`;
+            error = `الصف ${sourceRow}: الإجابة الصحيحة لا تطابق أحد الخيارات.`;
         } else if (question.type === 'essay' && !question.explanation) {
-            error = `السؤال ${number}: أضف الإجابة النموذجية للسؤال المقالي.`;
+            error = `الصف ${sourceRow}: أضف الإجابة النموذجية للسؤال المقالي.`;
+        } else if (question.correct_answer.length > 10000) {
+            error = `الصف ${sourceRow}: الإجابة أطول من الحد المسموح.`;
+        } else if (question.explanation.length > 30000) {
+            error = `الصف ${sourceRow}: التعليل أطول من الحد المسموح.`;
         }
 
         if (error) errors.push(error);
-        else valid.push(question);
+        else {
+            seenQuestions.set(fingerprint, sourceRow);
+            valid.push(question);
+        }
     });
 
-    return { valid, errors };
+    return { valid: valid.slice(0, 1000), errors };
 }
 
 function parseQuestionsText(text) {
@@ -3093,14 +3271,13 @@ async function submitBulkQuestions() {
         return;
     }
 
-    if (parsedBulkQuestions.length === 0) {
-        showToast("لا توجد أسئلة لتحميلها.", "warning");
+    if (parsedBulkQuestions.length === 0 || bulkImportErrors.length > 0) {
+        showToast("صحّح كل الصفوف المرفوضة قبل الحفظ.", "warning");
         return;
     }
 
     try {
         const payload = parsedBulkQuestions.map(q => ({
-            exam_id: parseInt(examId),
             type: q.type,
             text: q.text,
             options: q.type === 'mcq' ? q.options : null,
@@ -3110,24 +3287,127 @@ async function submitBulkQuestions() {
         }));
 
         submitButton.disabled = true;
-        const batchSize = 200;
-        for (let offset = 0; offset < payload.length; offset += batchSize) {
-            const batch = payload.slice(offset, offset + batchSize);
-            submitButton.textContent = `جاري الحفظ ${Math.min(offset + batch.length, payload.length)} / ${payload.length}`;
-            const { error } = await client.from('questions').insert(batch);
-            if (error) throw error;
-        }
+        submitButton.textContent = `جاري حفظ ${payload.length} سؤال كعملية واحدة...`;
+        const { data, error } = await client.rpc('import_questions_atomic', {
+            p_exam_id: Number(examId),
+            p_questions: payload,
+            p_source_type: bulkImportSource.type,
+            p_source_name: bulkImportSource.name
+        });
+        if (error) throw error;
 
-        showToast(`تم استيراد ${parsedBulkQuestions.length} سؤال بنجاح!`, "success");
+        const result = Array.isArray(data) ? data[0] : data;
+        const inserted = Number(result?.inserted_count || 0);
+        const skipped = Number(result?.skipped_duplicates || 0);
+        const message = skipped > 0
+            ? `تمت إضافة ${inserted} سؤال وتخطي ${skipped} سؤال مكرر.`
+            : `تم استيراد ${inserted} سؤال بنجاح كعملية واحدة.`;
+        showToast(message, inserted > 0 ? "success" : "warning");
         closeModal('bulk-import-modal');
         globalDataLoaded = false; // Force refresh question counts
         refreshQuestionsList();
     } catch (e) {
-        showToast("حدث خطأ أثناء حفظ الأسئلة دفعة واحدة: " + e.message, "error");
+        showToast("لم يُحفظ أي سؤال: " + e.message, "error");
     } finally {
         submitButton.disabled = false;
         submitButton.textContent = 'تأكيد وإضافة الأسئلة';
     }
+}
+
+async function loadQuestionImportHistory() {
+    const container = document.getElementById('bulk-import-history-list');
+    if (!container) return;
+
+    const client = getSupabaseClient();
+    const examId = currentIntegratedExamId || document.getElementById('filter-question-exam')?.value;
+    if (!client || !examId) {
+        container.innerHTML = '<p class="bulk-history-empty">اختر امتحانًا لعرض سجل الاستيراد.</p>';
+        return;
+    }
+
+    container.innerHTML = '<p class="bulk-history-empty"><i class="fas fa-spinner fa-spin"></i> جاري تحميل السجل...</p>';
+    try {
+        const { data, error } = await client
+            .from('question_imports')
+            .select('id,source_type,source_name,submitted_count,inserted_count,skipped_duplicates,created_at,rolled_back_at')
+            .eq('exam_id', Number(examId))
+            .order('created_at', { ascending: false })
+            .limit(10);
+        if (error) throw error;
+
+        if (!data?.length) {
+            container.innerHTML = '<p class="bulk-history-empty">لا توجد عمليات استيراد مسجلة لهذا الامتحان بعد.</p>';
+            return;
+        }
+
+        container.innerHTML = data.map(importRow => renderQuestionImportHistoryItem(importRow)).join('');
+    } catch (error) {
+        container.innerHTML = `<p class="bulk-history-empty">تعذر تحميل السجل: ${escapeAdminHtml(error.message)}</p>`;
+    }
+}
+
+function renderQuestionImportHistoryItem(importRow) {
+    const sourceLabels = {
+        manual: 'إدخال يدوي',
+        txt: 'TXT',
+        csv: 'CSV',
+        json: 'JSON',
+        xlsx: 'Excel',
+        google_sheets: 'Google Sheets'
+    };
+    const source = sourceLabels[importRow.source_type] || importRow.source_type;
+    const date = new Date(importRow.created_at).toLocaleString('ar-EG');
+    const rolledBack = Boolean(importRow.rolled_back_at);
+    const canRollback = !rolledBack && Number(importRow.inserted_count) > 0;
+    const sourceName = importRow.source_name ? ` — ${escapeAdminHtml(importRow.source_name)}` : '';
+    const status = rolledBack
+        ? '<span class="bulk-history-status">تم التراجع</span>'
+        : `أضيف ${Number(importRow.inserted_count)} · مكرر ${Number(importRow.skipped_duplicates)}`;
+
+    return `
+        <article class="bulk-history-item${rolledBack ? ' is-rolled-back' : ''}">
+            <div>
+                <div class="bulk-history-title">${escapeAdminHtml(source)}${sourceName}</div>
+                <div class="bulk-history-meta">${escapeAdminHtml(date)} · ${status} · الإجمالي ${Number(importRow.submitted_count)}</div>
+            </div>
+            ${canRollback ? `
+                <button type="button" class="bulk-history-rollback" onclick="requestQuestionImportRollback(${Number(importRow.id)}, ${Number(importRow.inserted_count)})">
+                    <i class="fas fa-rotate-left"></i> تراجع
+                </button>
+            ` : ''}
+        </article>
+    `;
+}
+
+function requestQuestionImportRollback(importId, insertedCount) {
+    showConfirmDialog({
+        title: 'التراجع عن عملية الاستيراد',
+        message: `سيتم حذف الأسئلة التي أضافتها هذه العملية فقط وعددها حتى <strong>${Number(insertedCount)}</strong> سؤال.`,
+        icon: 'fa-rotate-left',
+        iconType: 'danger',
+        confirmText: 'تراجع عن الاستيراد',
+        confirmStyle: 'danger',
+        onConfirm: () => rollbackQuestionImport(importId)
+    });
+}
+
+async function rollbackQuestionImport(importId) {
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    const { data, error } = await client.rpc('rollback_question_import', {
+        p_import_id: Number(importId)
+    });
+    if (error) {
+        showToast('تعذر التراجع عن الاستيراد: ' + error.message, 'error');
+        return;
+    }
+
+    const result = Array.isArray(data) ? data[0] : data;
+    showToast(`تم حذف ${Number(result?.deleted_count || 0)} سؤال من هذه العملية.`, 'success');
+    globalDataLoaded = false;
+    refreshQuestionsList();
+    loadQuestionImportHistory();
 }
 
 function refreshQuestionsList() {

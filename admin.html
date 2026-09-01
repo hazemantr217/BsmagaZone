@@ -12,6 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Supabase JS Client CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4"></script>
+    <!-- Pinned SheetJS build for local Excel parsing in the browser -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" defer></script>
     <!-- Stylesheets -->
     <link rel="stylesheet" href="shared/admin.css">
 </head>
@@ -521,7 +523,7 @@
        MODAL: BULK IMPORT QUESTIONS
        ============================================ -->
     <div id="bulk-import-modal" class="modal">
-        <div class="modal-content" style="max-width: 800px; width: 90%;">
+        <div class="modal-content bulk-import-modal-content">
             <div class="modal-header">
                 <h3>استيراد الأسئلة دفعة واحدة</h3>
                 <button class="close-modal-btn" onclick="closeModal('bulk-import-modal')">
@@ -552,14 +554,30 @@
 
                 <div class="form-group">
                     <label for="bulk-import-file">أو ارفع ملفًا جاهزًا</label>
-                    <input type="file" id="bulk-import-file" class="form-control" accept=".txt,.csv,.json,text/plain,text/csv,application/json" onchange="handleBulkImportFile(event)">
+                    <input type="file" id="bulk-import-file" class="form-control" accept=".txt,.csv,.json,.xlsx,.xls,text/plain,text/csv,application/json,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="handleBulkImportFile(event)">
                     <small style="display:block;margin-top:8px;color:var(--text-secondary);line-height:1.7;">
-                        يدعم TXT بنفس التنسيق الموضح، وCSV بالأعمدة: type, text, options, correct_answer, explanation، وJSON كمصفوفة أسئلة.
+                        يدعم TXT وCSV وJSON وExcel. يمكن استخدام الأعمدة الإنجليزية أو العربية، وكتابة الاختيارات في عمود واحد مفصولًا بعلامة | أو في أعمدة «اختيار 1» حتى «اختيار 10».
+                        يمكن تحديد الإجابة الصحيحة بحرف «أ/ب/ج/د»، أو نص الاختيار نفسه، أو رقمه من 0.
                     </small>
                     <button type="button" class="btn-secondary" onclick="downloadBulkImportTemplate()" style="margin-top:10px;">
                         <i class="fas fa-download"></i> تحميل نموذج CSV
                     </button>
                 </div>
+
+                <div class="bulk-sheet-import">
+                    <label for="bulk-google-sheet-url">أو استورد من Google Sheets</label>
+                    <div class="bulk-sheet-row">
+                        <input type="url" id="bulk-google-sheet-url" class="form-control" placeholder="الصق رابط Google Sheet المنشور أو المتاح لأي شخص لديه الرابط">
+                        <button type="button" id="btn-load-google-sheet" class="btn-secondary" onclick="loadGoogleSheetForImport()">
+                            <i class="fab fa-google-drive"></i> تحميل الجدول
+                        </button>
+                    </div>
+                    <small>يجب أن يكون الجدول متاحًا للعرض عبر الرابط. يتم جلب الورقة المحددة من قيمة gid فقط.</small>
+                </div>
+
+                <p id="bulk-import-source" class="bulk-import-source">
+                    <i class="fas fa-database"></i> المصدر: إدخال يدوي
+                </p>
                 
                 <div id="bulk-import-preview-container" style="display: none; margin-top: 20px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border: 1px solid var(--glass-border);">
                     <h4 style="color: var(--primary-color); margin-bottom: 10px;"><i class="fas fa-eye"></i> معاينة الأسئلة التي تم تحليلها (<span id="bulk-import-count">0</span> سؤال)</h4>
@@ -572,6 +590,18 @@
                         <!-- Dynamic preview list -->
                     </div>
                 </div>
+
+                <section class="bulk-import-history" aria-labelledby="bulk-import-history-title">
+                    <div class="bulk-import-history-header">
+                        <h4 id="bulk-import-history-title"><i class="fas fa-clock-rotate-left"></i> آخر عمليات الاستيراد لهذا الامتحان</h4>
+                        <button type="button" class="btn-secondary bulk-history-refresh" onclick="loadQuestionImportHistory()" title="تحديث السجل">
+                            <i class="fas fa-rotate"></i>
+                        </button>
+                    </div>
+                    <div id="bulk-import-history-list" class="bulk-import-history-list" aria-live="polite">
+                        <p class="bulk-history-empty">جاري تحميل السجل...</p>
+                    </div>
+                </section>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn-secondary" onclick="closeModal('bulk-import-modal')">إلغاء</button>
