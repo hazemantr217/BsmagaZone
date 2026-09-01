@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مادة مراجعة | BsmagaZone</title>
+    <link rel="icon" type="image/svg+xml" href="shared/favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="shared/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="shared/supabase-config.js"></script>
+    <style>
+        .review-shell { width:min(920px, calc(100% - 32px)); margin:48px auto; }
+        .review-card { background:var(--glass-bg); border:1px solid var(--border-color); border-radius:22px; padding:clamp(22px, 5vw, 48px); backdrop-filter:blur(14px); }
+        .review-back { display:inline-flex; gap:8px; align-items:center; color:var(--primary-color); text-decoration:none; margin-bottom:24px; font-weight:700; }
+        .review-title { margin:0 0 10px; font-size:clamp(1.6rem, 5vw, 2.6rem); }
+        .review-meta { color:var(--text-secondary); margin-bottom:28px; }
+        .review-content { white-space:pre-wrap; line-height:2.1; font-size:1.03rem; overflow-wrap:anywhere; }
+        .review-empty { text-align:center; padding:56px 20px; color:var(--text-secondary); }
+    </style>
+</head>
+<body>
+    <div class="bg-animation" aria-hidden="true">
+        <div class="shape circle shape-1"></div>
+        <div class="shape square shape-2"></div>
+    </div>
+
+    <main class="review-shell">
+        <a class="review-back" id="back-link" href="index.html"><i class="fas fa-arrow-right"></i> العودة للمادة</a>
+        <article class="review-card" id="review-card">
+            <div class="review-empty"><i class="fas fa-spinner fa-spin"></i> جاري تحميل المراجعة...</div>
+        </article>
+    </main>
+
+    <script>
+        async function loadReviewMaterial() {
+            const id = Number.parseInt(new URLSearchParams(window.location.search).get('id'), 10);
+            const card = document.getElementById('review-card');
+            const client = typeof getSupabaseClient === 'function' ? getSupabaseClient() : null;
+
+            if (!client || !Number.isInteger(id)) {
+                card.innerHTML = '<div class="review-empty">رابط المراجعة غير صالح.</div>';
+                return;
+            }
+
+            const { data, error } = await client
+                .from('review_materials')
+                .select('id,title,description,content,material_type,subjects(name,slug)')
+                .eq('id', id)
+                .eq('is_active', true)
+                .maybeSingle();
+
+            if (error || !data) {
+                card.innerHTML = '<div class="review-empty">تعذر العثور على مادة المراجعة المطلوبة.</div>';
+                return;
+            }
+
+            document.title = `${data.title} | BsmagaZone`;
+            if (data.subjects?.slug) {
+                document.getElementById('back-link').href = `subject.html?slug=${encodeURIComponent(data.subjects.slug)}`;
+            }
+
+            card.innerHTML = '';
+            const title = document.createElement('h1');
+            title.className = 'review-title';
+            title.textContent = data.title;
+
+            const meta = document.createElement('p');
+            meta.className = 'review-meta';
+            meta.textContent = [data.subjects?.name, data.description].filter(Boolean).join(' — ');
+
+            const content = document.createElement('div');
+            content.className = 'review-content';
+            content.textContent = data.content || 'لا يوجد محتوى نصي لهذه المراجعة.';
+
+            card.append(title, meta, content);
+        }
+
+        document.addEventListener('DOMContentLoaded', loadReviewMaterial);
+    </script>
+</body>
+</html>

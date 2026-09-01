@@ -1362,3 +1362,23 @@ input:checked + .slider:before {
 .btn-delete-all:hover {
     box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4) !important;
 }
+/* Flexible rows used by the expanded academic and review managers */
+.form-row {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.form-row > .form-group {
+    flex: 1;
+}
+
+@media (max-width: 640px) {
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-row > .form-group {
+        width: 100%;
+    }
+}

@@ -2,7 +2,10 @@
 let currentTab = 'overview';
 let activeSubjects = [];
 let activeExams = [];
+let activeReviewMaterials = [];
 let allQuestions = [];
+let activeUniversities = [];
+let activeFaculties = [];
 let activeYears = [];
 let activeSemesters = [];
 let isDashboardInitialized = false;
@@ -371,46 +374,32 @@ async function loadGlobalSubjects() {
     if (!client) return;
 
     try {
-        // Load Academic Years
-        const { data: years, error: yError } = await client
-            .from('academic_years')
-            .select('*')
-            .order('sort_order', { ascending: true });
-        if (yError) throw yError;
-        activeYears = years || [];
+        const [universitiesRes, facultiesRes, yearsRes, semestersRes, subjectsRes, examsRes, materialsRes, questionsRes] = await Promise.all([
+            client.from('universities').select('*').order('sort_order', { ascending: true }).order('name'),
+            client.from('faculties').select('*').order('sort_order', { ascending: true }).order('name'),
+            client.from('academic_years').select('*').order('sort_order', { ascending: true }),
+            client.from('semesters').select('*').order('sort_order', { ascending: true }),
+            client.from('subjects').select('*').order('id', { ascending: true }),
+            client.from('exams').select('*').order('id', { ascending: true }),
+            client.from('review_materials').select('*').order('sort_order', { ascending: true }),
+            client.from('questions').select('exam_id')
+        ]);
 
-        // Load Semesters
-        const { data: semesters, error: semError } = await client
-            .from('semesters')
-            .select('*')
-            .order('sort_order', { ascending: true });
-        if (semError) throw semError;
-        activeSemesters = semesters || [];
+        const firstError = [universitiesRes, facultiesRes, yearsRes, semestersRes, subjectsRes, examsRes, materialsRes]
+            .find(result => result.error)?.error;
+        if (firstError) throw firstError;
 
-        // Load Subjects
-        const { data: subjects, error: sError } = await client
-            .from('subjects')
-            .select('*')
-            .order('id', { ascending: true });
-        if (sError) throw sError;
-        activeSubjects = subjects || [];
+        activeUniversities = universitiesRes.data || [];
+        activeFaculties = facultiesRes.data || [];
+        activeYears = yearsRes.data || [];
+        activeSemesters = semestersRes.data || [];
+        activeSubjects = subjectsRes.data || [];
+        activeExams = examsRes.data || [];
+        activeReviewMaterials = materialsRes.data || [];
 
-        // Load Exams
-        const { data: exams, error: eError } = await client
-            .from('exams')
-            .select('*')
-            .order('id', { ascending: true });
-        if (eError) throw eError;
-        activeExams = exams || [];
-
-        // Load Question Counts per Exam
-        const { data: questionsData, error: qCountError } = await client
-            .from('questions')
-            .select('exam_id');
-        
         examQuestionCounts = {};
-        if (!qCountError && questionsData) {
-            questionsData.forEach(q => {
+        if (!questionsRes.error && questionsRes.data) {
+            questionsRes.data.forEach(q => {
                 if (q.exam_id) {
                     examQuestionCounts[q.exam_id] = (examQuestionCounts[q.exam_id] || 0) + 1;
                 }
@@ -429,6 +418,38 @@ async function loadGlobalSubjects() {
 function populateDropdowns() {
     const resultSubSelect = document.getElementById('filter-result-subject');
     const questionSubSelect = document.getElementById('filter-question-subject');
+
+    const managerUniversitySelect = document.getElementById('filter-subject-university');
+    if (managerUniversitySelect) {
+        const cachedValue = managerUniversitySelect.value;
+        managerUniversitySelect.innerHTML = '<option value="">كل الجامعات</option>';
+        activeUniversities.forEach(university => {
+            managerUniversitySelect.innerHTML += `<option value="${university.id}">${university.name}</option>`;
+        });
+        if (activeUniversities.some(university => university.id == cachedValue)) {
+            managerUniversitySelect.value = cachedValue;
+        }
+    }
+
+    populateManagerFacultyFilter();
+
+    const modalFacultyUniversity = document.getElementById('modal-faculty-university');
+    if (modalFacultyUniversity) {
+        modalFacultyUniversity.innerHTML = '<option value="">اختر الجامعة...</option>';
+        activeUniversities.forEach(university => {
+            modalFacultyUniversity.innerHTML += `<option value="${university.id}">${university.name}</option>`;
+        });
+    }
+
+    const modalYearFaculty = document.getElementById('modal-year-faculty');
+    if (modalYearFaculty) {
+        modalYearFaculty.innerHTML = '<option value="">اختر الكلية...</option>';
+        activeFaculties.forEach(faculty => {
+            const university = activeUniversities.find(item => item.id === faculty.university_id);
+            const label = university ? `${university.name} — ${faculty.name}` : faculty.name;
+            modalYearFaculty.innerHTML += `<option value="${faculty.id}">${label}</option>`;
+        });
+    }
     
     // Clear and add default
     if (resultSubSelect) {
@@ -449,7 +470,7 @@ function populateDropdowns() {
     if (questionYearSelect) {
         questionYearSelect.innerHTML = '<option value="">اختر الفرقة...</option>';
         activeYears.forEach(y => {
-            questionYearSelect.innerHTML += `<option value="${y.id}">${y.name}</option>`;
+            questionYearSelect.innerHTML += `<option value="${y.id}">${getAcademicYearLabel(y)}</option>`;
         });
     }
 
@@ -458,10 +479,12 @@ function populateDropdowns() {
     if (subYearSelect) {
         const cachedVal = subYearSelect.value;
         subYearSelect.innerHTML = '<option value="">كل الفرق</option>';
-        activeYears.forEach(y => {
+        getManagerFilteredYears().forEach(y => {
             subYearSelect.innerHTML += `<option value="${y.id}">${y.name}</option>`;
         });
-        subYearSelect.value = cachedVal;
+        if (Array.from(subYearSelect.options).some(option => option.value === cachedVal)) {
+            subYearSelect.value = cachedVal;
+        }
     }
 
     const subSemSelect = document.getElementById('filter-subject-semester');
@@ -479,7 +502,7 @@ function populateDropdowns() {
     if (modalSubYear) {
         modalSubYear.innerHTML = '<option value="">اختر الفرقة...</option>';
         activeYears.forEach(y => {
-            modalSubYear.innerHTML += `<option value="${y.id}">${y.name}</option>`;
+            modalSubYear.innerHTML += `<option value="${y.id}">${getAcademicYearLabel(y)}</option>`;
         });
     }
 
@@ -498,6 +521,80 @@ function populateDropdowns() {
             modalExamSub.innerHTML += `<option value="${s.id}">${s.name}</option>`;
         });
     }
+}
+
+function getFacultyContext(facultyId) {
+    const faculty = activeFaculties.find(item => item.id === facultyId);
+    const university = faculty
+        ? activeUniversities.find(item => item.id === faculty.university_id)
+        : null;
+    return { faculty, university };
+}
+
+function getAcademicYearLabel(year) {
+    const { faculty, university } = getFacultyContext(year.faculty_id);
+    const context = [university?.name, faculty?.name].filter(Boolean).join(' — ');
+    return context ? `${context} — ${year.name}` : year.name;
+}
+
+function populateManagerFacultyFilter() {
+    const universitySelect = document.getElementById('filter-subject-university');
+    const facultySelect = document.getElementById('filter-subject-faculty');
+    if (!facultySelect) return;
+
+    const cachedValue = facultySelect.value;
+    const universityId = universitySelect?.value;
+    const faculties = universityId
+        ? activeFaculties.filter(faculty => faculty.university_id == universityId)
+        : activeFaculties;
+
+    facultySelect.innerHTML = '<option value="">كل الكليات</option>';
+    faculties.forEach(faculty => {
+        facultySelect.innerHTML += `<option value="${faculty.id}">${faculty.name}</option>`;
+    });
+
+    if (faculties.some(faculty => faculty.id == cachedValue)) {
+        facultySelect.value = cachedValue;
+    }
+}
+
+function getManagerFilteredYears() {
+    const universityId = document.getElementById('filter-subject-university')?.value;
+    const facultyId = document.getElementById('filter-subject-faculty')?.value;
+
+    return activeYears.filter(year => {
+        const faculty = activeFaculties.find(item => item.id === year.faculty_id);
+        if (facultyId && year.faculty_id != facultyId) return false;
+        if (universityId && faculty?.university_id != universityId) return false;
+        return true;
+    });
+}
+
+function refreshManagerYearFilter() {
+    const yearSelect = document.getElementById('filter-subject-year');
+    if (!yearSelect) return;
+
+    const cachedValue = yearSelect.value;
+    const years = getManagerFilteredYears();
+    yearSelect.innerHTML = '<option value="">كل الفرق</option>';
+    years.forEach(year => {
+        yearSelect.innerHTML += `<option value="${year.id}">${year.name}</option>`;
+    });
+
+    if (years.some(year => year.id == cachedValue)) {
+        yearSelect.value = cachedValue;
+    }
+}
+
+function onManagerUniversityChange() {
+    populateManagerFacultyFilter();
+    refreshManagerYearFilter();
+    loadSubjectsManagerData();
+}
+
+function onManagerFacultyChange() {
+    refreshManagerYearFilter();
+    loadSubjectsManagerData();
 }
 
 // ============================================
@@ -1444,6 +1541,8 @@ async function loadSubjectsManagerData() {
     container.innerHTML = '<div style="grid-column:1/-1; text-align:center;">جاري تحميل المواد والامتحانات...</div>';
 
     try {
+        const universityFilterVal = document.getElementById('filter-subject-university')?.value || '';
+        const facultyFilterVal = document.getElementById('filter-subject-faculty')?.value || '';
         const yearFilterVal = document.getElementById('filter-subject-year').value;
         const semFilterVal = document.getElementById('filter-subject-semester').value;
 
@@ -1462,9 +1561,13 @@ async function loadSubjectsManagerData() {
             return;
         }
 
-        // Group subjects by Year
-        activeYears.forEach(year => {
+        // Group subjects by University > Faculty > Academic Year
+        getManagerFilteredYears().forEach(year => {
             if (selectedYearId && year.id !== selectedYearId) return;
+
+            const { faculty, university } = getFacultyContext(year.faculty_id);
+            if (facultyFilterVal && year.faculty_id != facultyFilterVal) return;
+            if (universityFilterVal && faculty?.university_id != universityFilterVal) return;
 
             // Get subjects for this year
             let yearSubjects = activeSubjects.filter(s => s.academic_year_id === year.id);
@@ -1484,6 +1587,7 @@ async function loadSubjectsManagerData() {
                         <h3 style="font-weight: 800; font-size: 1.2rem; color: #a855f7; margin: 0;">
                             <i class="fas fa-graduation-cap" style="margin-left: 10px;"></i>${year.name}
                         </h3>
+                        ${university || faculty ? `<span style="font-size:0.78rem;color:var(--text-secondary);">${[university?.name, faculty?.name].filter(Boolean).join(' / ')}</span>` : ''}
                         <span style="font-size: 0.8rem; background: rgba(168, 85, 247, 0.2); color: #c084fc; padding: 2px 8px; border-radius: 20px;">الرمز: ${year.slug}</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 15px;">
@@ -1568,6 +1672,9 @@ async function loadSubjectsManagerData() {
                                         <input type="checkbox" ${s.is_active ? 'checked' : ''} onchange="toggleSubjectActive(${s.id}, this.checked)">
                                         <span class="slider"></span>
                                     </label>
+                                    <button onclick="openReviewMaterialsModal(${s.id})" style="background:none; border:none; color:#38bdf8; cursor:pointer; font-size:0.95rem;" title="إدارة المراجعات">
+                                        <i class="fas fa-note-sticky"></i>
+                                    </button>
                                     <button onclick="openEditSubjectModal(${s.id})" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:0.95rem;" title="تعديل المادة">
                                         <i class="fas fa-edit"></i>
                                     </button>
@@ -1598,7 +1705,7 @@ async function loadSubjectsManagerData() {
 
         // Also display subjects with no year associated
         let orphanSubjects = activeSubjects.filter(s => !s.academic_year_id);
-        if (yearFilterVal) orphanSubjects = [];
+        if (yearFilterVal || facultyFilterVal || universityFilterVal) orphanSubjects = [];
         if (selectedSemId) {
             orphanSubjects = orphanSubjects.filter(s => s.semester_id === selectedSemId);
         }
@@ -1677,6 +1784,9 @@ async function loadSubjectsManagerData() {
                                     <input type="checkbox" ${s.is_active ? 'checked' : ''} onchange="toggleSubjectActive(${s.id}, this.checked)">
                                     <span class="slider"></span>
                                 </label>
+                                <button onclick="openReviewMaterialsModal(${s.id})" style="background:none; border:none; color:#38bdf8; cursor:pointer; font-size:0.95rem;" title="إدارة المراجعات">
+                                    <i class="fas fa-note-sticky"></i>
+                                </button>
                                 <button onclick="openEditSubjectModal(${s.id})" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:0.95rem;" title="تعديل المادة">
                                     <i class="fas fa-edit"></i>
                                 </button>
@@ -1753,12 +1863,93 @@ async function toggleExamActive(examId, isActive) {
 }
 
 // ============================================
+// UNIVERSITIES & FACULTIES CRUD LOGIC
+// ============================================
+function openAddUniversityModal() {
+    document.getElementById('university-form').reset();
+    document.getElementById('modal-university-country').value = 'مصر';
+    document.getElementById('university-modal').classList.add('active');
+}
+
+async function saveUniversity(event) {
+    event.preventDefault();
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    const payload = {
+        name: document.getElementById('modal-university-name').value.trim(),
+        slug: document.getElementById('modal-university-slug').value.trim().toLowerCase(),
+        country: document.getElementById('modal-university-country').value.trim(),
+        city: document.getElementById('modal-university-city').value.trim() || null
+    };
+
+    try {
+        const { error } = await client.from('universities').insert(payload);
+        if (error) throw error;
+        closeModal('university-modal');
+        showToast('تمت إضافة الجامعة بنجاح.', 'success');
+        globalDataLoaded = false;
+        await loadGlobalSubjects();
+        await loadSubjectsManagerData();
+    } catch (error) {
+        showToast('تعذر حفظ الجامعة: ' + error.message, 'error');
+    }
+}
+
+function openAddFacultyModal() {
+    if (activeUniversities.length === 0) {
+        showToast('أضف جامعة أولاً قبل إنشاء كلية.', 'warning');
+        return;
+    }
+
+    document.getElementById('faculty-form').reset();
+    const selectedUniversity = document.getElementById('filter-subject-university')?.value;
+    if (selectedUniversity) {
+        document.getElementById('modal-faculty-university').value = selectedUniversity;
+    }
+    document.getElementById('faculty-modal').classList.add('active');
+}
+
+async function saveFaculty(event) {
+    event.preventDefault();
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    const payload = {
+        university_id: parseInt(document.getElementById('modal-faculty-university').value),
+        name: document.getElementById('modal-faculty-name').value.trim(),
+        slug: document.getElementById('modal-faculty-slug').value.trim().toLowerCase(),
+        description: document.getElementById('modal-faculty-description').value.trim() || null
+    };
+
+    try {
+        const { error } = await client.from('faculties').insert(payload);
+        if (error) throw error;
+        closeModal('faculty-modal');
+        showToast('تمت إضافة الكلية بنجاح.', 'success');
+        globalDataLoaded = false;
+        await loadGlobalSubjects();
+        await loadSubjectsManagerData();
+    } catch (error) {
+        showToast('تعذر حفظ الكلية: ' + error.message, 'error');
+    }
+}
+
+// ============================================
 // ACADEMIC YEARS CRUD LOGIC
 // ============================================
 function openAddYearModal() {
+    if (activeFaculties.length === 0) {
+        showToast('أضف كلية أولاً قبل إنشاء فرقة دراسية.', 'warning');
+        return;
+    }
     document.getElementById('year-modal-title').textContent = 'إضافة فرقة جديدة';
     document.getElementById('modal-year-id').value = '';
     document.getElementById('year-form').reset();
+    const selectedFaculty = document.getElementById('filter-subject-faculty')?.value;
+    if (selectedFaculty) {
+        document.getElementById('modal-year-faculty').value = selectedFaculty;
+    }
     document.getElementById('year-modal').classList.add('active');
 }
 
@@ -1768,6 +1959,7 @@ async function openEditYearModal(yearId) {
 
     document.getElementById('year-modal-title').textContent = 'تعديل الفرقة';
     document.getElementById('modal-year-id').value = year.id;
+    document.getElementById('modal-year-faculty').value = year.faculty_id || '';
     document.getElementById('modal-year-name').value = year.name;
     document.getElementById('modal-year-slug').value = year.slug;
     document.getElementById('modal-year-sort').value = year.sort_order;
@@ -1781,11 +1973,12 @@ async function saveAcademicYear(event) {
     if (!client) return;
 
     const id = document.getElementById('modal-year-id').value;
+    const faculty_id = parseInt(document.getElementById('modal-year-faculty').value);
     const name = document.getElementById('modal-year-name').value.trim();
     const slug = document.getElementById('modal-year-slug').value.trim();
     const sort_order = parseInt(document.getElementById('modal-year-sort').value);
 
-    const payload = { name, slug, sort_order };
+    const payload = { faculty_id, name, slug, sort_order };
 
     try {
         if (id) {
@@ -2041,6 +2234,143 @@ async function deleteSubjectCompletely(subjectId, subjectName) {
 }
 
 // ============================================
+// REVIEW MATERIALS CRUD LOGIC
+// ============================================
+function openReviewMaterialsModal(subjectId) {
+    const subject = activeSubjects.find(item => item.id === subjectId);
+    if (!subject) return;
+
+    document.getElementById('review-material-modal-title').textContent = `مراجعات: ${subject.name}`;
+    document.getElementById('modal-review-subject-id').value = subjectId;
+    resetReviewMaterialForm();
+    renderReviewMaterialsList(subjectId);
+    document.getElementById('review-material-modal').classList.add('active');
+}
+
+function renderReviewMaterialsList(subjectId) {
+    const container = document.getElementById('review-materials-list');
+    const materials = activeReviewMaterials.filter(material => material.subject_id === subjectId);
+
+    if (materials.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-secondary);text-align:center;padding:12px;">لا توجد مراجعات لهذه المادة حتى الآن.</p>';
+        return;
+    }
+
+    const typeLabels = {
+        summary: 'ملخص',
+        mindmap: 'خريطة ذهنية',
+        notes: 'ملاحظات',
+        file: 'ملف',
+        link: 'رابط',
+        video: 'فيديو'
+    };
+
+    container.innerHTML = materials.map(material => `
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px;border:1px solid var(--glass-border);border-radius:10px;background:rgba(255,255,255,.03);">
+            <div>
+                <strong>${material.title}</strong>
+                <small style="display:block;color:var(--text-secondary);margin-top:4px;">${typeLabels[material.material_type] || material.material_type}${material.url ? ' — رابط' : ' — محتوى نصي'}</small>
+            </div>
+            <div style="display:flex;gap:8px;">
+                <button type="button" class="btn-circle edit" onclick="editReviewMaterial(${material.id})" title="تعديل"><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn-circle delete" onclick="deleteReviewMaterial(${material.id})" title="حذف"><i class="fas fa-trash"></i></button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function resetReviewMaterialForm() {
+    const subjectId = document.getElementById('modal-review-subject-id').value;
+    document.getElementById('review-material-form').reset();
+    document.getElementById('modal-review-id').value = '';
+    document.getElementById('modal-review-subject-id').value = subjectId;
+    document.getElementById('modal-review-sort').value = '0';
+}
+
+function editReviewMaterial(materialId) {
+    const material = activeReviewMaterials.find(item => item.id === materialId);
+    if (!material) return;
+
+    document.getElementById('modal-review-id').value = material.id;
+    document.getElementById('modal-review-subject-id').value = material.subject_id;
+    document.getElementById('modal-review-title').value = material.title;
+    document.getElementById('modal-review-type').value = material.material_type;
+    document.getElementById('modal-review-description').value = material.description || '';
+    document.getElementById('modal-review-url').value = material.url || '';
+    document.getElementById('modal-review-content').value = material.content || '';
+    document.getElementById('modal-review-sort').value = material.sort_order || 0;
+}
+
+async function saveReviewMaterial(event) {
+    event.preventDefault();
+    const client = getSupabaseClient();
+    if (!client) return;
+
+    const id = document.getElementById('modal-review-id').value;
+    const subjectId = parseInt(document.getElementById('modal-review-subject-id').value);
+    const url = document.getElementById('modal-review-url').value.trim();
+    const content = document.getElementById('modal-review-content').value.trim();
+
+    if (!url && !content) {
+        showToast('أضف رابطًا أو محتوى نصيًا للمراجعة.', 'warning');
+        return;
+    }
+
+    const payload = {
+        subject_id: subjectId,
+        title: document.getElementById('modal-review-title').value.trim(),
+        material_type: document.getElementById('modal-review-type').value,
+        description: document.getElementById('modal-review-description').value.trim() || null,
+        url: url || null,
+        content: content || null,
+        sort_order: parseInt(document.getElementById('modal-review-sort').value) || 0,
+        is_active: true,
+        updated_at: new Date().toISOString()
+    };
+
+    try {
+        const query = id
+            ? client.from('review_materials').update(payload).eq('id', id)
+            : client.from('review_materials').insert(payload);
+        const { error } = await query;
+        if (error) throw error;
+
+        showToast(id ? 'تم تحديث المراجعة.' : 'تمت إضافة المراجعة.', 'success');
+        await loadGlobalSubjects();
+        document.getElementById('modal-review-subject-id').value = subjectId;
+        resetReviewMaterialForm();
+        renderReviewMaterialsList(subjectId);
+    } catch (error) {
+        showToast('تعذر حفظ المراجعة: ' + error.message, 'error');
+    }
+}
+
+function deleteReviewMaterial(materialId) {
+    const material = activeReviewMaterials.find(item => item.id === materialId);
+    if (!material) return;
+
+    showConfirmDialog({
+        title: 'حذف مادة المراجعة',
+        message: `هل تريد حذف <strong>"${material.title}"</strong>؟`,
+        icon: 'fa-trash-alt',
+        iconType: 'danger',
+        confirmText: 'حذف',
+        confirmStyle: 'danger',
+        onConfirm: async () => {
+            const client = getSupabaseClient();
+            const { error } = await client.from('review_materials').delete().eq('id', materialId);
+            if (error) {
+                showToast('تعذر حذف المراجعة: ' + error.message, 'error');
+                return;
+            }
+            await loadGlobalSubjects();
+            renderReviewMaterialsList(material.subject_id);
+            showToast('تم حذف المراجعة.', 'success');
+        }
+    });
+}
+
+// ============================================
 // EXAMS CRUD LOGIC
 // ============================================
 function openAddExamModal(subjectId = null) {
@@ -2224,14 +2554,50 @@ async function deleteAllExamQuestions() {
 // BULK QUESTIONS IMPORT LOGIC
 // ============================================
 let parsedBulkQuestions = [];
+let bulkImportErrors = [];
 
 function openBulkImportModal() {
     document.getElementById('bulk-import-textarea').value = '';
+    document.getElementById('bulk-import-file').value = '';
     document.getElementById('bulk-import-preview-container').style.display = 'none';
     document.getElementById('btn-parse-bulk').style.display = 'inline-block';
     document.getElementById('btn-submit-bulk').style.display = 'none';
     parsedBulkQuestions = [];
+    bulkImportErrors = [];
     document.getElementById('bulk-import-modal').classList.add('active');
+}
+
+async function handleBulkImportFile(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+        const content = await file.text();
+        document.getElementById('bulk-import-textarea').value = content;
+        parseBulkQuestions();
+    } catch (error) {
+        showToast('تعذر قراءة الملف: ' + error.message, 'error');
+    }
+}
+
+function downloadBulkImportTemplate() {
+    const csv = [
+        ['type', 'text', 'options', 'correct_answer', 'explanation', 'sort_order'],
+        ['tf', 'مثال لسؤال صح أو خطأ', '', 'true', 'تعليل الإجابة', '1'],
+        ['mcq', 'مثال لسؤال اختيار من متعدد', 'الخيار الأول|الخيار الثاني|الخيار الثالث|الخيار الرابع', '1', 'تعليل الإجابة', '2'],
+        ['essay', 'مثال لسؤال مقالي', '', 'essay', 'الإجابة النموذجية', '3']
+    ];
+    const content = '\uFEFF' + csv.map(row => row.map(csvEscape).join(',')).join('\n');
+    const blob = new Blob([content], { type: 'text/csv;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'bsmagazone-questions-template.csv';
+    link.click();
+    URL.revokeObjectURL(link.href);
+}
+
+function csvEscape(value) {
+    return `"${String(value ?? '').replace(/"/g, '""')}"`;
 }
 
 function parseBulkQuestions() {
@@ -2241,10 +2607,18 @@ function parseBulkQuestions() {
         return;
     }
 
-    parsedBulkQuestions = parseQuestionsText(text);
+    try {
+        const rawQuestions = parseBulkInput(text);
+        const validated = validateBulkQuestions(rawQuestions);
+        parsedBulkQuestions = validated.valid;
+        bulkImportErrors = validated.errors;
+    } catch (error) {
+        parsedBulkQuestions = [];
+        bulkImportErrors = [error.message];
+    }
 
     if (parsedBulkQuestions.length === 0) {
-        showToast("فشل تحليل النص. يرجى التأكد من كتابة الأسئلة بالتنسيق الصحيح الموضح.", "error");
+        showToast(bulkImportErrors[0] || "فشل تحليل النص. راجع التنسيق وحاول مرة أخرى.", "error");
         return;
     }
 
@@ -2257,6 +2631,12 @@ function parseBulkQuestions() {
     document.getElementById('bulk-tf-count').textContent = tfCount;
     document.getElementById('bulk-mcq-count').textContent = mcqCount;
     document.getElementById('bulk-essay-count').textContent = essayCount;
+
+    const summary = document.getElementById('bulk-import-summary');
+    summary.querySelectorAll('.bulk-error-count').forEach(element => element.remove());
+    if (bulkImportErrors.length > 0) {
+        summary.insertAdjacentHTML('beforeend', `<span class="bulk-error-count" style="color:#f87171;">مرفوضة: <strong>${bulkImportErrors.length}</strong></span>`);
+    }
 
     // Render Preview list
     const previewList = document.getElementById('bulk-import-preview-list');
@@ -2289,9 +2669,148 @@ function parseBulkQuestions() {
         `;
     });
 
+    if (bulkImportErrors.length > 0) {
+        previewList.insertAdjacentHTML('beforeend', `
+            <div style="border:1px solid rgba(248,113,113,.35);background:rgba(248,113,113,.08);padding:10px;border-radius:8px;color:#fecaca;">
+                <strong>أسئلة تحتاج تصحيحًا قبل الاستيراد:</strong>
+                <ul style="margin:8px 18px 0;line-height:1.8;">${bulkImportErrors.slice(0, 20).map(error => `<li>${error}</li>`).join('')}</ul>
+            </div>
+        `);
+    }
+
     document.getElementById('bulk-import-preview-container').style.display = 'block';
     document.getElementById('btn-parse-bulk').style.display = 'none';
     document.getElementById('btn-submit-bulk').style.display = 'inline-block';
+    document.getElementById('btn-submit-bulk').textContent = bulkImportErrors.length > 0
+        ? `إضافة ${parsedBulkQuestions.length} سؤال سليم`
+        : `تأكيد وإضافة ${parsedBulkQuestions.length} سؤال`;
+}
+
+function parseBulkInput(text) {
+    const trimmed = text.trim();
+    if (trimmed.startsWith('[') || trimmed.startsWith('{')) {
+        const decoded = JSON.parse(trimmed);
+        const rows = Array.isArray(decoded) ? decoded : decoded.questions;
+        if (!Array.isArray(rows)) throw new Error('ملف JSON يجب أن يحتوي على مصفوفة أسئلة.');
+        return normalizeImportedQuestions(rows);
+    }
+
+    const firstLine = trimmed.split(/\r?\n/, 1)[0].toLowerCase();
+    if (firstLine.includes('type') && firstLine.includes('text') && firstLine.includes(',')) {
+        return normalizeImportedQuestions(parseQuestionsCsv(trimmed));
+    }
+
+    return normalizeImportedQuestions(parseQuestionsText(trimmed));
+}
+
+function parseQuestionsCsv(text) {
+    const rows = [];
+    let row = [];
+    let field = '';
+    let quoted = false;
+
+    for (let index = 0; index < text.length; index++) {
+        const char = text[index];
+        const next = text[index + 1];
+
+        if (char === '"' && quoted && next === '"') {
+            field += '"';
+            index++;
+        } else if (char === '"') {
+            quoted = !quoted;
+        } else if (char === ',' && !quoted) {
+            row.push(field);
+            field = '';
+        } else if ((char === '\n' || char === '\r') && !quoted) {
+            if (char === '\r' && next === '\n') index++;
+            row.push(field);
+            if (row.some(value => value.trim())) rows.push(row);
+            row = [];
+            field = '';
+        } else {
+            field += char;
+        }
+    }
+
+    row.push(field);
+    if (row.some(value => value.trim())) rows.push(row);
+    if (rows.length < 2) return [];
+
+    const headers = rows[0].map(header => header.replace(/^\uFEFF/, '').trim().toLowerCase());
+    return rows.slice(1).map(values => Object.fromEntries(headers.map((header, index) => [header, values[index] ?? ''])));
+}
+
+function normalizeImportedQuestions(rows) {
+    return rows.map((row, index) => {
+        let type = String(row.type || row.question_type || '').trim().toLowerCase();
+        if (['صح', 'خطأ', 'صح/خطأ', 'true_false', 'true-false'].includes(type)) type = 'tf';
+        if (['اختيار', 'اختيار من متعدد', 'multiple_choice'].includes(type)) type = 'mcq';
+        if (['مقالي', 'essay_question'].includes(type)) type = 'essay';
+
+        let options = row.options ?? [];
+        if (typeof options === 'string') {
+            const optionText = options.trim();
+            if (optionText.startsWith('[')) {
+                try { options = JSON.parse(optionText); } catch { options = optionText.split('|'); }
+            } else {
+                options = optionText ? optionText.split('|') : [];
+            }
+        }
+        options = Array.isArray(options) ? options.map(option => String(option).trim()).filter(Boolean) : [];
+
+        let correctAnswer = String(row.correct_answer ?? row.answer ?? '').trim();
+        if (type === 'tf') {
+            correctAnswer = /^(true|صح|صواب|1)$/i.test(correctAnswer) ? 'true' :
+                (/^(false|خطأ|خطا|0)$/i.test(correctAnswer) ? 'false' : correctAnswer);
+        } else if (type === 'mcq') {
+            const letterIndex = { 'أ': 0, 'ا': 0, 'a': 0, 'ب': 1, 'b': 1, 'ج': 2, 'c': 2, 'د': 3, 'd': 3 }[correctAnswer.toLowerCase()];
+            if (letterIndex !== undefined) correctAnswer = String(letterIndex);
+            if (!/^\d+$/.test(correctAnswer)) {
+                const matchingOption = options.findIndex(option => option === correctAnswer);
+                if (matchingOption >= 0) correctAnswer = String(matchingOption);
+            }
+        } else if (type === 'essay') {
+            correctAnswer = 'essay';
+        }
+
+        return {
+            type,
+            text: String(row.text ?? row.question ?? '').trim(),
+            options,
+            correct_answer: correctAnswer,
+            explanation: String(row.explanation ?? row.model_answer ?? '').trim(),
+            sort_order: Number.parseInt(row.sort_order ?? row.order ?? index + 1, 10) || index + 1
+        };
+    });
+}
+
+function validateBulkQuestions(questions) {
+    const valid = [];
+    const errors = [];
+
+    questions.forEach((question, index) => {
+        const number = question.sort_order || index + 1;
+        let error = '';
+
+        if (!['tf', 'mcq', 'essay'].includes(question.type)) {
+            error = `السؤال ${number}: نوع السؤال غير معروف.`;
+        } else if (!question.text) {
+            error = `السؤال ${number}: نص السؤال فارغ.`;
+        } else if (question.type === 'tf' && !['true', 'false'].includes(question.correct_answer)) {
+            error = `السؤال ${number}: إجابة الصح والخطأ يجب أن تكون صح أو خطأ.`;
+        } else if (question.type === 'mcq' && question.options.length < 2) {
+            error = `السؤال ${number}: سؤال الاختيار يحتاج خيارين على الأقل.`;
+        } else if (question.type === 'mcq' && (!/^\d+$/.test(question.correct_answer) || Number(question.correct_answer) >= question.options.length)) {
+            error = `السؤال ${number}: الإجابة الصحيحة لا تطابق أحد الخيارات.`;
+        } else if (question.type === 'essay' && !question.explanation) {
+            error = `السؤال ${number}: أضف الإجابة النموذجية للسؤال المقالي.`;
+        }
+
+        if (error) errors.push(error);
+        else valid.push(question);
+    });
+
+    return { valid, errors };
 }
 
 function parseQuestionsText(text) {
@@ -2433,6 +2952,7 @@ function parseQuestionsText(text) {
 async function submitBulkQuestions() {
     const client = getSupabaseClient();
     const examId = currentIntegratedExamId || document.getElementById('filter-question-exam').value;
+    const submitButton = document.getElementById('btn-submit-bulk');
 
     if (!client || !examId) {
         showToast("يرجى اختيار مادة وامتحان أولاً!", "warning");
@@ -2455,11 +2975,14 @@ async function submitBulkQuestions() {
             sort_order: q.sort_order
         }));
 
-        const { error } = await client
-            .from('questions')
-            .insert(payload);
-
-        if (error) throw error;
+        submitButton.disabled = true;
+        const batchSize = 200;
+        for (let offset = 0; offset < payload.length; offset += batchSize) {
+            const batch = payload.slice(offset, offset + batchSize);
+            submitButton.textContent = `جاري الحفظ ${Math.min(offset + batch.length, payload.length)} / ${payload.length}`;
+            const { error } = await client.from('questions').insert(batch);
+            if (error) throw error;
+        }
 
         showToast(`تم استيراد ${parsedBulkQuestions.length} سؤال بنجاح!`, "success");
         closeModal('bulk-import-modal');
@@ -2467,6 +2990,9 @@ async function submitBulkQuestions() {
         refreshQuestionsList();
     } catch (e) {
         showToast("حدث خطأ أثناء حفظ الأسئلة دفعة واحدة: " + e.message, "error");
+    } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'تأكيد وإضافة الأسئلة';
     }
 }
 
@@ -2694,4 +3220,3 @@ function filterIntegratedQuestions() {
     );
     renderIntegratedQuestions(filtered);
 }
-

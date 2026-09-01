@@ -942,6 +942,18 @@
             <div class="landing-header">
                 <div class="filters-container">
                     <div class="custom-select-wrapper">
+                        <select id="hub-university-select" class="hub-select" onchange="onHubUniversityChange()">
+                            <!-- Dynamic universities -->
+                        </select>
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="custom-select-wrapper">
+                        <select id="hub-faculty-select" class="hub-select" onchange="onHubFacultyChange()">
+                            <!-- Dynamic faculties -->
+                        </select>
+                        <i class="fas fa-building-columns"></i>
+                    </div>
+                    <div class="custom-select-wrapper">
                         <select id="hub-year-select" class="hub-select" onchange="renderDynamicSubjects()">
                             <!-- Dynamic years -->
                         </select>
@@ -954,8 +966,8 @@
                         <i class="fas fa-calendar-alt"></i>
                     </div>
                 </div>
-                <h1><i class="fas fa-graduation-cap"></i> منصة الامتحانات</h1>
-                <p class="subtitle">اختر المادة للبدء في المذاكرة والتدريب على الامتحانات</p>
+                <h1><i class="fas fa-graduation-cap"></i> منصة المراجعة والتدريب</h1>
+                <p class="subtitle">اختر جامعتك وكليتك والمادة، وابدأ مراجعة تفاعلية تُظهر الإجابة والتعليل فورًا</p>
             </div>
 
             <div class="subject-cards" id="subject-cards">
@@ -1223,6 +1235,8 @@
             }
         }
 
+        let activeUniversities = [];
+        let activeFaculties = [];
         let activeYears = [];
         let activeSemesters = [];
         let allSubjects = [];
@@ -1237,40 +1251,51 @@
             }
 
             try {
-                // Fetch Years, Semesters, Subjects, Exams
-                const [yearsRes, semRes, subRes, examsRes] = await Promise.all([
-                    client.from('academic_years').select('*').order('sort_order', { ascending: true }),
+                const [universitiesRes, facultiesRes, yearsRes, semRes, subRes, examsRes] = await Promise.all([
+                    client.from('universities').select('*').eq('is_active', true).order('sort_order', { ascending: true }).order('name'),
+                    client.from('faculties').select('*').eq('is_active', true).order('sort_order', { ascending: true }).order('name'),
+                    client.from('academic_years').select('*').eq('is_active', true).order('sort_order', { ascending: true }),
                     client.from('semesters').select('*').order('sort_order', { ascending: true }),
                     client.from('subjects').select('*').eq('is_active', true).order('id', { ascending: true }),
                     client.from('exams').select('*').eq('is_active', true)
                 ]);
 
+                if (universitiesRes.error) throw universitiesRes.error;
+                if (facultiesRes.error) throw facultiesRes.error;
                 if (yearsRes.error) throw yearsRes.error;
                 if (semRes.error) throw semRes.error;
                 if (subRes.error) throw subRes.error;
                 if (examsRes.error) throw examsRes.error;
 
+                activeUniversities = universitiesRes.data || [];
+                activeFaculties = facultiesRes.data || [];
                 activeYears = yearsRes.data || [];
                 activeSemesters = semRes.data || [];
                 allSubjects = subRes.data || [];
                 allExams = examsRes.data || [];
 
-                populateFilters();
-
+                const savedUniversity = localStorage.getItem('selected_university');
+                const savedFaculty = localStorage.getItem('selected_faculty');
                 let savedYear = localStorage.getItem('selected_year');
                 let savedSem = localStorage.getItem('selected_semester');
-
-                if (!savedYear && activeYears.some(y => y.id === 3)) savedYear = '3';
-                else if (!savedYear && activeYears.length > 0) savedYear = activeYears[0].id.toString();
 
                 if (!savedSem && activeSemesters.some(s => s.id === 2)) savedSem = '2';
                 else if (!savedSem && activeSemesters.length > 0) savedSem = activeSemesters[0].id.toString();
 
+                populateUniversityFilter(savedUniversity);
+                populateFacultyFilter(savedFaculty);
+                populateYearFilter(savedYear);
+                populateSemesterFilter(savedSem);
+
+                const universitySelect = document.getElementById('hub-university-select');
+                const facultySelect = document.getElementById('hub-faculty-select');
                 const yearSelect = document.getElementById('hub-year-select');
                 const semSelect = document.getElementById('hub-semester-select');
 
-                if (yearSelect && savedYear) yearSelect.value = savedYear;
-                if (semSelect && savedSem) semSelect.value = savedSem;
+                if (universitySelect?.value) localStorage.setItem('selected_university', universitySelect.value);
+                if (facultySelect?.value) localStorage.setItem('selected_faculty', facultySelect.value);
+                if (yearSelect?.value) localStorage.setItem('selected_year', yearSelect.value);
+                if (semSelect?.value) localStorage.setItem('selected_semester', semSelect.value);
 
                 renderDynamicSubjects();
             } catch (e) {
@@ -1280,33 +1305,91 @@
             }
         }
 
-        function populateFilters() {
-            const yearSelect = document.getElementById('hub-year-select');
-            const semSelect = document.getElementById('hub-semester-select');
+        function setSelectOptions(select, items, preferredValue, placeholder) {
+            if (!select) return;
+            select.innerHTML = '';
 
-            if (yearSelect) {
-                yearSelect.innerHTML = '';
-                activeYears.forEach(y => {
-                    yearSelect.innerHTML += `<option value="${y.id}">${y.name}</option>`;
-                });
+            if (items.length === 0) {
+                select.innerHTML = `<option value="">${placeholder}</option>`;
+                select.disabled = true;
+                return;
             }
 
-            if (semSelect) {
-                semSelect.innerHTML = '';
-                activeSemesters.forEach(s => {
-                    semSelect.innerHTML += `<option value="${s.id}">${s.name}</option>`;
-                });
+            select.disabled = false;
+            items.forEach(item => {
+                select.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+            });
+
+            if (preferredValue && items.some(item => item.id == preferredValue)) {
+                select.value = preferredValue;
             }
         }
 
+        function populateUniversityFilter(preferredValue) {
+            setSelectOptions(
+                document.getElementById('hub-university-select'),
+                activeUniversities,
+                preferredValue,
+                'لا توجد جامعات متاحة'
+            );
+        }
+
+        function populateFacultyFilter(preferredValue) {
+            const universityId = document.getElementById('hub-university-select')?.value;
+            const faculties = activeFaculties.filter(faculty => faculty.university_id == universityId);
+            setSelectOptions(
+                document.getElementById('hub-faculty-select'),
+                faculties,
+                preferredValue,
+                'لا توجد كليات متاحة'
+            );
+        }
+
+        function populateYearFilter(preferredValue) {
+            const facultyId = document.getElementById('hub-faculty-select')?.value;
+            const years = activeYears.filter(year => year.faculty_id == facultyId);
+            setSelectOptions(
+                document.getElementById('hub-year-select'),
+                years,
+                preferredValue,
+                'لا توجد فرق متاحة'
+            );
+        }
+
+        function populateSemesterFilter(preferredValue) {
+            setSelectOptions(
+                document.getElementById('hub-semester-select'),
+                activeSemesters,
+                preferredValue,
+                'لا توجد ترمات متاحة'
+            );
+        }
+
+        function onHubUniversityChange() {
+            localStorage.setItem('selected_university', document.getElementById('hub-university-select').value);
+            populateFacultyFilter();
+            populateYearFilter();
+            renderDynamicSubjects();
+        }
+
+        function onHubFacultyChange() {
+            localStorage.setItem('selected_faculty', document.getElementById('hub-faculty-select').value);
+            populateYearFilter();
+            renderDynamicSubjects();
+        }
+
         function renderDynamicSubjects() {
+            const universitySelect = document.getElementById('hub-university-select');
+            const facultySelect = document.getElementById('hub-faculty-select');
             const yearSelect = document.getElementById('hub-year-select');
             const semSelect = document.getElementById('hub-semester-select');
-            if (!yearSelect || !semSelect) return;
+            if (!universitySelect || !facultySelect || !yearSelect || !semSelect) return;
 
             const yearVal = yearSelect.value;
             const semVal = semSelect.value;
 
+            localStorage.setItem('selected_university', universitySelect.value);
+            localStorage.setItem('selected_faculty', facultySelect.value);
             localStorage.setItem('selected_year', yearVal);
             localStorage.setItem('selected_semester', semVal);
 
@@ -1322,7 +1405,7 @@
                 container.innerHTML = `
                     <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-color); opacity: 0.6;">
                         <i class="fas fa-book-open" style="font-size: 3rem; margin-bottom: 15px;"></i>
-                        <p>لا توجد مواد مضافة أو نشطة لهذه الفرقة والترم حالياً</p>
+                        <p>لا توجد مواد مضافة أو نشطة لهذا الاختيار حالياً</p>
                     </div>
                 `;
                 return;
@@ -1359,6 +1442,9 @@
                 container.innerHTML += cardHtml;
             });
         }
+
+        window.onHubUniversityChange = onHubUniversityChange;
+        window.onHubFacultyChange = onHubFacultyChange;
 
         document.addEventListener('DOMContentLoaded', () => {
             loadTheme();

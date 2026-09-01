@@ -339,6 +339,12 @@
                 <div id="subjects-manager-main-view">
                     <div class="manager-actions" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; background: var(--glass-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px);">
                         <div class="filters-wrapper" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                            <select id="filter-subject-university" class="select-filter" onchange="onManagerUniversityChange()">
+                                <option value="">كل الجامعات</option>
+                            </select>
+                            <select id="filter-subject-faculty" class="select-filter" onchange="onManagerFacultyChange()">
+                                <option value="">كل الكليات</option>
+                            </select>
                             <select id="filter-subject-year" class="select-filter" onchange="loadSubjectsManagerData()">
                                 <option value="">كل الفرق</option>
                                 <!-- Dynamic years -->
@@ -349,6 +355,14 @@
                             </select>
                         </div>
                         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="action-btn" onclick="openAddUniversityModal()" style="background: linear-gradient(135deg, #0284c7, #0369a1);">
+                                <i class="fas fa-university"></i>
+                                <span>إضافة جامعة</span>
+                            </button>
+                            <button class="action-btn" onclick="openAddFacultyModal()" style="background: linear-gradient(135deg, #0d9488, #0f766e);">
+                                <i class="fas fa-building-columns"></i>
+                                <span>إضافة كلية</span>
+                            </button>
                             <button class="action-btn" onclick="openAddYearModal()" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">
                                 <i class="fas fa-plus"></i>
                                 <span>إضافة فرقة</span>
@@ -510,6 +524,17 @@
 الإجابة النموذجية والتعليل:
 الإجابة والتعليل هنا..." required></textarea>
                 </div>
+
+                <div class="form-group">
+                    <label for="bulk-import-file">أو ارفع ملفًا جاهزًا</label>
+                    <input type="file" id="bulk-import-file" class="form-control" accept=".txt,.csv,.json,text/plain,text/csv,application/json" onchange="handleBulkImportFile(event)">
+                    <small style="display:block;margin-top:8px;color:var(--text-secondary);line-height:1.7;">
+                        يدعم TXT بنفس التنسيق الموضح، وCSV بالأعمدة: type, text, options, correct_answer, explanation، وJSON كمصفوفة أسئلة.
+                    </small>
+                    <button type="button" class="btn-secondary" onclick="downloadBulkImportTemplate()" style="margin-top:10px;">
+                        <i class="fas fa-download"></i> تحميل نموذج CSV
+                    </button>
+                </div>
                 
                 <div id="bulk-import-preview-container" style="display: none; margin-top: 20px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border: 1px solid var(--glass-border);">
                     <h4 style="color: var(--primary-color); margin-bottom: 10px;"><i class="fas fa-eye"></i> معاينة الأسئلة التي تم تحليلها (<span id="bulk-import-count">0</span> سؤال)</h4>
@@ -532,6 +557,80 @@
     </div>
 
     <!-- ============================================
+       MODAL: ADD UNIVERSITY
+       ============================================ -->
+    <div id="university-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إضافة جامعة</h3>
+                <button class="close-modal-btn" onclick="closeModal('university-modal')"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="university-form" onsubmit="saveUniversity(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="modal-university-name">اسم الجامعة</label>
+                        <input type="text" id="modal-university-name" class="form-control" placeholder="مثال: جامعة القاهرة" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-university-slug">الرمز (Slug)</label>
+                        <input type="text" id="modal-university-slug" class="form-control" placeholder="مثال: cairo-university" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-university-country">الدولة</label>
+                        <input type="text" id="modal-university-country" class="form-control" value="مصر" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-university-city">المدينة</label>
+                        <input type="text" id="modal-university-city" class="form-control" placeholder="مثال: القاهرة">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('university-modal')">إلغاء</button>
+                    <button type="submit" class="action-btn">حفظ الجامعة</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================
+       MODAL: ADD FACULTY
+       ============================================ -->
+    <div id="faculty-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إضافة كلية</h3>
+                <button class="close-modal-btn" onclick="closeModal('faculty-modal')"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="faculty-form" onsubmit="saveFaculty(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="modal-faculty-university">الجامعة</label>
+                        <select id="modal-faculty-university" class="form-control" required>
+                            <option value="">اختر الجامعة...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-faculty-name">اسم الكلية</label>
+                        <input type="text" id="modal-faculty-name" class="form-control" placeholder="مثال: كلية التجارة" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-faculty-slug">الرمز (Slug)</label>
+                        <input type="text" id="modal-faculty-slug" class="form-control" placeholder="مثال: commerce" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-faculty-description">وصف مختصر</label>
+                        <textarea id="modal-faculty-description" class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('faculty-modal')">إلغاء</button>
+                    <button type="submit" class="action-btn">حفظ الكلية</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================
        MODAL: ADD/EDIT ACADEMIC YEAR
        ============================================ -->
     <div id="year-modal" class="modal">
@@ -545,6 +644,12 @@
             <form id="year-form" onsubmit="saveAcademicYear(event)">
                 <input type="hidden" id="modal-year-id">
                 <div class="modal-body">
+                    <div class="form-group">
+                        <label for="modal-year-faculty">الكلية</label>
+                        <select id="modal-year-faculty" class="form-control" required>
+                            <option value="">اختر الكلية...</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="modal-year-name">اسم الفرقة</label>
                         <input type="text" id="modal-year-name" class="form-control" placeholder="مثال: الفرقة الأولى" required>
@@ -624,6 +729,64 @@
                     <button type="submit" class="action-btn">حفظ المادة</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- ============================================
+       MODAL: REVIEW MATERIALS
+       ============================================ -->
+    <div id="review-material-modal" class="modal">
+        <div class="modal-content" style="max-width:850px;width:92%;">
+            <div class="modal-header">
+                <h3 id="review-material-modal-title">مراجعات المادة</h3>
+                <button class="close-modal-btn" onclick="closeModal('review-material-modal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="review-materials-list" style="display:grid;gap:10px;margin-bottom:20px;"></div>
+                <form id="review-material-form" onsubmit="saveReviewMaterial(event)" style="border-top:1px solid var(--glass-border);padding-top:18px;">
+                    <input type="hidden" id="modal-review-id">
+                    <input type="hidden" id="modal-review-subject-id">
+                    <div class="form-row">
+                        <div class="form-group" style="flex:2;">
+                            <label for="modal-review-title">عنوان المراجعة</label>
+                            <input type="text" id="modal-review-title" class="form-control" required>
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label for="modal-review-type">النوع</label>
+                            <select id="modal-review-type" class="form-control" required>
+                                <option value="summary">ملخص</option>
+                                <option value="mindmap">خريطة ذهنية</option>
+                                <option value="notes">ملاحظات</option>
+                                <option value="file">ملف</option>
+                                <option value="link">رابط</option>
+                                <option value="video">فيديو</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-review-description">وصف مختصر</label>
+                        <input type="text" id="modal-review-description" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-review-url">الرابط — اختياري إذا كتبت محتوى</label>
+                        <input type="text" id="modal-review-url" class="form-control" placeholder="https://... أو رابط ملف داخل الموقع">
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-review-content">المحتوى النصي — اختياري إذا أضفت رابطًا</label>
+                        <textarea id="modal-review-content" class="form-control" rows="6" placeholder="اكتب الملخص أو الإجابة النموذجية هنا..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="modal-review-sort">ترتيب العرض</label>
+                            <input type="number" id="modal-review-sort" class="form-control" value="0">
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="padding:0;margin-top:10px;">
+                        <button type="button" class="btn-secondary" onclick="resetReviewMaterialForm()">تفريغ الحقول</button>
+                        <button type="submit" class="action-btn"><i class="fas fa-save"></i> حفظ المراجعة</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 

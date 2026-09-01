@@ -82,6 +82,7 @@
         }
 
         let activeExams = [];
+        let activeReviewMaterials = [];
         let currentSubject = null;
 
         async function initDynamicSubject() {
@@ -116,16 +117,25 @@
                 document.title = subject.name;
                 document.getElementById('subject-title').innerHTML = `<i class="fas fa-${subject.icon || 'book'}"></i> ${subject.name}`;
 
-                // Fetch exams for this subject
-                const { data: exams, error: examsError } = await client
-                    .from('exams')
-                    .select('*')
-                    .eq('subject_id', subject.id)
-                    .eq('is_active', true)
-                    .order('id', { ascending: true });
+                const [examsResult, materialsResult] = await Promise.all([
+                    client
+                        .from('exams')
+                        .select('*')
+                        .eq('subject_id', subject.id)
+                        .eq('is_active', true)
+                        .order('id', { ascending: true }),
+                    client
+                        .from('review_materials')
+                        .select('*')
+                        .eq('subject_id', subject.id)
+                        .eq('is_active', true)
+                        .order('sort_order', { ascending: true })
+                ]);
 
-                if (examsError) throw examsError;
-                activeExams = exams || [];
+                if (examsResult.error) throw examsResult.error;
+                if (materialsResult.error) throw materialsResult.error;
+                activeExams = examsResult.data || [];
+                activeReviewMaterials = materialsResult.data || [];
 
                 await renderSubjectModes();
             } catch (e) {
@@ -150,6 +160,31 @@
             const container = document.getElementById('mode-cards-container');
             container.innerHTML = '';
 
+            const materialIcons = {
+                summary: 'fa-file-lines',
+                mindmap: 'fa-project-diagram',
+                file: 'fa-file-arrow-down',
+                link: 'fa-link',
+                video: 'fa-circle-play',
+                notes: 'fa-note-sticky'
+            };
+
+            activeReviewMaterials.forEach(material => {
+                const destination = material.url || `review.html?id=${material.id}`;
+                container.innerHTML += `
+                    <div class="mode-card mindmap-card">
+                        <div class="card-icon"><i class="fas ${materialIcons[material.material_type] || 'fa-book-open'}"></i></div>
+                        <h2>${material.title}</h2>
+                        ${material.description ? `<p style="opacity:.75;line-height:1.8;">${material.description}</p>` : ''}
+                        <div class="card-buttons">
+                            <button class="card-btn mindmap-btn" onclick="window.location.href='${destination}'">
+                                <i class="fas fa-book-reader"></i> فتح المراجعة
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
             // Check if mindmap file exists
             const slugMapping = {
                 'subject2': 'الخريطة_الذهنية_بحث2.html',
@@ -165,7 +200,8 @@
 
             const hasMindmap = await checkFileExists(mindmapUrl);
 
-            if (hasMindmap) {
+            const mindmapAlreadyRegistered = activeReviewMaterials.some(material => material.url === mindmapUrl);
+            if (hasMindmap && !mindmapAlreadyRegistered) {
                 container.innerHTML += `
                     <div class="mode-card mindmap-card">
                         <div class="card-icon"><i class="fas fa-project-diagram"></i></div>
