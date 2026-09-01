@@ -28,16 +28,13 @@
                 <p style="color: var(--text-secondary); margin-top: 5px;">لوحة الإدارة والمراقبة</p>
             </div>
             
-            <div class="auth-tabs">
-                <button class="auth-tab active" onclick="switchAuthTab('login')">تسجيل الدخول</button>
-                <button class="auth-tab" onclick="switchAuthTab('signup')">إنشاء حساب أدمن</button>
-            </div>
+            <p class="auth-security-note"><i class="fas fa-shield-halved"></i> الدخول متاح لحساب الإدارة المعتمد فقط</p>
 
             <form id="auth-form" onsubmit="handleAuth(event)">
                 <div class="form-group">
                     <label for="auth-email">البريد الإلكتروني</label>
                     <div class="input-wrapper">
-                        <input type="email" id="auth-email" class="form-control" placeholder="name@example.com" value="hazemantr217@gmail.com" required>
+                        <input type="email" id="auth-email" class="form-control" placeholder="name@example.com" autocomplete="username" required>
                         <i class="fas fa-envelope"></i>
                     </div>
                 </div>
@@ -45,7 +42,7 @@
                 <div class="form-group">
                     <label for="auth-password">كلمة المرور</label>
                     <div class="input-wrapper">
-                        <input type="password" id="auth-password" class="form-control" placeholder="••••••••" value="123456789Hh#" required>
+                        <input type="password" id="auth-password" class="form-control" placeholder="••••••••" autocomplete="current-password" required>
                         <i class="fas fa-lock"></i>
                     </div>
                 </div>
