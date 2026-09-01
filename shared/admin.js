@@ -1,5 +1,4 @@
 // Admin Dashboard Core Logic for BsmagaZone
-let authMode = 'login';
 let currentTab = 'overview';
 let activeSubjects = [];
 let activeExams = [];
@@ -179,75 +178,85 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 100);
 });
 
-// Switch between Login and Signup tabs
-function switchAuthTab(mode) {
-    authMode = mode;
-    const tabs = document.querySelectorAll('.auth-tab');
-    const submitBtn = document.getElementById('auth-submit-btn');
-    
-    tabs.forEach(tab => tab.classList.remove('active'));
-    
-    if (mode === 'login') {
-        tabs[0].classList.add('active');
-        submitBtn.querySelector('span').textContent = 'تسجيل الدخول';
-        submitBtn.querySelector('i').className = 'fas fa-sign-in-alt';
-    } else {
-        tabs[1].classList.add('active');
-        submitBtn.querySelector('span').textContent = 'إنشاء حساب أدمن';
-        submitBtn.querySelector('i').className = 'fas fa-user-plus';
+// Authentication and admin authorization
+let authCheckVersion = 0;
+
+function showAuthScreen() {
+    isDashboardInitialized = false;
+    document.getElementById('auth-section').style.display = 'flex';
+    document.getElementById('dashboard-section').style.display = 'none';
+}
+
+async function applyAuthSession(session) {
+    const checkVersion = ++authCheckVersion;
+    const client = getSupabaseClient();
+
+    if (!client || !session) {
+        showAuthScreen();
+        return;
+    }
+
+    const { data: administrator, error } = await client
+        .from('admins')
+        .select('id, role, is_active')
+        .eq('id', session.user.id)
+        .eq('is_active', true)
+        .maybeSingle();
+
+    if (checkVersion !== authCheckVersion) return;
+
+    if (error || !administrator) {
+        console.error('Unauthorized dashboard session', error);
+        await client.auth.signOut();
+        showAuthScreen();
+        showToast('هذا الحساب لا يملك صلاحية دخول لوحة الإدارة.', 'error', 6000);
+        return;
+    }
+
+    document.getElementById('auth-section').style.display = 'none';
+    document.getElementById('dashboard-section').style.display = 'flex';
+    document.getElementById('admin-email').textContent = session.user.email;
+
+    if (!isDashboardInitialized) {
+        isDashboardInitialized = true;
+        loadDashboardData();
     }
 }
 
-// Authentication Listener
 function initAuthListener() {
     const client = getSupabaseClient();
     if (!client) return;
 
-// Listen for Auth changes
-    client.auth.onAuthStateChange((event, session) => {
-        if (session) {
-            // User is signed in
-            document.getElementById('auth-section').style.display = 'none';
-            document.getElementById('dashboard-section').style.display = 'flex';
-            document.getElementById('admin-email').textContent = session.user.email;
-            
-            // Initial data loads (only once)
-            if (!isDashboardInitialized) {
-                isDashboardInitialized = true;
-                loadDashboardData();
-            }
-        } else {
-            // User is signed out
-            isDashboardInitialized = false;
-            document.getElementById('auth-section').style.display = 'flex';
-            document.getElementById('dashboard-section').style.display = 'none';
-        }
+    client.auth.getSession().then(({ data }) => applyAuthSession(data.session));
+
+    client.auth.onAuthStateChange((_event, session) => {
+        window.setTimeout(() => applyAuthSession(session), 0);
     });
 }
 
-// Handle Login or Signup submission
+// Handle admin login
 async function handleAuth(event) {
     event.preventDefault();
-    const email = document.getElementById('auth-email').value;
+    const email = document.getElementById('auth-email').value.trim();
     const password = document.getElementById('auth-password').value;
     const client = getSupabaseClient();
-    
+    const submitBtn = document.getElementById('auth-submit-btn');
+
     if (!client) {
-        showToast("فشل الاتصال بـ Supabase.", "error");
+        showToast('فشل الاتصال بالخدمة. حاول مرة أخرى.', 'error');
         return;
     }
 
+    submitBtn.disabled = true;
+
     try {
-        if (authMode === 'login') {
-            const { data, error } = await client.auth.signInWithPassword({ email, password });
-            if (error) throw error;
-        } else {
-            const { data, error } = await client.auth.signUp({ email, password });
-            if (error) throw error;
-            showToast("تم إرسال رابط تأكيد الحساب لبريدك الإلكتروني (يرجى التحقق من البريد لتتمكن من تسجيل الدخول).", "info", 6000);
-        }
-    } catch (e) {
-        showToast("خطأ في المصادقة: " + e.message, "error");
+        const { error } = await client.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+    } catch (error) {
+        console.error('Admin login failed', error);
+        showToast('تعذر تسجيل الدخول. راجع البيانات وحاول مرة أخرى.', 'error');
+    } finally {
+        submitBtn.disabled = false;
     }
 }
 
